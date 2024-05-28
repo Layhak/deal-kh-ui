@@ -10,16 +10,12 @@ export const siteConfig = {
       href: '/',
     },
     {
-      label: 'About Us',
+      label: 'About',
       href: '/about',
     },
     {
       label: 'Policy',
       href: '/policy',
-    },
-    {
-      label: 'My Shop',
-      href: '/my-shop',
     },
   ],
   navMenuItems: [

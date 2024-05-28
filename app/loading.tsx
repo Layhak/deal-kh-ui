@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Loading() {
   return (
-    <div className={'grid h-full place-content-center'}>
+    <div className={'grid h-[100vh] place-content-center'}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="150"

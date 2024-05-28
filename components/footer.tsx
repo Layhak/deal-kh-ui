@@ -80,7 +80,7 @@ export default function Footer() {
         </div>
         <div className="mt-8 md:order-1 md:mt-0">
           <p className="text-center text-xs leading-5 text-gray-500 dark:text-gray-300">
-            &copy; 2024 My Ecommerce Company, Inc. All rights reserved.
+            &copy; 2024 Deal-KH website, Inc. All rights reserved.
           </p>
         </div>
       </div>

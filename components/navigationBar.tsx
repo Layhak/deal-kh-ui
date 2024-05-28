@@ -15,17 +15,32 @@ import {
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/theme-switch';
-import { Logo } from '@/components/icons';
+import { Logo, SearchIcon } from '@/components/icons';
 import { usePathname } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 import { useState } from 'react';
+import { Input } from "@nextui-org/input";
 
 // Utility function to get a specific cookie
 // Utility function to get a specific cookie
 
 export const NavigationBar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
+  const searchInput = (
+    <Input
+      aria-label="Search"
+      classNames={{
+        inputWrapper: "bg-default-100",
+        input: "text-sm",
+      }}
+      labelPlacement="outside"
+      placeholder="Search..."
+      endContent={
+        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+      }
+      type="search"
+    />
+  );
   // const users = useSelector(selectUsers);
   const pathname = usePathname();
   return (
@@ -36,8 +51,10 @@ export const NavigationBar = () => {
             <Logo />
             <p className="font-bold text-inherit">ACME</p>
           </NextLink>
+          <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         </NavbarBrand>
       </NavbarContent>
+      {/* List of nav bar */}
       <NavbarContent justify={'center'} className={'hidden lg:flex'}>
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>

@@ -1,16 +1,21 @@
-'use client';
 import React, { useEffect } from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
+	title: 'About Page',
+	description: 'About Page',
+};
 
 export default function Page() {
-  useEffect(() => {
-    Aos.init({ duration: 1000 });
-  }, []);
   return (
     <>
       <div className=" grid justify-center place-content-center h-[100vh] text-2xl">
-        <h1>Home</h1>
+        <h1>About</h1>
       </div>
     </>
   );

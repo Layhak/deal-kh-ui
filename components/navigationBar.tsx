@@ -11,21 +11,58 @@ import {
   NavbarItem,
   NavbarMenu,
   NavbarMenuToggle,
+  Button,
 } from '@nextui-org/react';
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/theme-switch';
-import { Logo, SearchIcon } from '@/components/icons';
+import { Logo, SearchIcon, CartIcon, HeartFilledIcon } from '@/components/icons';
 import { usePathname } from 'next/navigation';
-import { signOut } from 'next-auth/react';
+import { signOut, signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { Input } from "@nextui-org/input";
 
-// Utility function to get a specific cookie
-// Utility function to get a specific cookie
+type ValueTypes = {
+  email: string;
+  password: string;
+}
+
+const initialValues: ValueTypes = {
+  email: "",
+  password: "",
+}
 
 export const NavigationBar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const pathname = usePathname();
+  const [loading, setLoading] = useState(false);
+
+  const handleLogin = (values: ValueTypes) => {
+    setLoading(true);
+
+    // handle request to api via login
+    fetch(`http://localhost:3000/api/login`,{
+        method: "POST",
+        headers: {
+            "Content-Type":"application/json",
+        },
+        body: JSON.stringify(values),
+    })
+    .then((res) => res.json())
+    .then((data) => {
+        console.log(data);
+        setLoading(false);
+    })
+    .catch((error)=>{
+        console.log(error);
+        setLoading(false);
+    });
+};
+
+  const handleLogout = () => {
+    signOut();
+  };
+
   const searchInput = (
     <Input
       aria-label="Search"
@@ -41,8 +78,7 @@ export const NavigationBar = () => {
       type="search"
     />
   );
-  // const users = useSelector(selectUsers);
-  const pathname = usePathname();
+
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -68,13 +104,6 @@ export const NavigationBar = () => {
             </NextLink>
           </NavbarItem>
         ))}
-        {/*<NavbarItem>*/}
-        {/*  <NextLink*/}
-        {/*    href={'/users'}*/}
-        {/*  >*/}
-        {/*    Users ({users.length})*/}
-        {/*  </NextLink>*/}
-        {/*</NavbarItem>*/}
       </NavbarContent>
       <NavbarContent
         className="hidden basis-1/5 sm:flex sm:basis-full"
@@ -83,38 +112,56 @@ export const NavigationBar = () => {
         <NavbarItem className="hidden gap-2 lg:flex">
           <ThemeSwitch />
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex">
-          <Dropdown placement="bottom-end" shadow={'md'}>
-            <DropdownTrigger>
-              <Avatar
-                isBordered
-                as="button"
-                className="transition-transform"
-                color="warning"
-                size="sm"
-                src={`https://i.pravatar.cc/150?u=a042581f4e29026704d`}
-              />
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Profile Actions" variant="shadow">
-              <DropdownItem
-                key="profile"
-                className="h-14 gap-2"
-                isDisabled={true}
-              >
-                <p className="font-semibold">Signed in as</p>
-                <p className="font-semibold">Hello</p>
-              </DropdownItem>
-              <DropdownItem
-                key="logout"
-                color="danger"
-                className={'text-danger'}
-                onClick={() => signOut()}
-              >
-                Log Out
-              </DropdownItem>
-            </DropdownMenu>
-          </Dropdown>
-        </NavbarItem>
+        {isAuthenticated ? (
+          <NavbarItem className="hidden lg:flex">
+            <Dropdown placement="bottom-end" shadow={'md'}>
+              <DropdownTrigger>
+                <Avatar
+                  isBordered
+                  as="button"
+                  className="transition-transform"
+                  color="warning"
+                  size="sm"
+                  src={`https://i.pravatar.cc/150?u=a042581f4e29026704d`}
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="shadow">
+                <DropdownItem
+                  key="profile"
+                  className="h-14 gap-2"
+                  isDisabled={true}
+                >
+                  <p className="font-semibold">Signed in as</p>
+                  <p className="font-semibold">Hello</p>
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  color="danger"
+                  className={'text-danger'}
+                  onClick={handleLogout}
+                >
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </NavbarItem>
+        ) : (
+          <NavbarItem className="hidden lg:flex">
+            <div className="h-full pt-2 pr-4">
+              <NextLink href="/wishlist">
+                <HeartFilledIcon />
+              </NextLink>
+            </div>
+            <div className="h-full pt-2 pr-4">
+              <NextLink href="/cart">
+                <CartIcon className="w-[28px] h-[28px]"/>
+              </NextLink>
+            </div>
+            <NextLink href="/login">
+              <Button>Login</Button>
+            </NextLink>
+          </NavbarItem>
+        )}
       </NavbarContent>
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
@@ -132,14 +179,11 @@ export const NavigationBar = () => {
           ))}
         </div>
       </NavbarMenu>
+
       <NavbarContent className="basis-1 pl-4 lg:hidden" justify="end">
+        <HeartFilledIcon />
+        <CartIcon />
         <ThemeSwitch />
-        <Avatar
-          isBordered
-          color="secondary"
-          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          size={'sm'}
-        />
         <NavbarMenuToggle />
       </NavbarContent>
     </NextUINavbar>

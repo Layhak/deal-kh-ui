@@ -1,6 +1,55 @@
 import * as React from 'react';
 import { IconSvgProps } from '@/types';
 
+export const CloseIcon = (props: IconSvgProps) => (
+  <svg
+    aria-hidden="true"
+    fill="none"
+    focusable="false"
+    height="1em"
+    role="presentation"
+    viewBox="0 0 24 24"
+    width="1em"
+    {...props}
+  >
+    <path
+      d="M18 6L6 18"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+    />
+    <path
+      d="M6 6L18 18"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+    />
+  </svg>
+);
+
+export const CartIcon: React.FC<IconSvgProps> = (props) => (
+  <svg
+    aria-hidden="true"
+    fill="none"
+    focusable="false"
+    height="1em"
+    role="presentation"
+    viewBox="0 0 24 24"
+    width="1em"
+    {...props}
+  >
+    <path
+      d="M3 3h2l.4 2M7 13h11l3-7H6.4M7 13l-1.5-8h-2M7 13l1.2 5.5c.2.8 1 1.5 1.8 1.5h8.5M16 17c-1 0-1.8.8-1.8 1.8 0 1 .8 1.8 1.8 1.8 1 0 1.8-.8 1.8-1.8 0-1-.8-1.8-1.8-1.8zM9 17c-1 0-1.8.8-1.8 1.8 0 1 .8 1.8 1.8 1.8 1 0 1.8-.8 1.8-1.8 0-1-.8-1.8-1.8-1.8z"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+    />
+  </svg>
+);
+
 export const Logo: React.FC<IconSvgProps> = ({
   size = 36,
   width,

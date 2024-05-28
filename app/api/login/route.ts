@@ -1,58 +1,22 @@
-import { serialize } from "cookie";
-import { NextResponse } from "next/server"
-import type { NextRequest } from "next/server"
+import { NextApiRequest, NextApiResponse } from 'next';
 
-export async function POST(req: NextRequest){
-    const body = await req.json();
-    const { email, password } = body;
-    
-    console.log("Email: ", email);
-    console.log("Password: ", password);
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method Not Allowed' });
+  }
 
-    const response = await fetch(
-        `${process.env.DJANGO_API_URL}/api/user/login/`,
-        {
-            method: "POST",
-            headers: {
-                "Content-Type":"application/json"
-            },
-            body: JSON.stringify({email, password}),
-        }
-    );
-    if(!response.ok){
-        return NextResponse.json(
-            {
-                message: "Failed to login",
-            },
-            {
-                status: response.status,
-            }
-        );
+  try {
+    // Implement your login logic here (e.g., authenticate with database)
+    const { username, password } = req.body;
+
+    // Replace with your authentication logic
+    if (username === 'test@gmail.com' && password === 'test123') {
+      return res.status(200).json({ message: 'Login successful!' });
+    } else {
+      return res.status(401).json({ message: 'Invalid credentials' });
     }
-
-    const data = await response.json();
-    const user = data?.user || null;
-    const accessToken = data?.access_token || null;
-    const refreshToken = data?.refresh_token || null;
-
-    const cookieName = process.env.COOKIE_REFRESH_TOKEN_NAME || "refresh";
-    const serialized = serialize(cookieName, refreshToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        path: "/",
-        sameSite: "lax",
-    });
-    return NextResponse.json({
-        accessToken: accessToken,
-        user: user,
-    },{
-        status: response.status,
-        headers: {
-            "Set-Cookie": serialized,
-        },
-    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
 }
-
-
-
-

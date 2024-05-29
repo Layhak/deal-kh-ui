@@ -12,26 +12,31 @@ import {
   NavbarMenu,
   NavbarMenuToggle,
   Button,
+  Link,
 } from '@nextui-org/react';
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/theme-switch';
-import { Logo, SearchIcon, CartIcon, HeartFilledIcon } from '@/components/icons';
+import {
+  Logo,
+  SearchIcon,
+  CartIcon,
+  HeartFilledIcon,
+} from '@/components/icons';
 import { usePathname } from 'next/navigation';
 import { signOut, signIn } from 'next-auth/react';
 import { useState } from 'react';
-import { Input,Image } from "@nextui-org/react";
-
+import { Input, Image } from "@nextui-org/react";
 
 type ValueTypes = {
   email: string;
   password: string;
-}
+};
 
 const initialValues: ValueTypes = {
-  email: "",
-  password: "",
-}
+  email: '',
+  password: '',
+};
 
 export const NavigationBar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -43,6 +48,7 @@ export const NavigationBar = () => {
 
     // handle request to api via login
     fetch(`http://localhost:3000/api/login`, {
+
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -68,13 +74,13 @@ export const NavigationBar = () => {
     <Input
       aria-label="Search"
       classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
+        inputWrapper: 'bg-default-100',
+        input: 'text-sm',
       }}
       labelPlacement="outside"
       placeholder="Search..."
       endContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+        <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
       }
       type="search"
     />
@@ -83,7 +89,7 @@ export const NavigationBar = () => {
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="max-w-fit gap-3">
+        <NavbarBrand className="max-w-fit gap-3">
           <NextLink className="flex items-center justify-start gap-1" href="/">
             <Image
               src="/logo.png"
@@ -153,19 +159,23 @@ export const NavigationBar = () => {
           </NavbarItem>
         ) : (
           <NavbarItem className="hidden lg:flex">
-            <div className="h-full pt-2 pr-4">
+            <div className="h-full pr-4 pt-2">
               <NextLink href="/wishlist">
                 <HeartFilledIcon />
               </NextLink>
             </div>
-            <div className="h-full pt-2 pr-4">
+            <div className="h-full pr-4 pt-2">
               <NextLink href="/cart">
+
                 <CartIcon className="w-[28px] h-[28px]" />
+
               </NextLink>
-            </div>
+            </div> 
+            
             <NextLink href="/login">
               <Button className="bg-orange-500">Login</Button>
             </NextLink>
+
           </NavbarItem>
         )}
       </NavbarContent>
@@ -187,10 +197,11 @@ export const NavigationBar = () => {
       </NavbarMenu>
 
       <NavbarContent className="basis-1 pl-4 lg:hidden" justify="end">
-        <HeartFilledIcon />
-        <CartIcon />
-        <ThemeSwitch />
-        <NavbarMenuToggle />
+          <HeartFilledIcon />
+          <CartIcon />
+
+          <ThemeSwitch />
+          <NavbarMenuToggle />
       </NavbarContent>
     </NextUINavbar>
   );

@@ -16,21 +16,26 @@ import {
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/theme-switch';
-import { Logo, SearchIcon, CartIcon, HeartFilledIcon } from '@/components/icons';
+import {
+  Logo,
+  SearchIcon,
+  CartIcon,
+  HeartFilledIcon,
+} from '@/components/icons';
 import { usePathname } from 'next/navigation';
 import { signOut, signIn } from 'next-auth/react';
 import { useState } from 'react';
-import { Input } from "@nextui-org/input";
+import { Input } from '@nextui-org/input';
 
 type ValueTypes = {
   email: string;
   password: string;
-}
+};
 
 const initialValues: ValueTypes = {
-  email: "",
-  password: "",
-}
+  email: '',
+  password: '',
+};
 
 export const NavigationBar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
@@ -41,23 +46,23 @@ export const NavigationBar = () => {
     setLoading(true);
 
     // handle request to api via login
-    fetch(`http://localhost:3000/api/login`,{
-        method: "POST",
-        headers: {
-            "Content-Type":"application/json",
-        },
-        body: JSON.stringify(values),
+    fetch(`http://localhost:3000/api/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(values),
     })
-    .then((res) => res.json())
-    .then((data) => {
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data);
         setLoading(false);
-    })
-    .catch((error)=>{
+      })
+      .catch((error) => {
         console.log(error);
         setLoading(false);
-    });
-};
+      });
+  };
 
   const handleLogout = () => {
     signOut();
@@ -67,13 +72,13 @@ export const NavigationBar = () => {
     <Input
       aria-label="Search"
       classNames={{
-        inputWrapper: "bg-default-100",
-        input: "text-sm",
+        inputWrapper: 'bg-default-100',
+        input: 'text-sm',
       }}
       labelPlacement="outside"
       placeholder="Search..."
       endContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+        <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
       }
       type="search"
     />
@@ -147,14 +152,14 @@ export const NavigationBar = () => {
           </NavbarItem>
         ) : (
           <NavbarItem className="hidden lg:flex">
-            <div className="h-full pt-2 pr-4">
+            <div className="h-full pr-4 pt-2">
               <NextLink href="/wishlist">
                 <HeartFilledIcon />
               </NextLink>
             </div>
-            <div className="h-full pt-2 pr-4">
+            <div className="h-full pr-4 pt-2">
               <NextLink href="/cart">
-                <CartIcon className="w-[28px] h-[28px]"/>
+                <CartIcon className="h-[28px] w-[28px]" />
               </NextLink>
             </div>
             <NextLink href="/login">
@@ -181,10 +186,20 @@ export const NavigationBar = () => {
       </NavbarMenu>
 
       <NavbarContent className="basis-1 pl-4 lg:hidden" justify="end">
-        <HeartFilledIcon />
-        <CartIcon />
-        <ThemeSwitch />
-        <NavbarMenuToggle />
+        <NavbarItem>
+          <HeartFilledIcon />
+        </NavbarItem>
+        <NavbarItem>
+          <CartIcon />
+        </NavbarItem>
+
+        <NavbarItem>
+          <ThemeSwitch />
+        </NavbarItem>
+
+        <NavbarItem>
+          <NavbarMenuToggle />
+        </NavbarItem>
       </NavbarContent>
     </NextUINavbar>
   );

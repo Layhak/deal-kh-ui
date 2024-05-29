@@ -5,8 +5,8 @@ import { Metadata } from "next";
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Shop Page',
-	description: 'Shop Page',
+	title: 'Dashboard Admin Page',
+	description: 'Dashboard Admin Page',
 };
   
 export default function AdminLayout({

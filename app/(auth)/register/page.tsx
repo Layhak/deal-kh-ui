@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import NextLink from 'next/link';
 import Link from 'next/link';
 import { CloseIcon } from '@/components/icons';
+import { Input, Image } from "@nextui-org/react";
 
 interface RegisterFormValues {
     email: string;
@@ -49,8 +50,8 @@ const Register: React.FC = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-md w-full space-y-8">
+        <div className="min-h-screen flex items-center gap-16 justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-md w-full space-y-8 bg-white p-8 rounded-lg">
                 <div>
                     <div className="flex justify-between text-orange-500">
                         <h1>DealKH</h1>
@@ -211,6 +212,15 @@ const Register: React.FC = () => {
                         </Form>
                     )}
                 </Formik>
+            </div>
+            <div>
+                <Image
+                    src="/register_pic.png"
+                    alt="register_picture"
+                    width={400}
+                    height={400}
+                >
+                </Image>
             </div>
         </div>
     );

@@ -29,25 +29,39 @@ export const CloseIcon = (props: IconSvgProps) => (
   </svg>
 );
 
+
 export const CartIcon: React.FC<IconSvgProps> = (props) => (
-  <svg
-    aria-hidden="true"
-    fill="none"
-    focusable="false"
-    height="1em"
-    role="presentation"
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="32" 
+    height="32" 
     viewBox="0 0 24 24"
-    width="1em"
+    
     {...props}
   >
-    <path
-      d="M3 3h2l.4 2M7 13h11l3-7H6.4M7 13l-1.5-8h-2M7 13l1.2 5.5c.2.8 1 1.5 1.8 1.5h8.5M16 17c-1 0-1.8.8-1.8 1.8 0 1 .8 1.8 1.8 1.8 1 0 1.8-.8 1.8-1.8 0-1-.8-1.8-1.8-1.8zM9 17c-1 0-1.8.8-1.8 1.8 0 1 .8 1.8 1.8 1.8 1 0 1.8-.8 1.8-1.8 0-1-.8-1.8-1.8-1.8z"
-      stroke="currentColor"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth="2"
+    <path 
+      fill="orange" 
+      d="M7 22q-.825 0-1.412-.587T5 20t.588-1.412T7 18t1.413.588T9 20t-.587 1.413T7 22m10 0q-.825 0-1.412-.587T15 20t.588-1.412T17 18t1.413.588T19 20t-.587 1.413T17 22M5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.737.775T15.55 13H8.1L7 15h12v2H7q-1.125 0-1.7-.987t-.05-1.963L6.6 11.6L3 4H1V2h3.25z"
     />
   </svg>
+  // <svg
+  //   aria-hidden="true"
+  //   fill="none"
+  //   focusable="false"
+  //   height="1em"
+  //   role="presentation"
+  //   viewBox="0 0 24 24"
+  //   width="1em"
+  //   {...props}
+  // >
+  //   <path
+  //     d="M3 3h2l.4 2M7 13h11l3-7H6.4M7 13l-1.5-8h-2M7 13l1.2 5.5c.2.8 1 1.5 1.8 1.5h8.5M16 17c-1 0-1.8.8-1.8 1.8 0 1 .8 1.8 1.8 1.8 1 0 1.8-.8 1.8-1.8 0-1-.8-1.8-1.8-1.8zM9 17c-1 0-1.8.8-1.8 1.8 0 1 .8 1.8 1.8 1.8 1 0 1.8-.8 1.8-1.8 0-1-.8-1.8-1.8-1.8z"
+  //     stroke="currentColor"
+  //     strokeLinecap="round"
+  //     strokeLinejoin="round"
+  //     strokeWidth="2"
+  //   />
+  // </svg>
 );
 
 export const Logo: React.FC<IconSvgProps> = ({
@@ -413,7 +427,7 @@ export const MoonFilledIcon = ({
   >
     <path
       d="M21.53 15.93c-.16-.27-.61-.69-1.73-.49a8.46 8.46 0 01-1.88.13 8.409 8.409 0 01-5.91-2.82 8.068 8.068 0 01-1.44-8.66c.44-1.01.13-1.54-.09-1.76s-.77-.55-1.83-.11a10.318 10.318 0 00-6.32 10.21 10.475 10.475 0 007.04 8.99 10 10 0 002.89.55c.16.01.32.02.48.02a10.5 10.5 0 008.47-4.27c.67-.93.49-1.519.32-1.79z"
-      fill="currentColor"
+      fill="orange"
     />
   </svg>
 );
@@ -457,7 +471,7 @@ export const HeartFilledIcon = ({
   >
     <path
       d="M12.62 20.81c-.34.12-.9.12-1.24 0C8.48 19.82 2 15.69 2 8.69 2 5.6 4.49 3.1 7.56 3.1c1.82 0 3.43.88 4.44 2.24a5.53 5.53 0 0 1 4.44-2.24C19.51 3.1 22 5.6 22 8.69c0 7-6.48 11.13-9.38 12.12Z"
-      fill="currentColor"
+      fill="orange"
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}

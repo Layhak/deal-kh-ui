@@ -20,7 +20,8 @@ import { Logo, SearchIcon, CartIcon, HeartFilledIcon } from '@/components/icons'
 import { usePathname } from 'next/navigation';
 import { signOut, signIn } from 'next-auth/react';
 import { useState } from 'react';
-import { Input } from "@nextui-org/input";
+import { Input,Image } from "@nextui-org/react";
+
 
 type ValueTypes = {
   email: string;
@@ -41,23 +42,23 @@ export const NavigationBar = () => {
     setLoading(true);
 
     // handle request to api via login
-    fetch(`http://localhost:3000/api/login`,{
-        method: "POST",
-        headers: {
-            "Content-Type":"application/json",
-        },
-        body: JSON.stringify(values),
+    fetch(`http://localhost:3000/api/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
     })
-    .then((res) => res.json())
-    .then((data) => {
+      .then((res) => res.json())
+      .then((data) => {
         console.log(data);
         setLoading(false);
-    })
-    .catch((error)=>{
+      })
+      .catch((error) => {
         console.log(error);
         setLoading(false);
-    });
-};
+      });
+  };
 
   const handleLogout = () => {
     signOut();
@@ -84,8 +85,13 @@ export const NavigationBar = () => {
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand as="li" className="max-w-fit gap-3">
           <NextLink className="flex items-center justify-start gap-1" href="/">
-            <Logo />
-            <p className="font-bold text-inherit">ACME</p>
+            <Image
+              src="/logo.png"
+              alt="Description of the image"
+              width={50}
+              height={500}
+            />
+            <p className="font-bold text-inherit">DealKH</p>
           </NextLink>
           <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         </NavbarBrand>
@@ -154,11 +160,11 @@ export const NavigationBar = () => {
             </div>
             <div className="h-full pt-2 pr-4">
               <NextLink href="/cart">
-                <CartIcon className="w-[28px] h-[28px]"/>
+                <CartIcon className="w-[28px] h-[28px]" />
               </NextLink>
             </div>
             <NextLink href="/login">
-              <Button>Login</Button>
+              <Button className="bg-orange-500">Login</Button>
             </NextLink>
           </NavbarItem>
         )}

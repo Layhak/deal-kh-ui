@@ -1,6 +1,8 @@
 "use client";
 import NextLink from 'next/link';
 import { BackIcon } from './icons';
+import { NavbarContent } from '@nextui-org/react';
+import { ThemeSwitch } from './theme-switch';
 
 const Header = () => {
     return (
@@ -11,10 +13,16 @@ const Header = () => {
                 </NextLink>
                 <h1>Overview</h1>
             </div>
+            
+            
+                <ThemeSwitch />
+
+            
             <style jsx>{`
           .header {
-            background-color: ;
-            padding: 20px;
+            background-color: bg-gray-100 ;
+            padding-left: 12px;
+            padding-top: 2px;
           }
           h1 {
             margin: 0;

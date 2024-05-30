@@ -1,3 +1,4 @@
+
 import Charts from '@/components/data/chart';
 import { BackIcon } from '@/components/icons';
 import { Metadata } from 'next';
@@ -13,17 +14,9 @@ export const metadata: Metadata = {
 export default function Dashboard() {
   return (
     <>
-      <div className="w-full text-left">
-        {/* <NextLink href="/">
-          <BackIcon />
-        </NextLink> */}
-      </div>
-      <div className="flex w-[70%] absolute right-0">
+      <div className="flex w-[75%] absolute right-0">
         <Charts />
-      </div>
-      
-        
-      
+      </div>      
     </>
 
   )

@@ -23,9 +23,6 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      {/* <div className=" grid justify-center place-content-center h-[100vh] text-2xl">
-        <h1>Home</h1>
-      </div> */}
       <CardDiscountComponent />
     </>
   );

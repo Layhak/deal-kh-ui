@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IconSvgProps } from '@/types';
 
 
-export const RightArrow = (props: IconSvgProps) => (
+export const RightArrowIcon = (props: IconSvgProps) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="32" 
@@ -17,7 +17,7 @@ export const RightArrow = (props: IconSvgProps) => (
   </svg>
 )
 
-export const LeftArrow = (props: IconSvgProps) => (
+export const LeftArrowIcon = (props: IconSvgProps) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 
     width="32" 

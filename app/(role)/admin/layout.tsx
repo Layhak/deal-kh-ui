@@ -6,19 +6,10 @@ import { Metadata } from "next";
 import Sidebar from "@/components/sidebar";
 import { useState } from 'react';
 import Header from '@/components/header'
-import { LeftArrow, RightArrow } from "@/components/icons";
-import AdminSidebar from "@/components/sidebar2";
-
+import { LeftArrowIcon, RightArrowIcon } from "@/components/icons";
+import { NavigationBar } from "@/components/navigationBar";
 
 const inter = Inter({ subsets: ['latin'] });
-
-// export const metadata: Metadata = {
-// 	title: 'Dashboard Admin Page',
-// 	description: 'Dashboard Admin Page',
-// };
-
-
-
 
 export default function AdminLayout({
 	children,
@@ -34,26 +25,18 @@ export default function AdminLayout({
 
 				<div className="flex h-screen">
 
-					{/* <Sidebar visible={sidebarVisible} />
-					<button
-						className="p-2 text-orange-500 rounded"
-						onClick={() => setSidebarVisible(!sidebarVisible)}
-					>
-						{sidebarVisible ? <LeftArrow /> : <RightArrow />}
-					</button> */}
-					
+					<Sidebar />
+
 					<div className="flex flex-col flex-1">
 
-						<div className="flex items-center justify-between bg-gray-100 p-4 border-b">
+						<div className="flex items-center justify-between p-4 bg-gray-100 border-b">
 
 
-							{/* <Header /> */}
-
+							<Header />
 
 
 						</div>
-						<div className="p-4">
-							<AdminSidebar />
+						<div className="flex-1 overflow-y-auto ">
 							{children}
 						</div>
 					</div>

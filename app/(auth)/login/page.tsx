@@ -103,6 +103,13 @@ const Login: React.FC = () => {
                                         <ErrorMessage name="password" component="div" className="text-red-500 text-xs mt-1" />
                                     </div>
                                 </div>
+                                <div className="flex">
+                                    <hr />
+                                    <div className="flex gap-4 justify-center w-full ">
+                                        <p>or</p>
+                                    </div>
+                                    <hr />
+                                </div>
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center">
                                         <Field
@@ -121,7 +128,16 @@ const Login: React.FC = () => {
                                         </a>
                                     </div>
                                 </div>
-
+                                <div>
+                                    <button
+                                        type="submit"
+                                        disabled={isSubmitting}
+                                        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
+                                    >
+                                        {isSubmitting ? 'Logging in...' : 'Sign In'}
+                                    </button>
+                                    {status && <div className="text-red-500 text-xs mt-2">{status.message}</div>}
+                                </div>
                                 <div className="mt-6 flex flex-col gap-2 justify-between items-center">
                                     <button
                                         type="button"
@@ -152,16 +168,7 @@ const Login: React.FC = () => {
                                         <span className="ml-2">Sign up with GitHub</span>
                                     </button>
                                 </div>
-                                <div>
-                                    <button
-                                        type="submit"
-                                        disabled={isSubmitting}
-                                        className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500"
-                                    >
-                                        {isSubmitting ? 'Logging in...' : 'Sign In'}
-                                    </button>
-                                    {status && <div className="text-red-500 text-xs mt-2">{status.message}</div>}
-                                </div>
+                                
                             </Form>
                         )}
                     </Formik>

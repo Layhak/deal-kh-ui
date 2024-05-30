@@ -3,6 +3,7 @@ import { BackIcon } from '@/components/icons';
 import { Metadata } from 'next';
 import React from 'react'
 import NextLink from 'next/link';
+import Sidebar from '@/components/sidebar';
 
 export const metadata: Metadata = {
   title: 'Dashboard Page',
@@ -13,13 +14,16 @@ export default function Dashboard() {
   return (
     <>
       <div className="w-full text-left">
-        <NextLink href="/">
+        {/* <NextLink href="/">
           <BackIcon />
-        </NextLink>
+        </NextLink> */}
       </div>
-      <div className="">
+      <div className="flex w-[70%] absolute right-0">
         <Charts />
       </div>
+      
+        
+      
     </>
 
   )

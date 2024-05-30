@@ -1,4 +1,6 @@
 
+import CardDiscountComponent from '@/components/card/discountCard';
+import HomeCard from '@/components/homecard';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { Metadata } from 'next';
@@ -21,9 +23,10 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
-      <div className=" grid justify-center place-content-center h-[100vh] text-2xl">
+      {/* <div className=" grid justify-center place-content-center h-[100vh] text-2xl">
         <h1>Home</h1>
-      </div>
+      </div> */}
+      <CardDiscountComponent />
     </>
   );
 }

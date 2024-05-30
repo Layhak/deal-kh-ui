@@ -1,7 +1,9 @@
+"use client";
+
 import React from "react";
 import {Card, CardBody, CardFooter, Divider, Image} from "@nextui-org/react";
 
-export default function CardDiscountComponent() {
+function CardDiscountComponent() {
     function calculateDiscountedPrice(originalPrice: number, discountPercentage: number) {
         const discount = originalPrice * (discountPercentage / 100);
         const discountedPrice = originalPrice - discount;
@@ -90,3 +92,4 @@ export default function CardDiscountComponent() {
   );
 }
 
+export default CardDiscountComponent;

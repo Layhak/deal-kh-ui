@@ -199,7 +199,6 @@ export const NavigationBar = () => {
       <NavbarContent className="basis-1 pl-4 lg:hidden" justify="end">
           <HeartFilledIcon />
           <CartIcon />
-
           <ThemeSwitch />
           <NavbarMenuToggle />
       </NavbarContent>

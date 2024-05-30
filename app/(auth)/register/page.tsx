@@ -213,15 +213,6 @@ const Register: React.FC = () => {
                     )}
                 </Formik>
             </div>
-            <div>
-                <Image
-                    src="/register_pic.png"
-                    alt="register_picture"
-                    width={400}
-                    height={400}
-                >
-                </Image>
-            </div>
         </div>
     );
 };

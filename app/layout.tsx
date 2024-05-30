@@ -26,7 +26,7 @@ export default function RootLayout({
       <body>
         <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
           <NavigationBar />
-          <main className="container mx-auto min-h-[680px] max-w-7xl px-6 pt-16">
+          <main className="container mx-auto min-h-[680px] max-w-7xl px-6">
             <ErrorBoundary errorComponent={Error}>
               <Suspense fallback={<Loading />}>{children}</Suspense>
             </ErrorBoundary>

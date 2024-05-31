@@ -21,17 +21,17 @@ export default function Page() {
 
         </div>
         {/* right section image */}
-        <div className={styles.image}>
+        {/* <div className={styles.image}>
           <Image src="/images/about-first.png" alt="About us" width={800} height={900} />
-        </div>
+        </div> */}
       </div>
 
       {/* Second section about our story */}
       <div className={styles.container}>
         {/* left section text */}
-        <div className={styles.image}>
+        {/* <div className={styles.image}>
           <Image src="/images/about-second.png" alt="About us" width={800} height={900} />
-        </div>
+        </div> */}
         {/* right section image */}
         <div className={styles.content}>
             <p className={styles.title}>Our <span className={styles.gradientText}>Story</span></p>
@@ -54,17 +54,17 @@ export default function Page() {
             </p>
         </div>
         {/* right section image */}
-        <div className={styles.image}>
+        {/* <div className={styles.image}>
           <Image src="/images/about-third.png" alt="About us" width={800} height={900} />
-        </div>
+        </div> */}
       </div>
 
       {/* Forth section about our mission */}
       <div className={styles.container}>
         {/* left section text */}
-        <div className={styles.image}>
+        {/* <div className={styles.image}>
           <Image src="/images/about-forth.png" alt="About us" width={800} height={900} />
-        </div>
+        </div> */}
         {/* right section image */}
         <div className={styles.content}>
             <p className={styles.title}>Our <span className={styles.gradientText}>Mission</span></p>

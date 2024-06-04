@@ -1,4 +1,5 @@
 
+import DefaultLayout from '@/components/Layouts/DefaultLayout';
 import CardDiscountComponent from '@/components/card/discountCard';
 import HomeCard from '@/components/homecard';
 import Aos from 'aos';
@@ -20,10 +21,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
-      <CardDiscountComponent />
+      
+        <CardDiscountComponent />
+      
     </>
   );
 }

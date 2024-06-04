@@ -141,7 +141,7 @@ export const NavigationBar = () => {
                 <DropdownItem
                   key="profile"
                   className="h-14 gap-2"
-                  isDisabled={true}
+                  isDisabled={false}
                 >
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">Hello</p>

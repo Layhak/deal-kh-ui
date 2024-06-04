@@ -4,11 +4,11 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
 export const metadata: Metadata = {
   title:
-    "Dashboard Admin",
-  description: "This is Dashboard Admin Page",
+    "Shop Admin",
+  description: "This is a Shop Admin Page",
 };
 
-export default function AdminHome() {
+export default function ShopPage() {
   return (
     <>
       <DefaultLayout>

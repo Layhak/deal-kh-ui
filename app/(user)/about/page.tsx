@@ -13,7 +13,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'About Page',
-  description: 'About Page',
+  description: 'This is a About Page',
 };
 
 export default function AboutPage() {

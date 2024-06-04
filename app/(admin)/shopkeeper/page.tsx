@@ -5,12 +5,12 @@ import ChartSix from "@/components/Charts/ChartSix";
 import TableThree from "@/components/Tables/TableThree";
 
 export const metadata: Metadata = {
-  title: "Shop List Admin",
+  title: "Shopkeeper Admin",
   description:
-    "This is Shop List Admin Page",
+    "This is a Shopkeeper Admin Page",
 };
 
-const CalendarPage = () => {
+const ShopkeeperPage = () => {
   return (
     
     <DefaultLayout>
@@ -38,4 +38,4 @@ const CalendarPage = () => {
   );
 };
 
-export default CalendarPage;
+export default ShopkeeperPage;

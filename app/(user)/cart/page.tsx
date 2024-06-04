@@ -8,10 +8,10 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
 	title: 'Cart Page',
-	description: 'Cart Page',
+	description: 'This is a Cart Page',
 };
 
-export default function Wishlist() {
+export default function CartPage() {
   return (
     <>
       <div className=" grid justify-center place-content-center h-[100vh] text-2xl">

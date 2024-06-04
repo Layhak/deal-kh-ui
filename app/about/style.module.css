@@ -1,0 +1,33 @@
+/* style.module.css */
+.container {
+  @apply flex items-center justify-between;
+}
+
+.content {
+  @apply flex-1 pr-20 font-sans;
+}
+
+.image {
+  @apply flex-1;
+}
+
+.image img {
+  @apply w-full h-auto;
+}
+
+.gradientText {
+  @apply bg-gradient-to-r from-pink-500 to-yellow-500 text-transparent bg-clip-text;
+}
+
+.title {
+  @apply text-3xl font-bold text-foreground;
+}
+
+.subtext {
+  @apply text-foreground;
+}
+
+.gradientButton {
+  @apply mt-2 bg-gradient-to-tr from-pink-500 to-yellow-500 shadow-lg text-white
+}
+

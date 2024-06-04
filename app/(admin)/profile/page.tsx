@@ -6,9 +6,9 @@ import Link from "next/link";
 import AdminProfilePage from "@/components/Profiles/AdminProfile";
 
 export const metadata: Metadata = {
-  title: "Next.js Profile | TailAdmin - Next.js Dashboard Template",
+  title: "Profile Admin",
   description:
-    "This is Next.js Profile page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
+    "This is Profile Admin Page",
 };
 
 const Profile = () => {

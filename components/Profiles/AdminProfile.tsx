@@ -63,7 +63,7 @@ const AdminProfilePage: NextPage<ProfileProps> = () => {
                     </div>
                     <div className="flex justify-end">
                         <NextLink 
-                            href="/updateprofile"
+                            href="/profile/updateprofile"
                         >
                             <Button
                                 className="bg-orange-500 w-[70px] hover:opacity-70 text-white"

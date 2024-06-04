@@ -9,9 +9,9 @@ import ChartEight from "@/components/Charts/ChartEight";
 import TableFive from "@/components/Tables/TableFive";
 
 export const metadata: Metadata = {
-  title: "Report Admin Page",
+  title: "Report Admin ",
   description:
-    "This is Report Admin page Deal-KH",
+    "This is Report Admin Page",
 };
 
 const Report = () => {

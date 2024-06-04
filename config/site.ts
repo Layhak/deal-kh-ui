@@ -19,7 +19,7 @@ export const siteConfig = {
     },
     {
       label: 'My Shop',
-      href: '/category'
+      href: '/dashboard'
     }
   ],
   navMenuItems: [

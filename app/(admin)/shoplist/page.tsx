@@ -5,9 +5,9 @@ import ChartSix from "@/components/Charts/ChartSix";
 import TableThree from "@/components/Tables/TableThree";
 
 export const metadata: Metadata = {
-  title: "Next.js Calender | TailAdmin - Next.js Dashboard Template",
+  title: "Shop List Admin",
   description:
-    "This is Next.js Calender page for TailAdmin  Tailwind CSS Admin Dashboard Template",
+    "This is Shop List Admin Page",
 };
 
 const CalendarPage = () => {

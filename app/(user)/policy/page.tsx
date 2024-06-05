@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import 'aos/dist/aos.css';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import PolicyPageComponent from '@/components/PolicyPage/PolicyPageComponent';
+import PolicyPageComponent from '@/components/policy-page/PolicyPageComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 

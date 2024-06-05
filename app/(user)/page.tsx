@@ -1,6 +1,6 @@
-import DefaultLayout from '@/components/Layouts/DefaultLayout';
+
 import CardDiscountComponent from '@/components/card/discountCard';
-import HomeCard from '@/components/homecard';
+import HomeCard from '@/components/HomeCard';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { Metadata } from 'next';

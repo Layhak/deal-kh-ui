@@ -16,13 +16,14 @@ import {
 } from '@nextui-org/react';
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
-import { ThemeSwitch } from '@/components/theme-switch';
+import { ThemeSwitch } from '@/components/ThemeSwitch';
+import SearchBar from '@/components/SearchBar';
 import {
   Logo,
   SearchIcon,
   CartIcon,
   HeartFilledIcon,
-} from '@/components/icons';
+} from '@/components/Icons';
 import { usePathname } from 'next/navigation';
 import { signOut, signIn } from 'next-auth/react';
 import { useState } from 'react';
@@ -46,7 +47,7 @@ export const NavigationBar = () => {
   const handleLogin = (values: ValueTypes) => {
     setLoading(true);
 
-    // handle request to api via login
+    // handle request api via login
     fetch(`http://localhost:3000/api/login`, {
 
       method: "POST",
@@ -85,6 +86,8 @@ export const NavigationBar = () => {
       type="search"
     />
   );
+
+
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">

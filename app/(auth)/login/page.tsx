@@ -5,7 +5,7 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import Link from 'next/link';
-import { CloseIcon } from '@/components/icons';
+import { CloseIcon } from '@/components/Icons';
 import { Input, Image } from "@nextui-org/react";
 
 interface LoginFormValues {

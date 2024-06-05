@@ -7,7 +7,7 @@ import { Inter } from 'next/font/google';
 import { Button } from '@nextui-org/react';
 import MentorCard from '@/components/card-about/MentorCard';
 import MemberCard from '@/components/card-about/MemberCard';
-import AboutPageComponent from '@/components/AboutPage/AboutPageComponent';
+import AboutPageComponent from '@/components/about-page/AboutPageComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 

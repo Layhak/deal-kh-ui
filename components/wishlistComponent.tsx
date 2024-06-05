@@ -24,6 +24,27 @@ const initialItems = [
         collection: "Summer Collection",
         price: "$600"
     },
+    {
+        id: 4,
+        imageSrc: "https://i.pinimg.com/474x/16/55/c8/1655c80363e753ae9920e8524c72c95e.jpg",
+        title: "Yet Another Product",
+        collection: "Summer Collection",
+        price: "$600"
+    },
+    {
+        id: 5,
+        imageSrc: "https://i.pinimg.com/474x/16/55/c8/1655c80363e753ae9920e8524c72c95e.jpg",
+        title: "Yet Another Product",
+        collection: "Summer Collection",
+        price: "$600"
+    },
+    {
+        id: 6,
+        imageSrc: "https://i.pinimg.com/474x/16/55/c8/1655c80363e753ae9920e8524c72c95e.jpg",
+        title: "Yet Another Product",
+        collection: "Summer Collection",
+        price: "$600"
+    },
 ];
 
 const WishlistComponent = () => {
@@ -56,12 +77,12 @@ const WishlistComponent = () => {
 
 
     return (
-        <section className="border">
+        <section className="bg-red">
             <div className="px-4 py-8 sm:px-6 lg:px-8">
                 <div className="mx-auto">
                     <div className="mb-4">
                         <header>
-                            <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">Wish List</h1>
+                            <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">Wishlist</h1>
                         </header>
                         <div className="border bg-orange-600 w-[115px] h-2 mb-4"></div>
                     </div>
@@ -93,11 +114,11 @@ const WishlistComponent = () => {
     
                                     <div className="relative inline-block text-center w-[450px] ">
                                         <button 
-                                            className="inline-flex z-0 items-center justify-center w-[120px] px-4 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-2xl shadow-sm hover:bg-gray-50"
+                                            className="inline-flex z-0 items-center dark:text-black justify-center w-[150px] px-4 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
                                             onClick={() => toggleDropdown(item.id)}
                                         >
                                             {selectedOptions[item.id] || 'Discount off'}
-                                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 ml-2 -mr-1" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">=
                                                 <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                                             </svg>
                                         </button>

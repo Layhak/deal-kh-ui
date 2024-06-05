@@ -17,7 +17,7 @@ export default function MentorCard() {
       {mentors.map((item, index) => (
         <div
           key={index}
-          className="max-w-sm w-72 overflow-hidden shadow-lg rounded-2xl p-8"
+          className="max-w-sm w-72 overflow-hidden border-solid border-2 border-gray-200 rounded-2xl p-8"
         >
           <img
             className="h-auto w-auto rounded-full mx-auto"

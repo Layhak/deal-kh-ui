@@ -2,7 +2,7 @@ import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import TableSeven from "@/components/Tables/TableSeven";
+import ListAllPromotionTable from "@/components/AdminTable/ListAllPromotionTable";
 ;
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ const PromotionPage = () => {
   return (
     <DefaultLayout >
       
-      <TableSeven />
+      <ListAllPromotionTable />
 
     </DefaultLayout>
   );

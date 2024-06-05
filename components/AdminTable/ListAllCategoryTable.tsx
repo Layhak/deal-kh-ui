@@ -1,88 +1,97 @@
-import { PackagePromotion } from "../../types/package";
+import { PackageListCategories } from "../../types/package";
 
-const packageData: PackagePromotion[] = [
+const packageData: PackageListCategories[] = [
   {
-    product_Name: "Coffee",
-    discount_Type: "Coupon",
-    discount_Percentage: 20,
+    name: "Skincare",
+    created_By: "Votey",
     created_At: `May 30,2024`,
-    expired_At: `Aug 30,2024`,
+    updated_By: "Pheakakvotey",
+    updated_At: `May 31,2024`,
+    status: "Enable",
     action: "view"
   },
   {
-    product_Name: "Coffee",
-    discount_Type: "Coupon",
-    discount_Percentage: 20,
+    name: "Skincare",
+    created_By: "Votey",
     created_At: `May 30,2024`,
-    expired_At: `Aug 30,2024`,
+    updated_By: "Pheakakvotey",
+    updated_At: `May 31,2024`,
+    status: "Enable",
     action: "view"
   },
   {
-    product_Name: "Coffee",
-    discount_Type: "Coupon",
-    discount_Percentage: 20,
+    name: "Skincare",
+    created_By: "Votey",
     created_At: `May 30,2024`,
-    expired_At: `Aug 30,2024`,
+    updated_By: "Pheakakvotey",
+    updated_At: `May 31,2024`,
+    status: "Enable",
     action: "view"
   },
   {
-    product_Name: "Coffee",
-    discount_Type: "Coupon",
-    discount_Percentage: 20,
+    name: "Skincare",
+    created_By: "Votey",
     created_At: `May 30,2024`,
-    expired_At: `Aug 30,2024`,
+    updated_By: "Pheakakvotey",
+    updated_At: `May 31,2024`,
+    status: "Enable",
     action: "view"
   },
   {
-    product_Name: "Coffee",
-    discount_Type: "Coupon",
-    discount_Percentage: 20,
+    name: "Skincare",
+    created_By: "Votey",
     created_At: `May 30,2024`,
-    expired_At: `Aug 30,2024`,
+    updated_By: "Pheakakvotey",
+    updated_At: `May 31,2024`,
+    status: "Enable",
     action: "view"
   },
   {
-    product_Name: "Coffee",
-    discount_Type: "Coupon",
-    discount_Percentage: 20,
+    name: "Skincare",
+    created_By: "Votey",
     created_At: `May 30,2024`,
-    expired_At: `Aug 30,2024`,
+    updated_By: "Pheakakvotey",
+    updated_At: `May 31,2024`,
+    status: "Enable",
     action: "view"
   },
   {
-    product_Name: "Coffee",
-    discount_Type: "Coupon",
-    discount_Percentage: 20,
+    name: "Skincare",
+    created_By: "Votey",
     created_At: `May 30,2024`,
-    expired_At: `Aug 30,2024`,
+    updated_By: "Pheakakvotey",
+    updated_At: `May 31,2024`,
+    status: "Enable",
     action: "view"
   },
 ];
 
-const TableSeven = () => {
+const ListAllCategoryTable = () => {
   return (
     <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
-      <p className="text-2xl text-orange-500 py-4">Show All Promotions</p>
+      <p className="text-2xl text-orange-500 py-4">List All Categories</p>
       <div className="max-w-full overflow-x-auto py-2">
-      <table className="w-full table-auto">
+        <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
               <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-                Product Name
+                Name
               </th>
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white">
-                Discount Type
+                Created_By
               </th>
               <th className="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white">
-                Discount Percentage
+                Created_At
               </th>
               <th className="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white">
-                Created At
+                Updated_By
               </th>
               <th className="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white">
-                Expired At
+                Updated_At
               </th>
-             
+              <th className="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white">
+                Status
+              </th>
               <th className="px-4 py-4 font-medium text-black dark:text-white">
                 Actions
               </th>
@@ -93,18 +102,13 @@ const TableSeven = () => {
               <tr key={key}>
                 <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
-                    {packageItem.product_Name}
+                    {packageItem.name}
                   </h5>
                   
                 </td>
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {packageItem.discount_Type}
-                  </p>
-                </td>
-                <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                  <p className="text-black dark:text-white">
-                    {packageItem.discount_Percentage}%
+                    {packageItem.created_By}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
@@ -114,10 +118,27 @@ const TableSeven = () => {
                 </td>
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {packageItem.expired_At}
+                    {packageItem.updated_By}
                   </p>
                 </td>
-               
+                <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <p className="text-black dark:text-white">
+                    {packageItem.updated_At}
+                  </p>
+                </td>
+                <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+                  <p
+                    className={`inline-flex rounded-full bg-opacity-10 px-3 py-1 text-sm font-medium ${
+                      packageItem.status === "Enable"
+                        ? "bg-success text-success"
+                        : packageItem.status === "Disable"
+                          ? "bg-danger text-danger"
+                          : "bg-warning text-warning"
+                    }`}
+                  >
+                    {packageItem.status}
+                  </p>
+                </td>
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <div className="flex items-center space-x-3.5">
                     <button className="hover:text-primary">
@@ -196,4 +217,4 @@ const TableSeven = () => {
   );
 };
 
-export default TableSeven;
+export default ListAllCategoryTable;

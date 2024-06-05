@@ -36,4 +36,14 @@ export type PackagePromotion = {
   action: string;
 }
 
+export type PackageListAllShop = {
+  shop_Name: string;
+  seller_Name: string;
+  location: string;
+  contact: string;
+  created_At: string;
+  status: string;
+  action: string;
+}
+
 

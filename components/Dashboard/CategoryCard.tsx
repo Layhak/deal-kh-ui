@@ -1,20 +1,13 @@
 "use client";
-import React from "react";
-import ChartOne from "../Charts/ChartOne";
-import ChartThree from "../Charts/ChartThree";
-import ChartTwo from "../Charts/ChartTwo";
-import ChatCard from "../Chat/ChatCard";
-import TableOne from "../Tables/TableOne";
-import CardDataStats from "../CardDataStats";
-import MapOne from "../Maps/MapOne";
-import ChartFour from "../Charts/ChartFour";
 
-const ECommerce: React.FC = () => {
+import React from "react";
+import CardDataStats from "../CardDataStats";
+
+const CategoryCard: React.FC = () => {
   return (
     <>
-      <p className="text-2xl text-orange-500 py-4">Overview</p> 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-        <CardDataStats title="Total Shop" total="99" rate="0.43%" levelUp>
+        <CardDataStats title="Foods" total="3987" rate="0.43%" levelUp>
           <svg
             className="fill-orange-500 dark:fill-white"
             width="22"
@@ -33,7 +26,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Sale Report" total="299" rate="4.35%" levelUp>
+        <CardDataStats title="Cosmetic" total="1987" rate="4.35%" levelUp>
           <svg
             className="fill-orange-500 dark:fill-white"
             width="20"
@@ -56,7 +49,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Most Visited Shop" total="199" rate="2.59%" levelUp>
+        <CardDataStats title="Clothes" total="2287" rate="2.59%" levelUp>
           <svg
             className="fill-orange-500 dark:fill-white"
             width="22"
@@ -75,7 +68,7 @@ const ECommerce: React.FC = () => {
             />
           </svg>
         </CardDataStats>
-        <CardDataStats title="Total Buyer" total="240000" rate="0.95%" levelDown>
+        <CardDataStats title="Drinks" total="287" rate="0.95%" levelDown>
           <svg
             className="fill-orange-500 dark:fill-white"
             width="22"
@@ -100,14 +93,8 @@ const ECommerce: React.FC = () => {
         </CardDataStats>
       </div>
 
-      <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        
-        <ChartThree />
-        <ChartFour />
-        
-      </div>
     </>
   );
 };
 
-export default ECommerce;
+export default CategoryCard;

@@ -54,7 +54,7 @@ const options: ApexOptions = {
   ],
 };
 
-const ChartSix: React.FC = () => {
+const TrafficBySaleOfWeekChart: React.FC = () => {
   const [state, setState] = useState<ChartSixState>({
     series: [
       {
@@ -173,4 +173,4 @@ const ChartSix: React.FC = () => {
   );
 };
 
-export default ChartSix;
+export default TrafficBySaleOfWeekChart;

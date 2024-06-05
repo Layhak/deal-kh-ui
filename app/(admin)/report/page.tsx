@@ -6,7 +6,7 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Link from "next/link";
 import ChartSeven from "@/components/Charts/chartSeven";
 import ChartEight from "@/components/Charts/ChartEight";
-import TableFive from "@/components/Tables/TableFive";
+import TableFive from "@/components/AdminTable/TableFive";
 
 export const metadata: Metadata = {
   title: "Report Admin ",

@@ -11,7 +11,7 @@ interface SidebarProps {
   setSidebarOpen: (arg: boolean) => void;
 }
 
-const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+const SidebarAdmin = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   const pathname = usePathname();
 
   const trigger = useRef<any>(null);
@@ -117,6 +117,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium dark:text-white text-black duration-300 ease-in-out hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white ${pathname.includes("/shop") &&
                     "bg-orange-500 text-white dark:bg-orange-500 dark:text-white"
                     }`}
+                  
                 >
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
@@ -135,11 +136,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Calendar --> */}
               <li>
                 <Link
-                  href="/shopkeeper"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium dark:text-white text-black duration-300 ease-in-out hover:bg-orange-500 hover:text-white dark:hover:bg-orange-500 dark:hover:text-white ${pathname.includes("/shoplist") &&
-                    "bg-orange-500 text-white dark:bg-orange-500 dark:text-white"
+                  href="/keeper"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium dark:text-white dark:hover:bg-orange-500 text-black hover:bg-orange-500 hover:text-white duration-300 ease-in-out  ${pathname.includes("/keeper") && "bg-orange-500 text-white"
                     }`}
-                >
+                > 
                   <svg 
                     xmlns="http://www.w3.org/2000/svg" 
                     width="18" 
@@ -148,10 +148,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   >
                     <path 
                       fill="currentColor" 
-                      d="M7 15h5.575q.5 0 .75-.312t.25-.688t-.25-.687t-.75-.313H7q-.425 0-.712.288T6 14t.288.713T7 15m0-4h4q.425 0 .713-.288T12 10t-.288-.712T11 9H7q-.425 0-.712.288T6 10t.288.713T7 11m-3 8q-.825 0-1.412-.587T2 17V7q0-.825.588-1.412T4 5h16q.825 0 1.413.588T22 7v1.5q0 .425-.288.713T21 9.5t-.712-.288T20 8.5V7H4v10h6q.425 0 .713.288T11 18t-.288.713T10 19zm18.9-6.7q.125.125.125.275t-.125.275l-.9.9L20.25 12l.9-.9q.125-.125.275-.125t.275.125zm-1.5 2.05l-6.35 6.35q-.15.15-.337.225t-.388.075H13.5q-.2 0-.35-.15T13 20.5v-.825q0-.2.075-.387t.225-.338l6.35-6.35zM4 7v10z"
+                      d="M6.5 11L12 2l5.5 9zm11 11q-1.875 0-3.187-1.312T13 17.5t1.313-3.187T17.5 13t3.188 1.313T22 17.5t-1.312 3.188T17.5 22M3 21.5v-8h8v8zM17.5 20q1.05 0 1.775-.725T20 17.5t-.725-1.775T17.5 15t-1.775.725T15 17.5t.725 1.775T17.5 20M5 19.5h4v-4H5zM10.05 9h3.9L12 5.85zm7.45 8.5"
                     />
                   </svg>
-                  Shopkeeper
+                  Keeper
                 </Link>
               </li>
               {/* <!-- Menu Item Calendar --> */}
@@ -164,7 +164,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <Link
                   href="/category"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium dark:text-white dark:hover:bg-orange-500 text-black hover:bg-orange-500 hover:text-white duration-300 ease-in-out  ${pathname.includes("/admin/category") && "bg-orange-500 text-white"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium dark:text-white dark:hover:bg-orange-500 text-black hover:bg-orange-500 hover:text-white duration-300 ease-in-out  ${pathname.includes("/category") && "bg-orange-500 text-white"
                     }`}
                 >
                   <svg 
@@ -185,7 +185,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <Link
                   href="/promotion"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium dark:text-white dark:hover:bg-orange-500 text-black hover:bg-orange-500 hover:text-white duration-300 ease-in-out  ${pathname.includes("/admin/promotion") && "bg-orange-500 text-white"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium dark:text-white dark:hover:bg-orange-500 text-black hover:bg-orange-500 hover:text-white duration-300 ease-in-out  ${pathname.includes("/promotion") && "bg-orange-500 text-white"
                     }`}
                 >
                   <svg 
@@ -209,7 +209,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <Link
                   href="/profile"
-                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out dark:text-white dark:hover:bg-orange-500 hover:text-white hover:bg-orange-500 ${pathname.includes("/admin/profile") &&
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-black duration-300 ease-in-out dark:text-white dark:hover:bg-orange-500 hover:text-white hover:bg-orange-500 ${pathname.includes("/profile") &&
                     "bg-orange-500 text-white"
                     }`}
                 >
@@ -272,4 +272,4 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   );
 };
 
-export default Sidebar;
+export default SidebarAdmin;

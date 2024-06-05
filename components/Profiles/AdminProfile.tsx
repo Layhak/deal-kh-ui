@@ -8,6 +8,8 @@ type ProfileProps = {
     // Define any props here if needed
 };
 
+
+
 const AdminProfilePage: NextPage<ProfileProps> = () => {
     return (
         <div className="bg-white dark:bg-black rounded-md min-h-[68vh] w-full px-4 py-4">
@@ -59,11 +61,13 @@ const AdminProfilePage: NextPage<ProfileProps> = () => {
                     </div>
                     <div className="py-4">
                         <p className="font-semibold">Address</p>
-                        <Map src={'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345096193!2d144.95592831550418!3d-37.817209742021596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d43a1b5fdfb%3A0x5045675218ce6e0!2sMelbourne%20VIC%2C%20Australia!5e0!3m2!1sen!2sus!4v1627489121071!5m2!1sen!2su'} />
+                        
+                        <Map location={{ lat: 11.578891258922914, lng: 104.90175630917895 }} width="500px" height="300px" apiKey="AIzaSyBeZtJHgPb_uA_3Fsr9xtAgf31nhAc4LNI" />
+                        {/* 11.578891258922914, 104.90175630917895 */}
                     </div>
                     <div className="flex justify-end">
-                        <NextLink 
-                            href="/profile/updateprofile"
+                        <NextLink
+                            href="/profile/update-profile"
                         >
                             <Button
                                 className="bg-orange-500 w-[70px] hover:opacity-70 text-white"
@@ -72,7 +76,7 @@ const AdminProfilePage: NextPage<ProfileProps> = () => {
                     </div>
                 </div>
             </div>
-            
+
         </div>
     );
 }

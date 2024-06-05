@@ -1,8 +1,7 @@
-
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import ECommerce2 from "@/components/Dashboard/E-commerce_2";
-import TableSix from "@/components/Tables/TableSix";
+import CategoryCard from "@/components/Dashboard/CategoryCard";
+import ListAllCategoryTable from "@/components/AdminTable/ListAllCategoryTable";
 
 export const metadata: Metadata = {
   title: "Category Admin",
@@ -13,10 +12,13 @@ export const metadata: Metadata = {
 const CategoryPage = () => {
   return (
     <DefaultLayout>
-      <ECommerce2 />
+
+      <CategoryCard />
+      
       <div className="py-4">
-        <TableSix />
+        <ListAllCategoryTable />
       </div>
+
     </DefaultLayout>
   );
 };

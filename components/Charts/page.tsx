@@ -2,7 +2,7 @@
 import Breadcrumb from "../Breadcrumbs/Breadcrumb";
 import ChartOne from "./ChartOne";
 import ChartTwo from "./ChartTwo";
-import ChartThree from "./ChartThree";
+import ChartThree from "./UserVisitEachShopChart";
 import React from "react";
 
 const Chart: React.FC = () => {

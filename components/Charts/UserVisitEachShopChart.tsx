@@ -14,7 +14,7 @@ const options: ApexOptions = {
     type: "donut",
   },
   colors: ["#3C50E0", "#6577F3", "#8FD0EF", "#0FADCF"],
-  labels: ["Desktop", "Tablet", "Mobile", "Unknown"],
+  labels: ["Getsocio", "Namelix", "Tottly", "Bonsound"],
   legend: {
     show: false,
     position: "bottom",
@@ -51,27 +51,30 @@ const options: ApexOptions = {
   ],
 };
 
-const ChartThree: React.FC = () => {
+const UserVisitEachShopChart: React.FC = () => {
   const [state, setState] = useState<ChartThreeState>({
-    series: [65, 34, 12, 56],
+    series: [38.6, 22.5, 30.8, 8.1],
   });
 
   const handleReset = () => {
     setState((prevState) => ({
       ...prevState,
-      series: [65, 34, 12, 56],
+      series: [38.6, 22.5, 30.8, 8.1],
     }));
   };
   handleReset;
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pb-5 pt-7.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:col-span-5">
+      {/* top row */}
       <div className="mb-3 justify-between gap-4 sm:flex">
+        {/* title */}
         <div>
           <h5 className="text-xl font-semibold text-black dark:text-white">
-            Ads and boost product detail
+            User Visit Each Shop
           </h5>
         </div>
+        {/* option filtering */}
         <div>
           <div className="relative z-20 inline-block">
             <select
@@ -108,60 +111,65 @@ const ChartThree: React.FC = () => {
             </span>
           </div>
         </div>
+        {/*  */}
       </div>
 
-      <div className="mb-2">
-        <div id="chartThree" className="mx-auto flex justify-center">
-          <ReactApexChart
-            options={options}
-            series={state.series}
-            type="donut"
-          />
-        </div>
-      </div>
-
-      <div className="-mx-8 flex flex-wrap items-center justify-center gap-y-3">
-        <div className="w-full px-8 sm:w-1/2">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Desktop </span>
-              <span> 65% </span>
-            </p>
+      <div className="">
+        {/* chart */}
+        <div className="mb-2 flex-1">
+          <div id="chartThree" className="mx-auto flex justify-center">
+            <ReactApexChart
+              options={options}
+              series={state.series}
+              type="donut"
+            />
           </div>
         </div>
-        <div className="w-full px-8 sm:w-1/2">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#6577F3]"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Tablet </span>
-              <span> 34% </span>
-            </p>
+        {/* chart data */}
+        <div className="-mx-8 flex flex-1 flex-wrap items-center justify-center gap-y-3">
+          <div className="w-full px-8 sm:w-1/2">
+            <div className="flex w-full items-center">
+              <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-primary"></span>
+              <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
+                <span> Getsocio </span>
+                <span> 38.6% </span>
+              </p>
+            </div>
+          </div>
+          <div className="w-full px-8 sm:w-1/2">
+            <div className="flex w-full items-center">
+              <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#6577F3]"></span>
+              <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
+                <span> Namelix </span>
+                <span> 22.5% </span>
+              </p>
+            </div>
+          </div>
+          <div className="w-full px-8 sm:w-1/2">
+            <div className="flex w-full items-center">
+              <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#8FD0EF]"></span>
+              <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
+                <span> Tottly </span>
+                <span> 30.8% </span>
+              </p>
+            </div>
+          </div>
+          <div className="w-full px-8 sm:w-1/2">
+            <div className="flex w-full items-center">
+              <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#0FADCF]"></span>
+              <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
+                <span> Bonsound </span>
+                <span> 8.1% </span>
+              </p>
+            </div>
           </div>
         </div>
-        <div className="w-full px-8 sm:w-1/2">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#8FD0EF]"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Mobile </span>
-              <span> 45% </span>
-            </p>
-          </div>
-        </div>
-        <div className="w-full px-8 sm:w-1/2">
-          <div className="flex w-full items-center">
-            <span className="mr-2 block h-3 w-full max-w-3 rounded-full bg-[#0FADCF]"></span>
-            <p className="flex w-full justify-between text-sm font-medium text-black dark:text-white">
-              <span> Unknown </span>
-              <span> 12% </span>
-            </p>
-          </div>
-        </div>
+        {/*  */}
       </div>
     </div>
   );
 };
 
-export default ChartThree;
+export default UserVisitEachShopChart;
 
 

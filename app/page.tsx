@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import CardComponent from '@/components/CardComponent';
 
 export default function Page() {
   useEffect(() => {
@@ -9,7 +10,20 @@ export default function Page() {
   }, []);
   return (
     <>
-      <h1>Hello</h1>
+      {/* Component food */}
+      <CardComponent category='Food' />
+      {/* Component drink */}
+      <CardComponent category='Drink'/>
+      {/* Component clothes */}
+      <CardComponent category='Clothes'/>
+      {/* Component Accessories */}
+      <CardComponent category='Accessories'/>
+      {/* Component skin care */}
+      <CardComponent category='Skin Care'/>
+      {/* Component shoes */}
+      <CardComponent category='Shoes'/>
+      {/* Component electronics */}
+      <CardComponent category='Electronics'/>
     </>
   );
 }

@@ -13,11 +13,11 @@ export default function MemberCard() {
   const [mentors, setMentors] = useState<Members[]>(MemberList);
 
   return (
-    <div className="flex flex-wrap justify-center gap-[26.6px] my-8">
+    <div className="flex flex-wrap justify-center gap-[26.6px] my-8 ">
       {mentors.map((item, index) => (
         <div
           key={index}
-          className="max-w-sm w-72 overflow-hidden shadow-lg rounded-2xl p-8 flex flex-col items-center"
+          className="max-w-sm w-72 overflow-hidden rounded-2xl border-solid border-2 border-gray-200 p-8 flex flex-col items-center"
         >
           <img
             className="h-auto w-auto rounded-full"

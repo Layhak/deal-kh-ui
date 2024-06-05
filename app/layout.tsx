@@ -1,13 +1,16 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
-import Footer from '@/components/footer';
+import Footer from '@/components/footerComponent';
 import { Providers } from '@/app//providers';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { Suspense } from 'react';
 import Loading from '@/app/loading';
 import Error from '@/app/error';
 import { NavigationBar } from '@/components/navigationBar';
+import FooterComponent from '@/components/footerComponent';
+import CartComponent from '@/components/cartComponent';
+import WishlistComponent from '@/components/wishlistComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -28,10 +31,12 @@ export default function RootLayout({
           <NavigationBar />
           <main className="container mx-auto min-h-[680px] max-w-7xl px-6 pt-16">
             <ErrorBoundary errorComponent={Error}>
+            <CartComponent/>
+            {/* <WishlistComponent/> */}
               <Suspense fallback={<Loading />}>{children}</Suspense>
             </ErrorBoundary>
           </main>
-          <Footer />
+          <FooterComponent/>
         </Providers>
       </body>
     </html>

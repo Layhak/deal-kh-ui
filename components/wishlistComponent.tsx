@@ -1,6 +1,7 @@
 "use client"
 import { Image } from '@nextui-org/react';
 import React, { useState } from 'react';
+import { product }  from '@/app/api/get-product/route'
 
 const initialItems = [
     {
@@ -48,7 +49,7 @@ const initialItems = [
 ];
 
 const WishlistComponent = () => {
-    const [items, setItems] = useState(initialItems);
+    const [items, setItems] = useState(product);
     const [selectedOptions, setSelectedOptions] = useState<{ [key: number]: string }>({});
     const [openDropdown, setOpenDropdown] = useState<number | null>(null);
 
@@ -77,14 +78,14 @@ const WishlistComponent = () => {
 
 
     return (
-        <section className="bg-red">
-            <div className="px-4 py-8 sm:px-6 lg:px-8">
+        <section className="bg-white dark:bg-black rounded-md">
+            <div className="px-4 py-6 sm:px-6 lg:px-8">
                 <div className="mx-auto">
                     <div className="mb-4">
                         <header>
                             <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">Wishlist</h1>
                         </header>
-                        <div className="border bg-orange-600 w-[115px] h-2 mb-4"></div>
+                        <div className=" bg-orange-600 w-[115px] h-2 mb-4"></div>
                     </div>
     
                     <div className="mt-8">
@@ -114,7 +115,7 @@ const WishlistComponent = () => {
     
                                     <div className="relative inline-block text-center w-[450px] ">
                                         <button 
-                                            className="inline-flex z-0 items-center dark:text-black justify-center w-[150px] px-4 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
+                                            className="inline-flex z-0 items-center dark:bg-black dark:border-white dark:text-white justify-center w-[150px] px-4 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50"
                                             onClick={() => toggleDropdown(item.id)}
                                         >
                                             {selectedOptions[item.id] || 'Discount off'}
@@ -124,11 +125,11 @@ const WishlistComponent = () => {
                                         </button>
     
                                         {openDropdown === item.id && (
-                                            <div className="absolute z-30 right-12 w-36 mt-2 bg-white  border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                                                <div className="py-1" role="none">
-                                                    <button className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" onClick={() => handleOptionClick(item.id, '20% off')}>20% off</button>
-                                                    <button className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" onClick={() => handleOptionClick(item.id, '50% off')}>50% off</button>
-                                                    <button className="text-gray-700 block px-4 py-2 text-sm" role="menuitem" onClick={() => handleOptionClick(item.id, '70% off')}>70% off</button>
+                                            <div className="absolute z-30 right-12 w-36 mt-2 dark:border bg-white dark:bg-black dark:text-white  border-gray-200 divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+                                                <div className="block w-full" role="none">
+                                                    <button className="text-gray-700 px-4 py-2 text-sm  dark:hover:text-red" role="menuitem" onClick={() => handleOptionClick(item.id, '20% off')}>20% off</button>
+                                                    <button className="text-gray-700 px-4 py-2 text-sm  dark:hover:text-red" role="menuitem" onClick={() => handleOptionClick(item.id, '50% off')}>50% off</button>
+                                                    <button className="text-gray-700 px-4 py-2 text-sm  dark:hover:text-red" role="menuitem" onClick={() => handleOptionClick(item.id, '70% off')}>70% off</button>
                                                 </div>
                                             </div>
                                         )}
@@ -150,7 +151,7 @@ const WishlistComponent = () => {
                                                 viewBox="0 0 24 24"
                                                 strokeWidth="1.5"
                                                 stroke="currentColor"
-                                                className="h-6 w-6"
+                                                className="h-6 w-6 hover:text-red"
                                             >
                                                 <path
                                                     strokeLinecap="round"

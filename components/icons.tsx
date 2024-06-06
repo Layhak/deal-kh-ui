@@ -1,6 +1,31 @@
 import * as React from 'react';
 import { IconSvgProps } from '@/types';
 
+export const GoogleIcon = (props: IconSvgProps) => (
+  <svg className="w-5 h-5 text-gray-700" viewBox="0 0 48 48">
+      <path d="M24 9.5c3.14 0 5.66 1.1 7.78 2.92l5.78-5.77C34.85 3.95 29.71 1.5 24 1.5 14.6 1.5 6.84 7.79 3.96 16.34l6.86 5.36C12.74 13.64 17.9 9.5 24 9.5z" fill="#EA4335" />
+      <path d="M44.5 20H24v8.5h11.7c-1.1 3.2-3.7 5.4-7 6.4l6.6 5.2c4.1-3.8 6.7-9.4 6.7-15.7 0-1.4-.1-2.8-.3-4.4z" fill="#4285F4" />
+      <path d="M10.8 29.6c-1.5-4.4-1.5-9.1 0-13.4l-6.8-5.3C1.5 15.2 0 19.5 0 24s1.5 8.8 4 12.4l6.8-5.3z" fill="#FBBC05" />
+      <path d="M24 46c5.7 0 10.4-1.9 13.8-5.2l-6.6-5.2c-2.4 1.6-5.4 2.5-8.7 2.5-6 0-11.1-3.9-13-9.3l-6.8 5.3C6.8 40.8 14.8 46 24 46z" fill="#34A853" />
+      <path d="M0 0h48v48H0z" fill="none" />
+  </svg>
+)
+
+export const FacebookIcon = (props: IconSvgProps) => (
+  <svg 
+    xmlns="http://www.w3.org/2000/svg" 
+    width="20" 
+    height="20" 
+    viewBox="0 0 24 24"
+    fill="blue"
+    {...props}
+    >
+      <path 
+        d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.326 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.464.098 2.794.143v3.24h-1.918c-1.504 0-1.794.715-1.794 1.762v2.31h3.588l-.468 3.622h-3.12V24h6.116C23.405 24 24 23.408 24 22.674V1.326C24 .592 23.405 0 22.675 0z"
+      />
+  </svg>
+)
+
 export const RightArrowIcon = (props: IconSvgProps) => (
   <svg 
     xmlns="http://www.w3.org/2000/svg" 

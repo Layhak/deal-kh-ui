@@ -54,10 +54,12 @@ const Login: React.FC = () => {
 
     // authentication
     const { data: session } = useSession();
+    // check session
+    console.log('Session data:', session);
     // have no session before 
     if (!session) {
         return (
-            <div className="min-h-screen flex items-center gap-16 justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
+            <main className="min-h-screen flex items-center gap-16 justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-md w-full space-y-8 bg-gray p-8 rounded-lg">
                     <div>
                         <div className="flex justify-between text-orange-500">
@@ -204,7 +206,7 @@ const Login: React.FC = () => {
                         height={400}
                     ></Image>
                 </div>
-            </div>
+            </main>
         );
     }
     {/* When have session  */ }

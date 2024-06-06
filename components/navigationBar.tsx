@@ -95,14 +95,125 @@ export const NavigationBar = () => {
   // 
   if (!session) {
     return (
-      <main className="w-full h-screen flex flex-col justify-center items-center">
-        <p className="text-2xl mb-2">Not Signed In</p>  
-        <button className="bg-blue-600 py-2 px-6 rounded-md text-white mb-2" onClick={() => signIn('google')}>Sign in with google</button>
-        <button className="bg-none border-gray-300 border py-2 px-6 rounded-md mb-2" onClick={() => signIn('github')}>Sign in with github</button>
-      </main>
+      <NextUINavbar maxWidth="xl" position="sticky">
+        <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
+          <NavbarBrand className="max-w-fit gap-3">
+            <NextLink className="flex items-center justify-start gap-1" href="/">
+              <Image
+                src="/logo.png"
+                alt="Description of the image"
+                width={50}
+                height={500}
+              />
+              <p className="font-bold text-inherit">DealKH</p>
+            </NextLink>
+            <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+          </NavbarBrand>
+        </NavbarContent>
+        {/* List of nav bar */}
+        <NavbarContent justify={'center'} className={'hidden lg:flex'}>
+          {siteConfig.navItems.map((item) => (
+            <NavbarItem key={item.href} isActive={item.href === pathname}>
+              <NextLink
+                className={
+                  item.href === pathname ? 'text-warning' : 'text-foreground'
+                }
+                href={item.href}
+              >
+                {item.label}
+              </NextLink>
+            </NavbarItem>
+          ))}
+        </NavbarContent>
+        <NavbarContent
+          className="hidden basis-1/5 sm:flex sm:basis-full justify-center align-center"
+          justify="end"
+        >
+          <NavbarItem className="hidden gap-2 lg:flex ">
+            <ThemeSwitch />
+            <NextLink href="/wishlist">
+              <HeartFilledIcon />
+            </NextLink>
+            <NextLink href="/cart">
+              <CartIcon />
+            </NextLink>
+          </NavbarItem>
+          <NavbarItem>
+            <NextLink href="/login">
+            <Button className="bg-orange-500">Login</Button>
+            </NextLink>
+          </NavbarItem>
+          {/* {isAuthenticated ? (
+            <NavbarItem className="hidden lg:flex">
+              <Dropdown placement="bottom-end" shadow={'md'}>
+                <DropdownTrigger>
+                  
+                  <div className="w-12 h-12 relative mb-2">
+                    <Image
+                      src={session.user?.image ?? '/default-avatar.png'}
+                      alt="User Profile"
+                      className="object-cover rounded-full"
+                    />
+                  </div>
+                  
+                </DropdownTrigger>
+                <DropdownMenu aria-label="Profile Actions" variant="shadow">
+                  <DropdownItem
+                    key="profile"
+                    className="h-14 gap-2"
+                    isDisabled={false}
+                  >
+                    <p className="font-semibold">Signed in as</p>
+                    <p className="font-semibold">{session.user?.name ?? 'Unknown'}</p>
+                  </DropdownItem>
+                  <DropdownItem
+                    key="logout"
+                    color="danger"
+                    className={'text-danger'}
+                    onClick={handleLogout}
+                  >
+                    Log Out
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </NavbarItem>
+          ) : (
+            <NavbarItem className="hidden lg:flex">
+              <NextLink href="/login">
+                <Button className="bg-orange-500">Login</Button>
+              </NextLink>
+            </NavbarItem>
+          )} */}
+
+        </NavbarContent>
+        <NavbarMenu>
+          <div className="mx-4 mt-2 flex flex-col gap-2">
+            {siteConfig.navItems.map((item) => (
+              <NavbarItem key={item.href} isActive={item.href === pathname}>
+                <NextLink
+                  className={
+                    item.href === pathname ? 'text-warning' : 'text-foreground'
+                  }
+                  href={item.href}
+                >
+                  {item.label}
+                </NextLink>
+              </NavbarItem>
+            ))}
+          </div>
+        </NavbarMenu>
+
+        <NavbarContent className="basis-1 pl-4 lg:hidden" justify="end">
+          <HeartFilledIcon />
+          <CartIcon />
+          <ThemeSwitch />
+          <NavbarMenuToggle />
+        </NavbarContent>
+      </NextUINavbar>
+
     );
   }
-  // 
+  // when have session   
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -151,36 +262,6 @@ export const NavigationBar = () => {
 
         {isAuthenticated ? (
           <NavbarItem className="hidden lg:flex">
-            {/* <Dropdown placement="bottom-end" shadow={'md'}>
-              <DropdownTrigger>
-                <Avatar
-                  isBordered
-                  as="button"
-                  className="transition-transform"
-                  color="warning"
-                  size="sm"
-                  src={`https://i.pravatar.cc/150?u=a042581f4e29026704d`}
-                />
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Profile Actions" variant="shadow">
-                <DropdownItem
-                  key="profile"
-                  className="h-14 gap-2"
-                  isDisabled={false}
-                >
-                  <p className="font-semibold">Signed in as</p>
-                  <p className="font-semibold">Hello</p>
-                </DropdownItem>
-                <DropdownItem
-                  key="logout"
-                  color="danger"
-                  className={'text-danger'}
-                  onClick={handleLogout}
-                >
-                  Log Out
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown> */}
             <Dropdown placement="bottom-end" shadow={'md'}>
               <DropdownTrigger>
                 {/* profile authentication */}
@@ -216,28 +297,7 @@ export const NavigationBar = () => {
           </NavbarItem>
         ) : (
           <NavbarItem className="hidden lg:flex">
-            {/* <div className="h-full pr-4 pt-2">
-              <NextLink href="/wishlist">
-                <HeartFilledIcon />
-              </NextLink>
-            </div>
-            <div className="h-full pr-4 pt-2">
-              <NextLink href="/cart">
 
-                <CartIcon className="w-[28px] h-[28px]" />
-
-              </NextLink>
-            </div>
-
-            <nav>
-              {isAuthenticated ? (
-                <NavbarItem>
-
-                </NavbarItem>
-              ) : (
-                
-              )}
-            </nav> */}
             <NextLink href="/login">
               <Button className="bg-orange-500">Login</Button>
             </NextLink>

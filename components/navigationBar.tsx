@@ -111,7 +111,7 @@ export const NavigationBar = () => {
           </NavbarBrand>
         </NavbarContent>
         {/* List of nav bar */}
-        <NavbarContent justify={'center'} className={'hidden lg:flex'}>
+        <NavbarContent justify={'start'} className={'hidden sm:flex gap-4'}>
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} isActive={item.href === pathname}>
               <NextLink
@@ -125,65 +125,30 @@ export const NavigationBar = () => {
             </NavbarItem>
           ))}
         </NavbarContent>
+        {/*  */}
         <NavbarContent
-          className="hidden basis-1/5 sm:flex sm:basis-full justify-center align-center"
-          justify="end"
+          className="hidden sm:flex gap-4"
+          justify="center"
         >
-          <NavbarItem className="hidden gap-2 lg:flex ">
-            <ThemeSwitch />
-            <NextLink href="/wishlist">
-              <HeartFilledIcon />
-            </NextLink>
-            <NextLink href="/cart">
-              <CartIcon />
-            </NextLink>
-          </NavbarItem>
-          <NavbarItem>
-            <NextLink href="/login">
-            <Button className="bg-orange-500">Login</Button>
-            </NextLink>
-          </NavbarItem>
-          {/* {isAuthenticated ? (
-            <NavbarItem className="hidden lg:flex">
-              <Dropdown placement="bottom-end" shadow={'md'}>
-                <DropdownTrigger>
-                  
-                  <div className="w-12 h-12 relative mb-2">
-                    <Image
-                      src={session.user?.image ?? '/default-avatar.png'}
-                      alt="User Profile"
-                      className="object-cover rounded-full"
-                    />
-                  </div>
-                  
-                </DropdownTrigger>
-                <DropdownMenu aria-label="Profile Actions" variant="shadow">
-                  <DropdownItem
-                    key="profile"
-                    className="h-14 gap-2"
-                    isDisabled={false}
-                  >
-                    <p className="font-semibold">Signed in as</p>
-                    <p className="font-semibold">{session.user?.name ?? 'Unknown'}</p>
-                  </DropdownItem>
-                  <DropdownItem
-                    key="logout"
-                    color="danger"
-                    className={'text-danger'}
-                    onClick={handleLogout}
-                  >
-                    Log Out
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
+            <NavbarItem>
+              <ThemeSwitch />
             </NavbarItem>
-          ) : (
-            <NavbarItem className="hidden lg:flex">
-              <NextLink href="/login">
-                <Button className="bg-orange-500">Login</Button>
+            <NavbarItem>
+              <NextLink href="/wishlist">
+                <HeartFilledIcon />
               </NextLink>
             </NavbarItem>
-          )} */}
+            <NavbarItem>
+              <NextLink href="/cart">
+                <CartIcon />
+              </NextLink>
+            </NavbarItem>
+            <NavbarItem>
+              <NextLink href="/login">
+              <Button className="bg-orange-500">Login</Button>
+              </NextLink>
+            </NavbarItem>
+          
 
         </NavbarContent>
         <NavbarMenu>
@@ -203,7 +168,7 @@ export const NavigationBar = () => {
           </div>
         </NavbarMenu>
 
-        <NavbarContent className="basis-1 pl-4 lg:hidden" justify="end">
+        <NavbarContent className="basis-1 pl-4 sm:hidden" justify="end">
           <HeartFilledIcon />
           <CartIcon />
           <ThemeSwitch />
@@ -247,13 +212,15 @@ export const NavigationBar = () => {
         ))}
       </NavbarContent>
       <NavbarContent
-        className="hidden basis-1/5 sm:flex sm:basis-full align-center"
+        className="hidden basis-1/5 sm:flex sm:basis-full enter lg:flex"
         justify="end"
       >
-        <NavbarItem className="hidden gap-2 lg:flex ">
+        <NavbarItem className="hidden gap-2 lg:flex justify-center">
           <ThemeSwitch />
           <NextLink href="/wishlist">
-            <HeartFilledIcon />
+            <div className="mt-1">
+              <HeartFilledIcon />
+            </div>
           </NextLink>
           <NextLink href="/cart">
             <CartIcon />
@@ -265,13 +232,19 @@ export const NavigationBar = () => {
             <Dropdown placement="bottom-end" shadow={'md'}>
               <DropdownTrigger>
                 {/* profile authentication */}
-                <div className="w-12 h-12 relative mb-2">
-                  <Image
+
+                  {/* <Image
                     src={session.user?.image as string}
                     alt="User Profile"
                     className="object-cover rounded-full"
+                  /> */}
+                  <Avatar 
+                    isBordered 
+                    src={session.user?.image as string} 
+                    color="warning"
+                    className="w-8 h-8  mb-2"
                   />
-                </div>
+    
                 {/*  */}
               </DropdownTrigger>
               <DropdownMenu aria-label="Profile Actions" variant="shadow">

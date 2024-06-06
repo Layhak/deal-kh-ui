@@ -165,9 +165,9 @@ const Login: React.FC = () => {
                                     <button
                                         type="button"
                                         className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-                                        onClick={() => signIn('github')}
+                                        onClick={() => signIn('facebook')}
                                     >
-                                        <span className="sr-only">Sign in with GitHub</span>
+                                        <span className="sr-only">Sign in with Facebook</span>
                                         <svg className="w-5 h-5 text-gray-700" viewBox="0 0 24 24" fill="currentColor">
                                             <path
                                                 fillRule="evenodd"
@@ -175,7 +175,7 @@ const Login: React.FC = () => {
                                                 clipRule="evenodd"
                                             />
                                         </svg>
-                                        <span className="ml-2">Sign up with GitHub</span>
+                                        <span className="ml-2">Sign up with Facebook</span>
                                     </button>
                                 </div>
 

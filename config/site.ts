@@ -21,10 +21,6 @@ export const siteConfig = {
       label: 'Policy',
       href: '/policy',
     },
-    {
-      label: 'My Shop',
-      href: '#'
-    }
   ],
   navMenuItems: [
     {

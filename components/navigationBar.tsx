@@ -25,9 +25,11 @@ import {
   HeartFilledIcon,
 } from '@/components/Icons';
 import { usePathname } from 'next/navigation';
-import { signOut, signIn } from 'next-auth/react';
+import { signOut, signIn, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Input, Image } from "@nextui-org/react";
+import WishlistComponent from './WishlistComponent';
+import CartComponent from './CartComponent';
 
 type ValueTypes = {
   email: string;
@@ -39,10 +41,13 @@ const initialValues: ValueTypes = {
   password: '',
 };
 
+
 export const NavigationBar = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
+  const { data: session, status } = useSession();
+  const isAuthenticated = status === 'authenticated'
 
   const handleLogin = (values: ValueTypes) => {
     setLoading(true);
@@ -87,7 +92,17 @@ export const NavigationBar = () => {
     />
   );
 
-
+  // 
+  if (!session) {
+    return (
+      <main className="w-full h-screen flex flex-col justify-center items-center">
+        <p className="text-2xl mb-2">Not Signed In</p>  
+        <button className="bg-blue-600 py-2 px-6 rounded-md text-white mb-2" onClick={() => signIn('google')}>Sign in with google</button>
+        <button className="bg-none border-gray-300 border py-2 px-6 rounded-md mb-2" onClick={() => signIn('github')}>Sign in with github</button>
+      </main>
+    );
+  }
+  // 
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -121,15 +136,22 @@ export const NavigationBar = () => {
         ))}
       </NavbarContent>
       <NavbarContent
-        className="hidden basis-1/5 sm:flex sm:basis-full"
+        className="hidden basis-1/5 sm:flex sm:basis-full align-center"
         justify="end"
       >
-        <NavbarItem className="hidden gap-2 lg:flex">
+        <NavbarItem className="hidden gap-2 lg:flex ">
           <ThemeSwitch />
+          <NextLink href="/wishlist">
+            <HeartFilledIcon />
+          </NextLink>
+          <NextLink href="/cart">
+            <CartIcon />
+          </NextLink>
         </NavbarItem>
+
         {isAuthenticated ? (
           <NavbarItem className="hidden lg:flex">
-            <Dropdown placement="bottom-end" shadow={'md'}>
+            {/* <Dropdown placement="bottom-end" shadow={'md'}>
               <DropdownTrigger>
                 <Avatar
                   isBordered
@@ -158,11 +180,43 @@ export const NavigationBar = () => {
                   Log Out
                 </DropdownItem>
               </DropdownMenu>
+            </Dropdown> */}
+            <Dropdown placement="bottom-end" shadow={'md'}>
+              <DropdownTrigger>
+                {/* profile authentication */}
+                <div className="w-12 h-12 relative mb-2">
+                  <Image
+                    src={session.user?.image as string}
+                    alt="User Profile"
+                    className="object-cover rounded-full"
+                  />
+                </div>
+                {/*  */}
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="shadow">
+                <DropdownItem
+                  key="profile"
+                  className="h-14 gap-2"
+                  isDisabled={false}
+                >
+                  <p className="font-semibold">Signed in as</p>
+                  <p className="font-semibold">{session.user?.name}</p>
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  color="danger"
+                  className={'text-danger'}
+                  onClick={handleLogout}
+                >
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
             </Dropdown>
+
           </NavbarItem>
         ) : (
           <NavbarItem className="hidden lg:flex">
-            <div className="h-full pr-4 pt-2">
+            {/* <div className="h-full pr-4 pt-2">
               <NextLink href="/wishlist">
                 <HeartFilledIcon />
               </NextLink>
@@ -173,8 +227,17 @@ export const NavigationBar = () => {
                 <CartIcon className="w-[28px] h-[28px]" />
 
               </NextLink>
-            </div> 
-            
+            </div>
+
+            <nav>
+              {isAuthenticated ? (
+                <NavbarItem>
+
+                </NavbarItem>
+              ) : (
+                
+              )}
+            </nav> */}
             <NextLink href="/login">
               <Button className="bg-orange-500">Login</Button>
             </NextLink>
@@ -200,10 +263,10 @@ export const NavigationBar = () => {
       </NavbarMenu>
 
       <NavbarContent className="basis-1 pl-4 lg:hidden" justify="end">
-          <HeartFilledIcon />
-          <CartIcon />
-          <ThemeSwitch />
-          <NavbarMenuToggle />
+        <HeartFilledIcon />
+        <CartIcon />
+        <ThemeSwitch />
+        <NavbarMenuToggle />
       </NavbarContent>
     </NextUINavbar>
   );

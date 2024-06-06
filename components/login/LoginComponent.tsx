@@ -9,7 +9,6 @@ import { CloseIcon } from '@/components/Icons';
 import { Input, Image } from "@nextui-org/react";
 // authentication
 import { useSession, signIn, signOut } from "next-auth/react"
-import { useRouter } from 'next/navigation';
 
 interface LoginFormValues {
     email: string;
@@ -56,6 +55,21 @@ const Login: React.FC = () => {
     const { data: session } = useSession();
     // check session
     console.log('Session data:', session);
+
+    // handle redirect to home page
+    const handleLoginGoogle = async () => {
+        await signIn('google', {
+            redirect: false, // Prevent automatic redirection
+            callbackUrl: '/', // Redirect to home page after successful authentication
+        });
+    };
+    const handleLoginFacebook = async () => {
+        await signIn('facebook', {
+            redirect: false, // Prevent automatic redirection
+            callbackUrl: '/', // Redirect to home page after successful authentication
+        });
+    };
+
     // have no session before 
     if (!session) {
         return (
@@ -150,7 +164,8 @@ const Login: React.FC = () => {
                                     <button
                                         type="button"
                                         className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-                                        onClick={() => signIn('google')}
+                                        // onClick={() => signIn('google')}
+                                        onClick={handleLoginGoogle}
                                     >
                                         <span className="sr-only">Sign in with Google</span>
                                         <svg className="w-5 h-5 text-gray-700" viewBox="0 0 48 48">
@@ -165,7 +180,8 @@ const Login: React.FC = () => {
                                     <button
                                         type="button"
                                         className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
-                                        onClick={() => signIn('facebook')}
+                                        // onClick={() => signIn('facebook')}
+                                        onClick={handleLoginFacebook}
                                     >
                                         <span className="sr-only">Sign in with Facebook</span>
                                         <svg className="w-5 h-5 text-gray-700" viewBox="0 0 24 24" fill="currentColor">
@@ -213,7 +229,7 @@ const Login: React.FC = () => {
     return (
         <>
             <main className="w-full h-screen flex flex-col justify-center items-center">
-                <div className="w-44 h-44 relative mb-4">
+                <div className="relative mb-2">
                     <Image
                         src={session.user?.image as string}
                         alt=""

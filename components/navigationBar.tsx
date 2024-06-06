@@ -148,8 +148,6 @@ export const NavigationBar = () => {
               <Button className="bg-orange-500">Login</Button>
               </NextLink>
             </NavbarItem>
-          
-
         </NavbarContent>
         <NavbarMenu>
           <div className="mx-4 mt-2 flex flex-col gap-2">
@@ -175,11 +173,9 @@ export const NavigationBar = () => {
           <NavbarMenuToggle />
         </NavbarContent>
       </NextUINavbar>
-
     );
   }
   // when have session   
-
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -255,6 +251,14 @@ export const NavigationBar = () => {
                 >
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">{session.user?.name}</p>
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  color="warning"
+                  className={'font-semibold'}
+                  href="/"
+                >
+                  Setting
                 </DropdownItem>
                 <DropdownItem
                   key="logout"

@@ -6,14 +6,16 @@ import NextLink from 'next/link';
 import MapUser from '@/components/Maps/MapUser';
 import { Avatar, Button } from '@nextui-org/react';
 import { signOut, signIn, useSession } from 'next-auth/react';
-
+import MapComponent from '../Maps/MapComponent';
+import { fetchShops } from '@/app/api/get-map/route';
 
 type ProfileProps = {
     // Define any props here if needed
 };
 
-const UserProfileComponent: NextPage<ProfileProps> = () => {
+const UserProfileComponent: NextPage<ProfileProps> = async () => {
     const { data: session, status } = useSession();
+    const shops = await fetchShops();
 
     if (!session) {
         return (
@@ -65,8 +67,12 @@ const UserProfileComponent: NextPage<ProfileProps> = () => {
                         </div>
                         <div className="py-4">
                             <p className="font-semibold">Address</p>
-                            <MapUser location={{ lat: 11.578891258922914, lng: 104.90175630917895 }} width="500px" height="300px" apiKey="AIzaSyBeZtJHgPb_uA_3Fsr9xtAgf31nhAc4LNI" />
                             {/* <MapUser location={{ lat: 11.578891258922914, lng: 104.90175630917895 }} width="500px" height="300px" apiKey="AIzaSyBeZtJHgPb_uA_3Fsr9xtAgf31nhAc4LNI" /> */}
+
+
+                            <MapComponent shops={shops} />
+
+
                             {/* 11.578891258922914, 104.90175630917895 */}
                         </div>
                         <div className="flex justify-end">
@@ -134,8 +140,10 @@ const UserProfileComponent: NextPage<ProfileProps> = () => {
                     </div>
                     <div className="py-4">
                         <p className="font-semibold">Address</p>
-                        <MapUser location={{ lat: 11.578891258922914, lng: 104.90175630917895 }} width="500px" height="300px" apiKey="AIzaSyBeZtJHgPb_uA_3Fsr9xtAgf31nhAc4LNI" />
                         {/* <MapUser location={{ lat: 11.578891258922914, lng: 104.90175630917895 }} width="500px" height="300px" apiKey="AIzaSyBeZtJHgPb_uA_3Fsr9xtAgf31nhAc4LNI" /> */}
+
+                        <MapComponent shops={shops} />
+
                         {/* 11.578891258922914, 104.90175630917895 */}
                     </div>
                     <div className="flex justify-end">

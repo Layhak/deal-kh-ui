@@ -23,6 +23,7 @@ import {
   SearchIcon,
   CartIcon,
   HeartFilledIcon,
+  HeartIcon,
 } from '@/components/Icons';
 import { usePathname } from 'next/navigation';
 import { signOut, signIn, useSession } from 'next-auth/react';
@@ -97,20 +98,19 @@ export const NavigationBar = () => {
     return (
       <NextUINavbar maxWidth="xl" position="sticky">
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-          <NavbarBrand className="max-w-fit gap-3">
+          <NavbarBrand className="max-w-fit gap-4">
             <NextLink className="flex items-center justify-start gap-1" href="/">
               <Image
                 src="/logo.png"
                 alt="Description of the image"
-                width={50}
-                height={500}
+                width={32}
+                height={32}
               />
-              <p className="font-bold text-inherit">DealKH</p>
+              <p className="font-bold text-inherit text-sm hidden">DealKH</p>
             </NextLink>
-            <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+            <NavbarItem className="lg:flex w-[140px]">{searchInput}</NavbarItem>
           </NavbarBrand>
         </NavbarContent>
-        {/* List of nav bar */}
         <NavbarContent justify={'start'} className={'hidden sm:flex gap-4'}>
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} isActive={item.href === pathname}>
@@ -125,29 +125,25 @@ export const NavigationBar = () => {
             </NavbarItem>
           ))}
         </NavbarContent>
-        {/*  */}
-        <NavbarContent
-          className="hidden sm:flex gap-4"
-          justify="center"
-        >
-            <NavbarItem>
-              <ThemeSwitch />
-            </NavbarItem>
-            <NavbarItem>
-              <NextLink href="/wishlist">
-                <HeartFilledIcon />
-              </NextLink>
-            </NavbarItem>
-            <NavbarItem>
-              <NextLink href="/cart">
-                <CartIcon />
-              </NextLink>
-            </NavbarItem>
-            <NavbarItem>
-              <NextLink href="/login">
+        <NavbarContent className="hidden sm:flex gap-4" justify="center">
+          <NavbarItem>
+            <ThemeSwitch />
+          </NavbarItem>
+          <NavbarItem className="hidden sm:flex">
+            <NextLink href="/wishlist">
+              <HeartIcon />
+            </NextLink>
+          </NavbarItem>
+          <NavbarItem className="hidden sm:flex">
+            <NextLink href="/cart">
+              <CartIcon />
+            </NextLink>
+          </NavbarItem>
+          <NavbarItem>
+            <NextLink href="/login">
               <Button className="bg-orange-500">Login</Button>
-              </NextLink>
-            </NavbarItem>
+            </NextLink>
+          </NavbarItem>
         </NavbarContent>
         <NavbarMenu>
           <div className="mx-4 mt-2 flex flex-col gap-2">
@@ -165,10 +161,7 @@ export const NavigationBar = () => {
             ))}
           </div>
         </NavbarMenu>
-
-        <NavbarContent className="basis-1 pl-4 sm:hidden" justify="end">
-          <HeartFilledIcon />
-          <CartIcon />
+        <NavbarContent className="basis-1 sm:hidden" justify="end">
           <ThemeSwitch />
           <NavbarMenuToggle />
         </NavbarContent>
@@ -211,12 +204,10 @@ export const NavigationBar = () => {
         className="hidden basis-1/5 sm:flex sm:basis-full enter lg:flex"
         justify="end"
       >
-        <NavbarItem className="hidden gap-2 lg:flex justify-center">
+        <NavbarItem className="hidden gap-4 lg:flex justify-center">
           <ThemeSwitch />
           <NextLink href="/wishlist">
-            <div className="mt-1">
-              <HeartFilledIcon />
-            </div>
+            <HeartIcon />
           </NextLink>
           <NextLink href="/cart">
             <CartIcon />
@@ -224,23 +215,16 @@ export const NavigationBar = () => {
         </NavbarItem>
 
         {isAuthenticated ? (
-          <NavbarItem className="hidden lg:flex">
+          <NavbarItem className="">
             <Dropdown placement="bottom-end" shadow={'md'}>
               <DropdownTrigger>
                 {/* profile authentication */}
-
-                  {/* <Image
-                    src={session.user?.image as string}
-                    alt="User Profile"
-                    className="object-cover rounded-full"
-                  /> */}
-                  <Avatar 
-                    isBordered 
-                    src={session.user?.image as string} 
-                    color="warning"
-                    className="w-8 h-8  mb-2"
-                  />
-    
+                <Avatar
+                  isBordered
+                  src={session.user?.image as string}
+                  color="warning"
+                  className="w-8 h-8  mb-2"
+                />
                 {/*  */}
               </DropdownTrigger>
               <DropdownMenu aria-label="Profile Actions" variant="shadow">
@@ -256,9 +240,9 @@ export const NavigationBar = () => {
                   key="logout"
                   color="warning"
                   className={'font-semibold'}
-                  href="/"
+                  href="/profile"
                 >
-                  Setting
+                  Profile
                 </DropdownItem>
                 <DropdownItem
                   key="logout"
@@ -282,6 +266,7 @@ export const NavigationBar = () => {
           </NavbarItem>
         )}
       </NavbarContent>
+
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navItems.map((item) => (
@@ -300,9 +285,9 @@ export const NavigationBar = () => {
       </NavbarMenu>
 
       <NavbarContent className="basis-1 pl-4 lg:hidden" justify="end">
-        <HeartFilledIcon />
-        <CartIcon />
         <ThemeSwitch />
+        <HeartIcon />
+        <CartIcon />
         <NavbarMenuToggle />
       </NavbarContent>
     </NextUINavbar>

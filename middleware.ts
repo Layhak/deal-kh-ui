@@ -2,7 +2,7 @@ import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
 export function middleware(req: NextRequest){
-    console.log("Middleware testing");
+    console.log("========== Middleware handling redirect to Credential Login or Registeration =========== ");
     console.log("request url: ", req.url);
     console.log("request method: ", req.method);
     const cookies = req.cookies;
@@ -17,5 +17,5 @@ export function middleware(req: NextRequest){
 
 // define when user visited these page and redirect into page when have no session
 export const config = {
-    matcher: ['/cart','/wishlist'],
+    matcher: ['/cart','/wishlist', '/profile'],
 }

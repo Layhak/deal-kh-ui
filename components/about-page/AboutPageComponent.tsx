@@ -8,7 +8,8 @@ import { Inter } from 'next/font/google';
 import { Button } from '@nextui-org/react';
 import MentorCard from '@/components/card-about/MentorCard';
 import MemberCard from '@/components/card-about/MemberCard';
-import Image from 'next/image';
+import NextLink from 'next/link';
+import { Input, Image } from "@nextui-org/react";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -26,16 +27,17 @@ function AboutPageComponent() {
           <div className="text-center md:text-left md:w-1/2 p-4" data-aos="fade-right">
             <p className="text-4xl font-bold"><span className="text-gradient bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Deal</span>-KH</p>
             <p className="text-lg mt-4">Marketplace facilitates retail by providing a platform for small businesses.</p>
-            <Button 
-              href="/"
-              radius="full" 
-              className="mt-4 bg-gradient-to-r from-pink-500 to-yellow-500 text-white"
-            >View Product
-            </Button>
+            <NextLink href="/">
+              <Button
+                radius="full"
+                className="mt-4 bg-gradient-to-r from-pink-500 to-yellow-500 text-white"
+              >View Product
+              </Button>
+            </NextLink>
           </div>
           {/* right section image */}
             <div className="md:w-1/2 p-4">
-              <Image  src="/images/about-first.png" alt="About us" width={800} height={900} />
+              <Image src="/images/about-first.png" alt="About us" width={800} height={900} />
             </div> 
           </div>
 

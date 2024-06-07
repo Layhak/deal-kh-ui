@@ -35,7 +35,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.className}>
-
       <SessionWrapper>
         <body>
           <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
@@ -46,11 +45,9 @@ export default function RootLayout({
               </ErrorBoundary>
             </main>
             <FooterComponent />
-            {/* <FooterComponent /> */}
           </Providers>
         </body>
       </SessionWrapper>
-
     </html>
   );
 }

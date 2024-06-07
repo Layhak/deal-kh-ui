@@ -15,7 +15,7 @@ type Product = {
   discount: number;
 };
 
-export default function CardComponent({ category }: { category: string }) {
+export default function DiscountCardComponent() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -37,17 +37,17 @@ export default function CardComponent({ category }: { category: string }) {
   return (
     <div>
       {/* section header */}
-      <div className="my-8 flex items-center justify-between">
+      <div className="my-8 h-[50px] flex items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="relative w-fit text-lg font-bold after:absolute after:bottom-0 after:left-0 after:h-1 after:w-full after:bg-gradient-to-r after:from-pink-500 after:to-yellow-500">
-            {category}
+          <p className="relative w-fit text-[26px] text-gray-800 font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
+            Top <span className='text-[#eb7d52]'>Sales</span>
           </p>
         </div>
-
         {/* Right section */}
-        <div className="flex items-center">
-          <p className="mr-2 text-base">See More</p>
+         <Link href='#'>
+         <div className="flex items-center text-gray-800 pt-1">
+          <p className="mr-2 text-[17px] font-normal pb-1">See More</p>
           {/* Icon */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +58,7 @@ export default function CardComponent({ category }: { category: string }) {
           >
             <path
               fill="none"
-              stroke="#888888"
+              stroke="#545c6a"
               stroke-linecap="round"
               stroke-linejoin="round"
               stroke-width="4"
@@ -66,6 +66,7 @@ export default function CardComponent({ category }: { category: string }) {
             />
           </svg>
         </div>
+         </Link>
       </div>
 
       {/* for the card section*/}
@@ -75,7 +76,7 @@ export default function CardComponent({ category }: { category: string }) {
             key={product.id}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="relative h-[386px] w-[284px] flex-none rounded-xl border border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
+            className="relative h-[386px] w-[284px] mb-2 flex-none rounded-xl border shadow-none border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
             <Link href="#">
@@ -84,10 +85,10 @@ export default function CardComponent({ category }: { category: string }) {
                   src={product.image}
                 />
             </Link>
-            <span className='absolute right-0 top-0 z-20 h-[50px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[12px] font-semibold text-white'>
+            <span className='absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white'>
             25% OFF
             </span>
-            <div className="mt-4 flex">
+            <div className="mt-4 flex h-[20px]">
                 <div className="flex items-center rtl:space-x-reverse">
                   {[...Array(4)].map((_, index) => (
                     <svg
@@ -114,38 +115,36 @@ export default function CardComponent({ category }: { category: string }) {
                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                   </svg>
                 </div>
-                <span className="ms-3 rounded bg-blue-100 px-2.5 py-0.5 text-xs font-semibold text-blue-800 dark:bg-blue-200 dark:text-blue-800">
-                  5.0
+                <span className="text-[15px] ml-1 text-gray-600 font-medium">
+                 (32) Reviews
                 </span>
               </div>
               <Link href="#">
-                <h5 className="font-semibold mt-1 text-[18px] tracking-tight text-gray-800 dark:text-white h-[57px]">
+                <h5 className="font-semibold mt-1 text-[18px] tracking-tight text-gray-800 dark:text-white h-[45px]">
                   {product.name.length > 60
-                    ? `${product.name.substring(0, 25)}...`
-                    : product.name}
+                    ? `${product.name.substring(0, 60)}...`
+                    : product.name} For Your Need, Starlight Sport 
                 </h5>
               </Link>
-              <div className=" pt-1">
+              <div className=" pt-2 h-[30px]">
                 <p className="font-medium text-[14px] text-gray-600 ">
-                  Shop:{' '}
-                  {product.shop_name.length > 40
+                  Shop :{' '}
+                  {product.shop_name.length > 30
                     ? `${product.shop_name.substring(0, 20)}...`
                     : product.shop_name}
                 </p>
-                <p className="font-medium text-[13px] text-gray-600 ">
-                  Expired date : 
-                  <span className="font-medium text-red-600">
+                <p className="font-medium text-[14px] text-gray-600 ">
+                  Expired date : {' '}
+                  <span className="font-medium text-red-500">
                     {formatDate(product.expired_date)}
                   </span>
                 </p>
               </div>
-              <div className="flex items-center justify-start  pt-2 font-semibold">
-                {/* original price */}
-                <span className="pt-2 text-base font-bold text-gray-700 line-through dark:text-white">
+              <div className="flex items-center justify-start pt-10 h-[30px] font-semibold">
+                <span className="pt-1 text-base font-bold text-gray-700 line-through dark:text-white">
                   ${product.original_price}
                 </span>
-                {/* discount price */}
-                <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
+                <span className="bg-gradient-to-r ml-4 from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
                   ${product.discount_price}
                 </span>
               </div>

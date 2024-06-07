@@ -9,9 +9,24 @@ import Error from '@/app/(user)/error';
 import { NavigationBar } from '@/components/NavigationBar';
 import FooterComponent from '@/components/FooterComponent';
 import SessionWrapper from './SessionProvider';
-
+import { Metadata } from 'next';
 
 const inter = Inter({ subsets: ['latin'] });
+
+export const metadata: Metadata = {
+  title: 'Home Page',
+  description: 'This is a Home Page',
+  openGraph: {
+    images: [
+      {
+        url: "/images/logo/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "DealKH Logo Ecommerce Website",
+      },
+    ],
+  },
+};
 
 export default function RootLayout({
   children,

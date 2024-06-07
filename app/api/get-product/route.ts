@@ -31,7 +31,5 @@ export async function GET(req: NextRequest, res: NextResponse) {
     console.log("method", req.method);
     console.log("body", req.body);
     console.log("header", req.headers);
-
     return NextResponse.json(product);
-    
 }

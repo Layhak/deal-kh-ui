@@ -187,6 +187,7 @@ const Login: React.FC = () => {
                         )}
                     </Formik>
                 </div>
+                {/* picture in the right of the form */}
                 <div>
                     <Image
                         src="/login_pic.png"

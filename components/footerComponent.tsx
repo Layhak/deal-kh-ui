@@ -117,14 +117,14 @@ function FooterComponent() {
                     </div>
                 </div>
             </div>
-
-            <div className="border-t border-gray-100 p-6 sm:flex sm:items-center sm:justify-between">
+            <hr />
+            <div className="border-gray-100 p-6 mx-48 sm:flex sm:items-center sm:justify-between">
                 <ul className="flex flex-wrap justify-center gap-4 text-xs lg:justify-end">
                     <li><Link href="#" className="text-gray-500 text-base transition hover:opacity-75">@ 2024. ecommerce website by kon khmer!</Link></li>
                 </ul>
 
                 <ul className="mt-8 flex justify-center gap-6 sm:mt-0 lg:justify-end">
-                    <li><p className="text-gray-500">Let start with Us :</p></li>
+                    <li><p className="text-gray-500">Let start with us :</p></li>
                     {navigation.map((item) => (
                         <li key={item.name}>
                             <Link href={item.href} target="_blank" className="text-gray-700 transition hover:opacity-75">

@@ -3,9 +3,8 @@
 import { NextPage } from 'next';
 import Image from 'next/image';
 import NextLink from 'next/link';
-import MapUser from '@/components/Maps/MapUser';
 import { Avatar, Button } from '@nextui-org/react';
-import { signOut, signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import MapComponent from '../Maps/MapComponent';
 import { fetchShops } from '@/app/api/get-map/route';
 
@@ -107,6 +106,7 @@ const UserProfileComponent: NextPage<ProfileProps> = async () => {
             </div>
             <hr className="border-gray-600 dark:border-gray-700" />
             <div className="p-4 text-black dark:text-white flex flex-col md:flex-row">
+                {/* column-1 */}
                 <div className="flex-1 mb-4 md:mb-0">
                     <p className="text-lg font-semibold">Profile Information</p>
                     <div className="py-4">
@@ -122,6 +122,7 @@ const UserProfileComponent: NextPage<ProfileProps> = async () => {
                         <p>31-02-2002</p>
                     </div>
                 </div>
+                {/* column-2 */}
                 <div className="flex-1">
                     <p className="text-lg font-semibold">Social Media</p>
                     <div className="flex gap-2 py-2">
@@ -142,22 +143,27 @@ const UserProfileComponent: NextPage<ProfileProps> = async () => {
                         <p className="font-semibold">Address</p>
                         {/* <MapUser location={{ lat: 11.578891258922914, lng: 104.90175630917895 }} width="500px" height="300px" apiKey="AIzaSyBeZtJHgPb_uA_3Fsr9xtAgf31nhAc4LNI" /> */}
 
-                        <MapComponent shops={shops} />
+                        {/* <MapComponent shops={shops} /> */}
 
                         {/* 11.578891258922914, 104.90175630917895 */}
                     </div>
-                    <div className="flex justify-end">
-                        <NextLink
-                            href="/profile/update-profile"
-                        >
-                            <Button
-                                className="bg-orange-500 w-[70px] hover:opacity-70 text-white"
-                            >Edit</Button>
-                        </NextLink>
-                    </div>
                 </div>
             </div>
-
+            <div className="p-4 text-black dark:text-white flex flex-col md:flex-row">
+                <div className="flex gap-4 flex-1">
+                    <NextLink href="#">
+                        <Button className="text-white bg-orange-500 border-orange-500 border-1">Edit</Button>
+                    </NextLink>
+                    <NextLink href="#">
+                        <Button className="w-[75px] text-orange-500 bg-white border-orange-500 border-1 dark:bg-black dark:text-white">Preview</Button>
+                    </NextLink>
+                </div>
+                <div className="flex justify-end flex-1">
+                    <NextLink href="#">
+                        <Button className="border-1 border-orange-500 text-orange-500 bg-white dark:bg-black dark:text-white ">Delete</Button>
+                    </NextLink>
+                </div>
+            </div>
         </div>
     );
 }

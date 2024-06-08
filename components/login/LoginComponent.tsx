@@ -37,11 +37,15 @@ const Login: React.FC = () => {
                 body: JSON.stringify(values),
             });
 
+            const data = await response.json();
+
             if (!response.ok) {
-                setStatus({ message: 'Login failed. Please check your credentials.' });
+                setStatus({ message: data.message || 'Login failed. Please check your credentials.' });
             } else {
                 // Handle successful login (e.g., redirect)
                 console.log('Login successful!');
+                // Example: Redirect to home page
+                window.location.href = '/';
             }
         } catch (error) {
             console.error('Error:', error);
@@ -182,7 +186,7 @@ const Login: React.FC = () => {
                                     </button>
                                 </div>
 
-                        
+
                             </Form>
                         )}
                     </Formik>

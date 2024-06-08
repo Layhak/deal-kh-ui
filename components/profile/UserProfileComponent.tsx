@@ -151,7 +151,7 @@ const UserProfileComponent: NextPage<ProfileProps> = async () => {
             </div>
             <div className="p-4 text-black dark:text-white flex flex-col md:flex-row">
                 <div className="flex gap-4 flex-1">
-                    <NextLink href="#">
+                    <NextLink href="/profile/update-profile">
                         <Button className="text-white bg-orange-500 border-orange-500 border-1">Edit</Button>
                     </NextLink>
                     <NextLink href="#">

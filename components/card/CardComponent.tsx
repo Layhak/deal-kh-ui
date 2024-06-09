@@ -35,7 +35,7 @@ export default function DiscountCardComponent() {
   };
 
   return (
-    <div>
+    <main>
       {/* section header */}
       <div className="my-8 h-[50px] flex items-center justify-between">
         {/* Left section */}
@@ -45,28 +45,28 @@ export default function DiscountCardComponent() {
           </p>
         </div>
         {/* Right section */}
-         <Link href='#'>
-         <div className="flex items-center text-gray-800 pt-1">
-          <p className="mr-2 text-[17px] font-normal pb-1">See More</p>
-          {/* Icon */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            color="black"
-            viewBox="0 0 48 48"
-          >
-            <path
-              fill="none"
-              stroke="#545c6a"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="4"
-              d="M42 24H6m24-12l12 12l-12 12"
-            />
-          </svg>
-        </div>
-         </Link>
+        <Link href='#'>
+          <div className="flex items-center text-gray-800 pt-1">
+            <p className="mr-2 text-[17px] font-normal pb-1">See More</p>
+            {/* Icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              color="black"
+              viewBox="0 0 48 48"
+            >
+              <path
+                fill="none"
+                stroke="#545c6a"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="4"
+                d="M42 24H6m24-12l12 12l-12 12"
+              />
+            </svg>
+          </div>
+        </Link>
       </div>
 
       {/* for the card section*/}
@@ -76,19 +76,19 @@ export default function DiscountCardComponent() {
             key={product.id}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="relative h-[386px] w-[284px] mb-2 flex-none rounded-xl border shadow-none border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
+            className="relative h-[386px] w-[284px] mb-2 border border-gray flex-none rounded-xl shadow-none bg-white dark:border-gray-700 dark:bg-gray-800"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
-            <Link href="#">
+              <Link href="#">
                 <Image
                   className="h-[193px] w-[284px] object-cover"
                   src={product.image}
                 />
-            </Link>
-            <span className='absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white'>
-            25% OFF
-            </span>
-            <div className="mt-4 flex h-[20px]">
+              </Link>
+              <span className='absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white'>
+                25% OFF
+              </span>
+              <div className="mt-4 flex h-[20px]">
                 <div className="flex items-center rtl:space-x-reverse">
                   {[...Array(4)].map((_, index) => (
                     <svg
@@ -116,14 +116,14 @@ export default function DiscountCardComponent() {
                   </svg>
                 </div>
                 <span className="text-[15px] ml-1 text-gray-600 font-medium">
-                 (32) Reviews
+                  (32) Reviews
                 </span>
               </div>
               <Link href="#">
                 <h5 className="font-semibold mt-1 text-[18px] tracking-tight text-gray-800 dark:text-white h-[45px]">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 60)}...`
-                    : product.name} For Your Need, Starlight Sport 
+                    : product.name} For Your Need, Starlight Sport
                 </h5>
               </Link>
               <div className=" pt-2 h-[30px]">
@@ -152,6 +152,6 @@ export default function DiscountCardComponent() {
           </Card>
         ))}
       </div>
-    </div>
+    </main>
   );
 }

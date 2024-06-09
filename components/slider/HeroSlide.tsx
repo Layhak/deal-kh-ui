@@ -8,7 +8,7 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
 export default function HeroSlideComponent() {
     return (
-        <div className="flex flex-wrap justify-between sm:h-64 xl:h-80 2xl:h-96 mb-3">
+        <main className="flex flex-wrap justify-between sm:h-64 xl:h-80 2xl:h-96 mb-3 pb-8">
             <div className="w-full sm:w-[400px] md:w-[600px] lg:w-[820px] h-[250px] sm:h-[300px] md:h-[400px] lg:h-[427px] rounded-2xl">
                 <Swiper
                     className='rounded-2xl h-full border border-white dark:border-none'
@@ -156,7 +156,7 @@ export default function HeroSlideComponent() {
                     </Swiper>
                 </div>
             </div>
-        </div>
+        </main>
     );
 };
 

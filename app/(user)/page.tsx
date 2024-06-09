@@ -1,5 +1,7 @@
 "use client";
 
+import CardComponent from '@/components/card/CardComponent';
+import CardDiscountComponent from '@/components/card/discountCard';
 import HeroSlideComponent from '@/components/slider/HeroSlide';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
@@ -12,9 +14,12 @@ export default function HomePage() {
 
   return (
     <>
-        <main>
+        <main className="gap-16">
           <HeroSlideComponent />
-          {/* <CardDiscountComponent /> */}
+          <CardComponent />
+          <HeroSlideComponent />
+          <CardComponent />
+          <CardDiscountComponent />
         </main>
     </>
   );

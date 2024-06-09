@@ -17,7 +17,6 @@ import {
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
-import SearchBar from '@/components/SearchBar';
 import {
   Logo,
   SearchIcon,
@@ -27,10 +26,8 @@ import {
 } from '@/components/Icons';
 import { usePathname } from 'next/navigation';
 import { signOut, signIn, useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { Input, Image } from "@nextui-org/react";
-import WishlistComponent from './WishlistComponent';
-import CartComponent from './CartComponent';
 
 type ValueTypes = {
   email: string;
@@ -77,6 +74,13 @@ export const NavigationBar = () => {
     signOut();
   };
 
+  // 
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
+
   const searchInput = (
     <Input
       aria-label="Search"
@@ -87,9 +91,13 @@ export const NavigationBar = () => {
       labelPlacement="outside"
       placeholder="Search..."
       endContent={
-        <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
+        !searchValue && (
+          <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-warning" />
+        )
       }
       type="search"
+      value={searchValue}
+      onChange={handleChange}
     />
   );
 
@@ -111,12 +119,12 @@ export const NavigationBar = () => {
             <NavbarItem className="lg:flex w-[140px]">{searchInput}</NavbarItem>
           </NavbarBrand>
         </NavbarContent>
-        <NavbarContent justify={'start'} className={'hidden sm:flex gap-4'}>
+        <NavbarContent justify={'start'} className={'hidden sm:flex gap-4 '}>
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} isActive={item.href === pathname}>
               <NextLink
                 className={
-                  item.href === pathname ? 'text-warning' : 'text-foreground'
+                  `${item.href === pathname ? 'text-warning' : 'text-foreground'} hover:text-warning transition-all ease-in-out`
                 }
                 href={item.href}
               >
@@ -141,7 +149,7 @@ export const NavigationBar = () => {
           </NavbarItem>
           <NavbarItem>
             <NextLink href="/login">
-              <Button className="bg-orange-500">Login</Button>
+              <button className="bg-warning border border-warning text-white py-2 px-6 rounded-md hover:bg-opacity-75 active:bg-white active:text-warning active:border-warning active:border transition-all ease-in-out">Login</button>
             </NextLink>
           </NavbarItem>
         </NavbarContent>
@@ -182,6 +190,7 @@ export const NavigationBar = () => {
             />
             <p className="font-bold text-inherit">DealKH</p>
           </NextLink>
+          <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
           <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         </NavbarBrand>
       </NavbarContent>

@@ -7,6 +7,7 @@ export const HeartIcon = (props: IconSvgProps) => (
     width="22"
     height="22"
     viewBox="0 0 24 24"
+    
     {...props}
   >
     <path

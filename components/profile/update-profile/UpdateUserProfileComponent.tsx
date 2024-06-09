@@ -83,16 +83,21 @@ const UpdateUserProfileComponent: React.FC = () => {
     });
 
     return (
-        <div className="container bg-white dark:bg-black rounded-xl text-black px-10 py-6 justify-center">
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}
-            >
-                {(formik) => (
-                    <Form className="w-full max-w-2xl mx-auto">
-                        <div className="flex flex-col gap-6">
-                            
+
+        <>
+            <div className="my-6 font-2xl">
+                <h1 className="text-orange-500 text-base sm:text-lg md:text-xl lg:text-2xl">Account Setting</h1>
+            </div>
+            <div className="container bg-gray dark:bg-black rounded-xl text-black px-10 py-6 justify-center">
+                <Formik
+                    initialValues={initialValues}
+                    validationSchema={validationSchema}
+                    onSubmit={onSubmit}
+                >
+                    {(formik) => (
+                        <Form className="w-full max-w-2xl mx-auto">
+                            <div className="flex flex-col gap-6">
+
                                 <div className="flex flex-col mb-4">
                                     <label className="mb-1 text-gray-700 font-bold dark:text-white" htmlFor="firstName">
                                         Username
@@ -109,7 +114,7 @@ const UpdateUserProfileComponent: React.FC = () => {
                                         className="text-red-500 text-sm"
                                     />
                                 </div>
-                                
+
                                 <div className="flex flex-col mb-4">
                                     <label className="mb-1 text-gray-700 font-bold dark:text-white" htmlFor="phoneNumber">
                                         Phone Number
@@ -126,96 +131,98 @@ const UpdateUserProfileComponent: React.FC = () => {
                                         className="text-red-500 text-sm"
                                     />
                                 </div>
-                            
-                            <div className="flex flex-col mb-4">
-                                <label className="mb-1 text-gray-700 font-bold dark:text-white" htmlFor="phoneNumber">
-                                    Password
-                                </label>
-                                <Field
-                                    className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    type="password"
-                                    id="password"
-                                    name="password"
-                                />
-                                <ErrorMessage
-                                    name="password"
-                                    component="div"
-                                    className="text-red-500 text-sm"
-                                />
-                            </div>
-                            <div className="flex flex-col mb-4">
-                                <label className="mb-1 text-gray-700 font-bold dark:text-white" htmlFor="dateOfBirth">
-                                    Date of Birth
-                                </label>
-                                <Field
-                                    className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    type="date"
-                                    id="dateOfBirth"
-                                    name="dateOfBirth"
-                                />
-                                <ErrorMessage
-                                    name="dateOfBirth"
-                                    component="div"
-                                    className="text-red-500 text-sm"
-                                />
-                            </div>
-                            <div className="flex flex-col mb-4">
-                                <label className="mb-1 text-gray-700 font-bold dark:text-white" htmlFor="email">
-                                    Email
-                                </label>
-                                <Field
-                                    className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                    type="email"
-                                    id="email"
-                                    name="email"
-                                />
-                                <ErrorMessage
-                                    name="email"
-                                    component="div"
-                                    className="text-red-500 text-sm"
-                                />
-                            </div>
-                            <div className="flex flex-col gap-4 mb-4">
-                                <label className=" text-gray-700 font-bold dark:text-white" htmlFor="profileImage">
-                                    Upload Avatar
-                                </label>
-                                <input
-                                    type="file"
-                                    id="profileImage"
-                                    name="profileImage"
-                                    accept="image/*"
-                                    onChange={(event) => handleFileChange(event, formik.setFieldValue)}
-                                />
-                                {imagePreview && (
-                                    <img src={imagePreview} alt="Profile Preview" className=" w-24 h-24 object-cover rounded-full" />
-                                )}
-                                <ErrorMessage
-                                    name="profileImage"
-                                    component="div"
-                                    className="text-red-500 text-sm"
-                                />
-                            </div>
-                        </div>
 
-                        <div className="flex flex-col md:flex-row gap-4 mt-6">
-                            <div className="flex gap-4 flex-1">
-                                <NextLink href="#">
-                                    <Button className="w-full md:w-[75px] text-orange-500 bg-white border-orange-500 border-1 dark:bg-black dark:text-white">Update</Button>
-                                </NextLink>
-                                <NextLink href="/profile/update-profile">
-                                    <Button className="w-full md:w-auto text-white bg-orange-500 border-orange-500 border-1">Cancel</Button>
-                                </NextLink>
+                                <div className="flex flex-col mb-4">
+                                    <label className="mb-1 text-gray-700 font-bold dark:text-white" htmlFor="phoneNumber">
+                                        Password
+                                    </label>
+                                    <Field
+                                        className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                    />
+                                    <ErrorMessage
+                                        name="password"
+                                        component="div"
+                                        className="text-red-500 text-sm"
+                                    />
+                                </div>
+                                <div className="flex flex-col mb-4">
+                                    <label className="mb-1 text-gray-700 font-bold dark:text-white" htmlFor="dateOfBirth">
+                                        Date of Birth
+                                    </label>
+                                    <Field
+                                        className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                        type="date"
+                                        id="dateOfBirth"
+                                        name="dateOfBirth"
+                                    />
+                                    <ErrorMessage
+                                        name="dateOfBirth"
+                                        component="div"
+                                        className="text-red-500 text-sm"
+                                    />
+                                </div>
+                                <div className="flex flex-col mb-4">
+                                    <label className="mb-1 text-gray-700 font-bold dark:text-white" htmlFor="email">
+                                        Email
+                                    </label>
+                                    <Field
+                                        className="px-3 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                    />
+                                    <ErrorMessage
+                                        name="email"
+                                        component="div"
+                                        className="text-red-500 text-sm"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-4 mb-4">
+                                    <label className=" text-gray-700 font-bold dark:text-white" htmlFor="profileImage">
+                                        Upload Avatar
+                                    </label>
+                                    <input
+                                        type="file"
+                                        id="profileImage"
+                                        name="profileImage"
+                                        accept="image/*"
+                                        onChange={(event) => handleFileChange(event, formik.setFieldValue)}
+                                    />
+                                    {imagePreview && (
+                                        <img src={imagePreview} alt="Profile Preview" className=" w-24 h-24 object-cover rounded-full" />
+                                    )}
+                                    <ErrorMessage
+                                        name="profileImage"
+                                        component="div"
+                                        className="text-red-500 text-sm"
+                                    />
+                                </div>
                             </div>
-                            <div className="flex justify-end flex-1">
-                                <NextLink href="#">
-                                    <Button className="w-full md:w-auto border-1 border-orange-500 text-orange-500 bg-white dark:bg-black dark:text-white">Change Password</Button>
-                                </NextLink>
+
+                            <div className="flex flex-col md:flex-row gap-4 mt-6">
+                                <div className="flex gap-4 flex-1">
+                                    <NextLink href="#">
+                                        <Button className="w-full md:w-[75px] text-orange-500 bg-white border-orange-500 border-1 dark:bg-black dark:text-white">Update</Button>
+                                    </NextLink>
+                                    <NextLink href="/profile/update-profile">
+                                        <Button className="w-full md:w-auto text-white bg-orange-500 border-orange-500 border-1">Cancel</Button>
+                                    </NextLink>
+                                </div>
+                                <div className="flex justify-end flex-1">
+                                    <NextLink href="#">
+                                        <Button className="w-full md:w-auto border-1 border-orange-500 text-orange-500 bg-white dark:bg-black dark:text-white">Change Password</Button>
+                                    </NextLink>
+                                </div>
                             </div>
-                        </div>
-                    </Form>
-                )}
-            </Formik>
-        </div>
+                        </Form>
+                    )}
+                </Formik>
+            </div>
+
+        </>
     );
 };
 

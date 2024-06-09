@@ -22,7 +22,7 @@ export default function page() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discountoff">
+          <Link href="/food">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -57,7 +57,7 @@ export default function page() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discountoff">
+          <Link href="/drink">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -92,7 +92,7 @@ export default function page() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discountoff">
+          <Link href="/cloth">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -127,7 +127,7 @@ export default function page() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discountoff">
+          <Link href="/accessory">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -162,7 +162,7 @@ export default function page() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discountoff">
+          <Link href="/skincare">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -197,7 +197,7 @@ export default function page() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discountoff">
+          <Link href="/elctronic">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More

@@ -69,7 +69,7 @@ export default function page() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discountoff">
+          <Link href="/food">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More

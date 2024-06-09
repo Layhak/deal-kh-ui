@@ -6,10 +6,12 @@ import Buy1Get1Component from '@/components/pages/Buy1Get1';
 import Cloth from '@/components/pages/Cloth';
 import Coupon from '@/components/pages/Coupon';
 import Deal from '@/components/pages/Deal';
+import Discount from '@/components/pages/DiscountOff';
+import Drink from '@/components/pages/Drink';
 
 export const metadata: Metadata = {
-  title: 'Deal Page',
-  description: 'This is a Deal Page',
+  title: 'Drink Page',
+  description: 'This is a Drink Page',
   openGraph: {
     images: [
       {
@@ -24,7 +26,7 @@ export const metadata: Metadata = {
 export default function page() {
   return (
     <main>
-      <Deal/>
+      <Drink/>
     </main>
   )
 }

@@ -70,6 +70,7 @@ export default function DiscountCardComponent() {
       </div>
 
       {/* for the card section*/}
+
       <div className="flex flex-wrap justify-between gap-[25px]">
         {products.map((product) => (
           <Card

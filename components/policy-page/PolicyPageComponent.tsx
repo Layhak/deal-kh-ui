@@ -111,7 +111,7 @@ export default function PolicyPage() {
           <li className="mt-2">
             Once your order is shipped, you will receive a tracking number via
             email. You can use this number to track your order status on our
-            website or the carrier's website.
+            website or the carriers website.
           </li>
         </ul>
       </div>

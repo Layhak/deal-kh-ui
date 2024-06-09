@@ -72,9 +72,9 @@ function FooterComponent() {
                 <div className="grid grid-cols-1 gap-8 lg:grid-cols-3 justify-center">
                     {/* Logo */}
                     <div className="flex flex-col items-center lg:items-start pl-16">
-                        <div className="text-teal-600 flex items-center justify-center lg:justify-start">
+                        <div className="flex items-center justify-center lg:justify-start">
                             <Image src="/logo.png" alt="Deal-KH Logo" className="h-28 w-auto" />
-                            <h1 className="text-4xl font-bold mt-4 lg:mt-0 lg:ml-3">Deal</h1>
+                            <h1 className="text-4xl font-bold mt-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent lg:mt-0 lg:ml-3">Deal</h1>
                             <span className="text-4xl text-black font-bold mt-4 lg:mt-0">-KH</span>
                         </div>
                         <p className="mt-4 max-w-xs text-center lg:text-left text-gray-500">

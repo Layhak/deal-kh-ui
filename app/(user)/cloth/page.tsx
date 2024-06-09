@@ -1,81 +1,28 @@
-"use client";
-
 import React from 'react'
-import { Link, Image } from '@nextui-org/react';
-import DiscountCardComponent from '@/components/card/DiscountCardComponent';
-import ClearanceCardComponent from '@/components/card/ClearanceCard';
-import BuyMoreGetMoreComponent from '@/components/card/BuyMoreGetMore';
-import NormalProductComponent from '@/components/card/NormalProduct';
+import Accessory from '@/components/pages/Accessory';
+import { Metadata } from 'next';
+import Products from '@/components/pages/AllProduct';
+import Buy1Get1Component from '@/components/pages/Buy1Get1';
+import Cloth from '@/components/pages/Cloth';
+
+export const metadata: Metadata = {
+  title: 'Clothes Page',
+  description: 'This is a Clothes Page',
+  openGraph: {
+    images: [
+      {
+        url: '/icon.png',
+        alt: "DealKH Logo Ecommerce Website",
+      },
+    ],
+  },
+};
 
 
 export default function page() {
   return (
     <main>
-        {/* Banner */}
-        <div className="">
-          <Image
-            src="https://img.freepik.com/free-vector/flat-black-friday-horizontal-sale-banner_23-2149109959.jpg?t=st=1717935027~exp=1717938627~hmac=4c369a82fa3fc373a501a9ec74e7f33cce217121447a5e47b8d90b4d8d857b23&w=1060"
-            className="h-[320px] w-[1300px] object-cover"
-          ></Image>
-        </div>
-        {/* Top Sale */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Top <span className="text-[#eb7d52]">Sales</span>
-            </p>
-          </div>
-          {/* Right section */}
-          
-        </div>
-        <DiscountCardComponent />
-        {/* Clearance Sale */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Clearance <span className="text-[#eb7d52]">Sales</span>
-            </p>
-          </div>
-          {/* Right section */}
-          
-        </div>
-        <ClearanceCardComponent />
-        {/* Buy 1 Get 1 */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Buy More <span className="text-[#eb7d52]">Get More</span>
-            </p>
-          </div>
-          {/* Right section */}
-          
-        </div>
-        <BuyMoreGetMoreComponent />
-        {/* Coupon */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Shop <span className="text-[#eb7d52]">Coupon</span>
-            </p>
-          </div>
-          {/* Right section */}
-        </div>
-        <DiscountCardComponent />
-        {/* Event */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Event
-            </p>
-          </div>
-          {/* Right section */}
-        </div>
-        <NormalProductComponent />
+      <Cloth/>
     </main>
   )
 }

@@ -6,8 +6,8 @@ import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { Suspense } from 'react';
 import Loading from '@/app/(user)/loading';
 import Error from '@/app/(user)/error';
-import { NavigationBar } from '@/components/NavigationBar';
-import FooterComponent from '@/components/FooterComponent';
+import { NavigationBar } from '@/components/navigationBar';
+import FooterComponent from '@/components/footerComponent';
 import SessionWrapper from './SessionProvider';
 import { Metadata } from 'next';
 
@@ -19,9 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "/images/logo/logo.png",
-        width: 1200,
-        height: 630,
+        url: '/icon.png',
         alt: "DealKH Logo Ecommerce Website",
       },
     ],

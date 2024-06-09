@@ -1,24 +1,37 @@
-'use client'
 import React from 'react'
-import { Link, Image } from '@nextui-org/react';
-import ClearanceCardComponent from '@/components/card/ClearanceCard';
-import ServiceCardComponent from '@/components/card/Service';
+import Accessory from '@/components/pages/Accessory';
+import { Metadata } from 'next';
+import Products from '@/components/pages/AllProduct';
+import Buy1Get1Component from '@/components/pages/Buy1Get1';
+import Cloth from '@/components/pages/Cloth';
+import Coupon from '@/components/pages/Coupon';
+import Deal from '@/components/pages/Deal';
+import Discount from '@/components/pages/DiscountOff';
+import Drink from '@/components/pages/Drink';
+import Electronic from '@/components/pages/Electronic';
+import Event from '@/components/pages/Event';
+import FlashSale from '@/components/pages/FlashSale';
+import Food from '@/components/pages/Food';
+import Service from '@/components/pages/Service';
+
+export const metadata: Metadata = {
+  title: 'Service Page',
+  description: 'This is a Service Page',
+  openGraph: {
+    images: [
+      {
+        url: '/icon.png',
+        alt: "DealKH Logo Ecommerce Website",
+      },
+    ],
+  },
+};
+
 
 export default function page() {
   return (
     <main>
-        {/* Banner */}
-        <div className="">
-          <Image
-            src="https://img.freepik.com/free-vector/flat-design-car-dealer-sale-banner-template_23-2149998205.jpg?t=st=1717932978~exp=1717936578~hmac=d2cc12bf7fd0d8b21f645c1176881947e68cd8601f7397c04fe30391f29febe4&w=1060"
-            className="h-[320px] w-[1300px] object-cover"
-          ></Image>
-        </div>
-        {/* Card */}
-        <div className='my-10'>
-        <ServiceCardComponent/>
-        </div>
-        <ServiceCardComponent/>
+      <Service/>
     </main>
   )
 }

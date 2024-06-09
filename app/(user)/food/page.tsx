@@ -1,81 +1,36 @@
-"use client";
-
 import React from 'react'
-import { Link, Image } from '@nextui-org/react';
-import DiscountCardComponent from '@/components/card/DiscountCardComponent';
-import ClearanceCardComponent from '@/components/card/ClearanceCard';
-import BuyMoreGetMoreComponent from '@/components/card/BuyMoreGetMore';
-import NormalProductComponent from '@/components/card/NormalProduct';
+import Accessory from '@/components/pages/Accessory';
+import { Metadata } from 'next';
+import Products from '@/components/pages/AllProduct';
+import Buy1Get1Component from '@/components/pages/Buy1Get1';
+import Cloth from '@/components/pages/Cloth';
+import Coupon from '@/components/pages/Coupon';
+import Deal from '@/components/pages/Deal';
+import Discount from '@/components/pages/DiscountOff';
+import Drink from '@/components/pages/Drink';
+import Electronic from '@/components/pages/Electronic';
+import Event from '@/components/pages/Event';
+import FlashSale from '@/components/pages/FlashSale';
+import Food from '@/components/pages/Food';
+
+export const metadata: Metadata = {
+  title: 'Food Page',
+  description: 'This is a Food Page',
+  openGraph: {
+    images: [
+      {
+        url: '/icon.png',
+        alt: "DealKH Logo Ecommerce Website",
+      },
+    ],
+  },
+};
 
 
 export default function page() {
   return (
     <main>
-        {/* Banner */}
-        <div className="">
-          <Image
-            src="https://img.freepik.com/free-vector/hand-drawn-fast-food-sale-banner_23-2150970567.jpg?t=st=1717934947~exp=1717938547~hmac=58c8ea86733d88849707b728b3db59c8fea2a3eb7f0c83aafb02112d07442ad8&w=1060"
-            className="h-[320px] w-[1300px] object-cover"
-          ></Image>
-        </div>
-        {/* Top Sale */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Top <span className="text-[#eb7d52]">Sales</span>
-            </p>
-          </div>
-          {/* Right section */}
-          
-        </div>
-        <DiscountCardComponent />
-        {/* Clearance Sale */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Clearance <span className="text-[#eb7d52]">Sales</span>
-            </p>
-          </div>
-          {/* Right section */}
-          
-        </div>
-        <ClearanceCardComponent />
-        {/* Buy 1 Get 1 */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Buy More <span className="text-[#eb7d52]">Get More</span>
-            </p>
-          </div>
-          {/* Right section */}
-          
-        </div>
-        <BuyMoreGetMoreComponent />
-        {/* Coupon */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Shop <span className="text-[#eb7d52]">Coupon</span>
-            </p>
-          </div>
-          {/* Right section */}
-        </div>
-        <DiscountCardComponent />
-        {/* Event */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Event
-            </p>
-          </div>
-          {/* Right section */}
-        </div>
-        <NormalProductComponent />
+      <Food/>
     </main>
   )
 }

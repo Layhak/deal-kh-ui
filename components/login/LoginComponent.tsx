@@ -90,7 +90,7 @@ const Login: React.FC = () => {
                         </div>
                         <h2 className="mt-6 text-left text-2xl font-extrabold text-gray-900">Welcome back</h2>
                         <p className="mt-2 text-left text-sm text-gray-600">
-                            Don't have an account?{' '}
+                            Do not have an account?{' '}
                             <NextLink href="/register" className="font-medium text-orange-600 hover:text-orange-500">Sign up</NextLink>
                         </p>
                     </div>

@@ -37,7 +37,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={inter.className}>
       <SessionWrapper>
         <body>
-          <Providers themeProps={{ attribute: 'class', defaultTheme: 'dark' }}>
+          <Providers>
             <NavigationBar />
             <main className="container mx-auto min-h-[680px] max-w-7xl px-6">
               <ErrorBoundary errorComponent={Error}>

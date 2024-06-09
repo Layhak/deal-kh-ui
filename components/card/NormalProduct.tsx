@@ -1,5 +1,7 @@
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
+import { FaRegHeart } from 'react-icons/fa';
+import { LuShoppingCart } from 'react-icons/lu';
 
 // Fake product data API URL
 const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products';
@@ -15,7 +17,7 @@ type Product = {
   discount: number;
 };
 
-export default function DiscountCardComponent() {
+export default function NormalProductComponent() {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
@@ -36,47 +38,13 @@ export default function DiscountCardComponent() {
 
   return (
     <div>
-      {/* section header */}
-      <div className="my-8 h-[50px] flex items-center justify-between">
-        {/* Left section */}
-        <div className="flex-1">
-          <p className="relative w-fit text-[26px] text-gray-800 font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Top <span className='text-[#eb7d52]'>Sales</span>
-          </p>
-        </div>
-        {/* Right section */}
-         <Link href='#'>
-         <div className="flex items-center text-gray-800 pt-1">
-          <p className="mr-2 text-[17px] font-normal pb-1">See More</p>
-          {/* Icon */}
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            color="black"
-            viewBox="0 0 48 48"
-          >
-            <path
-              fill="none"
-              stroke="#545c6a"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="4"
-              d="M42 24H6m24-12l12 12l-12 12"
-            />
-          </svg>
-        </div>
-         </Link>
-      </div>
-
-      {/* for the card section*/}
       <div className="flex flex-wrap justify-between gap-[25px]">
         {products.map((product) => (
           <Card
             key={product.id}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="relative h-[386px] w-[284px] mb-2 flex-none rounded-xl border shadow-none border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
+            className="relative h-[395px] w-[284px] mb-2 flex-none rounded-xl border shadow-none border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
             <Link href="#">
@@ -85,9 +53,6 @@ export default function DiscountCardComponent() {
                   src={product.image}
                 />
             </Link>
-            <span className='absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white'>
-            25% OFF
-            </span>
             <div className="mt-4 flex h-[20px]">
                 <div className="flex items-center rtl:space-x-reverse">
                   {[...Array(4)].map((_, index) => (
@@ -140,14 +105,21 @@ export default function DiscountCardComponent() {
                   </span>
                 </p>
               </div>
-              <div className="flex items-center justify-start pt-10 h-[30px] font-semibold">
-                <span className="pt-1 text-base font-bold text-gray-700 line-through dark:text-white">
-                  ${product.original_price}
-                </span>
-                <span className="bg-gradient-to-r ml-4 from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                  ${product.discount_price}
-                </span>
-              </div>
+              <div className="flex items-center justify-between py-8">
+                  <div className="flex items-center justify-start">
+                    <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
+                      ${product.original_price}
+                    </span>
+                  </div>
+                  <div className="flex justify-end gap-[15px]">
+                    <a href="#">
+                      <FaRegHeart className="h-[30px] w-[30px] text-[#eb7d52]" />
+                    </a>
+                    <a href="">
+                      <LuShoppingCart className="h-[30px] w-[30px] text-[#eb7d52]" />
+                    </a>
+                  </div>
+                </div>
             </CardBody>
           </Card>
         ))}

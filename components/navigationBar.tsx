@@ -29,8 +29,8 @@ import { usePathname } from 'next/navigation';
 import { signOut, signIn, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Input, Image } from "@nextui-org/react";
-import WishlistComponent from './WishlistComponent';
-import CartComponent from './CartComponent';
+import WishlistComponent from '@/components/wishlistComponent';
+import CartComponent from '@/components/cartComponent';
 
 type ValueTypes = {
   email: string;

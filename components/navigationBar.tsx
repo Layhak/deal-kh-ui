@@ -47,6 +47,8 @@ export const NavigationBar = () => {
     const { data: session, status } = useSession();
     const isAuthenticated = status === 'authenticated'
 
+    
+
     const handleLogin = (values: ValueTypes) => {
         setLoading(true);
 
@@ -76,7 +78,7 @@ export const NavigationBar = () => {
 
     // 
     const [searchValue, setSearchValue] = useState<string>('');
-
+    
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setSearchValue(event.target.value);
     };
@@ -119,7 +121,7 @@ export const NavigationBar = () => {
                         <NavbarItem className="lg:flex w-[140px]">{searchInput}</NavbarItem>
                     </NavbarBrand>
                 </NavbarContent>
-                <NavbarContent justify={'start'} className={'hidden sm:flex gap-4 '}>
+                <NavbarContent justify={'start'} className={'hidden sm:flex gap-4 hover:text-warning transition-all ease-in-out'}>
                     {siteConfig.navItems.map((item) => (
                         <NavbarItem key={item.href} isActive={item.href === pathname}>
                             <NextLink

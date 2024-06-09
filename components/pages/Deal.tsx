@@ -31,7 +31,7 @@ export default function Deal() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discountoff">
+          <Link href="/discount-off">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -64,7 +64,7 @@ export default function Deal() {
               Buy More <span className="text-[#eb7d52]">Get More</span>
             </p>
           </div>
-          <Link href="/buymoregetmore">
+          <Link href="/buy-more-get-more">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -91,7 +91,7 @@ export default function Deal() {
         </div>
         <div className="flex flex-wrap justify-between">
           <div className="w-[366px]">
-            <Link href='/buymoregetmore'>
+            <Link href='/buy-more-get-more'>
             <Image
               src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
               className="h-[690px] w-[366px] object-fill"
@@ -229,7 +229,7 @@ export default function Deal() {
               Clearance <span className="text-[#eb7d52]">Sales</span>
             </p>
           </div>
-          <Link href="/flashsale">
+          <Link href="/flash-sale">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More

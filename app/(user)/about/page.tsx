@@ -14,6 +14,14 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'About Page',
   description: 'This is a About Page',
+  openGraph: {
+    images: [
+      {
+        url: '/icon.png',
+        alt: "DealKH Logo Ecommerce Website",
+      },
+    ],
+  },
 };
 
 export default function AboutPage() {

@@ -3,7 +3,7 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import CartComponent from '@/components/CartComponent';
+import CartComponent from '@/components/cartComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 

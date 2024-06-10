@@ -23,7 +23,8 @@ import { usePathname } from 'next/navigation';
 import { signOut, signIn, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Input, Image } from "@nextui-org/react";
-import { SearchIcon, HeartIcon, CartIcon } from '@/components/icons';
+import { SearchIcon, HeartIcon, CartIcon } from './Icons';
+
 
 type ValueTypes = {
   email: string;
@@ -101,7 +102,7 @@ export const NavigationBar = () => {
               />
               <p className="font-bold text-inherit text-sm hidden">DealKH</p>
             </NextLink>
-            {/* <NavbarItem className="lg:flex w-[140px]">{searchInput}</NavbarItem> */}
+            <NavbarItem className="lg:flex w-[140px]">{searchInput}</NavbarItem>
           </NavbarBrand>
         </NavbarContent>
         <NavbarContent justify={'start'} className={'hidden sm:flex gap-4'}>
@@ -134,7 +135,7 @@ export const NavigationBar = () => {
           </NavbarItem>
           <NavbarItem>
             <NextLink href="/login">
-              <Button className="bg-orange-500">Login</Button>
+              <button className="bg-warning px-6 py-2 rounded-md border border-warning hover:bg-white hover:text-warning transition-all ease-in-out text-white active:bg-warning active:text-white">Login</button>
             </NextLink>
           </NavbarItem>
         </NavbarContent>
@@ -253,7 +254,7 @@ export const NavigationBar = () => {
           <NavbarItem className="hidden lg:flex">
 
             <NextLink href="/login">
-              <Button className="bg-orange-500">Login</Button>
+              <button className="bg-warning px-2 text-white rouneded-md">Login</button>
             </NextLink>
 
           </NavbarItem>

@@ -105,13 +105,12 @@ export const NavigationBar = () => {
             <NavbarItem className="lg:flex w-[140px]">{searchInput}</NavbarItem>
           </NavbarBrand>
         </NavbarContent>
-        <NavbarContent justify={'start'} className={'hidden sm:flex gap-4'}>
+        <NavbarContent justify={'start'} className={'hidden sm:flex gap-4 '}>
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} isActive={item.href === pathname}>
               <NextLink
-                className={
-                  item.href === pathname ? 'text-warning' : 'text-foreground'
-                }
+                className={`${item.href === pathname ? 'text-warning' : 'text-foreground'
+                  } hover:text-warning transition-all ease-in-out`}
                 href={item.href}
               >
                 {item.label}
@@ -184,9 +183,8 @@ export const NavigationBar = () => {
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>
             <NextLink
-              className={
-                item.href === pathname ? 'text-warning' : 'text-foreground'
-              }
+              className={`${item.href === pathname ? 'text-warning' : 'text-foreground'
+                } hover:text-warning transition-all ease-in-out`}
               href={item.href}
             >
               {item.label}

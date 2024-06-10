@@ -21,7 +21,7 @@ import SearchBar from '@/components/SearchBar';
 
 import { usePathname } from 'next/navigation';
 import { signOut, signIn, useSession } from 'next-auth/react';
-import { useState } from 'react';
+import { SetStateAction, useState } from 'react';
 import { Input, Image } from "@nextui-org/react";
 import { SearchIcon, HeartIcon, CartIcon } from '@/components/icons';
 
@@ -71,20 +71,55 @@ export const NavigationBar = () => {
     signOut();
   };
 
+  const [searchValue, setSearchValue] = useState('');
+  const [secondValue, setSecondValue] = useState('');
+
+  const handleSearchChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+    setSearchValue(event.target.value);
+  };
+
+  const handleSecondChange = (event: { target: { value: SetStateAction<string>; }; }) => {
+    setSecondValue(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    // Logic to handle the submit action with both input values
+    console.log('Search Value:', searchValue);
+    console.log('Second Value:', secondValue);
+  };
+
   const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: 'bg-default-100',
-        input: 'text-sm',
-      }}
-      labelPlacement="outside"
-      placeholder="Search..."
-      endContent={
-        <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
-      }
-      type="search"
-    />
+    <>
+      <Input
+        aria-label="Search"
+        classNames={{
+          inputWrapper: 'bg-default-100 rounded-sm rounded-l-xl',
+          input: 'text-sm',
+        }}
+        labelPlacement="outside"
+        placeholder="Search DealKH"
+        type="search"
+        value={searchValue}
+        onChange={handleSearchChange}
+      />
+      <Input
+        aria-label="Second Input"
+        classNames={{
+          inputWrapper: 'bg-default-100 rounded-sm rounded-r-xl',
+          input: 'text-sm',
+        }}
+        labelPlacement="outside"
+        placeholder="Toul Kork"
+        endContent={
+          <SearchIcon onClick={handleSubmit} className="pointer-events-none flex-shrink-0 text-base text-default-400" />
+        }
+        type="text"
+        value={secondValue}
+        onChange={handleSecondChange}
+      />
+    </>
+
+
   );
 
   // 
@@ -102,7 +137,8 @@ export const NavigationBar = () => {
               />
               <p className="font-bold text-inherit text-sm hidden">DealKH</p>
             </NextLink>
-            <NavbarItem className="lg:flex w-[140px]">{searchInput}</NavbarItem>
+            <NavbarItem className="lg:flex w-[200px]">{searchInput}</NavbarItem>
+            
           </NavbarBrand>
         </NavbarContent>
         <NavbarContent justify={'start'} className={'hidden sm:flex gap-4 '}>

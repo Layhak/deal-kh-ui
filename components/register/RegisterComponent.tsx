@@ -5,9 +5,10 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import Link from 'next/link';
-import { CloseIcon, FacebookIcon, GoogleIcon } from '@/components/Icons';
+
 import { Input, Image } from "@nextui-org/react";
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { CloseIcon, GoogleIcon, FacebookIcon } from '@/components/icons';
 
 interface RegisterFormValues {
     email: string;
@@ -72,7 +73,7 @@ const Register: React.FC = () => {
     if (!session) {
         return (
             <div className="min-h-screen flex items-center gap-16 justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8 bg-gray p-8 rounded-lg">
+                <div className="max-w-md w-full space-y-8 bg-gray p-8 rounded-lg  bg-white shadow-md">
                     <div>
                         <div className="flex justify-between text-orange-500">
                             <h1>DealKH</h1>

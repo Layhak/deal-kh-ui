@@ -23,7 +23,7 @@ import { usePathname } from 'next/navigation';
 import { signOut, signIn, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import { Input, Image } from "@nextui-org/react";
-import { SearchIcon, HeartIcon, CartIcon } from './Icons';
+import { SearchIcon, HeartIcon, CartIcon } from '@/components/icons';
 
 
 type ValueTypes = {

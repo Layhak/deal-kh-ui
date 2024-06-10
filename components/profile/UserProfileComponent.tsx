@@ -6,6 +6,7 @@ import NextLink from 'next/link';
 import { Avatar, Button } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
 import MapComponent, { fetchShops } from '../Maps/MapComponent';
+import { FacebookIcon, InstagramIcon } from '../icons';
 
 type ProfileProps = {
     // Define any props here if needed
@@ -68,8 +69,8 @@ const UserProfileComponent: NextPage<ProfileProps> = async () => {
                             {/* <MapUser location={{ lat: 11.578891258922914, lng: 104.90175630917895 }} width="500px" height="300px" apiKey="AIzaSyBeZtJHgPb_uA_3Fsr9xtAgf31nhAc4LNI" /> */}
 
 
-                            <MapComponent shops={shops} />
-
+                            {/* <MapComponent shops={shops} /> */}
+                            <MapComponent shops={[]} />
 
                             {/* 11.578891258922914, 104.90175630917895 */}
                         </div>
@@ -78,7 +79,7 @@ const UserProfileComponent: NextPage<ProfileProps> = async () => {
                                 href="/profile/update-profile"
                             >
                                 <Button
-                                    className="bg-orange-500 w-[70px] hover:opacity-70 text-white"
+                                    className="bg-warning w-[70px] hover:opacity-70 text-white"
                                 >Edit</Button>
                             </NextLink>
                         </div>
@@ -125,24 +126,14 @@ const UserProfileComponent: NextPage<ProfileProps> = async () => {
                 <div className="flex-1">
                     <p className="text-lg font-semibold">Social Media</p>
                     <div className="flex gap-2 py-2">
-                        <Image
-                            src="/images/icon/icon-facebook-logo.svg"
-                            alt="Facebook Logo"
-                            width={24}
-                            height={24}
-                        />
-                        <Image
-                            src="/images/icon/icon-instagram-logo.svg"
-                            alt="Instagram Logo"
-                            width={24}
-                            height={24}
-                        />
+                        <FacebookIcon />
+                        <InstagramIcon />
                     </div>
                     <div className="py-4">
                         <p className="font-semibold">Address</p>
                         {/* <MapUser location={{ lat: 11.578891258922914, lng: 104.90175630917895 }} width="500px" height="300px" apiKey="AIzaSyBeZtJHgPb_uA_3Fsr9xtAgf31nhAc4LNI" /> */}
 
-                        {/* <MapComponent shops={shops} /> */}
+                        <MapComponent shops={[]} />
 
                         {/* 11.578891258922914, 104.90175630917895 */}
                     </div>
@@ -151,15 +142,15 @@ const UserProfileComponent: NextPage<ProfileProps> = async () => {
             <div className="p-4 text-black dark:text-white flex flex-col md:flex-row">
                 <div className="flex gap-4 flex-1">
                     <NextLink href="/profile/update-profile">
-                        <Button className="text-white bg-orange-500 border-orange-500 border-1">Edit</Button>
+                        <button className="text-white px-8 py-2 rounded-lg bg-warning border-warning border-1 hover:bg-white hover:text-warning transition-all ease-in-out">Edit</button>
                     </NextLink>
                     <NextLink href="#">
-                        <Button className="w-[75px] text-orange-500 bg-white border-orange-500 border-1 dark:bg-black dark:text-white">Preview</Button>
+                        <button className="px-8 py-2 rounded-lg bg-warning border-warning border-1 text-white dark:bg-black dark:text-white hover:bg-white hover:text-warning transition-all ease-in-out">Preview</button>
                     </NextLink>
                 </div>
                 <div className="flex justify-end flex-1">
                     <NextLink href="#">
-                        <Button className="border-1 border-orange-500 text-orange-500 bg-white dark:bg-black dark:text-white ">Delete</Button>
+                        <button className="px-8 py-2 rounded-lg bg-white border-1 border-warning text-warning dark:bg-black dark:text-white hover:bg-warning hover:text-white transition-all ease-in-out">Delete</button>
                     </NextLink>
                 </div>
             </div>

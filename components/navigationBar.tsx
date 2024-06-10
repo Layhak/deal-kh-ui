@@ -137,7 +137,7 @@ export const NavigationBar = () => {
               />
               <p className="font-bold text-inherit text-sm hidden">DealKH</p>
             </NextLink>
-            <NavbarItem className="lg:flex w-[200px]">{searchInput}</NavbarItem>
+            <NavbarItem className="lg:flex w-[160px]">{searchInput}</NavbarItem>
             
           </NavbarBrand>
         </NavbarContent>
@@ -207,15 +207,15 @@ export const NavigationBar = () => {
               src="/logo.png"
               alt="Description of the image"
               width={50}
-              height={500}
+              height={50}
             />
             <p className="font-bold text-inherit">DealKH</p>
           </NextLink>
-          <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+          <NavbarItem className="hidden lg:flex sm:flex md:flex w-[240px] sm:[120px]">{searchInput}</NavbarItem>
         </NavbarBrand>
       </NavbarContent>
       {/* List of nav bar */}
-      <NavbarContent justify={'center'} className={'hidden lg:flex'}>
+      <NavbarContent justify={'end'} className={'hidden lg:flex'}>
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>
             <NextLink

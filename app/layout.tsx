@@ -1,5 +1,3 @@
-
-
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
 import { Providers } from '@/app/(user)/providers';
@@ -8,16 +6,14 @@ import { Suspense } from 'react';
 import Loading from '@/app/(user)/loading';
 import error from '@/app/(user)/error';
 
-import FooterComponent from '@/components/footerComponent';
-import SessionWrapper from './SessionProvider';
 import { Metadata } from 'next';
-import { NavigationBar } from '@/components/navigationBar';
+import SessionWrapper from './(auth)/SessionProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Home Page',
-  description: 'This is a Home Page',
+  title: '404 Not Found',
+  description: 'This is a 404 Not Found Page.',
   openGraph: {
     images: [
       {
@@ -38,13 +34,11 @@ export default function RootLayout({
       <SessionWrapper>
         <body>
           <Providers>
-            <NavigationBar />
-            <main className="container mx-auto min-h-[680px] max-w-7xl px-6">
+            <main>
               <ErrorBoundary errorComponent={error}>
                 <Suspense fallback={<Loading />}>{children}</Suspense>
               </ErrorBoundary>
             </main>
-            <FooterComponent />
           </Providers>
         </body>
       </SessionWrapper>

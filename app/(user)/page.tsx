@@ -33,7 +33,7 @@ export default function HomePage() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discountoff">
+          <Link href="/discount-off">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -66,7 +66,7 @@ export default function HomePage() {
               Clearance <span className="text-[#eb7d52]">Sales</span>
             </p>
           </div>
-          <Link href="/flashsale">
+          <Link href="/flash-sale">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -105,7 +105,7 @@ export default function HomePage() {
               Buy More <span className="text-[#eb7d52]">Get More</span>
             </p>
           </div>
-          <Link href="/buymoregetmore">
+          <Link href="/buy-more-get-more">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -307,7 +307,7 @@ export default function HomePage() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/allproduct">
+          <Link href="/all-product">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -342,7 +342,7 @@ export default function HomePage() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/allproduct">
+          <Link href="/all-product">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More

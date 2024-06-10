@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { Input, Image } from "@nextui-org/react";
 // authentication
 import { useSession, signIn, signOut } from "next-auth/react"
-
+import { CloseIcon, GoogleIcon, FacebookIcon } from '@/components/icons';
 
 interface LoginFormValues {
     email: string;

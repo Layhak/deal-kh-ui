@@ -5,7 +5,7 @@
 
 <div align="center">
   <a href="ssh://git@git.istad.co:2424/cstad-ite-2nd-generation/fswd/dealkh/dealkh-ui.git">
-    <img src="public/logo.png" alt="Logo" width="200" height="100">
+    <img src="public/logo.png" alt="Logo" width="200" height="200">
   </a>
 </div>
 <br>
@@ -114,12 +114,56 @@ DealKh [live demo]()
 ---
 
 ## Page URL
+### Guest
+1. [Login](http://localhost:3000/login)
+2. [Register](http://localhost:3000/register)
+3. [Home](http://localhost:3000)
+4. [Deal](http://localhost:3000/deal)
+5. [About](http://localhost:3000/about)
+6. [Policy](http://localhost:3000/policy)
+7. [Accessory](http://localhost:3000/accessory)
+8. [Product](http://localhost:3000/allproduct)
+9. [Buy More Get More](http://localhost:3000/buymoregetmore)
+10. [Cloth](http://localhost:3000/cloth)
+11. [Coupon](http://localhost:3000/coupon)
+12. [Discount Off](http://localhost:3000/discountoff)
+13. [Drink](http://localhost:3000/drink)
+14. [Electronic](http://localhost:3000/electronic)
+15. [Event](http://localhost:3000/event)
+16. [Flash Sale](http://localhost:3000/flashsale)
+17. [Food](http://localhost:3000/food)
+18. [Profile](http://localhost:3000/profile)
+19. [Service](http://localhost:3000/service)
+20. [Skincare](http://localhost:3000/skincare)
 
-1. [Home Page](https://dealkh-homepage.com)
-2. [Document](https://dealkh-document.com)
-3. [Template](https://dealkh-template.com)
-4. [Contribute](https://dealkh-contribute.com)
-5. [About Us](https://dealkh-aboutus.com)
-6. [Contact](https://dealkh-contact.com)
+### User
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+1. [Cart](http://localhost:3000/cart)
+2. [Wishlist](http://localhost:3000/wishlist)
+
+### Seller
+
+1. [Dashboard](http://localhost:3000/dashboard)
+2. [Shop](http://localhost:3000/ownshop)
+3. [Promotion](http://localhost:3000/promotions)
+
+
+### Admin
+
+1. [Category](http://localhost:3000/category)
+2. [Shop Keeper](http://localhost:3000/keeper)
+3. [Update Profile](http://localhost:3000/profile/update-profile)
+4. [Promotion](http://localhost:3000/promotion)
+5. [Report](http://localhost:3000/report)
+
+
+### Super Admin
+1. [Reset Password](http://localhost:3000/super-admin/admin-management/reset-password)
+2. [View Report](http://localhost:3000/super-admin/admin-management/view-report)
+3. [Update Profile](http://localhost:3000/super-admin/profile/update-profile)
+4. [Product Management](http://localhost:3000/super-admin/product-management)
+5. [Shop Management](http://localhost:3000/super-admin/shop-management)
+
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>gi

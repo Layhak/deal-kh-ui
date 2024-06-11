@@ -10,7 +10,7 @@ import Error from '@/app/(user)/error';
 import FooterComponent from '@/components/footerComponent';
 import SessionWrapper from './SessionProvider';
 import { Metadata } from 'next';
-import { NavigationBar } from '@/components/NavigationBar';
+import { NavigationBar } from '@/components/navigationBar';
 
 const inter = Inter({ subsets: ['latin'] });
 

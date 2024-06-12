@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 
 // Fake product data API URL
-const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products';
-
+const API_URL = 'https://6668f7e12e964a6dfed36875.mockapi.io/api/v1/products';
 type Product = {
   id: number;
   name: string;
@@ -23,7 +22,7 @@ export default function BuyMoreGetMoreComponent() {
     // Fetch data from the fake API
     fetch(API_URL)
       .then((response) => response.json())
-      .then((data) => setProducts(data.slice(0, 8)))
+      .then((data) => setProducts(data.slice(22,30)))
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 

@@ -10,6 +10,7 @@ import { NavigationBar } from '@/components/navigationBar';
 import FooterComponent from '@/components/footerComponent';
 import SessionWrapper from './SessionProvider';
 import { Metadata } from 'next';
+import StoreProvider from './StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -35,6 +36,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={inter.className}>
       <SessionWrapper>
         <body>
+          <StoreProvider>
           <Providers>
             <NavigationBar />
             <main className="container mx-auto min-h-[680px] max-w-7xl px-6">
@@ -44,6 +46,7 @@ export default function RootLayout({
             </main>
             <FooterComponent />
           </Providers>
+          </StoreProvider>
         </body>
       </SessionWrapper>
     </html>

@@ -4,7 +4,7 @@ import { FaRegHeart } from 'react-icons/fa';
 import { LuShoppingCart } from 'react-icons/lu';
 
 // Fake product data API URL
-const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products';
+const API_URL = 'https://6668f7e12e964a6dfed36875.mockapi.io/api/v1/products';
 
 type Product = {
   id: number;

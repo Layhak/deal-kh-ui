@@ -1,8 +1,13 @@
-import { Card, CardBody, Image, Link } from '@nextui-org/react';
+'use client';
+import { addToCart } from '@/redux/feature/cart/cartSlice';
+import { useAppDispatch } from '@/redux/hook';
+import { Button, Card, CardBody, Image, Link } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
+
 import React, { useEffect, useState } from 'react';
 
 // Fake product data API URL
-const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products';
+const API_URL = 'https://6668f7e12e964a6dfed36875.mockapi.io/api/v1/products';
 
 type Product = {
   id: number;
@@ -13,16 +18,19 @@ type Product = {
   original_price: number;
   discount_price: number;
   discount: number;
+  onClick?: () => void;
 };
 
 export default function ClearanceCardComponent() {
   const [products, setProducts] = useState<Product[]>([]);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     // Fetch data from the fake API
     fetch(API_URL)
       .then((response) => response.json())
-      .then((data) => setProducts(data.slice(0, 3)))
+      .then((data) => setProducts(data.slice(20,23)))
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
@@ -34,12 +42,16 @@ export default function ClearanceCardComponent() {
     return `${month}/${day}/${year}`;
   };
 
+ 
+
   return (
+
     <div>
 
       <div className="flex flex-wrap justify-between gap-[25px] ">
         {products.map((product) => (
           <Card
+            onClick={() => router.push(`/${product.id}`)}
             key={product.id}
             isPressable
             onPress={() => console.log('item pressed')}
@@ -109,12 +121,22 @@ export default function ClearanceCardComponent() {
                   $3778
                 </span>
               </div>
-              <a
-                href="#"
-                className="rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center pt-2 text-[14px] text-white h-[37px] w-[100px] "
-              >
-                Add To Cart
-              </a>
+              <Button onClick={() =>
+								dispatch(
+									addToCart({
+                    id: 0,
+                    name: '',
+                    image: '',
+                    shop_name: '',
+                    expired_date: undefined,
+                    original_price: 0,
+                    discount_price: 0,
+                    discount: 0
+                  })
+								)
+							} className="rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center     text-[14px] text-white h-[37px] w-[100px]">
+          Add To Cart
+        </Button>
             </div>
             </CardBody>
           </Card>

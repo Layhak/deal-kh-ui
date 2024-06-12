@@ -90,9 +90,9 @@ const Login: React.FC = () => {
                             </Link>
                         </div>
                         <h2 className="mt-6 text-left text-2xl font-extrabold text-gray-900">Welcome back</h2>
-                        <p className="mt-2 text-left text-sm text-gray-600">
+                        <p className="mt-2 text-left text-sm text-black">
                             Do not have an account?{' '}
-                            <NextLink href="/register" className="font-medium text-orange-600 hover:text-orange-500">Sign up</NextLink>
+                            <NextLink href="/register" className="font-medium text-gray-400 hover:text-warning transition-all duration-300 ease-in-out">Sign up</NextLink>
                         </p>
                     </div>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
@@ -130,27 +130,29 @@ const Login: React.FC = () => {
                                         <ErrorMessage name="password" component="div" className="text-red-500 text-xs mt-1" />
                                     </div>
                                 </div>
-                                <div className="flex">
-                                    <hr />
-                                    <div className="flex gap-4 justify-center w-full ">
-                                        <p>or</p>
+                                {/* ruler */}
+                                <div className="flex h-[1px]">
+                                    <div className="bg-gray-600 w-full h-full"></div>
+                                    <div className="flex gap-2 w-full items-center justify-center">
+                                        <p className="text-gray-600">or</p>
                                     </div>
-                                    <hr />
+                                    <div className="bg-gray-600 w-full h-full"></div>
                                 </div>
-                                <div className="flex items-center justify-between">
-                                    <div className="flex items-center">
+                                {/*  */}
+                                <div className="flex flex-col items-center justify-between sm:flex-row">
+                                    <div className="flex items-center mb-4 sm:mb-0">
                                         <Field
                                             id="rememberMe"
                                             name="rememberMe"
                                             type="checkbox"
                                             className="h-4 w-4 text-orange-600 focus:ring-orange-500 border-gray-300 rounded"
                                         />
-                                        <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-900">
+                                        <label htmlFor="rememberMe" className="ml-2 block text-sm text-black">
                                             Remember me
                                         </label>
                                     </div>
                                     <div className="text-sm">
-                                        <a href="#" className="font-medium text-orange-600 hover:text-orange-500">
+                                        <a href="#" className="font-small text-gray-400 hover:text-warning transition-all duration-300 ease-in-out">
                                             Forgot password?
                                         </a>
                                     </div>
@@ -193,14 +195,6 @@ const Login: React.FC = () => {
                     </Formik>
                 </div>
                 {/* picture in the right of the form */}
-                <div>
-                    <Image
-                        src="/login_pic.png"
-                        alt="logo_picture"
-                        width={400}
-                        height={400}
-                    ></Image>
-                </div>
             </main>
         );
     }

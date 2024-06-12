@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: 'Login',
 };
 
-export default function RootLayout({
+export default function AuthLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

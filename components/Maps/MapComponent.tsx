@@ -48,7 +48,7 @@ export const fetchShops = (): Shop[] => [
 
 const containerStyle = {
     width: '100%',
-    height: '100vh',
+    height: '300px',
 };
 
 const MapComponent: React.FC<MapComponentProps> = ({ shops }) => {

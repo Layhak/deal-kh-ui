@@ -17,5 +17,5 @@ export function middleware(req: NextRequest){
 
 // define when user visited these page and redirect into page when have no session
 export const config = {
-    matcher: ['/cart','/wishlist', '/profile'],
+    matcher: ['/cart','/wishlist', '/profile','/sellers/ownshop','/sellers/product','/sellers/profile','/sellers/promotions','/sellers/seller','/sellers/wishlists'],
 }

@@ -23,7 +23,8 @@ import { usePathname } from 'next/navigation';
 import { signOut, signIn, useSession } from 'next-auth/react';
 import { SetStateAction, useState } from 'react';
 import { Input, Image } from "@nextui-org/react";
-import { SearchIcon, HeartIcon, CartIcon } from '@/components/icons';
+import { SearchIcon, HeartIcon, CartIcon, CloseIcon } from '@/components/icons';
+import CategoryButton from './CategoryButton';
 
 
 type ValueTypes = {
@@ -82,8 +83,15 @@ export const NavigationBar = () => {
     setSecondValue(event.target.value);
   };
 
+  const handleClearSearch = () => {
+    setSearchValue('');
+  };
+
+  const handleClearSecond = () => {
+    setSecondValue('');
+  };
+
   const handleSubmit = () => {
-    // Logic to handle the submit action with both input values
     console.log('Search Value:', searchValue);
     console.log('Second Value:', secondValue);
   };
@@ -91,29 +99,40 @@ export const NavigationBar = () => {
   const searchInput = (
     <>
       <Input
-        aria-label="Search"
+        aria-label="First Input"
         classNames={{
-          inputWrapper: 'bg-default-100 rounded-sm rounded-l-xl',
+          inputWrapper: 'bg-default-100 rounded-none rounded-l-xl',
           input: 'text-sm',
         }}
         labelPlacement="outside"
-        placeholder="Search DealKH"
-        type="search"
+        placeholder="Search Deal-KH"
+        endContent={
+          searchValue ? (
+            <CloseIcon onClick={handleClearSearch} className="flex-shrink-0 text-base text-default-400 cursor-pointer" />
+          ) : (
+            <SearchIcon onClick={handleSubmit} className="pointer-events-none flex-shrink-0 text-base text-default-400" />
+          )
+        }
+        type="se"
         value={searchValue}
         onChange={handleSearchChange}
       />
       <Input
         aria-label="Second Input"
         classNames={{
-          inputWrapper: 'bg-default-100 rounded-sm rounded-r-xl',
+          inputWrapper: 'bg-default-100 rounded-none rounded-r-xl',
           input: 'text-sm',
         }}
         labelPlacement="outside"
         placeholder="Toul Kork"
         endContent={
-          <SearchIcon onClick={handleSubmit} className="pointer-events-none flex-shrink-0 text-base text-default-400" />
+          secondValue ? (
+            <CloseIcon onClick={handleClearSecond} className="flex-shrink-0 text-base text-default-400 cursor-pointer" />
+          ) : (
+            <SearchIcon onClick={handleSubmit} className="pointer-events-none flex-shrink-0 text-base text-default-400" />
+          )
         }
-        type="text"
+        type="se"
         value={secondValue}
         onChange={handleSecondChange}
       />
@@ -122,8 +141,11 @@ export const NavigationBar = () => {
 
   );
 
+  const categories = ['Accessory', 'All-product', 'Clothes', 'Coupon', 'Discount-Off', 'Drink', 'Electronic', 'Event', 'Flash-Sale', 'Food', 'Shoe', 'Skincare'];
+
   // 
   if (!session) {
+
     return (
       <NextUINavbar maxWidth="xl" position="sticky">
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -137,16 +159,18 @@ export const NavigationBar = () => {
               />
               <p className="font-bold text-inherit text-sm hidden">DealKH</p>
             </NextLink>
-            <NavbarItem className="lg:flex w-[200px]">{searchInput}</NavbarItem>
-
+            <NavbarItem className="hidden sm:flex">
+              <CategoryButton categories={categories} />
+            </NavbarItem>
+            <NavbarItem className="lg:flex hidden">{searchInput}</NavbarItem>
           </NavbarBrand>
         </NavbarContent>
-        <NavbarContent justify={'start'} className={'hidden sm:flex gap-4 '}>
+        <NavbarContent justify={'start'} className={'hidden sm:flex gap-4 px-16'}>
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} isActive={item.href === pathname}>
               <NextLink
                 className={`${item.href === pathname ? 'text-warning' : 'text-foreground'
-                  } hover:text-warning transition-all ease-in-out`}
+                  } hover:text-warning transition-all ease-in-out  `}
                 href={item.href}
               >
                 {item.label}
@@ -170,12 +194,23 @@ export const NavigationBar = () => {
           </NavbarItem>
           <NavbarItem>
             <NextLink href="/login">
-              <button className="bg-warning px-6 py-2 rounded-md border border-warning hover:bg-white hover:text-warning transition-all ease-in-out text-white active:bg-warning active:text-white">Login</button>
+              <button className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange-500">Login</button>
             </NextLink>
           </NavbarItem>
         </NavbarContent>
         <NavbarMenu>
           <div className="mx-4 mt-2 flex flex-col gap-2">
+            {/* Search bar */}
+            <NavbarItem>{searchInput}</NavbarItem>
+            {/* Login button */}
+            {!isAuthenticated && (
+              <NavbarItem>
+                <NextLink href="/login">
+                  <button className="bg-warning px-2 text-white rouneded-md">Login</button>
+                </NextLink>
+              </NavbarItem>
+            )}
+            {/* Nav items */}
             {siteConfig.navItems.map((item) => (
               <NavbarItem key={item.href} isActive={item.href === pathname}>
                 <NextLink
@@ -200,22 +235,28 @@ export const NavigationBar = () => {
   // when have session   
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
+      {/* logo with search bar */}
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
         <NavbarBrand className="max-w-fit gap-3">
           <NextLink className="flex items-center justify-start gap-1" href="/">
             <Image
               src="/logo.png"
               alt="Description of the image"
-              width={50}
-              height={500}
+              width={75}
+              height={75}
             />
-            <p className="font-bold text-inherit">DealKH</p>
+            {/* <p className="font-bold text-warning">DealKH</p> */}
           </NextLink>
-          <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+
+          <NavbarItem className="hidden sm:flex">
+            <CategoryButton categories={categories} />
+          </NavbarItem>
+          <NavbarItem className="hidden lg:flex md:flex sm:flex">{searchInput}</NavbarItem>
+
         </NavbarBrand>
       </NavbarContent>
       {/* List of nav bar */}
-      <NavbarContent justify={'center'} className={'hidden lg:flex'}>
+      <NavbarContent justify={'end'} className={'hidden lg:flex'}>
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>
             <NextLink
@@ -247,12 +288,18 @@ export const NavigationBar = () => {
             <Dropdown placement="bottom-end" shadow={'md'}>
               <DropdownTrigger>
                 {/* profile authentication */}
-                <Avatar
+                {/* <Avatar
                   isBordered
                   src={session.user?.image as string}
                   color="warning"
                   className="w-8 h-8  mb-2"
-                />
+                /> */}
+                <Image
+                  src={session.user?.image as string}
+                  alt="Profile Image"
+                  className="w-8 h-8 mb-2 rounded-full border-2 border-warning"
+                ></Image>
+
                 {/*  */}
               </DropdownTrigger>
               <DropdownMenu aria-label="Profile Actions" variant="shadow">
@@ -271,6 +318,14 @@ export const NavigationBar = () => {
                   href="/profile"
                 >
                   Profile
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  color="warning"
+                  className={'font-semibold'}
+                  href="/login"
+                >
+                  Switch
                 </DropdownItem>
                 <DropdownItem
                   key="logout"
@@ -297,6 +352,17 @@ export const NavigationBar = () => {
 
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
+          {/* Search bar */}
+          <NavbarItem>{searchInput}</NavbarItem>
+          {/* Login button */}
+          {!isAuthenticated && (
+            <NavbarItem>
+              <NextLink href="/login">
+                <button className="bg-warning px-2 text-white rouneded-md">Login</button>
+              </NextLink>
+            </NavbarItem>
+          )}
+          {/* Nav items */}
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} isActive={item.href === pathname}>
               <NextLink

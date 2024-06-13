@@ -45,13 +45,18 @@ export type ProductType = {
   desc: string;
   image: string;
 };
+
 export type CartProductType = {
+  id: number;
   name: string;
   image: string;
-  price: number;
-  seller: string;
+  shop_name: string;
+  expired_at: string;
+  original_price: number;
+  discount_price: number;
+  discount: number;
+  description: string;
   category: string;
-  id: number;
   onClick?: () => void;
 };
 export type ModalType = {

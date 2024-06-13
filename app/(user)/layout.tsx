@@ -1,15 +1,20 @@
 
+
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
 import { Providers } from '@/app/(user)/providers';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { Suspense } from 'react';
 import Loading from '@/app/(user)/loading';
-import Error from '@/app/(user)/error';
-import { NavigationBar } from '@/components/navigationBar';
+import error from '@/app/(user)/error';
+
 import FooterComponent from '@/components/footerComponent';
 import SessionWrapper from './SessionProvider';
 import { Metadata } from 'next';
+
+import { NavigationBar } from '@/components/navigationBar';
+
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -38,7 +43,7 @@ export default function RootLayout({
           <Providers>
             <NavigationBar />
             <main className="container mx-auto min-h-[680px] max-w-7xl px-6">
-              <ErrorBoundary errorComponent={Error}>
+              <ErrorBoundary errorComponent={error}>
                 <Suspense fallback={<Loading />}>{children}</Suspense>
               </ErrorBoundary>
             </main>
@@ -49,3 +54,4 @@ export default function RootLayout({
     </html>
   );
 }
+

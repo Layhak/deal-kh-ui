@@ -5,25 +5,39 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import Link from 'next/link';
-import { CloseIcon, FacebookIcon, GoogleIcon } from '@/components/icons';
+
 import { Input, Image } from "@nextui-org/react";
 import { signIn, signOut, useSession } from 'next-auth/react';
+import { CloseIcon, GoogleIcon, FacebookIcon } from '@/components/icons';
 
 interface RegisterFormValues {
+    firstName: string;
+    lastName: string;
     email: string;
-    password: string;
-    rememberMe: boolean;
+    dateOfBirth: Date;
+    password1: string;
+    password2: string;
+    acceptPolicy: boolean;
 }
 
 const initialValues: RegisterFormValues = {
+    firstName: '',
+    lastName: '',
     email: '',
-    password: '',
-    rememberMe: false,
+    dateOfBirth: new Date(),
+    password1: '',
+    password2: '',
+    acceptPolicy: false,
 };
 
 const validationSchema = Yup.object().shape({
+    firstName: Yup.string().required('First name is required'),
+    lastName: Yup.string().required('Last name is required'),
     email: Yup.string().email('Invalid email address').required('Email is required'),
-    password: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+    dateOfBirth: Yup.date().required('Date of birth is required').nullable(),
+    password1: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters'),
+    password2: Yup.string().oneOf([Yup.ref('password1')], 'Passwords must match').required('Confirm password is required'),
+    acceptPolicy: Yup.boolean().oneOf([true], 'You must accept the terms and conditions'), // Validation for the checkbox
 });
 
 const Register: React.FC = () => {
@@ -83,9 +97,9 @@ const Register: React.FC = () => {
                             </Link>
                         </div>
                         <h2 className="mt-6 text-left text-2xl font-extrabold text-gray-900">Create your account</h2>
-                        <p className="mt-2 text-left text-sm text-gray-600">
+                        <p className="mt-2 text-left text-sm text-black">
                             Already have an account?{' '}
-                            <NextLink href="/login" className="font-medium text-orange-600 hover:text-orange-500">Login Here</NextLink>
+                            <NextLink href="/login" className="font-medium text-gray-400 hover:text-warning transition-all duration-300 ease-in-out">Login Here</NextLink>
                         </p>
                     </div>
                     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={onSubmit}>
@@ -125,8 +139,8 @@ const Register: React.FC = () => {
                                         </div>
                                     </div>
                                     {/* row 2 of input 2  */}
-                                    <div className="flex gap-2">
-                                        <div>
+                                    <div className="flex flex-col sm:flex-row gap-2">
+                                        <div className="w-full sm:w-1/2">
                                             <label htmlFor="email" className="sr-only">
                                                 Email address
                                             </label>
@@ -136,27 +150,28 @@ const Register: React.FC = () => {
                                                 type="email"
                                                 autoComplete="email"
                                                 required
-                                                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm mr-24"
+                                                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
                                                 placeholder="Enter Email"
                                             />
                                             <ErrorMessage name="email" component="div" className="text-red-500 text-xs mt-1" />
                                         </div>
-                                        <div>
-                                            <label htmlFor="email" className="sr-only">
+                                        <div className="w-full sm:w-1/2">
+                                            <label htmlFor="date" className="sr-only">
                                                 Date of Birth
                                             </label>
                                             <Field
                                                 id="date"
                                                 name="date"
                                                 type="date"
-                                                autoComplete="date"
+                                                autoComplete="bday"
                                                 required
                                                 className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-orange-500 focus:border-orange-500 focus:z-10 sm:text-sm"
                                                 placeholder="Enter Date"
                                             />
-                                            <ErrorMessage name="email" component="div" className="text-red-500 text-xs mt-1" />
+                                            <ErrorMessage name="date" component="div" className="text-red-500 text-xs mt-1" />
                                         </div>
                                     </div>
+
                                     <div>
                                         <label htmlFor="password" className="sr-only">
                                             Password1
@@ -187,6 +202,20 @@ const Register: React.FC = () => {
                                         />
                                         <ErrorMessage name="password" component="div" className="text-red-500 text-xs mt-1" />
                                     </div>
+                                </div>
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-right">
+                                        <Field
+                                            id="acceptPolicy"
+                                            name="acceptPolicy"
+                                            type="checkbox"
+                                            className="h-4 w-4 text-warning focus:ring-orange-500 border-gray-300 rounded"
+                                        />
+                                        <label htmlFor="rememberMe" className="ml-2 block text-sm text-gray-00">
+                                            I accept and agree to <span className="text-warning">Term Condition</span> and follow all <span className="text-warning">policy privacy</span>
+                                        </label>
+                                    </div>
+
                                 </div>
 
                                 <button
@@ -226,7 +255,7 @@ const Register: React.FC = () => {
             </div>
         )
     }
-    
+
     {/* When have session  */ }
     return (
         <>

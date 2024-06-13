@@ -21,8 +21,8 @@ export default function Category() {
       }}
       navigation={true}
       modules={[Autoplay, Pagination, Navigation]}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper: any) => console.log(swiper)}
+      onSlideChange={() => {}}
+      // onSwiper={(swiper: any) => console.log(swiper)}
       loop={true}
     >
       <SwiperSlide>

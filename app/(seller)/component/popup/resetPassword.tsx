@@ -34,7 +34,7 @@ const ResetPasswordModal = ({ isOpen, onClose }) => {
             <input
               type={showPassword ? "text" : "password"}
               id="new-password"
-              className="w-full p-2 border rounded-lg bg-slate-50 border-stone-300" 
+              className="w-full border px-3 py-2 text-gray-700 font-medium text-md border-stone-200 bg-slate-50 rounded-md focus:outline-none focus:ring-1 focus:ring-warning-500" 
               placeholder="New Password"
             />
             <div
@@ -49,7 +49,7 @@ const ResetPasswordModal = ({ isOpen, onClose }) => {
             <input
               type={showConfirmPassword ? "text" : "password"}
               id="confirm-password"
-              className="w-full p-2 border rounded-lg border-stone-300 bg-slate-50"
+              className="w-full border px-3 py-2 text-gray-700 font-medium text-md border-stone-200 bg-slate-50 rounded-md focus:outline-none focus:ring-1 focus:ring-warning-500"
               placeholder="Confirm New Password"
             />
             <div

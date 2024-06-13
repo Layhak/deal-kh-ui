@@ -9,25 +9,17 @@ import {
   TableRow,
   TableCell,
   Input,
-  Button,
-  DropdownTrigger,
-  Dropdown,
-  DropdownMenu,
-  DropdownItem,
-  Chip,
+  Tooltip,
   User,
   Pagination,
   Selection,
   ChipProps,
   SortDescriptor
 } from "@nextui-org/react";
-import {PlusIcon} from "./PlusIcon";
-import {VerticalDotsIcon} from "./VerticalDotsIcon";
 import {SearchIcon} from "./SearchIcon";
 import {columns, wishlists, statusOptions} from "./dataWishlist";
-import { FiEye } from "react-icons/fi";
-import { RiDeleteBinLine } from "react-icons/ri";
-import { CiEdit } from "react-icons/ci";
+import { FaCheck } from "react-icons/fa6";
+import { RxCross2 } from "react-icons/rx";
 
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -36,7 +28,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "description", "price", "image", "category", "discount","created", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["name", "description", "price", "image", "category", "discount","created_at","created_by", "actions"];
 
 type User = typeof wishlists[0];
 
@@ -125,43 +117,32 @@ export default function TableWishlistComponent() {
                 </div>
             );
 
-        case "created":
+        case "created_at":
             return (
                 <div>
                     {cellValue}
                 </div>
             );
+            case "created_by":
+              return (
+                  <div>
+                      {cellValue}
+                  </div>
+              );
         case "actions":
             return (
-                <div>
-                    <Dropdown>
-                        <DropdownTrigger>
-                            <Button isIconOnly size="sm" variant="light">
-                                <VerticalDotsIcon className="text-default-300" />
-                            </Button>
-                        </DropdownTrigger>
-                        <DropdownMenu>
-                        <DropdownItem>
-                          <div className="flex gap-3 ">
-                            <FiEye className="w-5 h-5 text-gray-600" />
-                            <span>View</span>
-                          </div>  
-                        </DropdownItem>
-                        <DropdownItem>
-                          <div className="flex gap-3 ">
-                          <CiEdit className="w-5 h-5 text-gray-600" />
-                          <span>Edit</span>
-                          </div>
-                        </DropdownItem >
-                        <DropdownItem>
-                          <div className="flex gap-3">
-                          <RiDeleteBinLine className="w-5 h-5 text-gray-600" />
-                          <span>Delete</span>
-                          </div>
-                        </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                </div>
+              <div className="relative flex items-center gap-4">
+              <Tooltip content="Ckeck">
+                <span className="text-lg text-default-400 cursor-pointer active:opacity-60">
+                <FaCheck className="w-5 h-5"/>
+                </span>
+              </Tooltip>
+              <Tooltip content="Un Ckeck">
+                <span className="text-lg text-default-400 cursor-pointer active:opacity-60">
+                  <RxCross2 className="w-6 h-6" />
+                </span>
+              </Tooltip>
+            </div>
             );
 
         default:
@@ -181,18 +162,14 @@ export default function TableWishlistComponent() {
   const topContent = React.useMemo(() => {
     return (
       <div className="z-30">
-        <h1 className="font-semibold text-2xl mb-8 text-black">List All Product</h1>
+        <h1 className="font-semibold text-2xl mb-8 text-black">List All Wishlists</h1>
         <div className="flex justify-between z-30">
-          {/* <CreateShopModal isOpen={isModalOpen} onClose={closeModal} /> */}
-          <Button className="border text-gray-700 font-medium text-lg border-stone-200 bg-slate-50 rounded-md" startContent={<PlusIcon />} onClick={openModal}>
-            Create Product
-          </Button>
           <Input
             isClearable
             classNames={{
-                base: "w-full sm:max-w-[300px] h-10", // Adjust height as per requirement
+                base: "w-full sm:max-w-full h-10", // Adjust height as per requirement
                 inputWrapper: "border-1 border-gray-300 bg-slate-50 rounded-md transition-colors duration-200", // Custom border and rounded corners
-                input: "h-full text-lg placeholder:text-lg focus:outline-none", // Custom padding
+                input: "h-full placeholder:text-base focus:outline-none", // Custom padding
                 clearButton: "text-gray-500", // Custom style for the clear button
             }}
             placeholder="Search..."
@@ -312,7 +289,7 @@ export default function TableWishlistComponent() {
       bottomContentPlacement="outside"
       classNames={{
         // wrapper: "max-h-[450px] w-[900px]",
-        table: "max-h-[450px] z-0",
+        table: "max-h-[450px]",
       }}
       selectedKeys={selectedKeys}
       selectionMode="multiple"
@@ -328,15 +305,18 @@ export default function TableWishlistComponent() {
             key={column.uid}
             align={column.uid === "actions" ? "center" : "start"}
             allowsSorting={column.sortable}
-            style={{ fontWeight: "medium", fontSize: "12px",backgroundColor: "whitesmoke", padding: "4px",margin: "20px 0"  }}
+            style={{ fontWeight: "medium", fontSize: "12px" , backgroundColor: "whitesmoke", margin: "20px 0"  }}
           >
             {column.name}
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"No wishlist found"} items={sortedItems}>
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow 
+          key={item.id} 
+          style={{ height: "60px" }}
+          >
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}

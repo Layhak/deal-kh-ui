@@ -1,11 +1,11 @@
 import React from "react";
 
 const columns = [
+  { name: "IMAGE OF SHOP", uid: "image" },
   { name: "SHOP NAME", uid: "name", sortable: true },
   { name: "OWNER", uid: "owner", sortable: true },
   { name: "DESCRIPTION", uid: "description", sortable: true },
   { name: "ADDRESS", uid: "address" },
-  { name: "IMAGE OF SHOP", uid: "image" },
   { name: "CONTACT", uid: "contact", sortable: true },
   { name: "CREATED AT", uid: "created", sortable: true },
   { name: "ACTIONS", uid: "actions" },

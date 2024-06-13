@@ -3,9 +3,9 @@ import { AiOutlineShop } from "react-icons/ai";
 import { FaRegUser } from "react-icons/fa";
 const CardViewShop = () => { 
   return (
-   <div className="flex gap-5">
+   <div className="flex gap-8">
      <div className="bg-white rounded-lg  flex items-center p-4 w-72 ">
-      <div className="mr-4 border-2 p-3 rounded-full border-warning">
+      <div className="mr-4 border-3 p-3 rounded-full border-warning">
       <AiOutlineShop className="w-7 h-7" />
       </div>
       <div>
@@ -14,7 +14,7 @@ const CardViewShop = () => {
       </div>
     </div>
     <div className="bg-white rounded-lg  flex items-center p-4 w-72 ">
-      <div className="mr-4 border-2 p-3 rounded-full border-warning">
+      <div className="mr-4 border-3 p-3 rounded-full border-warning">
       <FaRegUser  className="w-6 h-6" />
       </div>
       <div>

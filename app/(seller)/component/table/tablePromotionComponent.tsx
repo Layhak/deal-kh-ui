@@ -153,35 +153,35 @@ export default function TablePromotionComponent() {
   
       case "actions":
         return (
-          <div className="relative flex justify-start items-center gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu className="bg-slate-100 border border-slate-200 p-3 rounded-lg">
-                <DropdownItem>
-                  <div className="flex gap-3">
-                    <FiEye className="w-5 h-5 text-gray-600" />
-                    <span>View</span>
-                  </div>
-                </DropdownItem>
-                <DropdownItem>
-                  <div className="flex gap-3">
-                    <CiEdit className="w-5 h-5 text-gray-600" />
-                    <span>Edit</span>
-                  </div>
-                </DropdownItem>
-                <DropdownItem>
-                  <div className="flex gap-3">
-                    <RiDeleteBinLine className="w-5 h-5 text-gray-600" />
-                    <span>Delete</span>
-                  </div>
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-          </div>
+            <div>
+                    <Dropdown>
+                        <DropdownTrigger>
+                            <Button isIconOnly size="sm" variant="light">
+                                <VerticalDotsIcon className="text-default-300" />
+                            </Button>
+                        </DropdownTrigger>
+                        <DropdownMenu>
+                        <DropdownItem>
+                          <div className="flex gap-3 ">
+                            <FiEye className="w-5 h-5 text-gray-600" />
+                            <span>View</span>
+                          </div>  
+                        </DropdownItem>
+                        <DropdownItem>
+                          <div className="flex gap-3 ">
+                          <CiEdit className="w-5 h-5 text-gray-600" />
+                          <span>Edit</span>
+                          </div>
+                        </DropdownItem >
+                        <DropdownItem>
+                          <div className="flex gap-3">
+                          <RiDeleteBinLine className="w-5 h-5 text-gray-600" />
+                          <span>Delete</span>
+                          </div>
+                        </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+              </div>
         );
   
       default:
@@ -224,21 +224,28 @@ export default function TablePromotionComponent() {
   const topContent = React.useMemo(() => {
     return (
       <div>
-        <h1 className="font-semibold text-2xl mb-5 text-black">List All Promotions</h1>
+        <h1 className="font-semibold text-2xl mb-8 text-black">List All Promotions</h1>
         <div className="flex justify-between ">
           {/* <CreateShopModal isOpen={isModalOpen} onClose={closeModal} /> */}
-          <Button className="border font-semibold text-lg border-stone-200 bg-slate-50 rounded-md" startContent={<PlusIcon />} onClick={openModal}>
+          <Button className="border text-gray-600 font-semibold text-lg border-stone-200 bg-slate-50 rounded-md" startContent={<PlusIcon />} onClick={openModal}>
             Create Promotion
           </Button>
           <Input
             isClearable
-            className="w-full sm:max-w-[30%] border border-stone-200 bg-slate-50 rounded-md"
+            classNames={{
+                base: "w-full sm:max-w-[300px] h-10", // Adjust height as per requirement
+                inputWrapper: "border-1 border-gray-300 bg-slate-50 rounded-md transition-colors duration-200", // Custom border and rounded corners
+                input: "h-full text-lg placeholder:text-lg focus:outline-none", // Custom padding
+                clearButton: "text-gray-500", // Custom style for the clear button
+            }}
             placeholder="Search..."
-            startContent={<SearchIcon className="mr-3"/>}
+            size="md"
+            startContent={<SearchIcon className="text-gray-800 mr-2 text-lg" />}
             value={filterValue}
-            onClear={() => onClear()}
+            variant="bordered"
+            onClear={() => setFilterValue('')}
             onValueChange={onSearchChange}
-          />
+        />
           {/* <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
@@ -364,19 +371,23 @@ export default function TablePromotionComponent() {
             key={column.uid}
             align={column.uid === "actions" ? "center" : "start"}
             allowsSorting={column.sortable}
-            style={{ fontWeight: "medium", fontSize: "12px",backgroundColor: "whitesmoke", padding: "4px",margin: "20px 0"  }}
+            style={{ fontWeight: "medium", fontSize: "12px",backgroundColor: "whitesmoke",margin: "20px 0"  }}
           >
             {column.name}
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"No promotion found"} items={sortedItems}>
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow 
+          key={item.id} 
+          style={{ height: "60px" }}
+          >
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}
       </TableBody>
+
     </Table>
     </div>
   );

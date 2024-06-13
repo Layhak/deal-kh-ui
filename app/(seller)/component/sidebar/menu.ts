@@ -16,7 +16,7 @@ export const MenuList = [
 	},
 	{
 		name: "Product",
-		path: "/dashboard",
+		path: "/product",
 		icon: AiOutlineFileProtect,
 	},
 	{
@@ -31,7 +31,7 @@ export const MenuList = [
 	},
 	{
 		name: "Profile",
-		path: "/profile",
+		path: "/profiles",
 		icon: FaRegUser,
 	},
 	

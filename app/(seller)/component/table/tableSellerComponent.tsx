@@ -27,9 +27,7 @@ import {SearchIcon} from "./SearchIcon";
 import { FiEye } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { CiEdit } from "react-icons/ci";
-import {columns, shops, statusOptions} from "./dataOwnShop";
-import CreateShopModal from "../popup/Shop/createShop";
-import ViewShopModal from "../popup/Shop/viewShop";
+import { columns, sellers, statusOptions } from "./dataSeller";
 
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -38,11 +36,11 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["image", "name", "owner", "description", "address","contact", "created", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["image", "name", "email", "gender", "address","phone_number", "date_of_birth","created_at", "actions"];
 
-type User = typeof shops[0];
+type User = typeof sellers[0];
 
-export default function TableOwnShopComponent() {
+export default function TableSellerComponent() {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState<Selection>(new Set([]));
   const [visibleColumns] = React.useState<Selection>(new Set(INITIAL_VISIBLE_COLUMNS));
@@ -64,8 +62,6 @@ export default function TableOwnShopComponent() {
     setIsModalOpen(false);
   };
 
-
-
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
@@ -77,7 +73,7 @@ export default function TableOwnShopComponent() {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
-    let filteredUsers = [...shops];
+    let filteredUsers = [...sellers];
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
@@ -86,7 +82,7 @@ export default function TableOwnShopComponent() {
     }
 
     return filteredUsers;
-  }, [shops, filterValue, statusFilter]);
+  }, [sellers, filterValue, statusFilter]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -107,8 +103,6 @@ export default function TableOwnShopComponent() {
     });
   }, [sortDescriptor, items]);
 
-
-
   const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
     const cellValue = user[columnKey as keyof User];
 
@@ -128,35 +122,34 @@ export default function TableOwnShopComponent() {
             </div>
         );
 
-        case "owner":
+        case "email":
             return (
                 <div>
                     {cellValue}
                 </div>
             );
+            case "gender":
+                return (
+                    <div>
+                        {cellValue}
+                    </div>
+                );
 
-        case "description":
+        case "phone_number":
             return (
                 <div>
                     {cellValue}
                 </div>
             );
+        
+            case "date_of_birth":
+              return (
+                  <div>
+                      {cellValue}
+                  </div>
+              );
 
-        case "address":
-            return (
-                <div>
-                    {cellValue}
-                </div>
-            );
-
-        case "contact":
-            return (
-                <div>
-                    {cellValue}
-                </div>
-            );
-
-        case "created":
+        case "created_at":
             return (
                 <div>
                     {cellValue}
@@ -173,14 +166,12 @@ export default function TableOwnShopComponent() {
                             </Button>
                         </DropdownTrigger>
                         <DropdownMenu>
-                        <DropdownItem onClick={openModal}>
-                          <div className="flex gap-3">
-                            <FiEye className="w-5 h-5 text-gray-600" />
-                            <span>View</span>
-                          </div>
-                        </DropdownItem>
-                        {/* Modal component */}
-                        {/* <ViewShopModal isOpen={isModalOpen} onClose={closeModal} /> */}
+                            <DropdownItem>
+                                <div className="flex gap-3">
+                                    <FiEye className="w-5 h-5 text-gray-600" />
+                                    <span>View</span>
+                                </div>
+                            </DropdownItem>
                             <DropdownItem>
                                 <div className="flex gap-3">
                                     <CiEdit className="w-5 h-5 text-gray-600" />
@@ -238,19 +229,19 @@ export default function TableOwnShopComponent() {
   const topContent = React.useMemo(() => {
     return (
       <div>
-        <h1 className="font-semibold text-2xl mb-8 text-black">List All Shopkeeper</h1>
+        <h1 className="font-semibold text-2xl mb-8 text-black">List All Sellers</h1>
         <div className="flex justify-between ">
-          <CreateShopModal isOpen={isModalOpen} onClose={closeModal} />
-          <Button className="border font-semibold text-gray-600 text-lg border-stone-200 bg-slate-50 rounded-md" onClick={openModal}>
-            <PlusIcon /> Create Shop
+          {/* <CreateShopModal isOpen={isModalOpen} onClose={closeModal} /> */}
+          <Button className="border text-gray-600 font-semibold text-lg border-stone-200 bg-slate-50 rounded-md" startContent={<PlusIcon />} onClick={openModal}>
+            Create Seller
           </Button>
           <Input
             isClearable
             classNames={{
-              base: "w-full sm:max-w-[300px] h-10",
-              inputWrapper: "border-1 border-gray-300 bg-slate-50 rounded-md transition-colors duration-200",
-              input: "h-full text-lg placeholder:text-lg focus:outline-none",
-              clearButton: "text-gray-500",
+                base: "w-full sm:max-w-[300px] h-10", // Adjust height as per requirement
+                inputWrapper: "border-1 border-gray-300 bg-slate-50 rounded-md transition-colors duration-200", // Custom border and rounded corners
+                input: "h-full text-lg placeholder:text-lg focus:outline-none", // Custom padding
+                clearButton: "text-gray-500", // Custom style for the clear button
             }}
             placeholder="Search..."
             size="md"
@@ -259,7 +250,7 @@ export default function TableOwnShopComponent() {
             variant="bordered"
             onClear={() => setFilterValue('')}
             onValueChange={onSearchChange}
-          />
+        />
           {/* <div className="flex gap-3">
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
@@ -327,7 +318,7 @@ export default function TableOwnShopComponent() {
     visibleColumns,
     onSearchChange,
     // onRowsPerPageChange,
-    shops.length,
+    sellers.length,
     hasSearchFilter,
   ]);
 
@@ -369,7 +360,7 @@ export default function TableOwnShopComponent() {
       bottomContentPlacement="outside"
       classNames={{
         // wrapper: "max-h-[450px] w-[900px]",
-        table: "max-h-[450px] rounded-none",
+        table: "max-h-[450px]",
       }}
       selectedKeys={selectedKeys}
       selectionMode="multiple"

@@ -5,9 +5,9 @@ import { TbRosetteDiscount } from "react-icons/tb";
 
 const CardViewProduct = () => { 
   return (
-   <div className="flex gap-5">
-     <div className="bg-white rounded-lg  flex items-center p-4 w-64 ">
-      <div className="mr-4 border-2 p-2 rounded-full border-warning">
+   <div className="flex gap-8">
+    <div className="bg-white rounded-lg  flex items-center p-4 w-64 ">
+      <div className="mr-4 border-3 p-2 rounded-full border-warning">
       <AiOutlineProduct className="w-7 h-7" />
       </div>
       <div>
@@ -16,7 +16,7 @@ const CardViewProduct = () => {
       </div>
     </div>
     <div className="bg-white rounded-lg  flex items-center p-4 w-64 ">
-      <div className="mr-4 border-2 p-2 rounded-full border-warning">
+      <div className="mr-4 border-3 p-2 rounded-full border-warning">
       <BiCategory className="w-7 h-7" />
       </div>
       <div>
@@ -25,7 +25,7 @@ const CardViewProduct = () => {
       </div>
     </div>
     <div className="bg-white rounded-lg flex items-center p-4 w-64 ">
-      <div className="mr-4 border-2 border-warning p-2 rounded-full">
+      <div className="mr-4 border-3 border-warning p-2 rounded-full">
       <TbRosetteDiscount   className="w-7 h-7" />
       </div>
       <div>

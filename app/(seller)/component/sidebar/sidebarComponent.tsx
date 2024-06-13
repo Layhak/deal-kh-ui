@@ -14,9 +14,9 @@ export default function SidebarSellerComponent() {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     return (
-        <div className="w-[230px] z-40 bg-white">
+        <div className="w-[230px] bg-white">
            <div className="flex h-screen flex-col justify-between ">
-            <div className="px-4 py-6">
+            <div className="px-4 py-2">
                 <div className="flex justify-start items-center">
                     <img src="/images/logo/logo.png" alt="Logo" className="w-16 h-16" />
                     <span className="grid h-10 w-32 place-content-center rounded-lg text-2xl font-bold text-slate-700">

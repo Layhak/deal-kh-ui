@@ -14,7 +14,6 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
-  Chip,
   User,
   Pagination,
   Selection,
@@ -28,7 +27,6 @@ import {columns, products, statusOptions} from "./dataProduct";
 import { FiEye } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { CiEdit } from "react-icons/ci";
-import CreateShopModal from "../popup/Shop/createShop";
 
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -37,7 +35,7 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["name", "description", "price", "image", "category", "discount","created", "actions"];
+const INITIAL_VISIBLE_COLUMNS = ["image","name", "description", "price", "category", "discount","created", "actions"];
 
 type User = typeof products[0];
 
@@ -105,6 +103,14 @@ export default function TableDashboardComponent() {
     const cellValue = user[columnKey as keyof User];
 
     switch (columnKey) { 
+         case "image":
+            return (
+                <img
+                    src={user.avatar}
+                    alt={user.name}
+                    style={{ width: '50px', height: '50px', borderRadius: '5px' }}
+                />
+            );
         case "name":
             return (
                 <div>
@@ -124,15 +130,6 @@ export default function TableDashboardComponent() {
                 <div>
                     {cellValue}
                 </div>
-            );
-
-        case "image":
-            return (
-                <img
-                    src={user.avatar}
-                    alt={user.name}
-                    style={{ width: '50px', height: '50px', borderRadius: '5px' }}
-                />
             );
 
         case "category":
@@ -205,18 +202,18 @@ export default function TableDashboardComponent() {
   const topContent = React.useMemo(() => {
     return (
       <div className="z-30">
-        <h1 className="font-semibold text-2xl mb-8 text-black">List All Product</h1>
+        <h1 className="font-semibold text-2xl mb-8 text-black">List All Products</h1>
         <div className="flex justify-between z-30">
           {/* <CreateShopModal isOpen={isModalOpen} onClose={closeModal} /> */}
-          <Button className="border text-gray-700 font-medium text-lg border-stone-200 bg-slate-50 rounded-md" startContent={<PlusIcon />} onClick={openModal}>
+          <Button className="border text-gray-600 font-semibold text-lg border-stone-200 bg-slate-50 rounded-md" startContent={<PlusIcon />} onClick={openModal}>
             Create Product
           </Button>
           <Input
             isClearable
             classNames={{
                 base: "w-full sm:max-w-[300px] h-10", // Adjust height as per requirement
-                inputWrapper: "border-1 border-gray-300 bg-slate-50 rounded-md transition-colors duration-200", // Custom border and rounded corners
-                input: "h-full text-lg placeholder:text-lg focus:outline-none", // Custom padding
+                inputWrapper: "border-1 border-gray-300 bg-slate-50 rounded-md transition-colors duration-200 ", // Custom border and rounded corners
+                input: "h-full text-lg placeholder:text-lg focus:outline-none focus:ring-1 focus:ring-warning-500", // Custom padding
                 clearButton: "text-gray-500", // Custom style for the clear button
             }}
             placeholder="Search..."
@@ -352,7 +349,7 @@ export default function TableDashboardComponent() {
             key={column.uid}
             align={column.uid === "actions" ? "center" : "start"}
             allowsSorting={column.sortable}
-            style={{ fontWeight: "medium", fontSize: "12px",backgroundColor: "whitesmoke", padding: "4px",margin: "20px 0"  }}
+            style={{ fontWeight: "medium", fontSize: "12px",backgroundColor: "whitesmoke", margin: "20px 0"  }}
           >
             {column.name}
           </TableColumn>

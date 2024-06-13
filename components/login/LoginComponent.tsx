@@ -6,10 +6,10 @@ import * as Yup from 'yup';
 import NextLink from 'next/link';
 import Link from 'next/link';
 
+import { CloseIcon, FacebookIcon, GoogleIcon } from '@/components/icons';
 import { Input, Image } from "@nextui-org/react";
 // authentication
 import { useSession, signIn, signOut } from "next-auth/react"
-import { CloseIcon, GoogleIcon, FacebookIcon } from '@/components/icons';
 
 interface LoginFormValues {
     email: string;

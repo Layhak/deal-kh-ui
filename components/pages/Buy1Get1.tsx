@@ -11,7 +11,7 @@ export default function Buy1Get1Component() {
         <div className="">
           <Image
             src="https://img.freepik.com/premium-vector/this-weekend-sale-banner-illustration_275806-124.jpg?w=1060"
-            className="h-[320px] w-[1300px] object-cover"
+            className="h-[320px] w-[1300px] object-cover" alt='Banner'
           ></Image>
         </div>
         {/* Food */}

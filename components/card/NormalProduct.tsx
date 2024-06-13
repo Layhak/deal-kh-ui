@@ -1,47 +1,34 @@
+<<<<<<< HEAD
 "use client"
+=======
+import { CartProductType } from '@/libs/difinition';
+>>>>>>> b8e15d8a071696ff30224210425f29d791906c50
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { LuShoppingCart } from 'react-icons/lu';
 
-// Fake product data API URL
-const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products';
-
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  shop_name: string;
-  expired_date: any;
-  original_price: number;
-  discount_price: number;
-  discount: number;
-};
-
 export default function NormalProductComponent() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<CartProductType[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     // Fetch data from the fake API
-    fetch(API_URL)
+    fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}/api/v1/products`)
       .then((response) => response.json())
-      .then((data) => setProducts(data.slice(0, 8)))
+      .then((data) => {
+        setProducts(data.slice(0,8));
+      })
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-  };
-
   return (
     <div>
-      <div className="flex flex-wrap justify-between gap-[25px]">
+      <div className="flex flex-wrap justify-center gap-6">
         {products.map((product) => (
           <Card
+          onClick={() => router.push(`/${product.id}`)}
             key={product.id}
             isPressable
             onPress={() => console.log('item pressed')}
@@ -52,6 +39,7 @@ export default function NormalProductComponent() {
                 <Image
                   className="h-[193px] w-[284px] object-cover"
                   src={product.image}
+                  alt={product.name}
                 />
             </Link>
             <div className="mt-4 flex h-[20px]">
@@ -95,14 +83,18 @@ export default function NormalProductComponent() {
               <div className=" pt-2 h-[30px]">
                 <p className="font-medium text-[14px] text-gray-600 ">
                   Shop :{' '}
+                  <Link href=''>
+                 <span className="text-[14px] font-medium text-blue-800">
                   {product.shop_name.length > 30
                     ? `${product.shop_name.substring(0, 20)}...`
                     : product.shop_name}
+                  </span>
+                  </Link>
                 </p>
                 <p className="font-medium text-[14px] text-gray-600 ">
                   Expired date : {' '}
                   <span className="font-medium text-red-500">
-                    {formatDate(product.expired_date)}
+                    {product.expired_at}
                   </span>
                 </p>
               </div>
@@ -114,10 +106,10 @@ export default function NormalProductComponent() {
                   </div>
                   <div className="flex justify-end gap-[15px]">
                     <a href="#">
-                      <FaRegHeart className="h-[30px] w-[30px] text-[#eb7d52]" />
+                      <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
                     </a>
                     <a href="">
-                      <LuShoppingCart className="h-[30px] w-[30px] text-[#eb7d52]" />
+                      <LuShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
                     </a>
                   </div>
                 </div>

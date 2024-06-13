@@ -2,7 +2,7 @@
 
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { useState, useEffect, useCallback } from 'react';
-import { Shop } from '@/types/shop';
+import { Shop } from '../types/shop';
 
 type MapComponentProps = {
     shops: Shop[];
@@ -49,7 +49,7 @@ export const fetchShops = (): Shop[] => [
 
 const containerStyle = {
     width: '100%',
-    height: '300px',
+    height: '100vh',
 };
 
 const MapComponent: React.FC<MapComponentProps> = ({ shops }) => {

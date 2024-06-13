@@ -9,7 +9,7 @@ import { CloseIcon, FacebookIcon, GoogleIcon } from '@/components/icons';
 import { Input, Image } from "@nextui-org/react";
 // authentication
 import { useSession, signIn, signOut } from "next-auth/react"
-
+import { CloseIcon, GoogleIcon, FacebookIcon } from '@/components/icons';
 
 interface LoginFormValues {
     email: string;
@@ -79,7 +79,7 @@ const Login: React.FC = () => {
     if (!session) {
         return (
             <main className="min-h-screen flex items-center gap-16 justify-center bg-gray-200 py-12 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-md w-full space-y-8 bg-gray p-8 rounded-lg">
+                <div className="max-w-md w-full space-y-8 bg-gray p-8 rounded-lg bg-white shadow-md">
                     <div>
                         <div className="flex justify-between text-orange-500">
                             <h1>DealKH</h1>

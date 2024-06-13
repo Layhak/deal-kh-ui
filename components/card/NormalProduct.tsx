@@ -1,8 +1,6 @@
-<<<<<<< HEAD
 "use client"
-=======
+
 import { CartProductType } from '@/libs/difinition';
->>>>>>> b8e15d8a071696ff30224210425f29d791906c50
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -12,7 +10,6 @@ import { LuShoppingCart } from 'react-icons/lu';
 export default function NormalProductComponent() {
   const [products, setProducts] = useState<CartProductType[]>([]);
   const router = useRouter();
-
   useEffect(() => {
     // Fetch data from the fake API
     fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}/api/v1/products`)

@@ -6,7 +6,8 @@ import 'swiper/css';
 // import required modules
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 
-export default function HeroSlideComponent() {
+export default function HeroSlideComponent () {
+
   return (
     <div className="flex flex-wrap justify-center gap-[25px] mt-2 overflow-hidden">
       <div className="lg:w-[820px] md:w-[350px] sm:w-[350px]">

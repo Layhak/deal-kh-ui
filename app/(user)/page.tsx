@@ -33,8 +33,7 @@ export default function HomePage() {
             </p>
           </div>
           {/* Right section */}
-
-          <Link href="/discountoff">
+          <Link href="/discount-off">
             <div className="flex items-center  pt-2">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
                 See More
@@ -67,8 +66,8 @@ export default function HomePage() {
               Clearance <span className="text-[#eb7d52]">Sales</span>
             </p>
           </div>
+          <Link href="/flash-sale">
 
-          <Link href="/flashsale">
             <div className="flex items-center pt-2">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
                 See More
@@ -109,8 +108,8 @@ export default function HomePage() {
             </p>
           </div>
           <Link href="/buy-more-get-more">
-            <div className="flex items-center  pt-1">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
+            <div className="flex items-center  pt-2">
+              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
                 See More
               </p>
               {/* Icon */}
@@ -135,7 +134,7 @@ export default function HomePage() {
         </div>
         <div className="flex flex-wrap justify-between">
           <div>
-            <Link href="/buymoregetmore">
+            <Link href="/buy-more-get-more">
               <Image
                 src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
                 className="h-[690px] object-cover"
@@ -320,8 +319,9 @@ export default function HomePage() {
           </div>
           {/* Right section */}
           <Link href="/all-product">
-            <div className="flex items-center  pt-1">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
+
+            <div className="flex items-center  pt-2">
+              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
                 See More
               </p>
               {/* Icon */}
@@ -355,8 +355,10 @@ export default function HomePage() {
           </div>
           {/* Right section */}
           <Link href="/all-product">
-            <div className="flex items-center  pt-1">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
+
+            <div className="flex items-center  pt-2">
+              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
+
                 See More
               </p>
               {/* Icon */}

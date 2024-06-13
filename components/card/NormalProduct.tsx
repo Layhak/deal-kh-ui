@@ -1,3 +1,4 @@
+"use client"
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';

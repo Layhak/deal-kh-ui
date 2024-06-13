@@ -241,7 +241,7 @@ export const NavigationBar = () => {
             />
             <p className="font-bold text-inherit">DealKH</p>
           </NextLink>
-          <NavbarItem className="hidden lg:flex md:flex sm:flex w-[150vw]">{searchInput}</NavbarItem>
+          <NavbarItem className="hidden lg:flex md:flex sm:flex ">{searchInput}</NavbarItem>
         </NavbarBrand>
       </NavbarContent>
       {/* List of nav bar */}
@@ -277,11 +277,15 @@ export const NavigationBar = () => {
             <Dropdown placement="bottom-end" shadow={'md'}>
               <DropdownTrigger>
                 {/* profile authentication */}
-                <Avatar
+                {/* <Avatar
                   isBordered
                   src={session.user?.image as string}
                   color="warning"
                   className="w-8 h-8  mb-2"
+                /> */}
+                <Image
+                  src={session.user?.image as string}
+                  className="w-8 h-8 mb-2 border border-3 border-warning rounded-full"
                 />
                 {/*  */}
               </DropdownTrigger>

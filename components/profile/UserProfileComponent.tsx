@@ -5,8 +5,9 @@ import Image from 'next/image';
 import NextLink from 'next/link';
 import { Avatar, Button } from '@nextui-org/react';
 import { useSession } from 'next-auth/react';
-import MapComponent, { fetchShops } from '../Maps/MapComponent';
+
 import { FacebookIcon, InstagramIcon } from '../icons';
+import MapComponent, { fetchShops } from '../Maps/MapComponent';
 
 type ProfileProps = {
     // Define any props here if needed

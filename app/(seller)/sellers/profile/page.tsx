@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import ProfileComponent from "../../../../components/seller/component/profile/profileComponent";
+import React from "react";
 
 export const metadata: Metadata = {
   title: 'Profile',

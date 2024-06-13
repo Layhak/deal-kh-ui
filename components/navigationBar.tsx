@@ -247,14 +247,12 @@ export const NavigationBar = () => {
             />
             {/* <p className="font-bold text-warning">DealKH</p> */}
           </NextLink>
-<<<<<<< HEAD
+
           <NavbarItem className="hidden sm:flex">
             <CategoryButton categories={categories} />
           </NavbarItem>
           <NavbarItem className="hidden lg:flex md:flex sm:flex">{searchInput}</NavbarItem>
-=======
-          <NavbarItem className="hidden lg:flex md:flex sm:flex ">{searchInput}</NavbarItem>
->>>>>>> b5c0134ec662bb600a1673c81a9c57f24d23bc4c
+
         </NavbarBrand>
       </NavbarContent>
       {/* List of nav bar */}
@@ -298,14 +296,10 @@ export const NavigationBar = () => {
                 /> */}
                 <Image
                   src={session.user?.image as string}
-<<<<<<< HEAD
                   alt="Profile Image"
                   className="w-8 h-8 mb-2 rounded-full border-2 border-warning"
                 ></Image>
-=======
-                  className="w-8 h-8 mb-2 border border-3 border-warning rounded-full"
-                />
->>>>>>> b5c0134ec662bb600a1673c81a9c57f24d23bc4c
+
                 {/*  */}
               </DropdownTrigger>
               <DropdownMenu aria-label="Profile Actions" variant="shadow">
@@ -324,6 +318,14 @@ export const NavigationBar = () => {
                   href="/profile"
                 >
                   Profile
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  color="warning"
+                  className={'font-semibold'}
+                  href="/login"
+                >
+                  Switch
                 </DropdownItem>
                 <DropdownItem
                   key="logout"

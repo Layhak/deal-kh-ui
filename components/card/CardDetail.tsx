@@ -15,11 +15,11 @@ export default function CardComponent({
   name,
   image,
   shop_name,
-  expired_date,
+  expired_at,
   original_price,
   discount_price,
   discount,
-  onClick,
+  onClick
 }: CartProductType)
  {
   const dispatch = useDispatch();

@@ -1,4 +1,5 @@
 'use client';
+import { CartProductType } from '@/libs/difinition';
 import { addToCart } from '@/redux/feature/cart/cartSlice';
 import { useAppDispatch } from '@/redux/hook';
 import { Button, Card, CardBody, Image, Link } from '@nextui-org/react';
@@ -6,60 +7,37 @@ import { useRouter } from 'next/navigation';
 
 import React, { useEffect, useState } from 'react';
 
-// Fake product data API URL
-const API_URL = 'https://6668f7e12e964a6dfed36875.mockapi.io/api/v1/products';
-
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  shop_name: string;
-  expired_date: any;
-  original_price: number;
-  discount_price: number;
-  discount: number;
-  onClick?: () => void;
-};
 
 export default function ClearanceCardComponent() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<CartProductType[]>([]);
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     // Fetch data from the fake API
-    fetch(API_URL)
+    fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}/api/v1/products`)
       .then((response) => response.json())
-      .then((data) => setProducts(data.slice(20,23)))
+      .then((data) => {
+        setProducts(data.slice(0,3));
+      })
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-  };
-
- 
 
   return (
 
     <div>
-
-      <div className="flex flex-wrap justify-between gap-[25px] ">
+      <div className="flex flex-wrap justify-center gap-[35px]">
         {products.map((product) => (
           <Card
             onClick={() => router.push(`/${product.id}`)}
             key={product.id}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="w-[353px] shadow-none border border-gray-200"
+            className="w-[387px] shadow-none border border-gray-200"
           >
             <CardBody>
             <Link href="#">
-              <Image className="object-cover" src={product.image} />
+              <Image className="object-cover h-[250px] w-[400px]" src={product.image} alt={product.name} />
             </Link>
             <div className="mb-2 mt-2.5 flex items-center">
             <div className="flex items-center rtl:space-x-reverse">
@@ -90,35 +68,38 @@ export default function ClearanceCardComponent() {
                     : product.name} For Your Need, Starlight Sport 
               </h5>
             </a>
-            <div className='mb-2 text-gray-600'>
+            {/* <div className='mb-2 h-[70px] text-gray-600'>
              <p>
-             Trending Short for easy wear which provide
-             comfort for you which is really comfortable especially in hot weather.
+             {product.description.length > 115
+                    ? `${product.description.substring(0, 115)}...`
+                    : product.description}
              </p>
-            </div>
+            </div> */}
             <div>
                 <p className=" text-gray-600">
                   Shop : {' '}
-                  <span className='font-medium text-gray-900'>
+                  <Link href=''>
+                 <span className="text-[14px] font-medium text-blue-800">
                   {product.shop_name.length > 30
                     ? `${product.shop_name.substring(0, 20)}...`
                     : product.shop_name}
                   </span>
+                  </Link>
                 </p>
                 <p className=" text-gray-600 ">
                   Expired date : {' '}
                   <span className="font-medium text-red-500">
-                    {formatDate(product.expired_date)}
+                    {product.expired_at}
                   </span>
                 </p>
               </div>
-            <div className="flex pt-6 items-center justify-between">
+            <div className="flex mt-3 items-center justify-between">
             <div className="flex items-center justify-start font-semibold">
                 <span className="pt-2 text-lg font-bold text-gray-500 line-through dark:text-white">
-                  $3900
+                  {product.original_price}
                 </span>
                 <span className="bg-gradient-to-r ml-3 from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
-                  $3778
+                  {product.discount_price}
                 </span>
               </div>
               <Button onClick={() =>
@@ -128,10 +109,12 @@ export default function ClearanceCardComponent() {
                     name: '',
                     image: '',
                     shop_name: '',
-                    expired_date: undefined,
+                    expired_at: '',
                     original_price: 0,
                     discount_price: 0,
-                    discount: 0
+                    discount: 0,
+                    description: '',
+                    category: ''
                   })
 								)
 							} className="rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center     text-[14px] text-white h-[37px] w-[100px]">

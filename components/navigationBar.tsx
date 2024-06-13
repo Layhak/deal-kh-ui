@@ -24,6 +24,7 @@ import { signOut, signIn, useSession } from 'next-auth/react';
 import { SetStateAction, useState } from 'react';
 import { Input, Image } from "@nextui-org/react";
 import { SearchIcon, HeartIcon, CartIcon, CloseIcon } from '@/components/icons';
+import CategoryButton from './CategoryButton';
 
 
 type ValueTypes = {
@@ -140,8 +141,11 @@ export const NavigationBar = () => {
 
   );
 
+  const categories = ['Accessory', 'All-product', 'Clothes', 'Coupon', 'Discount-Off', 'Drink', 'Electronic', 'Event', 'Flash-Sale', 'Food', 'Shoe', 'Skincare'];
+
   // 
   if (!session) {
+
     return (
       <NextUINavbar maxWidth="xl" position="sticky">
         <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
@@ -155,8 +159,10 @@ export const NavigationBar = () => {
               />
               <p className="font-bold text-inherit text-sm hidden">DealKH</p>
             </NextLink>
+            <NavbarItem className="hidden sm:flex">
+              <CategoryButton categories={categories} />
+            </NavbarItem>
             <NavbarItem className="lg:flex hidden">{searchInput}</NavbarItem>
-
           </NavbarBrand>
         </NavbarContent>
         <NavbarContent justify={'start'} className={'hidden sm:flex gap-4 px-16'}>
@@ -236,12 +242,15 @@ export const NavigationBar = () => {
             <Image
               src="/logo.png"
               alt="Description of the image"
-              width={50}
-              height={50}
+              width={75}
+              height={75}
             />
-            <p className="font-bold text-inherit">DealKH</p>
+            {/* <p className="font-bold text-warning">DealKH</p> */}
           </NextLink>
-          <NavbarItem className="hidden lg:flex md:flex sm:flex w-[150vw]">{searchInput}</NavbarItem>
+          <NavbarItem className="hidden sm:flex">
+            <CategoryButton categories={categories} />
+          </NavbarItem>
+          <NavbarItem className="hidden lg:flex md:flex sm:flex">{searchInput}</NavbarItem>
         </NavbarBrand>
       </NavbarContent>
       {/* List of nav bar */}
@@ -277,12 +286,17 @@ export const NavigationBar = () => {
             <Dropdown placement="bottom-end" shadow={'md'}>
               <DropdownTrigger>
                 {/* profile authentication */}
-                <Avatar
+                {/* <Avatar
                   isBordered
                   src={session.user?.image as string}
                   color="warning"
                   className="w-8 h-8  mb-2"
-                />
+                /> */}
+                <Image
+                  src={session.user?.image as string}
+                  alt="Profile Image"
+                  className="w-8 h-8 mb-2 rounded-full border-2 border-warning"
+                ></Image>
                 {/*  */}
               </DropdownTrigger>
               <DropdownMenu aria-label="Profile Actions" variant="shadow">
@@ -362,4 +376,3 @@ export const NavigationBar = () => {
     </NextUINavbar>
   );
 };
-

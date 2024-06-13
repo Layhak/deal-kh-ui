@@ -99,7 +99,7 @@ function FooterComponent() {
                             <p className="font-bold text-gray-900 mb-6 text-center lg:text-left">About Deal-Kh</p>
                             <ul className="space-y-4 text-sm text-center lg:text-left">
                                 <li><Link href="#" className="text-gray-700 transition hover:opacity-75">Join with Us</Link></li>
-                                <li><Link href="#" className="text-gray-700 transition hover:opacity-75">About Us</Link></li>
+                                <li><Link href="/about" className="text-gray-700 transition hover:opacity-75">About Us</Link></li>
                                 <li><Link href="#" className="text-gray-700 transition hover:opacity-75">Contact Us</Link></li>
                                 <li><Link href="#" className="text-gray-700 transition hover:opacity-75">Live share</Link></li>
                             </ul>
@@ -108,10 +108,10 @@ function FooterComponent() {
                         <div>
                             <p className="font-bold text-gray-900 mb-6 text-center lg:text-left">Shopping Cart</p>
                             <ul className="space-y-4 text-sm text-center lg:text-left">
-                                <li><Link href="#" className="text-gray-700 transition hover:opacity-75">Discount</Link></li>
-                                <li><Link href="#" className="text-gray-700 transition hover:opacity-75">Coupon</Link></li>
+                                <li><Link href="/category/discount-off" className="text-gray-700 transition hover:opacity-75">Discount</Link></li>
+                                <li><Link href="/category/coupon" className="text-gray-700 transition hover:opacity-75">Coupon</Link></li>
                                 <li><Link href="#" className="text-gray-700 transition hover:opacity-75">Ads and boost</Link></li>
-                                <li><Link href="#" className="text-gray-700 transition hover:opacity-75">Wishlist</Link></li>
+                                <li><Link href="/wishlist" className="text-gray-700 transition hover:opacity-75">Wishlist</Link></li>
                             </ul>
                         </div>
                     </div>

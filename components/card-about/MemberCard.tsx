@@ -28,7 +28,7 @@ export default function MemberCard() {
             <div className="mb-2 text-[18px] font-bold">
               {item.name}
             </div>
-            <div className="mb-2 text-base">
+            <div className="mb-2 text-base"> 
               {item.role}
             </div>
           </div>

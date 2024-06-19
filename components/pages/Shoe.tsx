@@ -16,6 +16,7 @@ export default function Shoe() {
           <Image
             src="https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/banner/202406/61106ed5-598b-409a-a13a-3579adbacecb.jpg"
             className="h-[320px] w-[1300px] object-cover"
+            alt='Shoes Banner'
           ></Image>
         </div>
         {/* Top Sale */}

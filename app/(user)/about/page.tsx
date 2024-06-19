@@ -1,5 +1,4 @@
-
-import React, { useEffect } from 'react';
+import React from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { Metadata } from 'next';
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/icon.png',
-        alt: "DealKH Logo Ecommerce Website",
+        alt: 'DealKH Logo Ecommerce Website',
       },
     ],
   },
@@ -29,6 +28,5 @@ export default function AboutPage() {
     <>
       <AboutPageComponent />
     </>
-      
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { Metadata } from 'next';
@@ -8,8 +8,8 @@ import CartComponent from '@/components/cartComponent';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Cart Page',
-	description: 'This is a Cart Page',
+  title: 'Cart Page',
+  description: 'This is a Cart Page',
 };
 
 export default function CartPage() {

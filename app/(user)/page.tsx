@@ -13,6 +13,7 @@ import { Link, Image } from '@nextui-org/react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
+import { Metadata } from 'next';
 
 export default function HomePage() {
   useEffect(() => {
@@ -67,7 +68,6 @@ export default function HomePage() {
             </p>
           </div>
           <Link href="/flash-sale">
-
             <div className="flex items-center pt-2">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
                 See More
@@ -96,7 +96,7 @@ export default function HomePage() {
         <div>
           <Image
             src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
-            className="lg:h-[310px] w-[1300px] object-cover h-[200px] mt-[35px]"
+            className="mt-[35px] h-[200px] w-[1300px] object-cover lg:h-[310px]"
             alt="image"
           ></Image>
         </div>
@@ -271,7 +271,7 @@ export default function HomePage() {
           <Image
             src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
             alt="image"
-            className=''
+            className=""
           ></Image>
         </Link>
         {/* Shop Section */}
@@ -319,7 +319,6 @@ export default function HomePage() {
           </div>
           {/* Right section */}
           <Link href="/all-product">
-
             <div className="flex items-center  pt-2">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
                 See More
@@ -355,10 +354,8 @@ export default function HomePage() {
           </div>
           {/* Right section */}
           <Link href="/all-product">
-
             <div className="flex items-center  pt-2">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
-
                 See More
               </p>
               {/* Icon */}

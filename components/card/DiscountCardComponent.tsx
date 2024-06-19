@@ -1,4 +1,3 @@
-
 import { CartProductType } from '@/libs/difinition';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
@@ -19,52 +18,18 @@ export default function DiscountCardComponent() {
 
   return (
     <main>
-      {/* section header */}
-      <div className="my-8 h-[50px] flex items-center justify-between">
-        {/* Left section */}
-        <div className="flex-1">
-          <p className="relative w-fit text-[26px] text-gray-800 font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Top <span className="text-[#eb7d52]">Sales</span>
-          </p>
-        </div>
-        {/* Right section */}
-        <Link href="#">
-          <div className="flex items-center text-gray-800 pt-1">
-            <p className="mr-2 text-[17px] font-normal pb-1">See More</p>
-            {/* Icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              color="black"
-              viewBox="0 0 48 48"
-            >
-              <path
-                fill="none"
-                stroke="#545c6a"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="4"
-                d="M42 24H6m24-12l12 12-12 12"
-              />
-            </svg>
-          </div>
-        </Link>
-      </div>
-
       {/* for the card section*/}
       <div className="flex flex-wrap justify-between gap-[25px]">
-
         {products.map((product) => (
           <Card
             onClick={() => router.push(`/${product.id}`)}
             key={product.id}
             isPressable
-            className="relative h-[386px] w-[284px] mb-2 border border-gray flex-none rounded-xl shadow-none bg-white dark:border-gray-700 dark:bg-gray-800"
+            className="border-gray relative mb-2 h-[386px] w-[284px] flex-none rounded-xl border bg-white shadow-none dark:border-gray-700 dark:bg-gray-800"
             onPress={() => console.log('item pressed')}
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
-                <Link href="#">
+              <Link href="#">
                 <Image
                   className="h-[193px] w-[284px] object-cover"
                   src={product.image}

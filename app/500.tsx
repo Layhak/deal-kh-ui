@@ -1,37 +1,37 @@
 import { Metadata } from 'next';
 import Image from 'next/image';
 import 'tailwindcss/tailwind.css';
+import React from 'react';
 
 export const metadata: Metadata = {
-    title: '500 Internal Error ',
-    description: 'This is a Error Page 500',
-    openGraph: {
-        images: [
-            {
-                url: '/logo.png',
-                alt: "DealKH Logo Ecommerce Website",
-            },
-        ],
-    },
+  title: '500 Internal Error ',
+  description: 'This is a Error Page 500',
+  openGraph: {
+    images: [
+      {
+        url: '/logo.png',
+        alt: 'DealKH Logo Ecommerce Website',
+      },
+    ],
+  },
 };
 
 export default function InternalErrorPage() {
-    return (
-
-        <>
-            <main className="h-[100vh] w-[100vw] flex flex-col items-center justify-center text-center p-4 bg-gray-100">
-                <Image
-                    src="/Error500.png"
-                    alt="Error500"
-                    width={400}
-                    height={350}
-                    className="mb-4 animate-fadeIn"
-                />
-                <h1 className="text-2xl font-bold mb-2 text-center text-orange-500 animate-slideUp">500 Internal Error</h1>
-                <p className="text-lg text-black animate-slideUp">Whoops! That page doesn't exist.</p>
-            </main>
-
-        </>
-
-    );
+  return (
+    <main className="flex flex-col items-center justify-center text-center">
+      <Image
+        src="/Error500.png"
+        alt="Error500"
+        width={500}
+        height={400}
+        className="animate-fadeIn mb-4"
+      />
+      <h1 className="animate-slideUp mb-3 text-center text-2xl font-bold text-gray-800">
+        500 Internal Error
+      </h1>
+      <p className="animate-slideUp text-4xl font-bold text-black">
+        Whoops! That page does not exist.
+      </p>
+    </main>
+  );
 }

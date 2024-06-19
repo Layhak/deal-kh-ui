@@ -16,6 +16,7 @@ export default function SkinCare() {
           <Image
             src="https://img.freepik.com/premium-vector/skin-care-sale-promotion-banner-woman-bathrobe-towel-gua-sha-massage-tools-eye-patches_372860-482.jpg?w=1380"
             className="h-[320px] w-[1300px] object-cover"
+            alt='Skincare banner'
           ></Image>
         </div>
         {/* Top Sale */}

@@ -1,29 +1,26 @@
 'use client';
 import {
-  Avatar,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Image,
+  Input,
   Navbar as NextUINavbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
   NavbarMenu,
   NavbarMenuToggle,
-  Button,
-  Link,
 } from '@nextui-org/react';
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
-import SearchBar from '@/components/SearchBar';
 
 import { usePathname } from 'next/navigation';
-import { signOut, signIn, useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { SetStateAction, useState } from 'react';
-import { Input, Image } from '@nextui-org/react';
-import { SearchIcon, HeartIcon, CartIcon, CloseIcon } from '@/components/icons';
+import { CartIcon, CloseIcon, HeartIcon, SearchIcon } from '@/components/icons';
 import CategoryButton from './CategoryButton';
 
 type ValueTypes = {
@@ -177,7 +174,13 @@ export const NavigationBar = () => {
               className="flex items-center justify-start gap-1"
               href="/"
             >
-              <Image src="/logo.png" alt="logo" width={70} height={70} />
+              <Image
+                src="/logo.png"
+                alt="Description of the image"
+                width={32}
+                height={32}
+              />
+              <p className="hidden text-sm font-bold text-inherit">DealKH</p>
             </NextLink>
             <NavbarItem className="hidden sm:flex">
               <CategoryButton categories={categories} />
@@ -193,8 +196,10 @@ export const NavigationBar = () => {
             <NavbarItem key={item.href} isActive={item.href === pathname}>
               <NextLink
                 className={`${
-                  item.href === pathname ? 'text-[#eb7d52]' : 'text-gray-800'
-                } transition-all ease-in-out hover:text-[#eb7d52]  font-medium`}
+                  item.href === pathname
+                    ? ' bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
+                    : 'text-foreground'
+                } transition-all ease-linear hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-600 hover:bg-clip-text hover:font-normal hover:text-transparent`}
                 href={item.href}
               >
                 {item.label}
@@ -203,15 +208,19 @@ export const NavigationBar = () => {
           ))}
         </NavbarContent>
         <NavbarContent className="hidden gap-4 sm:flex" justify="center">
-        <NavbarItem className="flex justify-center gap-4">
-          <ThemeSwitch />
-          <NextLink href="/wishlist">
-            <HeartIcon />
-          </NextLink>
-          <NextLink href="/cart">
-            <CartIcon />
-          </NextLink>
-        </NavbarItem>
+          <NavbarItem>
+            <ThemeSwitch />
+          </NavbarItem>
+          <NavbarItem className="hidden sm:flex">
+            <NextLink href="/wishlist">
+              <HeartIcon />
+            </NextLink>
+          </NavbarItem>
+          <NavbarItem className="hidden sm:flex">
+            <NextLink href="/cart">
+              <CartIcon />
+            </NextLink>
+          </NavbarItem>
           <NavbarItem>
             <NextLink href="/login">
               <button className="group relative flex w-full justify-center rounded-md border border-transparent bg-gradient-to-r from-pink-500 to-orange-500 px-4 py-2 text-sm font-medium text-white hover:from-pink-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2">
@@ -240,7 +249,7 @@ export const NavigationBar = () => {
                 <NextLink
                   className={
                     item.href === pathname
-                      ? 'text-[#eb7d52]'
+                      ? ' bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
                       : 'text-foreground'
                   }
                   href={item.href}
@@ -263,13 +272,17 @@ export const NavigationBar = () => {
     <NextUINavbar maxWidth="xl" position="sticky">
       {/* logo with search bar */}
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand className="max-w-fit gap-4">
-        <NextLink
-              className="flex items-center justify-start gap-1"
-              href="/"
-            >
-              <Image src="/logo.png" alt="logo" width={70} height={70} />
-            </NextLink>
+        <NavbarBrand className="max-w-fit gap-3">
+          <NextLink className="flex items-center justify-start gap-1" href="/">
+            <Image
+              src="/logo.png"
+              alt="Description of the image"
+              width={75}
+              height={75}
+            />
+            {/* <p className="font-bold text-warning">DealKH</p> */}
+          </NextLink>
+
           <NavbarItem className="hidden sm:flex">
             <CategoryButton categories={categories} />
           </NavbarItem>
@@ -279,16 +292,15 @@ export const NavigationBar = () => {
         </NavbarBrand>
       </NavbarContent>
       {/* List of nav bar */}
-      <NavbarContent
-        justify={'end'}
-        className={'hidden lg:flex lg:gap-6 lg:text-xl lg:font-medium '}
-      >
+      <NavbarContent justify={'end'} className={'hidden lg:flex'}>
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>
             <NextLink
               className={`${
-                item.href === pathname ? 'text-[#eb7d52]' : 'text-gray-800'
-              } transition-all ease-in-out hover:text-[#eb7d52]`}
+                item.href === pathname
+                  ? ' bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
+                  : 'text-foreground'
+              }  transition-all ease-in-out`}
               href={item.href}
             >
               {item.label}
@@ -300,7 +312,7 @@ export const NavigationBar = () => {
         className="enter hidden basis-1/5 sm:flex sm:basis-full lg:flex"
         justify="end"
       >
-        <NavbarItem className="flex justify-center gap-4">
+        <NavbarItem className="hidden justify-center gap-4 lg:flex">
           <ThemeSwitch />
           <NextLink href="/wishlist">
             <HeartIcon />
@@ -312,7 +324,7 @@ export const NavigationBar = () => {
 
         {isAuthenticated ? (
           <NavbarItem className="">
-            <Dropdown placement="bottom-end">
+            <Dropdown placement="bottom-end" shadow={'md'}>
               <DropdownTrigger>
                 {/* profile authentication */}
                 {/* <Avatar
@@ -324,7 +336,7 @@ export const NavigationBar = () => {
                 <Image
                   src={session.user?.image as string}
                   alt="Profile Image"
-                  className="mb-2 w-10 rounded-full border-2 border-[#eb7d52]"
+                  className="mb-2 h-8 w-8 rounded-full border-2 border-warning"
                 ></Image>
 
                 {/*  */}
@@ -395,7 +407,7 @@ export const NavigationBar = () => {
             <NavbarItem key={item.href} isActive={item.href === pathname}>
               <NextLink
                 className={
-                  item.href === pathname ? 'text-warning' : 'text-foreground'
+                  item.href === pathname ? 'text-[#EAB308]' : 'text-foreground'
                 }
                 href={item.href}
               >

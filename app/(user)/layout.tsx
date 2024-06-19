@@ -1,8 +1,10 @@
+
+
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
 import { Providers } from '@/app/(user)/providers';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
-import React, { Suspense } from 'react';
+import { Suspense } from 'react';
 import Loading from '@/app/(user)/loading';
 import error from '@/app/(user)/error';
 
@@ -11,9 +13,7 @@ import SessionWrapper from './SessionProvider';
 import { Metadata } from 'next';
 
 import { NavigationBar } from '@/components/navigationBar';
-import Header from '@/components/header/Header';
-import { usePathname } from 'next/navigation';
-import ConditionalHeader from '@/components/header/ConditionalHeader';
+import StoreProvider from '@/app/(user)/StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -39,18 +39,20 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={inter.className}>
       <SessionWrapper>
         <body>
-          <Providers>
-            <ConditionalHeader />
-            <NavigationBar />
-            <main className="container mx-auto min-h-[680px] max-w-7xl px-6">
-              <ErrorBoundary errorComponent={error}>
-                <Suspense fallback={<Loading />}>{children}</Suspense>
-              </ErrorBoundary>
-            </main>
-            <FooterComponent />
-          </Providers>
+          <StoreProvider>
+            <Providers>
+              <NavigationBar />
+              <main className="container mx-auto min-h-[680px] max-w-7xl px-6">
+                <ErrorBoundary errorComponent={error}>
+                  <Suspense fallback={<Loading />}>{children}</Suspense>
+                </ErrorBoundary>
+              </main>
+              <FooterComponent />
+            </Providers>
+          </StoreProvider>
         </body>
       </SessionWrapper>
     </html>
   );
 }
+

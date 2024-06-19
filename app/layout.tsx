@@ -8,6 +8,7 @@ import error from '@/app/(user)/error';
 
 import { Metadata } from 'next';
 import SessionWrapper from './(auth)/SessionProvider';
+import StoreProvider from '@/app/(user)/StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/icon.png',
-        alt: "DealKH Logo Ecommerce Website",
+        alt: 'DealKH Logo Ecommerce Website',
       },
     ],
   },
@@ -32,17 +33,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={inter.className}>
       <SessionWrapper>
-        <body>
-          <Providers>
-            <main>
-              <ErrorBoundary errorComponent={error}>
-                <Suspense fallback={<Loading />}>{children}</Suspense>
-              </ErrorBoundary>
-            </main>
-          </Providers>
-        </body>
+        <StoreProvider>
+          <body>
+            <Providers>
+              <main>
+                <ErrorBoundary errorComponent={error}>
+                  <Suspense fallback={<Loading />}>{children}</Suspense>
+                </ErrorBoundary>
+              </main>
+            </Providers>
+          </body>
+        </StoreProvider>
       </SessionWrapper>
     </html>
   );
 }
-

@@ -4,7 +4,7 @@ import { setAccessToken } from '@/redux/feature/auth/authSlice'; //
 //
 // Setting up prepareHeaders to include the token in the headers
 const baseQuery = fetchBaseQuery({
-  baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
+  baseUrl: process.env.NEXT_PUBLIC_DEALKH_API_URL,
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
     console.log('Token from prepareHeaders', token);

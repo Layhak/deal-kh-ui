@@ -4,9 +4,9 @@ import { Providers } from '@/app/providers';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { Suspense } from 'react';
 import Loading from '@/app/(user)/loading';
-import error from '@/app/error';
+import error from '@/app/(user)/error';
 
-import FooterComponent from '@/components/footerComponent';
+import FooterComponent from '@/components/FooterComponent';
 import SessionWrapper from '../SessionProvider';
 import { Metadata } from 'next';
 

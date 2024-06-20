@@ -21,39 +21,48 @@ const config: Config = {
   plugins: [
     nextui({
       themes: {
-        'purple-dark': {
-          extend: 'dark', // <- inherit default values from dark theme
+        light: {
+          extend: 'light',
           colors: {
-            background: '#0D001A',
-            foreground: '#ffffff',
+            background: '#ffffff',
+            foreground: '#000000',
             primary: {
-              50: '#3B096C',
-              100: '#520F83',
-              200: '#7318A2',
-              300: '#9823C2',
-              400: '#c031e2',
-              500: '#DD62ED',
-              600: '#F182F6',
-              700: '#FCADF9',
+              50: '#83184d',
+              100: '#9d1759',
+              200: '#be186a',
+              300: '#db2780',
+              400: '#ec4899',
+              500: '#f472b2',
+              600: '#f9a8d0',
+              700: '#fbcfe5',
               800: '#FDD5F9',
               900: '#FEECFE',
-              DEFAULT: '#DD62ED',
+              DEFAULT: '#EC4899',
               foreground: '#ffffff',
             },
-            focus: '#F182F6',
+            focus: '#db2780',
           },
-          layout: {
-            disabledOpacity: '0.3',
-            radius: {
-              small: '4px',
-              medium: '6px',
-              large: '8px',
+        },
+        'pink-dark': {
+          extend: 'dark',
+          colors: {
+            background: '#18181b',
+            foreground: '#ffffff',
+            primary: {
+              50: '#83184d',
+              100: '#9d1759',
+              200: '#be186a',
+              300: '#db2780',
+              400: '#ec4899',
+              500: '#f472b2',
+              600: '#f9a8d0',
+              700: '#fbcfe5',
+              800: '#FDD5F9',
+              900: '#FEECFE',
+              DEFAULT: '#EC4899',
+              foreground: '#ffffff',
             },
-            borderWidth: {
-              small: '1px',
-              medium: '2px',
-              large: '3px',
-            },
+            focus: '#db2780',
           },
         },
       },

@@ -2,7 +2,7 @@ import { Image, Link } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 
 // Fake product data API URL
-const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products';
+const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products/';
 
 type Product = {
   id: number;

@@ -1,5 +1,5 @@
 'use client';
-import { Image } from '@nextui-org/react';
+import { Image, Link } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 import { Reviews } from './review';
 import { MdExpandMore, MdExpandLess } from 'react-icons/md';
@@ -13,7 +13,7 @@ export default function ReviewProductDetailComponent() {
 
   return (
     <div className="mb-6 p-6">
-      <div className="mb-8 flex-1">
+      <div className="mb-16 flex-1">
         <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
           Customer <span className="text-[#eb7d52]">Review</span>
         </p>
@@ -41,7 +41,7 @@ export default function ReviewProductDetailComponent() {
               </div>
 
               {/* rating section */}
-              <div className='flex gap-2'>
+              <div className="flex gap-2">
                 <p className="font-semibold text-gray-700 dark:text-white">
                   Rating: {review.star.toFixed(1)}
                 </p>
@@ -79,11 +79,8 @@ export default function ReviewProductDetailComponent() {
             {/* comment section */}
             {/* text-2xl font-semibold text-gray-700 dark:text-white md:text-3xl */}
             <div className="mt-6 items-start">
-              <p className="text-lg font-semibold text-gray-700 dark:text-white">
-                {review.comment}
-              </p>
               <p className="mt-2 text-gray-600 dark:text-gray-300 ">
-                {review.description}
+                {review.comment}
               </p>
               <div className="mb-12 mt-4 flex">
                 {review.commentImages.map((image, imgIndex) => (
@@ -99,7 +96,6 @@ export default function ReviewProductDetailComponent() {
           </div>
         )
       )}
-
       {Reviews.length > 2 && (
         <div className="mt-4 flex justify-center">
           <button
@@ -108,13 +104,46 @@ export default function ReviewProductDetailComponent() {
           >
             {showAllReviews ? 'Show Less ' : 'Show More'}
             {showAllReviews ? (
-              <MdExpandLess className="ml-2 text-2xl mt-[2px] text-gray-800" />
+              <MdExpandLess className="ml-2 mt-[2px] text-2xl text-gray-800" />
             ) : (
-              <MdExpandMore className="ml-2 text-2xl mt-[2px] text-gray-800" />
+              <MdExpandMore className="ml-2 mt-[2px] text-2xl text-gray-800" />
             )}
           </button>
         </div>
       )}
+
+      {/* related product section */}
+      <div className="my-8 flex h-[50px] items-center justify-between">
+        <div className="flex-1">
+          <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
+            Related <span className="text-[#eb7d52]">Product</span>
+          </p>
+        </div>
+        <Link href="/buymoregetmore">
+          <div className="flex items-center  pt-1">
+            <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
+              See More
+            </p>
+            {/* Icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              color="black"
+              viewBox="0 0 48 48"
+            >
+              <path
+                fill="none"
+                stroke="#545c6a"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="4"
+                d="M42 24H6m24-12l12 12l-12 12"
+              />
+            </svg>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }

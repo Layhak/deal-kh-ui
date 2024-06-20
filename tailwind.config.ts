@@ -38,16 +38,14 @@ const config: Config = {
               800: '#FDD5F9',
               900: '#FEECFE',
               DEFAULT: '#EC4899',
-              foreground: '#ffffff',
+              foreground: '#000000',
             },
             focus: '#db2780',
           },
         },
-        'pink-dark': {
+        dark: {
           extend: 'dark',
           colors: {
-            background: '#18181b',
-            foreground: '#ffffff',
             primary: {
               50: '#83184d',
               100: '#9d1759',

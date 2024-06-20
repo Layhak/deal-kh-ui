@@ -1,20 +1,22 @@
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
-import { Providers } from '@/app/(user)/providers';
+import { Providers } from '@/app/providers';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { Suspense } from 'react';
 import Loading from '@/app/(user)/loading';
-import error from '@/app/(user)/error';
+import error from '@/app/error';
 
+import FooterComponent from '@/components/footerComponent';
 import { Metadata } from 'next';
-import SessionWrapper from './(auth)/SessionProvider';
-import StoreProvider from '@/app/(user)/StoreProvider';
+
+import { NavigationBar } from '@/components/navigationBar';
+import StoreProvider from '@/app/StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: '404 Not Found',
-  description: 'This is a 404 Not Found Page.',
+  description: 'This is a Error Page 404',
   openGraph: {
     images: [
       {
@@ -32,19 +34,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.className}>
-      <SessionWrapper>
+      <body>
         <StoreProvider>
-          <body>
-            <Providers>
-              <main>
-                <ErrorBoundary errorComponent={error}>
-                  <Suspense fallback={<Loading />}>{children}</Suspense>
-                </ErrorBoundary>
-              </main>
-            </Providers>
-          </body>
+          <Providers>
+            <NavigationBar />
+            <main className="container mx-auto min-h-[680px] max-w-7xl px-6">
+              <ErrorBoundary errorComponent={error}>
+                <Suspense fallback={<Loading />}>{children}</Suspense>
+              </ErrorBoundary>
+            </main>
+            <FooterComponent />
+          </Providers>
         </StoreProvider>
-      </SessionWrapper>
+      </body>
     </html>
   );
 }

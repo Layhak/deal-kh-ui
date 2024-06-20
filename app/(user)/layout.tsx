@@ -1,19 +1,17 @@
-
-
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
-import { Providers } from '@/app/(user)/providers';
+import { Providers } from '@/app/providers';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { Suspense } from 'react';
 import Loading from '@/app/(user)/loading';
-import error from '@/app/(user)/error';
+import error from '@/app/error';
 
 import FooterComponent from '@/components/footerComponent';
-import SessionWrapper from './SessionProvider';
+import SessionWrapper from '../SessionProvider';
 import { Metadata } from 'next';
 
 import { NavigationBar } from '@/components/navigationBar';
-import StoreProvider from '@/app/(user)/StoreProvider';
+import StoreProvider from '@/app/StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -55,4 +53,3 @@ export default function RootLayout({
     </html>
   );
 }
-

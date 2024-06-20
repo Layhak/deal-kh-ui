@@ -1,16 +1,15 @@
-"use client"
+'use client';
 
 import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
-import { Providers } from '@/app/(user)/providers';
-import { Suspense, useState } from 'react';
+import { Providers } from '@/app/providers';
+import { useState } from 'react';
 
-import SessionWrapper from '@/app/(user)/SessionProvider';
+import SessionWrapper from '@/app/SessionProvider';
 import NavbarSellerComponent from '../../components/seller/component/navbar/navbarComponent';
 import SidebarSellerComponent from '../../components/seller/component/sidebar/sidebarComponent';
 
 const inter = Inter({ subsets: ['latin'] });
-
 
 export default function RootLayout({
   children,
@@ -24,20 +23,19 @@ export default function RootLayout({
         <body className="bg-gray-100 dark:bg-black">
           <Providers>
             <div className="flex h-screen overflow-hidden">
-
               <SidebarSellerComponent />
 
               <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
-
-                <NavbarSellerComponent sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+                <NavbarSellerComponent
+                  sidebarOpen={sidebarOpen}
+                  setSidebarOpen={setSidebarOpen}
+                />
                 <main>
                   <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
                     {children}
                   </div>
                 </main>
-
               </div>
-
             </div>
           </Providers>
         </body>

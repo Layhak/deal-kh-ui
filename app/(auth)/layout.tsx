@@ -1,31 +1,54 @@
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
-import SessionWrapper from './SessionProvider';
-
-const inter = Inter({ subsets: ['latin'] });
+import { Metadata, Viewport } from 'next';
+import { siteConfig } from '@/config/site';
+import { fontSans } from '@/config/fonts';
+import clsx from 'clsx';
+import StoreProvider from '@/app/StoreProvider';
+import SessionWrapper from '@/app/SessionProvider';
+import { Providers } from '@/app/providers';
 
 export const metadata: Metadata = {
-  title: 'Login',
-  description: 'Login',
+  title: {
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
-export default function AuthLayout({
+export const viewport: Viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#fff' },
+    { media: '(prefers-color-scheme: dark)', color: '#333' },
+  ],
+};
+
+export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
-          
-            <body className={`${inter.className}`}>
-            
-              <main>
-                {children}
-              </main>
-            
-            </body>
-          
-        </html>
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <SessionWrapper>
+        <body
+          className={clsx(
+            'min-h-screen bg-background font-sans antialiased',
+            fontSans.variable
+          )}
+        >
+          <StoreProvider>
+            <Providers
+              themeProps={{ attribute: 'class', defaultTheme: 'dark' }}
+            >
+              <main>{children}</main>
+            </Providers>
+          </StoreProvider>
+        </body>
+      </SessionWrapper>
+    </html>
   );
 }

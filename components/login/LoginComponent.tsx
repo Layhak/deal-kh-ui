@@ -7,8 +7,6 @@ import NextLink from 'next/link';
 import 'aos/dist/aos.css';
 import Aos from 'aos';
 import { Button, Checkbox } from '@nextui-org/react';
-// import sidebarImage from '@/public/locker.svg';
-// authentication
 import { signIn } from 'next-auth/react';
 import { Logo } from '@/components/icons';
 import { selectToken, setAccessToken } from '@/redux/feature/auth/authSlice';
@@ -34,13 +32,12 @@ const validationSchema = Yup.object().shape({
   password: Yup.string().required('Password is required'),
 });
 
-const BaseUrl = process.env.NEXT_PUBLIC_LOCAL_HOST_API || '';
+const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
 
 export default function MyShop() {
   const dispatch = useAppDispatch();
   const showPassword = useAppSelector((state) => state.passwordVisibility);
   const token = useAppSelector(selectToken);
-  console.log('Token from Redux store', token);
   // useEffect(() => {
   //   dispatch(togglePasswordVisibility());
   // }, []);
@@ -56,7 +53,7 @@ export default function MyShop() {
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      const response = await fetch(`${BaseUrl}login/`, {
+      const response = await fetch(`${BaseUrl}login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -68,6 +65,7 @@ export default function MyShop() {
           console.log('Data in jwt test: ', data);
 
           dispatch(setAccessToken(data.accessToken));
+          localStorage.setItem('loggedIn', 'loggedIn');
           router.push('/');
         })
         .catch((error) => {
@@ -77,9 +75,6 @@ export default function MyShop() {
       console.error('Login error:', error);
     }
   };
-  // if (session) {
-  //   router.push('/');
-  // }
 
   useEffect(() => {
     Aos.init({ duration: 1000 });
@@ -119,13 +114,7 @@ export default function MyShop() {
               <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={async (values) => {
-                  await signIn('credentials', {
-                    email: values.email,
-                    password: values.password,
-                    callbackUrl: '/',
-                  });
-                }}
+                onSubmit={handleSubmit}
               >
                 {() => (
                   <Form action="#" method="POST" className="space-y-6">

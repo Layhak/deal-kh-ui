@@ -19,7 +19,8 @@ import {
   Pagination,
   Selection,
   ChipProps,
-  SortDescriptor
+  SortDescriptor,
+  Tooltip
 } from "@nextui-org/react";
 import {PlusIcon} from "./PlusIcon";
 import {VerticalDotsIcon} from "./VerticalDotsIcon";
@@ -30,6 +31,9 @@ import { CiEdit } from "react-icons/ci";
 import {columns, shops, statusOptions} from "./dataOwnShop";
 import CreateShopModal from "../popup/Shop/createShop";
 import ViewShopModal from "../popup/Shop/viewShop";
+import { EyeIcon } from "./EyeIcon";
+import { EditIcon } from "./EditIcon";
+import { DeleteIcon } from "./DeleteIcon";
 
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
@@ -164,6 +168,7 @@ export default function TableOwnShopComponent() {
             );
 
         case "actions":
+        
             return (
                 <div className="relative flex justify-start items-center gap-2">
                     <Dropdown>
@@ -198,28 +203,31 @@ export default function TableOwnShopComponent() {
                 </div>
             );
 
+        // case "actions":
+        // return (
+        //   <div className="relative flex items-center gap-2">
+        //     <Tooltip  content="View">
+        //       <span className="text-lg text- cursor-pointer active:opacity-50">
+        //         <EyeIcon />
+        //       </span>
+        //     </Tooltip>
+        //     <Tooltip content="Edit">
+        //       <span className="text-lg text-warning cursor-pointer active:opacity-50">
+        //         <EditIcon />
+        //       </span>
+        //     </Tooltip>
+        //     <Tooltip color="danger" content="Delete">
+        //       <span className="text-lg text-danger cursor-pointer active:opacity-50">
+        //         <DeleteIcon />
+        //       </span>
+        //     </Tooltip>
+        //   </div>
+        // );
+
         default:
             return <div>{cellValue}</div>;
     }
 }, []);
-
-
-  // const onNextPage = React.useCallback(() => {
-  //   if (page < pages) {
-  //     setPage(page + 1);
-  //   }
-  // }, [page, pages]);
-
-  // const onPreviousPage = React.useCallback(() => {
-  //   if (page > 1) {
-  //     setPage(page - 1);
-  //   }
-  // }, [page]);
-
-  // const onRowsPerPageChange = React.useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   setRowsPerPage(Number(e.target.value));
-  //   setPage(1);
-  // }, []);
 
   const onSearchChange = React.useCallback((value?: string) => {
     if (value) {
@@ -238,95 +246,38 @@ export default function TableOwnShopComponent() {
   const topContent = React.useMemo(() => {
     return (
       <div>
-        <h1 className="font-semibold text-2xl mb-8 text-black">List All Shopkeeper</h1>
-        <div className="flex justify-between ">
-          <CreateShopModal isOpen={isModalOpen} onClose={closeModal} />
-          <Button className="border font-semibold text-gray-600 text-lg border-stone-200 bg-slate-50 rounded-md" onClick={openModal}>
+        <h1 className="font-semibold text-2xl mb-8 text-black dark:text-gray-200">List All Shopkeeper</h1>
+        <div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0 md:space-x-4">
+          <Button 
+            className="w-full md:w-auto border font-semibold dark:bg-zinc-800 dark:text-gray-200 text-gray-100 text-lg border-stone-200 bg-slate-100 rounded-md" 
+            onClick={openModal}
+          >
             <PlusIcon /> Create Shop
+            <Chip color="warning" variant="faded">Faded</Chip>
           </Button>
           <Input
             isClearable
             classNames={{
-              base: "w-full sm:max-w-[300px] h-10",
-              inputWrapper: "border-1 border-gray-300 bg-slate-50 rounded-md transition-colors duration-200",
-              input: "h-full text-lg placeholder:text-lg focus:outline-none",
-              clearButton: "text-gray-500",
+              base: "w-full md:w-auto sm:max-w-[300px] h-10",
+              inputWrapper: "border-1 border-gray-300 bg-slate-50 dark:bg-zinc-800 rounded-md transition-colors duration-200",
+              input: "h-full text-lg dark:text-gray-200 placeholder:text-lg focus:outline-none",
+              clearButton: "text-gray-500 dark:text-gray-200",
             }}
             placeholder="Search..."
             size="md"
-            startContent={<SearchIcon className="text-gray-800 mr-2 text-lg" />}
+            startContent={<SearchIcon className="text-gray-800 dark:text-gray-200 mr-2 text-lg" />}
             value={filterValue}
             variant="bordered"
             onClear={() => setFilterValue('')}
             onValueChange={onSearchChange}
           />
-          {/* <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={visibleColumns}
-                selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}
-              >
-                {columns.map((column) => (
-                  <DropdownItem key={column.uid} className="capitalize">
-                    {capitalize(column.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-          </div> */}
         </div>
-        {/* <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} users</span>
-          <label className="flex items-center text-default-400 text-small">
-            Rows per page:
-            <select
-              className="bg-transparent outline-none text-default-400 text-small"
-              onChange={onRowsPerPageChange}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </label>
-        </div> */}
       </div>
     );
   }, [
     filterValue,
-    // statusFilter,
     visibleColumns,
     onSearchChange,
-    // onRowsPerPageChange,
     shops.length,
     hasSearchFilter,
   ]);
@@ -334,11 +285,6 @@ export default function TableOwnShopComponent() {
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-center items-center ">
-        {/* <span className="w-[30%] text-small text-default-400">
-          {selectedKeys === "all"
-            ? "All items selected"
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span> */}
         <Pagination
           isCompact
           showControls
@@ -348,14 +294,6 @@ export default function TableOwnShopComponent() {
           total={pages}
           onChange={setPage}
         />
-        {/* <div className="hidden sm:flex w-[30%] justify-end gap-2">
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
-            Previous
-          </Button>
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
-            Next  
-          </Button>
-        </div> */}
       </div>
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
@@ -368,8 +306,7 @@ export default function TableOwnShopComponent() {
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
       classNames={{
-        // wrapper: "max-h-[450px] w-[900px]",
-        table: "max-h-[450px] rounded-none",
+        table: "max-h-[450px] rounded-none no-shadow-table",
       }}
       selectedKeys={selectedKeys}
       selectionMode="multiple"
@@ -385,15 +322,15 @@ export default function TableOwnShopComponent() {
             key={column.uid}
             align={column.uid === "actions" ? "center" : "start"}
             allowsSorting={column.sortable}
-            style={{ fontWeight: "medium", fontSize: "12px",backgroundColor: "whitesmoke", margin: "20px 0"  }}
+            style={{ fontWeight: "medium", fontSize: "13px", }}
           >
             {column.name}
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody emptyContent={"No shops found"} items={sortedItems}>
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow key={item.id} className=" dark:text-white">
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}
@@ -402,3 +339,5 @@ export default function TableOwnShopComponent() {
     </div>
   );
 }
+
+

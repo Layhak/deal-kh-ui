@@ -6,10 +6,10 @@ interface DeleteProductModalProps {
   isOpen: boolean;
   onClose: () => void;
   onDelete: () => void;
-  shopName: string;
+  productName: string;
 }
 
-const DeleteShopModal: React.FC<DeleteProductModalProps> = ({ isOpen, onClose, onDelete, shopName }) => {
+const DeleteProductModal: React.FC<DeleteProductModalProps> = ({ isOpen, onClose, onDelete, productName }) => {
   const handleDelete = () => {
     onDelete(); 
   };
@@ -17,16 +17,16 @@ const DeleteShopModal: React.FC<DeleteProductModalProps> = ({ isOpen, onClose, o
   if (!isOpen) return null;
 
   return (
-    <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-8">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white dark:bg-zinc-900 rounded-lg shadow-lg w-full max-w-md p-8">
         <div className="flex justify-between items-center mb-4">
           <div className="text-lg font-bold text-orange-600">DealKH</div>
           <div className="cursor-pointer" onClick={onClose}>
             <HiMiniXMark size={24} color="black" />
           </div>
         </div>
-        <div className="flex justify-center m-5 text-slate-900 font-medium text-lg">
-          Are you sure you want to delete {shopName}?
+        <div className="flex text-center dark:text-gray-100 items-center justify-center m-5 text-slate-900 font-medium text-lg">
+          Are you sure you want to delete {productName}?
         </div>
         <div className="flex justify-center space-x-4 mt-5">
           <button
@@ -49,11 +49,11 @@ const DeleteShopModal: React.FC<DeleteProductModalProps> = ({ isOpen, onClose, o
   );
 };
 
-DeleteShopModal.propTypes = {
+DeleteProductModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  shopName: PropTypes.string.isRequired,
+  productName: PropTypes.string.isRequired,
 };
 
-export default DeleteShopModal;
+export default DeleteProductModal;

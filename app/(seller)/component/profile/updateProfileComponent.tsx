@@ -116,7 +116,7 @@ const UpdateProfileSellerComponent: React.FC = () => {
     
 
     return (
-        <div className="container mx-auto p-4 bg-white rounded-lg dark:bg-black text-black">
+        <div className="container mx-auto p-4 bg-white rounded-xl dark:text-gray-200 dark:bg-zinc-900 text-black">
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -130,7 +130,7 @@ const UpdateProfileSellerComponent: React.FC = () => {
                                     First Name
                                 </label>
                                 <Field
-                                    className="border px-3 py-2 text-gray-700 font-medium text-md border-stone-200 bg-slate-50 rounded-md focus:outline-none focus:ring-1 focus:ring-warning-500"
+                                    className="border dark:text-gray-200 placeholder:text-lg px-3 py-2 text-gray-700 font-medium text-md border-stone-200 bg-slate-50 rounded-md focus:outline-none focus:ring-1 focus:ring-warning-500"
                                     type="text"
                                     id="firstName"
                                     name="firstName"
@@ -187,204 +187,6 @@ const UpdateProfileSellerComponent: React.FC = () => {
                                     Email
                                 </label>
                                 <Field
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                
                                     className="border px-3 py-2 text-gray-700 font-medium text-md border-stone-200 bg-slate-50 rounded-md focus:outline-none focus:ring-1 focus:ring-warning-500"
                                     type="email"
                                     id="email"
@@ -412,24 +214,6 @@ const UpdateProfileSellerComponent: React.FC = () => {
                         </div>
 
                         <div className="flex gap-8 px-2">
-                            <div className="flex flex-col mb-4 flex-1 relative">
-                                <label className="mb-3 text-gray-700 font-bold dark:text-white" htmlFor="password">
-                                    Password
-                                </label>
-                                <Field
-                                    className="border px-3 py-2 text-gray-700 font-medium text-md border-stone-200 bg-slate-50 rounded-md focus:outline-none focus:ring-1 focus:ring-warning-500"
-                                    type={showConfirmPassword ? "text" : "password"}
-                                    id="password"
-                                    name="password"
-                                />
-                                <div
-                                    className="absolute top-11 right-4 cursor-pointer"
-                                    onClick={toggleConfirmPasswordVisibility}
-                                >
-                                {showConfirmPassword ? <RiEyeOffLine size={20} /> : <FaRegEye size={20} />}
-                                </div>
-                                
-                            </div>
                             <div className="flex flex-col mb-4 flex-1">
                                 <label className="mb-3 text-gray-700 font-bold dark:text-white" htmlFor="location">
                                     Location
@@ -493,11 +277,10 @@ const UpdateProfileSellerComponent: React.FC = () => {
                             </Button>
                         </Link>
                         <Link
-                            href="/profiles"
+                            href="/profiles/profileSellerUpdate"
                         >
                             <Button
                                 className="px-6 bg-gradient-to-tr from-pink-500 to-yellow-500 text-white text-md py-2 dark:text-white rounded-md focus:outline-none"
-                                variant="bordered"
                                 type="submit"
                             >
                                 <span className="relative z-10">Cancel</span>

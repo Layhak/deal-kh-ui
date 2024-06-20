@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import React, { useState } from "react";
 import {
   Table,
@@ -14,20 +13,21 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
-  User,
   Pagination,
   Selection,
   ChipProps,
-  SortDescriptor
+  SortDescriptor,
+  Image,
 } from "@nextui-org/react";
-import {PlusIcon} from "./PlusIcon";
-import {VerticalDotsIcon} from "./VerticalDotsIcon";
-import {SearchIcon} from "./SearchIcon";
-import {columns, products, statusOptions} from "./dataProduct";
+import { VerticalDotsIcon } from "@/app/(seller)/component/table/VerticalDotsIcon";
+import { SearchIcon } from "@/app/(seller)/component/table/SearchIcon";
+import { columns, products as initialProducts } from "@/app/(seller)/component/table/dataProduct"; 
 import { FiEye } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
+import CreateProduct from "@/app/(seller)/component/popup/product/createProduct";
+import ViewProductModal from "@/app/(seller)/component/popup/product/viewProduct";
+import DeleteProductModal from "@/app/(seller)/component/popup/product/deleteProduct";
 import { CiEdit } from "react-icons/ci";
-
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   active: "success",
@@ -35,9 +35,18 @@ const statusColorMap: Record<string, ChipProps["color"]> = {
   vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = ["image","name", "description", "price", "category", "discount","created", "actions"];
+const INITIAL_VISIBLE_COLUMNS = [
+  "image",
+  "name",
+  "description",
+  "price",
+  "category",
+  "discount",
+  "created",
+  "actions",
+];
 
-type User = typeof products[0];
+type User = typeof initialProducts[0];
 
 export default function TableDashboardComponent() {
   const [filterValue, setFilterValue] = React.useState("");
@@ -46,16 +55,42 @@ export default function TableDashboardComponent() {
   const [statusFilter, setStatusFilter] = React.useState<Selection>("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(7);
 
+  const [products, setProducts] = useState(initialProducts); 
+
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
+  const [modalProduct, setModalProduct] = useState<User | null>(null);
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [productToDelete, setProductToDelete] = useState<User | null>(null);
+
+  const openModal = (product: User) => {
+    setModalProduct(product);
+    setIsModalOpen(true);
+  };
+
   const closeModal = () => setIsModalOpen(false);
 
+  const openDeleteModal = (product: User) => {
+    setProductToDelete(product);
+    setIsDeleteModalOpen(true);
+  };
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false);
+    setProductToDelete(null); 
+  };
+
+  const handleDelete = () => {
+    if (productToDelete) {
+      setProducts((prevProducts) => prevProducts.filter((product) => product.id !== productToDelete.id));
+      closeDeleteModal();
+    }
+  };
 
   const [sortDescriptor, setSortDescriptor] = React.useState<SortDescriptor>({
     column: "age",
     direction: "ascending",
   });
-
 
   const [page, setPage] = React.useState(1);
 
@@ -72,7 +107,7 @@ export default function TableDashboardComponent() {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase()),
+        user.name.toLowerCase().includes(filterValue.toLowerCase())
       );
     }
 
@@ -98,95 +133,61 @@ export default function TableDashboardComponent() {
     });
   }, [sortDescriptor, items]);
 
-
   const renderCell = React.useCallback((user: User, columnKey: React.Key) => {
     const cellValue = user[columnKey as keyof User];
 
-    switch (columnKey) { 
-         case "image":
-            return (
-                <img
-                    src={user.avatar}
-                    alt={user.name}
-                    style={{ width: '50px', height: '50px', borderRadius: '5px' }}
-                />
-            );
-        case "name":
-            return (
-                <div>
-                    {cellValue}
-                </div>
-            );
-
-        case "description":
-            return (
-                <div>
-                    {cellValue}
-                </div>
-            );
-
-        case "price":
-            return (
-                <div>
-                    {cellValue}
-                </div>
-            );
-
-        case "category":
-            return (
-                <div>
-                    {cellValue}
-                </div>
-            );
-
-        case "discount":
-            return (
-                <div>
-                    {cellValue}
-                </div>
-            );
-
-        case "created":
-            return (
-                <div>
-                    {cellValue}
-                </div>
-            );
-        case "actions":
-            return (
-                <div>
-                    <Dropdown>
-                        <DropdownTrigger>
-                            <Button isIconOnly size="sm" variant="light">
-                                <VerticalDotsIcon className="text-default-300" />
-                            </Button>
-                        </DropdownTrigger>
-                        <DropdownMenu>
-                        <DropdownItem>
-                          <div className="flex gap-3 ">
-                            <FiEye className="w-5 h-5 text-gray-600" />
-                            <span>View</span>
-                          </div>  
-                        </DropdownItem>
-                        <DropdownItem>
-                          <div className="flex gap-3 ">
-                          <CiEdit className="w-5 h-5 text-gray-600" />
-                          <span>Edit</span>
-                          </div>
-                        </DropdownItem >
-                        <DropdownItem>
-                          <div className="flex gap-3">
-                          <RiDeleteBinLine className="w-5 h-5 text-gray-600" />
-                          <span>Delete</span>
-                          </div>
-                        </DropdownItem>
-                        </DropdownMenu>
-                    </Dropdown>
-                </div>
-            );
-
-        default:
-            return <div>{cellValue}</div>;
+    switch (columnKey) {
+      case "image":
+        return (
+          <Image
+            src={user.avatar}
+            alt={user.name}
+            style={{ width: "50px", height: "50px", borderRadius: "5px" }}
+          />
+        );
+      case "name":
+      case "description":
+      case "price":
+      case "category":
+      case "discount":
+        return <div>{String(cellValue)}</div>;
+      case "created":
+        const createdDate = new Date(cellValue);
+        return <div>{createdDate.toDateString()}</div>;
+      case "actions":
+        return (
+          <div>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button isIconOnly size="sm" variant="light">
+                  <VerticalDotsIcon className="text-default-300" />
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu>
+                <DropdownItem onClick={() => openModal(user)}>
+                  <div className="flex gap-3 ">
+                    <FiEye className="w-5 h-5 text-gray-600 font-semibold dark:text-gray-200" />
+                    <span className="dark:text-gray-200 font-semibold">View</span>
+                  </div>
+                </DropdownItem>
+                <DropdownItem>
+                  <div className="flex gap-3">
+                    <CiEdit className="w-5 h-5 text-gray-600 font-semibold dark:text-gray-200" />
+                    <span className="dark:text-gray-200 font-semibold">Edit</span>
+                  </div>
+                </DropdownItem>
+                <DropdownItem onClick={() => openDeleteModal(user)}>
+                  <div className="flex gap-3">
+                    <RiDeleteBinLine className="w-5 h-5 text-gray-600 dark:text-gray-200" />
+                    <span className="dark:text-gray-200 font-semibold">Delete</span>
+                  </div>
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          </div>
+        );
+      default:
+        return <div>{String(cellValue)}</div>;
     }
   }, []);
 
@@ -201,108 +202,34 @@ export default function TableDashboardComponent() {
 
   const topContent = React.useMemo(() => {
     return (
-      <div className="z-30">
-        <h1 className="font-semibold text-2xl mb-8 text-black">List All Products</h1>
-        <div className="flex justify-between z-30">
-          {/* <CreateShopModal isOpen={isModalOpen} onClose={closeModal} /> */}
-          <Button className="border text-gray-600 font-semibold text-lg border-stone-200 bg-slate-50 rounded-md" startContent={<PlusIcon />} onClick={openModal}>
-            Create Product
-          </Button>
+      <div className="z-10">
+        <h1 className="font-semibold text-2xl mb-8 dark:text-gray-200 text-black">List All Products</h1>
+        <div className="flex justify-between z-10">
+          <CreateProduct />
           <Input
             isClearable
             classNames={{
-                base: "w-full sm:max-w-[300px] h-10", // Adjust height as per requirement
-                inputWrapper: "border-1 border-gray-300 bg-slate-50 rounded-md transition-colors duration-200 ", // Custom border and rounded corners
-                input: "h-full text-lg placeholder:text-lg focus:outline-none focus:ring-1 focus:ring-warning-500", // Custom padding
-                clearButton: "text-gray-500", // Custom style for the clear button
+              base: "w-full sm:max-w-[300px] h-10",
+              inputWrapper: "border-1 border-gray-300 bg-slate-50 dark:bg-zinc-800 rounded-md transition-colors duration-200",
+              input: "h-full text-lg dark:text-gray-200 placeholder:text-lg focus:outline-none",
+              clearButton: "text-gray-500 dark:text-gray-200",
             }}
             placeholder="Search..."
             size="md"
-            startContent={<SearchIcon className="text-gray-800 mr-2 text-lg" />}
+            startContent={<SearchIcon className="text-gray-800 dark:text-gray-200 mr-2 text-lg" />}
             value={filterValue}
             variant="bordered"
             onClear={() => setFilterValue('')}
             onValueChange={onSearchChange}
-        />
-          {/* <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={visibleColumns}
-                selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}
-              >
-                {columns.map((column) => (
-                  <DropdownItem key={column.uid} className="capitalize">
-                    {capitalize(column.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-          </div> */}
+          />
         </div>
-        {/* <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} users</span>
-          <label className="flex items-center text-default-400 text-small">
-            Rows per page:
-            <select
-              className="bg-transparent outline-none text-default-400 text-small"
-              onChange={onRowsPerPageChange}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </label>
-        </div> */}
       </div>
     );
-  }, [
-    filterValue,
-    // statusFilter,
-    visibleColumns,
-    onSearchChange,
-    // onRowsPerPageChange,
-    products.length,
-    hasSearchFilter,
-  ]);
+  }, [filterValue, visibleColumns, onSearchChange, products.length, hasSearchFilter]);
 
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-center items-center ">
-        {/* <span className="w-[30%] text-small text-default-400">
-          {selectedKeys === "all"
-            ? "All items selected"
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span> */}
         <Pagination
           isCompact
           showControls
@@ -312,14 +239,6 @@ export default function TableDashboardComponent() {
           total={pages}
           onChange={setPage}
         />
-        {/* <div className="hidden sm:flex w-[30%] justify-end gap-2">
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
-            Previous
-          </Button>
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
-            Next  
-          </Button>
-        </div> */}
       </div>
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
@@ -327,42 +246,64 @@ export default function TableDashboardComponent() {
   return (
     <div>
       <Table
-      aria-label="Example table with custom cells, pagination and sorting"
-      isHeaderSticky
-      bottomContent={bottomContent}
-      bottomContentPlacement="outside"
-      classNames={{
-        // wrapper: "max-h-[450px] w-[900px]",
-        table: "max-h-[450px] z-0",
-      }}
-      selectedKeys={selectedKeys}
-      selectionMode="multiple"
-      sortDescriptor={sortDescriptor}
-      topContent={topContent}
-      topContentPlacement="outside"
-      onSelectionChange={setSelectedKeys}
-      onSortChange={setSortDescriptor}
-    >
-      <TableHeader columns={headerColumns}>
-        {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-            allowsSorting={column.sortable}
-            style={{ fontWeight: "medium", fontSize: "12px",backgroundColor: "whitesmoke", margin: "20px 0"  }}
-          >
-            {column.name}
-          </TableColumn>
-        )}
-      </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
-        {(item) => (
-          <TableRow key={item.id}>
-            {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+        aria-label="Example table with custom cells, pagination and sorting"
+        isHeaderSticky
+        bottomContent={bottomContent}
+        bottomContentPlacement="outside"
+        classNames={{
+          table: "max-h-[450px] z-0",
+        }}
+        selectedKeys={selectedKeys}
+        selectionMode="multiple"
+        sortDescriptor={sortDescriptor}
+        topContent={topContent}
+        topContentPlacement="outside"
+        onSelectionChange={setSelectedKeys}
+        onSortChange={setSortDescriptor}
+      >
+        <TableHeader columns={headerColumns}>
+          {(column) => (
+            <TableColumn
+              key={column.uid}
+              align={column.uid === "actions" ? "center" : "start"}
+              allowsSorting={column.sortable}
+              style={{ fontWeight: "medium", fontSize: "13px" }}
+            >
+              {column.name}
+            </TableColumn>
+          )}
+        </TableHeader>
+        <TableBody emptyContent={"No users found"} items={sortedItems}>
+          {(item) => (
+            <TableRow key={item.id} className=" dark:text-white">
+              {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>
+      {modalProduct && (
+        <ViewProductModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          productDetails={{
+            imageUrl: modalProduct.avatar,
+            name: modalProduct.name,
+            description: modalProduct.description,
+            price: modalProduct.price,
+            category: modalProduct.category,
+            discount: modalProduct.discount,
+            created: modalProduct.created.toISOString(),
+          }}
+        />
+      )}
+      {productToDelete && (
+        <DeleteProductModal
+          isOpen={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          onDelete={handleDelete} 
+          productName={productToDelete.name} 
+        />
+      )}
     </div>
   );
 }

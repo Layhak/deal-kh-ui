@@ -2,7 +2,7 @@
 
 import { GoogleMap, LoadScript, Marker, InfoWindow } from '@react-google-maps/api';
 import { useState, useEffect, useCallback } from 'react';
-import { Shop } from '../types/shop';
+import { Shop } from '@/app/(seller)/component/types/shop';
 
 type MapComponentProps = {
     shops: Shop[];

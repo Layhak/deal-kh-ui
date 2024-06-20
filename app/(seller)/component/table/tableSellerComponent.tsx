@@ -21,14 +21,13 @@ import {
   ChipProps,
   SortDescriptor
 } from "@nextui-org/react";
-import {PlusIcon} from "./PlusIcon";
-import {VerticalDotsIcon} from "./VerticalDotsIcon";
-import {SearchIcon} from "./SearchIcon";
+import {PlusIcon} from "@/app/(seller)/component/table/PlusIcon";
+import { VerticalDotsIcon } from "@/app/(seller)/component/table/VerticalDotsIcon";
+import { SearchIcon } from "@/app/(seller)/component/table/SearchIcon";
 import { FiEye } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { CiEdit } from "react-icons/ci";
-import { columns, sellers, statusOptions } from "./dataSeller";
-
+import { columns, sellers, statusOptions } from "@/app/(seller)/component/table/dataSeller";
 
 const statusColorMap: Record<string, ChipProps["color"]> = {
   active: "success",
@@ -194,24 +193,6 @@ export default function TableSellerComponent() {
     }
 }, []);
 
-
-  // const onNextPage = React.useCallback(() => {
-  //   if (page < pages) {
-  //     setPage(page + 1);
-  //   }
-  // }, [page, pages]);
-
-  // const onPreviousPage = React.useCallback(() => {
-  //   if (page > 1) {
-  //     setPage(page - 1);
-  //   }
-  // }, [page]);
-
-  // const onRowsPerPageChange = React.useCallback((e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   setRowsPerPage(Number(e.target.value));
-  //   setPage(1);
-  // }, []);
-
   const onSearchChange = React.useCallback((value?: string) => {
     if (value) {
       setFilterValue(value);
@@ -229,95 +210,35 @@ export default function TableSellerComponent() {
   const topContent = React.useMemo(() => {
     return (
       <div>
-        <h1 className="font-semibold text-2xl mb-8 text-black">List All Sellers</h1>
+        <h1 className="font-semibold text-2xl mb-8 dark:text-gray-200 text-black">List All Sellers</h1>
         <div className="flex justify-between ">
           {/* <CreateShopModal isOpen={isModalOpen} onClose={closeModal} /> */}
-          <Button className="border text-gray-600 font-semibold text-lg border-stone-200 bg-slate-50 rounded-md" startContent={<PlusIcon />} onClick={openModal}>
-            Create Seller
+          <Button className="border font-semibold dark:bg-zinc-800 dark:text-gray-200 text-gray-600 text-lg border-stone-200 bg-slate-50  rounded-md" onClick={openModal}>
+            <PlusIcon /> Create Seller
           </Button>
           <Input
             isClearable
             classNames={{
-                base: "w-full sm:max-w-[300px] h-10", // Adjust height as per requirement
-                inputWrapper: "border-1 border-gray-300 bg-slate-50 rounded-md transition-colors duration-200", // Custom border and rounded corners
-                input: "h-full text-lg placeholder:text-lg focus:outline-none", // Custom padding
-                clearButton: "text-gray-500", // Custom style for the clear button
+              base: "w-full sm:max-w-[300px] h-10",
+              inputWrapper: "border-1 border-gray-300 bg-slate-50 dark:bg-zinc-800 rounded-md transition-colors duration-200",
+              input: "h-full text-lg dark:text-gray-200 placeholder:text-lg focus:outline-none",
+              clearButton: "text-gray-500 dark:text-gray-200",
             }}
             placeholder="Search..."
             size="md"
-            startContent={<SearchIcon className="text-gray-800 mr-2 text-lg" />}
+            startContent={<SearchIcon className="text-gray-800 dark:text-gray-200 mr-2 text-lg" />}
             value={filterValue}
             variant="bordered"
             onClear={() => setFilterValue('')}
             onValueChange={onSearchChange}
-        />
-          {/* <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                  Status
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={statusFilter}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
-              >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {capitalize(status.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
-                  Columns
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                selectedKeys={visibleColumns}
-                selectionMode="multiple"
-                onSelectionChange={setVisibleColumns}
-              >
-                {columns.map((column) => (
-                  <DropdownItem key={column.uid} className="capitalize">
-                    {capitalize(column.name)}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-          </div> */}
+          />
         </div>
-        {/* <div className="flex justify-between items-center">
-          <span className="text-default-400 text-small">Total {users.length} users</span>
-          <label className="flex items-center text-default-400 text-small">
-            Rows per page:
-            <select
-              className="bg-transparent outline-none text-default-400 text-small"
-              onChange={onRowsPerPageChange}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </label>
-        </div> */}
       </div>
     );
   }, [
     filterValue,
-    // statusFilter,
     visibleColumns,
     onSearchChange,
-    // onRowsPerPageChange,
     sellers.length,
     hasSearchFilter,
   ]);
@@ -325,11 +246,6 @@ export default function TableSellerComponent() {
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-center items-center ">
-        {/* <span className="w-[30%] text-small text-default-400">
-          {selectedKeys === "all"
-            ? "All items selected"
-            : `${selectedKeys.size} of ${filteredItems.length} selected`}
-        </span> */}
         <Pagination
           isCompact
           showControls
@@ -339,14 +255,6 @@ export default function TableSellerComponent() {
           total={pages}
           onChange={setPage}
         />
-        {/* <div className="hidden sm:flex w-[30%] justify-end gap-2">
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onPreviousPage}>
-            Previous
-          </Button>
-          <Button isDisabled={pages === 1} size="sm" variant="flat" onPress={onNextPage}>
-            Next  
-          </Button>
-        </div> */}
       </div>
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
@@ -359,7 +267,6 @@ export default function TableSellerComponent() {
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
       classNames={{
-        // wrapper: "max-h-[450px] w-[900px]",
         table: "max-h-[450px]",
       }}
       selectedKeys={selectedKeys}
@@ -376,7 +283,7 @@ export default function TableSellerComponent() {
             key={column.uid}
             align={column.uid === "actions" ? "center" : "start"}
             allowsSorting={column.sortable}
-            style={{ fontWeight: "medium", fontSize: "12px",backgroundColor: "whitesmoke", margin: "20px 0"  }}
+            style={{ fontWeight: "medium", fontSize: "13px"}}
           >
             {column.name}
           </TableColumn>
@@ -384,7 +291,7 @@ export default function TableSellerComponent() {
       </TableHeader>
       <TableBody emptyContent={"No users found"} items={sortedItems}>
         {(item) => (
-          <TableRow key={item.id}>
+          <TableRow key={item.id} className=" dark:text-white">
             {(columnKey) => <TableCell>{renderCell(item, columnKey)}</TableCell>}
           </TableRow>
         )}

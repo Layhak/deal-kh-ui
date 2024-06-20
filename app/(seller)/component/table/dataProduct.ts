@@ -2,11 +2,11 @@
 const columns = [
   { name: "IMAGE", uid: "image" },
   { name: "PRODUCT NAME", uid: "name", sortable: true },
-  { name: "DESCRIPTION", uid: "description", sortable: true },
-  { name: "PRICE", uid: "price", sortable: true },
+  { name: "DESCRIPTION", uid: "description" },
+  { name: "PRICE", uid: "price" },
   { name: "CATEGORY", uid: "category" },
-  { name: "DISCOUNT TYPE", uid: "discount", sortable: true },
-  { name: "CREATED AT", uid: "created", sortable: true },
+  { name: "DISCOUNT TYPE", uid: "discount"},
+  { name: "CREATED AT", uid: "created"},
   { name: "ACTIONS", uid: "actions" },
 ];
 
@@ -26,7 +26,7 @@ const products = [
     category: "shoes",
     avatar: "https://i.pinimg.com/236x/e2/7a/60/e27a60059cafc9c83328da00375acd68.jpg",
     discount: "seasonal",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 2,
@@ -37,7 +37,7 @@ const products = [
     category: "jackets",
     avatar: "https://i.pinimg.com/236x/91/46/82/91468255ae1c08420894ad9a9742899a.jpg",
     discount: "clearance",
-    created: "2024-07-01",
+    created: new Date(),
   },
   {
     id: 3,
@@ -48,7 +48,7 @@ const products = [
     category: "hats",
     avatar: "https://i.pinimg.com/236x/2c/ed/32/2ced32983e0df1ca6e66bdd6ab4d0bec.jpg",
     discount: "coupon",
-    created: "2024-02-01",
+    created: new Date(),
   },
   {
     id: 4,
@@ -59,7 +59,7 @@ const products = [
     category: "accessories",
     avatar: "https://i.pinimg.com/474x/58/01/d2/5801d2113db483b9c980ea7c79da4355.jpg",
     discount: "seasonal",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 5,
@@ -70,7 +70,7 @@ const products = [
     category: "shoes",
     avatar: "https://i.pinimg.com/236x/a1/ce/c3/a1cec311c145219305cbc62c72e1f748.jpg",
     discount: "clearance",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 6,
@@ -81,7 +81,7 @@ const products = [
     category: "bags",
     avatar: "https://i.pinimg.com/236x/c2/59/cb/c259cb3853f69273d5437c170d5355fa.jpg",
     discount: "coupon",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 7,
@@ -92,7 +92,7 @@ const products = [
     category: "shirts",
     avatar: "https://i.pinimg.com/236x/d5/fe/f0/d5fef033c2c73e03bcbf30b79bf1da9a.jpg",
     discount: "seasonal",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 8,
@@ -103,6 +103,7 @@ const products = [
     category: "pants",
     avatar: "https://i.pinimg.com/236x/2c/ed/32/2ced32983e0df1ca6e66bdd6ab4d0bec.jpg",
     discount: "clearance",
+    created: new Date(),
   },
   {
     id: 9,
@@ -113,7 +114,7 @@ const products = [
     category: "suits",
     avatar: "https://i.pinimg.com/236x/a0/67/3a/a0673a59eba6410bf8f3c8ad34f145d8.jpg",
     discount: "coupon",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 10,
@@ -124,7 +125,7 @@ const products = [
     category: "accessories",
     avatar: "https://i.pinimg.com/236x/65/91/08/659108f49d07c95f0c968a9b6e185e30.jpg",
     discount: "seasonal",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 11,
@@ -135,7 +136,7 @@ const products = [
     category: "jackets",
     avatar: "https://i.pinimg.com/236x/cc/fe/98/ccfe988d730cdd444d5007c226482fa5.jpg",
     discount: "clearance",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 12,
@@ -146,7 +147,7 @@ const products = [
     category: "shoes",
     avatar: "https://i.pinimg.com/236x/87/98/2c/87982c75762467ace8fbf1a556f6081e.jpg",
     discount: "coupon",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 13,
@@ -157,7 +158,7 @@ const products = [
     category: "hats",
     avatar: "https://i.pinimg.com/236x/28/45/b0/2845b048562270037bcf8a5543ea095d.jpg",
     discount: "seasonal",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 14,
@@ -168,7 +169,7 @@ const products = [
     category: "shirts",
     avatar: "https://i.pinimg.com/236x/e4/fd/b9/e4fdb9c7fbdb12af57a27d42ee616e24.jpg",
     discount: "clearance",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 15,
@@ -179,7 +180,7 @@ const products = [
     category: "pants",
     avatar: "https://i.pinimg.com/236x/d2/11/16/d211166ccd842b73bc272d9b406662a6.jpg",
     discount: "coupon",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 16,
@@ -190,7 +191,7 @@ const products = [
     category: "bags",
     avatar: "https://i.pinimg.com/236x/64/15/6d/64156d524517d944f3afba0ec3bd002e.jpg",
     discount: "seasonal",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 17,
@@ -201,7 +202,7 @@ const products = [
     category: "suits",
     avatar: "https://i.pinimg.com/474x/d8/62/90/d862900b0fe38a5e3a9370818029d73a.jpg",
     discount: "clearance",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 18,
@@ -212,7 +213,7 @@ const products = [
     category: "shoes",
     avatar: "https://i.pinimg.com/236x/6a/b0/9d/6ab09deb018710223caa13f3bac464b2.jpg",
     discount: "coupon",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 19,
@@ -223,7 +224,7 @@ const products = [
     category: "hats",
     avatar: "https://i.pinimg.com/236x/27/51/88/2751886a2fc1318eb45c9955c0709b06.jpg",
     discount: "seasonal",
-    created: "2024-06-01",
+    created: new Date(),
   },
   {
     id: 20,
@@ -234,7 +235,7 @@ const products = [
     category: "jackets",
     avatar: "https://i.pinimg.com/236x/c8/e1/97/c8e197be005cb35b31f4f4d98426b6b8.jpg",
     discount: "clearance",
-    created: "2024-06-01",
+    created: new Date(),
   },
 ];
 

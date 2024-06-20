@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { HiMiniXMark } from 'react-icons/hi2';
 import { FaRegEye } from "react-icons/fa6";
-import PropTypes from 'prop-types';
 import { RiEyeOffLine } from "react-icons/ri";
 
-const ResetPasswordModal = ({ isOpen, onClose }) => {
+interface ResetPasswordModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -69,11 +73,6 @@ const ResetPasswordModal = ({ isOpen, onClose }) => {
       </div>
     </div>
   );
-};
-
-ResetPasswordModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default ResetPasswordModal;

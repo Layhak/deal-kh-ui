@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { HiMiniXMark } from 'react-icons/hi2';
-import PropTypes from 'prop-types';
 import { BsExclamationCircle } from "react-icons/bs";
 
-const LogoutModal = ({ isOpen, onClose }) => {
+interface LogoutModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const LogoutModal: React.FC<LogoutModalProps> = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -26,24 +30,18 @@ const LogoutModal = ({ isOpen, onClose }) => {
             <HiMiniXMark size={24} color="black" />
           </div>
         </div>
-        {/* <h2 className="text-2xl font-bold text-slate-900 mb-6">Log Out</h2> */}
         <div className="flex justify-center m-5 text-slate-900 font-medium text-lg">
             <BsExclamationCircle className="mr-3 mt-1" />
             <p> Are you sure you want to Logout ?</p>
         </div>
 
         <div className="flex justify-center space-x-4 mt-5">
-            <button type="button" className="px-4 py-2 border border-gray-300  border-orange-500 text-orange-600 font-semibold rounded-lg" onClick={onClose}>No</button>
+            <button type="button" className="px-4 py-2 border border-orange-500 text-orange-600 font-semibold rounded-lg" onClick={onClose}>No</button>
             <button type="submit" className="px-4 py-2 bg-gradient-to-r from-pink-500 to-orange-500 text-white font-semibold rounded-lg">Yes</button>
         </div>
       </div>
     </div>
   );
-};
-
-LogoutModal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
 };
 
 export default LogoutModal;

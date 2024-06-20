@@ -62,10 +62,9 @@ export default function MyShop() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log('Data in jwt test: ', data);
-
           dispatch(setAccessToken(data.accessToken));
           localStorage.setItem('loggedIn', 'loggedIn');
+          localStorage.setItem('showSuccessToast', 'true'); // Set the flag
           router.push('/');
         })
         .catch((error) => {
@@ -94,11 +93,11 @@ export default function MyShop() {
           <div>
             <div className={'mt-8 flex items-center gap-2'}>
               <Logo />
-              <h2 className=" text-gray-900  dark:text-gray-200 text-2xl font-bold leading-9 tracking-tight">
+              <h2 className=" text-2xl  font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-200">
                 Sign in to your account
               </h2>
             </div>
-            <p className="text-gray-500 dark:text-gray-400 mt-2 text-sm leading-6">
+            <p className="mt-2 text-sm leading-6 text-gray-500 dark:text-gray-400">
               Not a member?{' '}
               <NextLink
                 href="/register"
@@ -121,7 +120,7 @@ export default function MyShop() {
                     <div>
                       <label
                         htmlFor="email"
-                        className="text-gray-900 dark:text-gray-300 block text-sm font-medium leading-6"
+                        className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
                       >
                         Email address
                       </label>
@@ -132,7 +131,7 @@ export default function MyShop() {
                           type="email"
                           autoComplete="email"
                           required
-                          className="ring-gray-300 placeholder:text-gray-400 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                       </div>
                       <ErrorMessage
@@ -156,7 +155,7 @@ export default function MyShop() {
                           type={showPassword ? 'text' : 'password'}
                           autoComplete="current-password"
                           required
-                          className="ring-gray-300 placeholder:text-gray-400 block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         />
                         {!showPassword ? (
                           <IoEyeOffSharp
@@ -198,7 +197,7 @@ export default function MyShop() {
                       <Button
                         color={'warning'}
                         className={
-                          ' text-gray-50 w-full bg-gradient-to-tr from-pink-500 to-yellow-500 '
+                          ' w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-gray-50 '
                         }
                         type="submit"
                         variant="shadow"
@@ -217,10 +216,10 @@ export default function MyShop() {
                   className="absolute inset-0 flex items-center"
                   aria-hidden="true"
                 >
-                  <div className="border-gray-200 w-full border-t" />
+                  <div className="w-full border-t border-gray-200" />
                 </div>
                 <div className="relative flex justify-center text-sm font-medium leading-6">
-                  <span className="text-gray-900 dark:text-gray-300 bg-white px-6  dark:bg-black">
+                  <span className="bg-white px-6 text-gray-900 dark:bg-black  dark:text-gray-300">
                     Or continue with
                   </span>
                 </div>
@@ -229,7 +228,7 @@ export default function MyShop() {
               <div className="mt-6 grid grid-cols-2 gap-4">
                 <NextLink
                   href="#"
-                  className="bg-gray-50 hover:bg-gray-300 flex w-full items-center justify-center gap-3 rounded-md border-1 px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+                  className="flex w-full items-center justify-center gap-3 rounded-md border-1 bg-gray-50 px-3 py-1.5 text-white hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
                   onClick={() => signIn('google')}
                 >
                   <svg
@@ -255,14 +254,14 @@ export default function MyShop() {
                       d="M130.55 50.479c24.514 0 41.05 10.589 50.479 19.438l36.844-35.974C195.245 12.91 165.798 0 130.55 0C79.49 0 35.393 29.301 13.925 71.947l42.211 32.783c10.59-31.477 39.891-54.251 74.414-54.251"
                     />
                   </svg>
-                  <span className="text-gray-800 text-sm font-semibold leading-6">
+                  <span className="text-sm font-semibold leading-6 text-gray-800">
                     Google
                   </span>
                 </NextLink>
 
                 <NextLink
                   href="#"
-                  className="hover:bg-gray-900 flex w-full items-center justify-center gap-3 rounded-md bg-[#24292F] px-3 py-1.5 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]"
+                  className="flex w-full items-center justify-center gap-3 rounded-md bg-[#24292F] px-3 py-1.5 text-white hover:bg-gray-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#24292F]"
                   onClick={() => signIn('github')}
                 >
                   <svg

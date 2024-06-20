@@ -12,6 +12,8 @@ import { Metadata } from 'next';
 
 import { NavigationBar } from '@/components/navigationBar';
 import StoreProvider from '@/app/StoreProvider';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -46,6 +48,7 @@ export default function RootLayout({
                 </ErrorBoundary>
               </main>
               <FooterComponent />
+              <ToastContainer />
             </Providers>
           </StoreProvider>
         </body>

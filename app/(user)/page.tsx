@@ -6,12 +6,30 @@ import 'aos/dist/aos.css';
 import { useEffect } from 'react';
 import HeroSlideComponent from '@/components/slider/HeroSlide';
 import ShopCardComponent from '@/components/card/Shop';
+import { toast } from 'react-toastify';
+import { useTheme } from 'next-themes';
 
 export default function HomePage() {
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);
+  const { theme } = useTheme(); // Get the current theme
 
+  useEffect(() => {
+    if (localStorage.getItem('showSuccessToast') === 'true') {
+      toast.success('Successfully logged in!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      localStorage.removeItem('showSuccessToast'); // Clear the flag
+    }
+  }, []);
   return (
     <>
       <main>

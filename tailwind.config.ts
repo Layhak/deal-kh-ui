@@ -10,11 +10,15 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      // backgroundImage: {
-      //     "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-      //     "gradient-conic":
-      //         "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      // },
+      keyframes: {
+        'text-gradient': {
+          '0%': { backgroundPosition: '0% 50%' },
+          '100%': { backgroundPosition: '-200% 50%' },
+        },
+      },
+      animation: {
+        'text-gradient': 'text-gradient 3s linear infinite',
+      },
     },
   },
   darkMode: 'class',

@@ -30,7 +30,10 @@ import { useTheme } from 'next-themes';
 import AuthLink from '@/components/auth/AuthLink';
 import { signOut } from '@/app/Auth/auth';
 import { useSubmitFormMutation } from '@/redux/api';
-import { logoutUser, selectLogoutState } from '@/redux/feature/logout/logoutSlice';
+import {
+  logoutUser,
+  selectLogoutState,
+} from '@/redux/feature/logout/logoutSlice';
 
 type ValueTypes = {
   email: string;
@@ -145,7 +148,8 @@ export const NavigationBar = () => {
       <Input
         aria-label="First Input"
         classNames={{
-          inputWrapper: 'bg-default-100 rounded-none rounded-l-xl',
+          inputWrapper:
+            'bg-default-100 rounded-none rounded-l-xl w-[200px] mt-1',
           input: 'text-sm',
         }}
         labelPlacement="outside"
@@ -170,7 +174,8 @@ export const NavigationBar = () => {
       <Input
         aria-label="Second Input"
         classNames={{
-          inputWrapper: 'bg-default-100 rounded-none rounded-r-xl',
+          inputWrapper:
+            'bg-default-100 rounded-none rounded-r-xl w-[200px] mt-1',
           input: 'text-sm',
         }}
         labelPlacement="outside"
@@ -212,22 +217,20 @@ export const NavigationBar = () => {
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand className="max-w-fit gap-4">
-          <NextLink className="flex items-center justify-start gap-1" href="/">
-            <Image
-              src="/logo.png"
-              alt="Description of the image"
-              width={32}
-              height={32}
-            />
-            <p className="hidden text-sm font-bold text-inherit">DealKH</p>
+      <NavbarContent>
+        <NavbarBrand>
+          <NextLink href="/" className="h-12 w-12">
+            <Image src="/logo.png" alt="logo" className="h-12 w-12" />
           </NextLink>
-          <NavbarItem className="hidden sm:flex">
+        </NavbarBrand>
+      </NavbarContent>
+      <NavbarContent>
+        <div className="flex gap-4">
+          <NavbarItem className="hidden sm:flex ">
             <CategoryButton categories={categories} />
           </NavbarItem>
           <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-        </NavbarBrand>
+        </div>
       </NavbarContent>
       <NavbarContent justify={'start'} className={'hidden gap-4 px-16 sm:flex'}>
         {siteConfig.navItems.map((item) => (
@@ -305,7 +308,7 @@ export const NavigationBar = () => {
             <>
               <NavbarItem>
                 <NextLink href="/login">
-                  <button className="rouneded-md bg-warning px-2 text-white">
+                  <button className="rouneded-md bg-warning text-white">
                     Login
                   </button>
                 </NextLink>

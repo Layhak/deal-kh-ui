@@ -24,7 +24,7 @@ export default function CardDetailComponent({}) {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 lg:py-8">
       <div className="grid grid-cols-1 content-center gap-8 sm:grid-cols-2">
         {/* Product Image */}
         <div className="rounded-lg text-center">
@@ -37,7 +37,7 @@ export default function CardDetailComponent({}) {
         {/* Product Details */}
         <div className="md:flex md:flex-col md:gap-4">
           {/* Star section */}
-          <div className="flex items-center">
+          <div className="flex mb-2 items-center">
             {[...Array(4)].map((_, index) => (
               <svg
                 key={index}
@@ -76,7 +76,7 @@ export default function CardDetailComponent({}) {
               {staticData.description}
             </p>
             {/* Price */}
-            <div className="mt-4 flex flex-col md:flex-row items-end">
+            <div className="mt-4 flex justify-between md:flex-row items-end">
               <p className="text-lg font-bold text-gray-700 line-through dark:text-white md:mr-3">
                 ${staticData.originalPrice}
               </p>
@@ -106,11 +106,11 @@ export default function CardDetailComponent({}) {
             </div>
           </div>
           {/* Buttons */}
-          <div className="mt-4 flex flex-col md:flex-row md:gap-4">
-            <Button className=" rounded-lg outline-0 ring-2 ring-orange-500 bg-clip-text text-lg font-semibold h-12 md:w-96 text-transparent bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600">
+          <div className="mt-4 flex gap-2 md:flex-row md:gap-4">
+            <Button className=" rounded-lg outline-0 ring-2 ring-orange-500 bg-clip-text text-base lg:text-lg font-medium lg:font-semibold h-12 w-40 lg:w-64 text-transparent bg-gradient-to-r from-pink-500 to-orange-500 hover:from-pink-600 hover:to-orange-600">
               Add to Cart
             </Button>
-            <Button className=" rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-lg font-semibold text-white h-12 w-96">
+            <Button className=" rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-base lg:text-lg font-medium lg:font-semibold text-white h-12 w-40 lg:w-64">
               Add to Wishlist
             </Button>
           </div>

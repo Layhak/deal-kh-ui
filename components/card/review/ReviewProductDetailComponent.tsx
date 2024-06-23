@@ -12,17 +12,17 @@ export default function ReviewProductDetailComponent() {
   };
 
   return (
-    <div className="mb-6 p-6">
-      <div className="mb-16 flex-1">
+    <div className="mb-6 p-4">
+      <div className="mb-8 lg:mb-16 flex-1">
         <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
           Customer <span className="text-[#eb7d52]">Review</span>
         </p>
       </div>
       {Reviews.slice(0, showAllReviews ? Reviews.length : 2).map(
         (review, index) => (
-          <div key={index} className="w-3/5">
+          <div key={index} className="lg:w-3/5">
             {/* profile */}
-            <div className="flex flex-col justify-between lg:flex-row lg:items-center">
+            <div className="flex flex-col gap-2 justify-between lg:flex-row lg:items-center">
               {/* profile section */}
               <div className="flex gap-4 lg:flex-shrink-0">
                 <Image
@@ -42,7 +42,7 @@ export default function ReviewProductDetailComponent() {
 
               {/* rating section */}
               <div className="flex gap-2">
-                <p className="font-semibold text-gray-700 dark:text-white">
+                <p className="lg:font-semibold font-medium text-gray-700 dark:text-white">
                   Rating: {review.star.toFixed(1)}
                 </p>
                 {/* Star section */}
@@ -78,7 +78,7 @@ export default function ReviewProductDetailComponent() {
 
             {/* comment section */}
             {/* text-2xl font-semibold text-gray-700 dark:text-white md:text-3xl */}
-            <div className="mt-6 items-start">
+            <div className="lg:mt-6 items-start ">
               <p className="mt-2 text-gray-600 dark:text-gray-300 ">
                 {review.comment}
               </p>

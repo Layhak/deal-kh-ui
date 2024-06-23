@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import 'aos/dist/aos.css';
@@ -11,10 +11,13 @@ import { signIn } from 'next-auth/react';
 import { Logo } from '@/components/icons';
 import { selectToken, setAccessToken } from '@/redux/feature/auth/authSlice';
 import { togglePasswordVisibility } from '@/redux/feature/password/passwordVisibilitySlice';
-import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { IoEyeOffSharp, IoEyeSharp } from 'react-icons/io5';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { useRouter } from 'next/navigation';
+import { toast, ToastContainer } from 'react-toastify';
+import { useTheme } from 'next-themes';
+import 'react-toastify/dist/ReactToastify.css';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
 type FormValues = {
   email: string;
@@ -29,7 +32,10 @@ const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email address')
     .required('Email is required'),
-  password: Yup.string().required('Password is required'),
+  password: Yup.string()
+    .required('Password is required')
+    .min(6, 'Password must be at least 6 characters')
+    .max(255, 'Password must be less than 255 characters'),
 });
 
 const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
@@ -38,20 +44,16 @@ export default function MyShop() {
   const dispatch = useAppDispatch();
   const showPassword = useAppSelector((state) => state.passwordVisibility);
   const token = useAppSelector(selectToken);
-  // useEffect(() => {
-  //   dispatch(togglePasswordVisibility());
-  // }, []);
   const handleShowPassword = () => {
     dispatch(togglePasswordVisibility());
   };
   const router = useRouter();
-  // console.log('Session Log', session);
 
-  // useEffect(() => {
-  //   dispatch(fetchUserProfile());
-  // }, []);
-
-  const handleSubmit = async (values: FormValues) => {
+  const { theme } = useTheme();
+  const handleSubmit = async (
+    values: FormValues,
+    { setErrors }: FormikHelpers<FormValues>
+  ) => {
     try {
       const response = await fetch(`${BaseUrl}login`, {
         method: 'POST',
@@ -59,19 +61,28 @@ export default function MyShop() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(values),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          dispatch(setAccessToken(data.accessToken));
-          localStorage.setItem('loggedIn', 'loggedIn');
-          localStorage.setItem('showSuccessToast', 'true'); // Set the flag
-          router.push('/');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      });
+
+      const data = await response.json();
+      console.log('Data Login:', data);
+      if (response.ok) {
+        dispatch(setAccessToken(data.accessToken));
+        localStorage.setItem('loggedIn', 'loggedIn');
+        localStorage.setItem('showSuccessToast', 'true'); // Set the flag
+        // toast.success('Successfully logged in!', { theme });
+        router.push('/');
+      } else {
+        if (data.message) {
+          setErrors({ email: data.message, password: data.message });
+        } else {
+          toast.error('Login failed. Please check your email and password.', {
+            theme,
+          });
+        }
+      }
     } catch (error) {
       console.error('Login error:', error);
+      toast.error('An error occurred. Please try again later.', { theme });
     }
   };
 
@@ -285,6 +296,7 @@ export default function MyShop() {
           </div>
         </div>
       </div>
+      <ToastContainer />
       {/*<div className="relative hidden  lg:flex  lg:items-center">*/}
       {/*  <Image*/}
       {/*    className=" inset-0 h-full max-h-[700px] w-full max-w-[800px] overflow-x-hidden object-cover"*/}

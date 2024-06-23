@@ -50,6 +50,8 @@ const config: Config = {
         dark: {
           extend: 'dark',
           colors: {
+            background: '#18181d',
+            foreground: '#ffffff',
             primary: {
               50: '#83184d',
               100: '#9d1759',

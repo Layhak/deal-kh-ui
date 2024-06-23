@@ -1,30 +1,63 @@
 import * as React from 'react';
 import { IconSvgProps } from '@/types';
 
-export const HeartIcon = (props: IconSvgProps) => (
+export const CategoryIcon = (props: IconSvgProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width="22"
     height="22"
     viewBox="0 0 24 24"
-
     {...props}
   >
     <path
-      fill="orange"
-      d="m12 21l-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812T2.388 10.4T2 8.15Q2 5.8 3.575 4.225T7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55t2.475-.55q2.35 0 3.925 1.575T22 8.15q0 1.15-.387 2.25t-1.363 2.412t-2.625 2.963T13.45 19.7zm0-2.7q2.4-2.15 3.95-3.687t2.45-2.675t1.25-2.026T20 8.15q0-1.5-1-2.5t-2.5-1q-1.175 0-2.175.662T12.95 7h-1.9q-.375-1.025-1.375-1.687T7.5 4.65q-1.5 0-2.5 1t-1 2.5q0 .875.35 1.763t1.25 2.025t2.45 2.675T12 18.3m0-6.825" />
+      fill="currentColor"
+      d="M6.5 11L12 2l5.5 9zm11 11q-1.875 0-3.187-1.312T13 17.5t1.313-3.187T17.5 13t3.188 1.313T22 17.5t-1.312 3.188T17.5 22M3 21.5v-8h8v8zM17.5 20q1.05 0 1.775-.725T20 17.5t-.725-1.775T17.5 15t-1.775.725T15 17.5t.725 1.775T17.5 20M5 19.5h4v-4H5zM10.05 9h3.9L12 5.85zm7.45 8.5"
+    />
   </svg>
-)
+);
+
+export const HeartIcon = ({ size, width, height, ...props }: IconSvgProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size || width}
+    height={size || height}
+    viewBox="0 0 24 24"
+    {...props}
+  >
+    <defs>
+      <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: '#EC4899', stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: '#EAB308', stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <path
+      fill="url(#grad1)"
+      d="m12 21l-1.45-1.3q-2.525-2.275-4.175-3.925T3.75 12.812T2.388 10.4T2 8.15Q2 5.8 3.575 4.225T7.5 2.65q1.3 0 2.475.55T12 4.75q.85-1 2.025-1.55t2.475-.55q2.35 0 3.925 1.575T22 8.15q0 1.15-.387 2.25t-1.363 2.412t-2.625 2.963T13.45 19.7zm0-2.7q2.4-2.15 3.95-3.687t2.45-2.675t1.25-2.026T20 8.15q0-1.5-1-2.5t-2.5-1q-1.175 0-2.175.662T12.95 7h-1.9q-.375-1.025-1.375-1.687T7.5 4.65q-1.5 0-2.5 1t-1 2.5q0 .875.35 1.763t1.25 2.025t2.45 2.675T12 18.3m0-6.825"
+    />
+  </svg>
+);
 
 export const GoogleIcon = (props: IconSvgProps) => (
-  <svg className="w-5 h-5 text-gray-700" viewBox="0 0 48 48">
-    <path d="M24 9.5c3.14 0 5.66 1.1 7.78 2.92l5.78-5.77C34.85 3.95 29.71 1.5 24 1.5 14.6 1.5 6.84 7.79 3.96 16.34l6.86 5.36C12.74 13.64 17.9 9.5 24 9.5z" fill="#EA4335" />
-    <path d="M44.5 20H24v8.5h11.7c-1.1 3.2-3.7 5.4-7 6.4l6.6 5.2c4.1-3.8 6.7-9.4 6.7-15.7 0-1.4-.1-2.8-.3-4.4z" fill="#4285F4" />
-    <path d="M10.8 29.6c-1.5-4.4-1.5-9.1 0-13.4l-6.8-5.3C1.5 15.2 0 19.5 0 24s1.5 8.8 4 12.4l6.8-5.3z" fill="#FBBC05" />
-    <path d="M24 46c5.7 0 10.4-1.9 13.8-5.2l-6.6-5.2c-2.4 1.6-5.4 2.5-8.7 2.5-6 0-11.1-3.9-13-9.3l-6.8 5.3C6.8 40.8 14.8 46 24 46z" fill="#34A853" />
+  <svg className="text-gray-700 h-5 w-5" viewBox="0 0 48 48">
+    <path
+      d="M24 9.5c3.14 0 5.66 1.1 7.78 2.92l5.78-5.77C34.85 3.95 29.71 1.5 24 1.5 14.6 1.5 6.84 7.79 3.96 16.34l6.86 5.36C12.74 13.64 17.9 9.5 24 9.5z"
+      fill="#EA4335"
+    />
+    <path
+      d="M44.5 20H24v8.5h11.7c-1.1 3.2-3.7 5.4-7 6.4l6.6 5.2c4.1-3.8 6.7-9.4 6.7-15.7 0-1.4-.1-2.8-.3-4.4z"
+      fill="#4285F4"
+    />
+    <path
+      d="M10.8 29.6c-1.5-4.4-1.5-9.1 0-13.4l-6.8-5.3C1.5 15.2 0 19.5 0 24s1.5 8.8 4 12.4l6.8-5.3z"
+      fill="#FBBC05"
+    />
+    <path
+      d="M24 46c5.7 0 10.4-1.9 13.8-5.2l-6.6-5.2c-2.4 1.6-5.4 2.5-8.7 2.5-6 0-11.1-3.9-13-9.3l-6.8 5.3C6.8 40.8 14.8 46 24 46z"
+      fill="#34A853"
+    />
     <path d="M0 0h48v48H0z" fill="none" />
   </svg>
-)
+);
 
 export const InstagramIcon = (props: IconSvgProps) => (
   <svg
@@ -35,12 +68,18 @@ export const InstagramIcon = (props: IconSvgProps) => (
     {...props}
   >
     <defs>
-      <linearGradient id="instagram-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" style={{ stopColor: "#f09433", stopOpacity: 1 }} />
-        <stop offset="25%" style={{ stopColor: "#e6683c", stopOpacity: 1 }} />
-        <stop offset="50%" style={{ stopColor: "#dc2743", stopOpacity: 1 }} />
-        <stop offset="75%" style={{ stopColor: "#cc2366", stopOpacity: 1 }} />
-        <stop offset="100%" style={{ stopColor: "#bc1888", stopOpacity: 1 }} />
+      <linearGradient
+        id="instagram-gradient"
+        x1="0%"
+        y1="0%"
+        x2="100%"
+        y2="100%"
+      >
+        <stop offset="0%" style={{ stopColor: '#f09433', stopOpacity: 1 }} />
+        <stop offset="25%" style={{ stopColor: '#e6683c', stopOpacity: 1 }} />
+        <stop offset="50%" style={{ stopColor: '#dc2743', stopOpacity: 1 }} />
+        <stop offset="75%" style={{ stopColor: '#cc2366', stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: '#bc1888', stopOpacity: 1 }} />
       </linearGradient>
     </defs>
     <path
@@ -48,8 +87,7 @@ export const InstagramIcon = (props: IconSvgProps) => (
       fill="url(#instagram-gradient)"
     />
   </svg>
-)
-
+);
 
 export const FacebookIcon = (props: IconSvgProps) => (
   <svg
@@ -60,11 +98,9 @@ export const FacebookIcon = (props: IconSvgProps) => (
     fill="blue"
     {...props}
   >
-    <path
-      d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.326 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.464.098 2.794.143v3.24h-1.918c-1.504 0-1.794.715-1.794 1.762v2.31h3.588l-.468 3.622h-3.12V24h6.116C23.405 24 24 23.408 24 22.674V1.326C24 .592 23.405 0 22.675 0z"
-    />
+    <path d="M22.675 0h-21.35C.595 0 0 .592 0 1.326v21.348C0 23.408.595 24 1.326 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.464.098 2.794.143v3.24h-1.918c-1.504 0-1.794.715-1.794 1.762v2.31h3.588l-.468 3.622h-3.12V24h6.116C23.405 24 24 23.408 24 22.674V1.326C24 .592 23.405 0 22.675 0z" />
   </svg>
-)
+);
 
 export const RightArrowIcon = (props: IconSvgProps) => (
   <svg
@@ -79,7 +115,7 @@ export const RightArrowIcon = (props: IconSvgProps) => (
       d="m14.475 12l-7.35-7.35q-.375-.375-.363-.888t.388-.887t.888-.375t.887.375l7.675 7.7q.3.3.45.675t.15.75t-.15.75t-.45.675l-7.7 7.7q-.375.375-.875.363T7.15 21.1t-.375-.888t.375-.887z"
     />
   </svg>
-)
+);
 
 export const LeftArrowIcon = (props: IconSvgProps) => (
   <svg
@@ -94,8 +130,7 @@ export const LeftArrowIcon = (props: IconSvgProps) => (
       d="m9.55 12l7.35 7.35q.375.375.363.875t-.388.875t-.875.375t-.875-.375l-7.7-7.675q-.3-.3-.45-.675t-.15-.75t.15-.75t.45-.675l7.7-7.7q.375-.375.888-.363t.887.388t.375.875t-.375.875z"
     />
   </svg>
-)
-
+);
 
 export const BackIcon = (props: IconSvgProps) => (
   <svg
@@ -105,20 +140,18 @@ export const BackIcon = (props: IconSvgProps) => (
     viewBox="0 0 24 24"
     {...props}
   >
-    <path
-      fill="orange"
-      d="m9 18l-6-6l6-6l1.4 1.4L6.8 11H21v2H6.8l3.6 3.6z" />
+    <path fill="orange" d="m9 18l-6-6l6-6l1.4 1.4L6.8 11H21v2H6.8l3.6 3.6z" />
   </svg>
-)
+);
 export const CloseIcon = (props: IconSvgProps) => (
   <svg
     aria-hidden="true"
     fill="none"
     focusable="false"
-    height="1em"
+    height="1.5em"
     role="presentation"
     viewBox="0 0 24 24"
-    width="1em"
+    width="1.5em"
     {...props}
   >
     <path
@@ -138,17 +171,21 @@ export const CloseIcon = (props: IconSvgProps) => (
   </svg>
 );
 
-
-export const CartIcon: React.FC<IconSvgProps> = (props) => (
+export const CartIcon = ({ width, height, size, ...props }: IconSvgProps) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width="22"
-    height="22"
+    width={size || width}
+    height={size || height}
     viewBox="0 0 24 24"
-    {...props}
   >
+    <defs>
+      <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: '#EC4899', stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: '#EAB308', stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
     <path
-      fill="orange"
+      fill="url(#grad1)"
       d="M7 22q-.825 0-1.412-.587T5 20t.588-1.412T7 18t1.413.588T9 20t-.587 1.413T7 22m10 0q-.825 0-1.412-.587T15 20t.588-1.412T17 18t1.413.588T19 20t-.587 1.413T17 22M6.15 6l2.4 5h7l2.75-5zM5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.737.775T15.55 13H8.1L7 15h11q.425 0 .713.288T19 16t-.288.713T18 17H7q-1.125 0-1.7-.987t-.05-1.963L6.6 11.6L3 4H2q-.425 0-.712-.288T1 3t.288-.712T2 2h1.625q.275 0 .525.15t.375.425zm3.35 7h7z"
     />
   </svg>
@@ -501,63 +538,64 @@ export const GithubIcon: React.FC<IconSvgProps> = ({
 };
 
 export const MoonFilledIcon = ({
-  size = 24,
+  size,
   width,
   height,
   ...props
 }: IconSvgProps) => (
   <svg
-    aria-hidden="true"
-    focusable="false"
-    height={size || height}
-    role="presentation"
-    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
     width={size || width}
-    {...props}
+    height={size || height}
+    viewBox="0 0 24 24"
   >
+    <defs>
+      <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: '#EC4899', stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: '#EAB308', stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
     <path
-      d="M21.53 15.93c-.16-.27-.61-.69-1.73-.49a8.46 8.46 0 01-1.88.13 8.409 8.409 0 01-5.91-2.82 8.068 8.068 0 01-1.44-8.66c.44-1.01.13-1.54-.09-1.76s-.77-.55-1.83-.11a10.318 10.318 0 00-6.32 10.21 10.475 10.475 0 007.04 8.99 10 10 0 002.89.55c.16.01.32.02.48.02a10.5 10.5 0 008.47-4.27c.67-.93.49-1.519.32-1.79z"
-      fill="orange"
+      fill="url(#grad1)"
+      d="M12 21q-3.75 0-6.375-2.625T3 12t2.625-6.375T12 3q.35 0 .688.025t.662.075q-1.025.725-1.638 1.888T11.1 7.5q0 2.25 1.575 3.825T16.5 12.9q1.375 0 2.525-.613T20.9 10.65q.05.325.075.662T21 12q0 3.75-2.625 6.375T12 21m0-2q2.2 0 3.95-1.213t2.55-3.162q-.5.125-1 .2t-1 .075q-3.075 0-5.238-2.163T9.1 7.5q0-.5.075-1t.2-1q-1.95.8-3.163 2.55T5 12q0 2.9 2.05 4.95T12 19m-.25-6.75"
     />
   </svg>
 );
 
 export const SunFilledIcon = ({
-  size = 24,
   width,
   height,
+  size,
   ...props
 }: IconSvgProps) => (
   <svg
-    aria-hidden="true"
-    focusable="false"
-    height={size || height}
-    role="presentation"
-    viewBox="0 0 24 24"
+    xmlns="http://www.w3.org/2000/svg"
     width={size || width}
+    height={size || height}
+    viewBox="0 0 24 24"
     {...props}
   >
-    <g fill="orange">
-      <path d="M19 12a7 7 0 11-7-7 7 7 0 017 7z" />
-      <path d="M12 22.96a.969.969 0 01-1-.96v-.08a1 1 0 012 0 1.038 1.038 0 01-1 1.04zm7.14-2.82a1.024 1.024 0 01-.71-.29l-.13-.13a1 1 0 011.41-1.41l.13.13a1 1 0 010 1.41.984.984 0 01-.7.29zm-14.28 0a1.024 1.024 0 01-.71-.29 1 1 0 010-1.41l.13-.13a1 1 0 011.41 1.41l-.13.13a1 1 0 01-.7.29zM22 13h-.08a1 1 0 010-2 1.038 1.038 0 011.04 1 .969.969 0 01-.96 1zM2.08 13H2a1 1 0 010-2 1.038 1.038 0 011.04 1 .969.969 0 01-.96 1zm16.93-7.01a1.024 1.024 0 01-.71-.29 1 1 0 010-1.41l.13-.13a1 1 0 011.41 1.41l-.13.13a.984.984 0 01-.7.29zm-14.02 0a1.024 1.024 0 01-.71-.29l-.13-.14a1 1 0 011.41-1.41l.13.13a1 1 0 010 1.41.97.97 0 01-.7.3zM12 3.04a.969.969 0 01-1-.96V2a1 1 0 012 0 1.038 1.038 0 01-1 1.04z" />
-    </g>
+    <defs>
+      <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: '#EC4899', stopOpacity: 1 }} />
+        <stop offset="100%" style={{ stopColor: '#EAB308', stopOpacity: 1 }} />
+      </linearGradient>
+    </defs>
+    <path
+      fill="url(#grad1)"
+      d="M11 3V2q0-.425.288-.712T12 1t.713.288T13 2v1q0 .425-.288.713T12 4t-.712-.288T11 3m0 19v-1q0-.425.288-.712T12 20t.713.288T13 21v1q0 .425-.288.713T12 23t-.712-.288T11 22m11-9h-1q-.425 0-.712-.288T20 12t.288-.712T21 11h1q.425 0 .713.288T23 12t-.288.713T22 13M3 13H2q-.425 0-.712-.288T1 12t.288-.712T2 11h1q.425 0 .713.288T4 12t-.288.713T3 13m16.75-7.325l-.35.35q-.275.275-.687.275T18 6q-.275-.275-.288-.687t.263-.713l.375-.375q.275-.3.7-.3t.725.3t.288.725t-.313.725M6.025 19.4l-.375.375q-.275.3-.7.3t-.725-.3t-.288-.725t.313-.725l.35-.35q.275-.275.688-.275T6 18q.275.275.288.688t-.263.712m12.3.35l-.35-.35q-.275-.275-.275-.687T18 18q.275-.275.688-.287t.712.262l.375.375q.3.275.3.7t-.3.725t-.725.288t-.725-.313M4.6 6.025l-.375-.375q-.3-.275-.3-.7t.3-.725t.725-.288t.725.313l.35.35q.275.275.275.688T6 6q-.275.275-.687.288T4.6 6.025M12 18q-2.5 0-4.25-1.75T6 12t1.75-4.25T12 6t4.25 1.75T18 12t-1.75 4.25T12 18m0-2q1.675 0 2.838-1.162T16 12t-1.162-2.838T12 8T9.162 9.163T8 12t1.163 2.838T12 16m0-4"
+    />
   </svg>
 );
 
-
-export const HeartFilledIcon = ({
-  size = 24,
-  width,
-  height,
-  ...props
-}: IconSvgProps) => (
+export const HeartFilledIcon = ({ width, height, ...props }: IconSvgProps) => (
   <svg
+    width="30"
+    height="30"
     aria-hidden="true"
     focusable="false"
-    height={size || height}
     role="presentation"
     viewBox="0 0 24 24"
-    width={size || width}
     {...props}
   >
     <path

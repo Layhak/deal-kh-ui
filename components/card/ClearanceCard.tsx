@@ -1,56 +1,50 @@
-import { Card, CardBody, Image, Link } from '@nextui-org/react';
+'use client';
+
+import { CartProductType } from '@/libs/difinition';
+import { addToCart } from '@/redux/feature/cart/cartSlice';
+import { useAppDispatch } from '@/redux/hook';
+import { Button, Card, CardBody, Image, Link } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-// Fake product data API URL
-const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products';
-
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  shop_name: string;
-  expired_date: any;
-  original_price: number;
-  discount_price: number;
-  discount: number;
-};
-
 export default function ClearanceCardComponent() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<CartProductType[]>([]);
+  const router = useRouter();
+  // const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // Fetch data from the fake API
-    fetch(API_URL)
+    fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}/api/v1/products`)
       .then((response) => response.json())
-      .then((data) => setProducts(data.slice(0, 3)))
+      .then((data) => {
+        setProducts(data.slice(0, 3));
+      })
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-  };
+  function dispatch(arg0: { payload: CartProductType; type: "cart/addToCart"; }): void {
+    throw new Error('Function not implemented.');
+  }
 
   return (
     <div>
-
-      <div className="flex flex-wrap justify-between gap-[25px] ">
+      <div className="flex flex-wrap justify-center gap-[35px]">
         {products.map((product) => (
           <Card
+            onClick={() => router.push(`/${product.id}`)}
             key={product.id}
             isPressable
-            onPress={() => console.log('item pressed')}
-            className="w-[353px] shadow-none border border-gray-200"
+            className="w-[387px] shadow-none border border-gray-200"
           >
             <CardBody>
-            <Link href="#">
-              <Image className="object-cover" src={product.image} />
-            </Link>
-            <div className="mb-2 mt-2.5 flex items-center">
-            <div className="flex items-center rtl:space-x-reverse">
+              <Link href="#">
+                <Image
+                  className="object-cover h-[250px] w-[400px]"
+                  src={product.image}
+                  alt={product.name}
+                />
+              </Link>
+              <div className="mb-2 mt-2.5 flex items-center">
+                <div className="flex items-center rtl:space-x-reverse">
                   {[...Array(5)].map((_, index) => (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -68,54 +62,66 @@ export default function ClearanceCardComponent() {
                   ))}
                 </div>
                 <span className="text-[16px] ml-2 text-gray-600 font-medium">
-                 (32) Reviews
+                  (32) Reviews
                 </span>
-            </div>
-            <a href="#">
-              <h5 className="text-gray-800 text-xl font-semibold tracking-tight dark:text-white mb-2">
-              {product.name.length > 60
+              </div>
+              <Link href="#">
+                <h5 className="text-gray-800 text-xl font-semibold tracking-tight dark:text-white mb-2">
+                  {product.name.length > 60
                     ? `${product.name.substring(0, 60)}...`
-                    : product.name} For Your Need, Starlight Sport 
-              </h5>
-            </a>
-            <div className='mb-2 text-gray-600'>
-             <p>
-             Trending Short for easy wear which provide
-             comfort for you which is really comfortable especially in hot weather.
-             </p>
-            </div>
-            <div>
-                <p className=" text-gray-600">
-                  Shop : {' '}
-                  <span className='font-medium text-gray-900'>
-                  {product.shop_name.length > 30
-                    ? `${product.shop_name.substring(0, 20)}...`
-                    : product.shop_name}
-                  </span>
+                    : product.name}{' '}
+                  For Your Need, Starlight Sport
+                </h5>
+              </Link>
+              <div>
+                <p className="text-gray-600">
+                  Shop :{' '}
+                  <Link href="">
+                    <span className="text-[14px] font-medium text-blue-800">
+                      {product.shop_name.length > 30
+                        ? `${product.shop_name.substring(0, 20)}...`
+                        : product.shop_name}
+                    </span>
+                  </Link>
                 </p>
-                <p className=" text-gray-600 ">
-                  Expired date : {' '}
+                <p className="text-gray-600">
+                  Expired date :{' '}
                   <span className="font-medium text-red-500">
-                    {formatDate(product.expired_date)}
+                    {product.expired_at}
                   </span>
                 </p>
               </div>
-            <div className="flex pt-6 items-center justify-between">
-            <div className="flex items-center justify-start font-semibold">
-                <span className="pt-2 text-lg font-bold text-gray-500 line-through dark:text-white">
-                  $3900
-                </span>
-                <span className="bg-gradient-to-r ml-3 from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
-                  $3778
-                </span>
+              <div className="flex mt-3 items-center justify-between">
+                <div className="flex items-center justify-start font-semibold">
+                  <span className="pt-2 text-lg font-bold text-gray-500 line-through dark:text-white">
+                    ${product.original_price}
+                  </span>
+                  <span className="bg-gradient-to-r ml-3 from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
+                    ${product.discount_price}
+                  </span>
+                </div>
+                <Button
+                  onClick={() =>
+                    dispatch(
+                      addToCart({
+                        id: product.id,
+                        name: product.name,
+                        image: product.image,
+                        shop_name: product.shop_name,
+                        expired_at: product.expired_at,
+                        original_price: product.original_price,
+                        discount_price: product.discount_price,
+                        discount: product.discount,
+                        description: product.description,
+                        category: product.category,
+                      })
+                    )
+                  }
+                  className="rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center text-[14px] text-white h-[37px] w-[100px]"
+                >
+                  Add To Cart
+                </Button>
               </div>
-              <a
-                href="#"
-                className="rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center pt-2 text-[14px] text-white h-[37px] w-[100px] "
-              >
-                Add To Cart
-              </a>
-            </div>
             </CardBody>
           </Card>
         ))}

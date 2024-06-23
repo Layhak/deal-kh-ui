@@ -10,18 +10,54 @@ export default function Loading() {
         viewBox="0 0 24 24"
       >
         <defs>
-          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#FFD700" />
-            <stop offset="100%" stopColor="#FFA500" />
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" style={{ stopColor: '#EC4899' }} />
+            <stop offset="100%" style={{ stopColor: '#EAB308' }} />
           </linearGradient>
         </defs>
         <g>
-          <circle cx="12" cy="2.5" r="1.5" fill="url(#gradient)" opacity=".14" />
-          <circle cx="16.75" cy="3.77" r="1.5" fill="url(#gradient)" opacity=".29" />
-          <circle cx="20.23" cy="7.25" r="1.5" fill="url(#gradient)" opacity=".43" />
-          <circle cx="21.5" cy="12" r="1.5" fill="url(#gradient)" opacity=".57" />
-          <circle cx="20.23" cy="16.75" r="1.5" fill="url(#gradient)" opacity=".71" />
-          <circle cx="16.75" cy="20.23" r="1.5" fill="url(#gradient)" opacity=".86" />
+          <circle
+            cx="12"
+            cy="2.5"
+            r="1.5"
+            fill="url(#gradient)"
+            opacity=".14"
+          />
+          <circle
+            cx="16.75"
+            cy="3.77"
+            r="1.5"
+            fill="url(#gradient)"
+            opacity=".29"
+          />
+          <circle
+            cx="20.23"
+            cy="7.25"
+            r="1.5"
+            fill="url(#gradient)"
+            opacity=".43"
+          />
+          <circle
+            cx="21.5"
+            cy="12"
+            r="1.5"
+            fill="url(#gradient)"
+            opacity=".57"
+          />
+          <circle
+            cx="20.23"
+            cy="16.75"
+            r="1.5"
+            fill="url(#gradient)"
+            opacity=".71"
+          />
+          <circle
+            cx="16.75"
+            cy="20.23"
+            r="1.5"
+            fill="url(#gradient)"
+            opacity=".86"
+          />
           <circle cx="12" cy="21.5" r="1.5" fill="url(#gradient)" />
           <animateTransform
             attributeName="transform"
@@ -34,6 +70,5 @@ export default function Loading() {
         </g>
       </svg>
     </div>
-
   );
 }

@@ -1,7 +1,7 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: 'My Ecommerce',
+  name: 'Deal Kh',
   description:
     'Best ecommerce platform for your business needs with a modern design and easy to use.',
   navItems: [

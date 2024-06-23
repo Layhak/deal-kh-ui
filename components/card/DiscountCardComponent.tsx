@@ -1,92 +1,42 @@
+import { CartProductType } from '@/libs/difinition';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
-// Fake product data API URL
-const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products';
-
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  shop_name: string;
-  expired_date: any;
-  original_price: number;
-  discount_price: number;
-  discount: number;
-};
-
 export default function DiscountCardComponent() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<CartProductType[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
-    // Fetch data from the fake API
-    fetch(API_URL)
+    fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}/api/v1/products`)
       .then((response) => response.json())
-      .then((data) => setProducts(data.slice(0, 8)))
+      .then((data) => {
+        setProducts(data.slice(0, 8));
+      })
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-  };
-
   return (
     <main>
-      {/* section header */}
-      <div className="my-8 h-[50px] flex items-center justify-between">
-        {/* Left section */}
-        <div className="flex-1">
-          <p className="relative w-fit text-[26px] text-gray-800 font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Top <span className='text-[#eb7d52]'>Sales</span>
-          </p>
-        </div>
-        {/* Right section */}
-        <Link href='#'>
-          <div className="flex items-center text-gray-800 pt-1">
-            <p className="mr-2 text-[17px] font-normal pb-1">See More</p>
-            {/* Icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              color="black"
-              viewBox="0 0 48 48"
-            >
-              <path
-                fill="none"
-                stroke="#545c6a"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="4"
-                d="M42 24H6m24-12l12 12l-12 12"
-              />
-            </svg>
-          </div>
-        </Link>
-      </div>
-
       {/* for the card section*/}
-
       <div className="flex flex-wrap justify-between gap-[25px]">
         {products.map((product) => (
           <Card
+            onClick={() => router.push(`/${product.id}`)}
             key={product.id}
             isPressable
+            className="border-gray relative mb-2 h-[386px] w-[284px] flex-none rounded-xl border bg-white shadow-none dark:border-gray-700 dark:bg-gray-800"
             onPress={() => console.log('item pressed')}
-            className="relative h-[386px] w-[284px] mb-2 border border-gray flex-none rounded-xl shadow-none bg-white dark:border-gray-700 dark:bg-gray-800"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
                 <Image
                   className="h-[193px] w-[284px] object-cover"
                   src={product.image}
+                  alt={product.name}
                 />
               </Link>
-              <span className='absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white'>
+              <span className="absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white">
                 25% OFF
               </span>
               <div className="mt-4 flex h-[20px]">
@@ -116,36 +66,42 @@ export default function DiscountCardComponent() {
                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                   </svg>
                 </div>
-                <span className="text-[15px] ml-1 text-gray-600 font-medium">
+
+                <span className="ml-1 text-[15px] font-medium text-gray-600">
                   (32) Reviews
                 </span>
               </div>
               <Link href="#">
-                <h5 className="font-semibold mt-1 text-[18px] tracking-tight text-gray-800 dark:text-white h-[45px]">
+                <h5 className="mt-1 h-[45px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 60)}...`
-                    : product.name} For Your Need, Starlight Sport
+                    : product.name}{' '}
+                  For Your Need, Starlight Sport
                 </h5>
               </Link>
-              <div className=" pt-2 h-[30px]">
-                <p className="font-medium text-[14px] text-gray-600 ">
+              <div className="h-[30px] pt-2">
+                <p className="text-[14px] font-medium text-gray-600">
                   Shop :{' '}
-                  {product.shop_name.length > 30
-                    ? `${product.shop_name.substring(0, 20)}...`
-                    : product.shop_name}
+                  <Link href="">
+                    <span className="text-[14px] font-medium text-blue-800">
+                      {product.shop_name.length > 30
+                        ? `${product.shop_name.substring(0, 20)}...`
+                        : product.shop_name}
+                    </span>
+                  </Link>
                 </p>
-                <p className="font-medium text-[14px] text-gray-600 ">
-                  Expired date : {' '}
+                <p className="text-[14px] font-medium text-gray-600">
+                  Expired date :{' '}
                   <span className="font-medium text-red-500">
-                    {formatDate(product.expired_date)}
+                    {product.expired_at}
                   </span>
                 </p>
               </div>
-              <div className="flex items-center justify-start pt-10 h-[30px] font-semibold">
+              <div className="flex h-[30px] items-center justify-start pt-10 font-semibold">
                 <span className="pt-1 text-base font-bold text-gray-700 line-through dark:text-white">
                   ${product.original_price}
                 </span>
-                <span className="bg-gradient-to-r ml-4 from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
+                <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
                   ${product.discount_price}
                 </span>
               </div>

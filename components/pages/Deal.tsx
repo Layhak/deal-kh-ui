@@ -1,15 +1,10 @@
 'use client';
 
 import Buy1Get1Component from '@/components/card/Buy1Get1';
-import Category from '@/components/card/Category';
 import ClearanceCardComponent from '@/components/card/ClearanceCard';
 import DiscountCardComponent from '@/components/card/DiscountCardComponent';
-import NormalProductComponent from '@/components/card/NormalProduct';
 import ServiceCardComponent from '@/components/card/Service';
-import ShopCardComponent from '@/components/card/Shop';
-import HomeCard from '@/components/homecard';
-import HeroSlideComponent from '@/components/slider/HeroSlide';
-import { Link, Image } from '@nextui-org/react';
+import { Image, Link } from '@nextui-org/react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
@@ -31,7 +26,7 @@ export default function Deal() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discountoff">
+          <Link href="/discount-off">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -64,7 +59,7 @@ export default function Deal() {
               Buy More <span className="text-[#eb7d52]">Get More</span>
             </p>
           </div>
-          <Link href="/buymoregetmore">
+          <Link href="/buy-more-get-more">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More
@@ -91,11 +86,12 @@ export default function Deal() {
         </div>
         <div className="flex flex-wrap justify-between">
           <div className="w-[366px]">
-            <Link href='/buymoregetmore'>
-            <Image
-              src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
-              className="h-[690px] w-[366px] object-fill"
-            ></Image></Link>
+            <Link href="/buy-more-get-more">
+              <Image
+                src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
+                className="h-[690px] w-[366px] object-fill"
+              ></Image>
+            </Link>
           </div>
           <div className="w-[800px]">
             <Buy1Get1Component />
@@ -171,10 +167,11 @@ export default function Deal() {
             </div>
           </Link>
         </div>
-        <Link href='/event'>
-        <Image src='https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728'></Image></Link>
-         {/* Coupon Section */}
-         <div className="my-8 flex h-[50px] items-center justify-between">
+        <Link href="/event">
+          <Image src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"></Image>
+        </Link>
+        {/* Coupon Section */}
+        <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
             <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
@@ -221,7 +218,7 @@ export default function Deal() {
             />
           </div>
         </div>
-        <DiscountCardComponent/>
+        <DiscountCardComponent />
         {/* Clearance Sale Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -229,7 +226,7 @@ export default function Deal() {
               Clearance <span className="text-[#eb7d52]">Sales</span>
             </p>
           </div>
-          <Link href="/flashsale">
+          <Link href="/flash-sale">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
                 See More

@@ -49,7 +49,7 @@ export default function CategoryCardComponent() {
                 radius="lg"
                 width="100%"
                 alt={item.title}
-                className="h-[300px] w-full object-cover"
+                className="lg:h-[300px] h-[150px] w-full object-cover"
                 src={item.img}
               />
             </CardBody>

@@ -19,14 +19,14 @@ export default function ShopProfileComponent() {
             backgroundPosition: 'center',
           }}
         >
-          <div className="absolute bottom-0 left-8 flex translate-y-1/2 transform flex-col items-start justify-start lg:flex-row">
+          <div className="absolute lg:bottom-0 -bottom-5 left-8 flex translate-y-1/2 transform flex-col items-start justify-start lg:flex-row">
             <img
               src="https://i.pinimg.com/564x/c8/5c/4c/c85c4cc81847cc51ff6e21ad0f71eb0d.jpg"
               alt="Profile Picture"
               className="h-24 w-24 rounded-full border-4 border-white lg:h-40 lg:w-40"
             />
             <h1 className="self-center text-start text-lg font-semibold lg:ml-4 lg:mt-16 lg:text-2xl">
-              K The Shop - Ks’s collection Shop And Quality Product
+              Shop collection Shop And Quality Product
             </h1>
           </div>
         </div>
@@ -35,7 +35,7 @@ export default function ShopProfileComponent() {
       {/* page details section */}
       <div className="mt-[74px] flex flex-col lg:mt-28 lg:flex-row">
         {/* description section */}
-        <div className="w-full">
+        <div className="w-full lg:mt-0 mt-9">
           <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 lg:text-2xl">
             Page's Detail
           </p>

@@ -1,7 +1,12 @@
 // redux/service/api.ts
-import { BaseQueryApi, FetchArgs, createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import {
+  BaseQueryApi,
+  createApi,
+  FetchArgs,
+  fetchBaseQuery,
+} from '@reduxjs/toolkit/query/react';
 import { RootState } from '@/redux/store';
-import { setAccessToken, removeAccessToken } from '@/redux/feature/auth/authSlice';
+import { setAccessToken } from '@/redux/feature/auth/authSlice';
 
 // Setting up prepareHeaders to include the token in the headers
 const baseQuery = fetchBaseQuery({
@@ -15,10 +20,14 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-const baseQueryWithReAuth = async (args:string | FetchArgs  , api:BaseQueryApi, extraOptions:{}) => {
+const baseQueryWithReAuth = async (
+  args: string | FetchArgs,
+  api: BaseQueryApi,
+  extraOptions: {}
+) => {
   let result = await baseQuery(args, api, extraOptions);
   if (result.error?.status === 401) {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}refresh`, {
+    const res = await fetch(`${process.env.EXT_PUBLIC_BASE_URL}refresh`, {
       method: 'POST',
       credentials: 'include',
     });
@@ -27,10 +36,13 @@ const baseQueryWithReAuth = async (args:string | FetchArgs  , api:BaseQueryApi, 
       api.dispatch(setAccessToken(data.accessToken));
       result = await baseQuery(args, api, extraOptions);
     } else {
-      const logoutRes = await fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}logout`, {
-        method: 'POST',
-        credentials: 'include',
-      });
+      const logoutRes = await fetch(
+        `${process.env.EXT_PUBLIC_BASE_URL}logout`,
+        {
+          method: 'POST',
+          credentials: 'include',
+        }
+      );
       const logoutData = await logoutRes.json();
       console.log(logoutData);
     }
@@ -51,6 +63,5 @@ export const ecommerceApi = createApi({
     }),
   }),
 });
-
 
 export const { useSubmitFormMutation } = ecommerceApi;

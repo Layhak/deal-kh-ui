@@ -62,7 +62,10 @@ export default function MyShop() {
     } catch (error: any) {
       console.error('Login error:', error);
       if (error.data?.message) {
-        setErrors({ email: error.data.message, password: error.data.message });
+        setErrors({
+          email: 'invalid email or password',
+          password: 'invalid email or password',
+        });
       } else {
         toast.error('An error occurred. Please try again later.', { theme });
       }

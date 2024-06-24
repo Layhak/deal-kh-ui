@@ -1,4 +1,3 @@
-// redux/service/api.ts
 import {
   BaseQueryApi,
   createApi,

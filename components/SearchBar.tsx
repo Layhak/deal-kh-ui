@@ -1,6 +1,6 @@
-import React, { useState, FormEvent, ChangeEvent } from 'react';
-import { Input, Image } from "@nextui-org/react";
-import { SearchIcon } from '@heroicons/react/solid'; // replace with your actual icon import
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { Input } from '@nextui-org/react';
+import { SearchIcon } from '@/components/icons';
 
 interface SearchBarProps {
   onSearch: (values: { firstValue: string; secondValue: string }) => void;
@@ -55,7 +55,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
         value={secondValue}
         onChange={handleChangeSecondValue}
       />
-      <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded">
+      <button
+        type="submit"
+        className="rounded bg-blue-500 px-4 py-2 text-white"
+      >
         Search
       </button>
     </form>

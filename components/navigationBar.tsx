@@ -1,6 +1,5 @@
-// components/NavigationBar.tsx
 'use client';
-import { useState, useEffect } from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import {
   Avatar,
   Dropdown,
@@ -19,7 +18,6 @@ import {
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
-import { SetStateAction } from 'react';
 import { CartIcon, CloseIcon, HeartIcon, SearchIcon } from '@/components/icons';
 import CategoryButton from './categoryButton';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
@@ -28,12 +26,9 @@ import { usePathname } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import AuthLink from '@/components/auth/AuthLink';
-import { signOut } from '@/app/Auth/auth';
 import { useSubmitFormMutation } from '@/redux/api';
-import {
-  logoutUser,
-  selectLogoutState,
-} from '@/redux/feature/logout/logoutSlice';
+import { signOut } from '@/app/Auth/auth';
+import { useLogoutUserMutation } from '@/redux/service/auth';
 
 type ValueTypes = {
   email: string;
@@ -49,7 +44,7 @@ export const NavigationBar = () => {
   const [submitForm, { isLoading, isError, error }] = useSubmitFormMutation();
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
-  const logoutState = useAppSelector(selectLogoutState);
+  const [logoutUser, { isLoading: isLoggingOut }] = useLogoutUserMutation();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -116,7 +111,7 @@ export const NavigationBar = () => {
 
   const handleLogout = async () => {
     try {
-      await dispatch(logoutUser()).unwrap();
+      await logoutUser({}).unwrap();
       toast.success('Logout successfully.', {
         position: 'top-right',
         autoClose: 5000,

@@ -1,14 +1,19 @@
 'use client';
 
 import React from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
-import Link from 'next/link';
 
-import { Input, Image } from '@nextui-org/react';
-import { signIn, signOut, useSession } from 'next-auth/react';
-import { CloseIcon, GoogleIcon, FacebookIcon } from '@/components/icons';
+import { Button, Checkbox } from '@nextui-org/react';
+import { signIn, useSession } from 'next-auth/react';
+import { Cancel, Facebook, Google, Logo } from '@/components/icons';
+import { ToastContainer } from 'react-toastify';
+import { IoEyeOffSharp, IoEyeSharp } from 'react-icons/io5';
+import { ThemeSwitch } from '@/components/ThemeSwitch';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { useLoginUserMutation } from '@/redux/service/auth';
+import { togglePasswordVisibility } from '@/redux/feature/password/passwordVisibilitySlice';
 
 interface RegisterFormValues {
   firstName: string;
@@ -50,6 +55,9 @@ const validationSchema = Yup.object().shape({
 });
 
 const Register: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const showPassword = useAppSelector((state) => state.passwordVisibility);
+  const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
   const onSubmit = async (
     values: RegisterFormValues,
     { setSubmitting, setStatus }: any
@@ -94,257 +102,287 @@ const Register: React.FC = () => {
       callbackUrl: '/', // Redirect to home page after successful authentication
     });
   };
+  const handleShowPassword = () => {
+    dispatch(togglePasswordVisibility());
+  };
+  const handleSubmit = () => {
+    console.log('Hello');
+  };
 
-  if (!session) {
-    return (
-      <div className="flex min-h-screen items-center justify-center gap-16 bg-zinc-100 px-4 py-12 sm:px-6 lg:px-8">
-        <div className="bg-gray w-full max-w-lg space-y-8 rounded-lg bg-white p-8">
-          <div>
-            <div className="flex justify-between text-xl font-semibold text-[#eb7d52]">
-              <h1>DealKH</h1>
-              <Link href="/">
-                <CloseIcon />
-              </Link>
-            </div>
-            <h2 className="mt-4 text-left text-2xl font-bold text-gray-900">
-              Create your account
-            </h2>
-            <p className="mt-1 text-left text-sm text-gray-500">
-              Already have an account?{' '}
-              <NextLink
-                href="/login"
-                className="font-medium text-blue-600 transition-all duration-300 ease-in-out"
-              >
-                Login Here
-              </NextLink>
-            </p>
-          </div>
+  return (
+    <div
+      className="min-h-[500px] w-full rounded-xl border-1.5 bg-gray-50 p-4 dark:border-0  dark:bg-gray-950 sm:w-[500px] sm:px-7 sm:py-5"
+      data-aos="flip-up"
+    >
+      <div className={'flex items-center justify-between'}>
+        <NextLink href="/">
+          <Button
+            color={'danger'}
+            radius={'full'}
+            variant={'bordered'}
+            className={'border-0'}
+            size={'sm'}
+            isIconOnly={true}
+          >
+            <Cancel size={28} />
+          </Button>
+        </NextLink>
+        <ThemeSwitch />
+      </div>
+      <div>
+        <div className={'my-2 flex items-center gap-1'}>
+          <Logo size={46} />
+          <h2 className=" bg-gradient-to-r  from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold leading-9 tracking-tight text-transparent">
+            Deal KH
+          </h2>
+        </div>
+        <div>
+          <h1 className=" text-3xl  font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-200">
+            Create your account
+          </h1>
+        </div>
+        <p className="mt-2 text-sm leading-6 text-gray-500 dark:text-gray-400">
+          Already become our member?{' '}
+          <NextLink
+            href="/login"
+            className="font-semibold text-primary-500 hover:text-blue-600"
+          >
+            Login here!
+          </NextLink>
+        </p>
+      </div>
+
+      <div className="mt-5">
+        <div>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={onSubmit}
+            onSubmit={handleSubmit}
           >
-            {({ isSubmitting, status }) => (
-              <Form className="mt-6 space-y-6">
-                <div className="flex  flex-col gap-4 -space-y-px rounded-md">
-                  <div className="flex gap-2">
-                    <div>
-                      <label htmlFor="email" className="sr-only">
-                        First Name
-                      </label>
-                      <Field
-                        id="firstname"
-                        name="firstname"
-                        type="text"
-                        autoComplete="firstname"
-                        required
-                        className="relative block w-[200px] appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                        placeholder="Enter First Name"
-                      />
-                      <ErrorMessage
-                        name="email"
-                        component="div"
-                        className="mt-1 text-xs text-red-500"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="sr-only">
-                        Last Name
-                      </label>
-                      <Field
-                        id="lastname"
-                        name="lastname"
-                        type="text"
-                        autoComplete="lastname"
-                        required
-                        className="relative block w-[250px] appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                        placeholder="Enter Last Name"
-                      />
-                      <ErrorMessage
-                        name="email"
-                        component="div"
-                        className="mt-1 text-xs text-red-500"
-                      />
-                    </div>
+            {() => (
+              <Form action="#" method="POST" className="space-y-2">
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium leading-6 text-foreground"
+                  >
+                    Email address
+                  </label>
+                  <div className="mt-2">
+                    <Field
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      className="block w-full basis-[70%] rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
+                    />
                   </div>
-                  {/* row 2 of input 2  */}
-                  <div className="flex  gap-2 ">
-                    <div>
-                      <label htmlFor="email" className="sr-only">
-                        Email address
-                      </label>
+                </div>
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium leading-6 text-foreground"
+                  >
+                    Email address
+                  </label>
+                  <div className="mt-2">
+                    <Field
+                      id="email"
+                      name="email"
+                      type="email"
+                      autoComplete="email"
+                      required
+                      className="block w-full basis-[70%] rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
+                    />
+                  </div>
+                </div>
+                <div className={'grid grid-cols-3 gap-3'}>
+                  <div className={'col-span-2'}>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium leading-6 text-foreground"
+                    >
+                      Email address
+                    </label>
+                    <div className="mt-2">
                       <Field
                         id="email"
                         name="email"
                         type="email"
                         autoComplete="email"
                         required
-                        className="relative block w-[300px] appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                        placeholder="Enter Email"
+                        className="block w-full basis-[70%] rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
                       />
                       <ErrorMessage
                         name="email"
-                        component="div"
-                        className="mt-1 text-xs text-red-500"
+                        component="section"
+                        className={'text-danger'}
                       />
                     </div>
-                    <div>
-                      <label htmlFor="date" className="sr-only">
-                        Date of Birth
-                      </label>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="dob"
+                      className="block text-sm font-medium leading-6 text-foreground"
+                    >
+                      Email address
+                    </label>
+                    <div className="mt-2">
                       <Field
-                        id="date"
-                        name="date"
+                        id="dob"
+                        name="dob"
                         type="date"
-                        autoComplete="bday"
+                        autoComplete="date"
                         required
-                        className="relative block w-[150px] appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-500 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                        placeholder="Enter Date"
+                        className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
                       />
                       <ErrorMessage
-                        name="date"
-                        component="div"
-                        className="mt-1 text-xs text-red-500"
+                        name="email"
+                        component="section"
+                        className={'text-danger'}
                       />
                     </div>
                   </div>
+                </div>
 
-                  <div>
-                    <label htmlFor="password" className="sr-only">
-                      Password1
-                    </label>
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
+                  >
+                    Password
+                  </label>
+                  <div className="relative mt-2">
                     <Field
-                      id="password1"
-                      name="password1"
-                      type="password"
+                      id="password"
+                      name="password"
+                      type={showPassword ? 'text' : 'password'}
                       autoComplete="current-password"
                       required
-                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                      placeholder="Enter Password"
+                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
-                    <ErrorMessage
-                      name="password"
-                      component="div"
-                      className="mt-1 text-xs text-red-500"
-                    />
+                    {!showPassword ? (
+                      <IoEyeOffSharp
+                        onClick={() => handleShowPassword()}
+                        className="absolute right-3 top-3 cursor-pointer"
+                      />
+                    ) : (
+                      <IoEyeSharp
+                        onClick={() => handleShowPassword()}
+                        className="absolute right-3 top-3 cursor-pointer"
+                      />
+                    )}
                   </div>
-                  <div>
-                    <label htmlFor="password" className="sr-only">
-                      Password2
-                    </label>
+                  <ErrorMessage
+                    name="password"
+                    component="section"
+                    className={'text-danger'}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="password"
+                    className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
+                  >
+                    Password
+                  </label>
+                  <div className="relative mt-2">
                     <Field
-                      id="password2"
-                      name="password2"
-                      type="password"
+                      id="password"
+                      name="password"
+                      type={showPassword ? 'text' : 'password'}
                       autoComplete="current-password"
                       required
-                      className="relative block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-orange-500 focus:outline-none focus:ring-orange-500 sm:text-sm"
-                      placeholder="Re-Enter Password"
+                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     />
-                    <ErrorMessage
-                      name="password"
-                      component="div"
-                      className="mt-1 text-xs text-red-500"
-                    />
+                    {!showPassword ? (
+                      <IoEyeOffSharp
+                        onClick={() => handleShowPassword()}
+                        className="absolute right-3 top-3 cursor-pointer"
+                      />
+                    ) : (
+                      <IoEyeSharp
+                        onClick={() => handleShowPassword()}
+                        className="absolute right-3 top-3 cursor-pointer"
+                      />
+                    )}
+                  </div>
+                  <ErrorMessage
+                    name="password"
+                    component="section"
+                    className={'text-danger'}
+                  />
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <Checkbox defaultSelected color={'primary'}>
+                      I agree with the term and condition
+                    </Checkbox>
                   </div>
                 </div>
-                <div className="flex justify-between">
-                  <div className="mb-4 flex items-center sm:mb-0">
-                    <Field
-                      id="rememberMe"
-                      name="rememberMe"
-                      type="checkbox"
-                      className="h-4 w-4 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
-                    />
-                    <label
-                      htmlFor="rememberMe"
-                      className="ml-2 block text-sm text-gray-500"
-                    >
-                      I accept and agree to{' '}
-                      <span className="text-blue-600">Term</span> and
-                      <span className="text-blue-600"> Condition</span>
-                    </label>
-                  </div>
-                </div>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="group relative flex w-full justify-center rounded-md border border-transparent bg-gradient-to-r from-pink-500 to-orange-500 px-4 py-2 text-sm font-medium text-white hover:from-pink-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
-                >
-                  {isSubmitting ? 'Logging in...' : 'Sign Up'}
-                </button>
-                {status && (
-                  <div className="mt-2 text-xs text-red-500">
-                    {status.message}
-                  </div>
-                )}
-
-                {/* ruler */}
-                <div className="flex h-[1px]">
-                  {/* width of 1st ruler*/}
-                  <div className="h-full w-full bg-gray-300"></div>
-                  <div className="flex w-[100px] items-center justify-center">
-                    <p className="text-gray-500">or</p>
-                  </div>
-                  {/* width of 2nd ruler */}
-                  <div className="h-full w-full bg-gray-300"></div>
-                </div>
-
-                <div className="mt-6 flex flex-col items-center justify-between gap-2">
-                  <button
-                    type="button"
-                    className="flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
-                    onClick={handleLoginGoogle}
+                <div>
+                  <Button
+                    color={'warning'}
+                    className={
+                      ' w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-lg  text-gray-50 '
+                    }
+                    type="submit"
+                    variant={'solid'}
                   >
-                    <span className="sr-only">Sign in with Google</span>
-                    <GoogleIcon />
-                    <span className="ml-2">Sign up with Google</span>
-                  </button>
-                  <button
-                    type="button"
-                    className="flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
-                    onClick={handleLoginFacebook}
-                  >
-                    <span className="sr-only">Sign in with Facebook</span>
-                    <FacebookIcon />
-                    <span className="ml-2">Sign up with Facebook</span>
-                  </button>
+                    Sign up
+                  </Button>
                 </div>
               </Form>
             )}
           </Formik>
         </div>
-      </div>
-    );
-  }
 
-  {
-    /* When have session  */
-  }
-  return (
-    <>
-      <main className="flex h-screen w-full flex-col items-center justify-center">
-        <div className="relative mb-2">
-          <Image
-            src={session.user?.image as string}
-            alt=""
-            className="rounded-full object-cover"
-          />
+        <div className="mt-5">
+          <div className="relative">
+            <div
+              className="absolute inset-0 flex items-center"
+              aria-hidden="true"
+            >
+              <div className="w-full border-t border-gray-200" />
+            </div>
+            <div className="relative flex justify-center text-sm font-medium leading-6">
+              <span className="bg-gray-100  px-3 text-gray-900 dark:bg-gray-900 dark:text-gray-300">
+                Or
+              </span>
+            </div>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-4">
+            <NextLink
+              href="#"
+              className="flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 bg-gray-50 px-3 py-1.5 text-white hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+              onClick={() => signIn('google')}
+            >
+              <Google />
+              <span className="text-sm font-semibold leading-6 text-gray-800">
+                Google
+              </span>
+            </NextLink>
+
+            <NextLink
+              href="#"
+              className="flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 bg-gray-50 px-3 py-1 text-white hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+              onClick={() => signIn('facebook')}
+            >
+              <Facebook size={24} className={'text-primary-500'} />
+              <span className="text-sm font-semibold leading-6 text-gray-800">
+                Facebook
+              </span>
+            </NextLink>
+          </div>
         </div>
-        <p className="mb-2 text-2xl">
-          Welcome <span className="font-bold">{session.user?.name}</span>.
-          Signed In As
-        </p>
-        <p className="mb-4 font-bold">{session.user?.email}</p>
-        <button
-          className="rounded-md bg-red-600 px-6 py-2"
-          onClick={() => signOut()}
-        >
-          Sign out
-        </button>
-      </main>
-    </>
+      </div>
+      <ToastContainer />
+    </div>
   );
 };
 

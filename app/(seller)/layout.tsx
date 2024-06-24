@@ -6,8 +6,8 @@ import { Providers } from '@/app/providers';
 import { useState } from 'react';
 
 import SessionWrapper from '@/app/SessionProvider';
-import NavbarSellerComponent from '../../components/seller/component/navbar/navbarComponent';
 import SidebarSellerComponent from '../../components/seller/component/sidebar/sidebarComponent';
+import NavbarSellerComponent from '@/components/seller/component/navbar/navbarComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 

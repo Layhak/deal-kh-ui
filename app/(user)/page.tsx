@@ -1,5 +1,4 @@
 'use client';
-
 import { Button, Image, Link } from '@nextui-org/react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
@@ -54,9 +53,6 @@ export default function HomePage() {
             <p className="relative w-fit text-[20px] font-bold text-gray-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Top <span className="text-[#eb7d52]">Sales</span>
             </p>
-            <Button color="primary" className="mt-4">
-              Hello
-            </Button>
           </div>
           {/* Right section */}
           <Link href="/discount-off">
@@ -238,7 +234,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <div className="coupon-container flex justify-between pb-10">
+        <div className="coupon-container flex lg:flex-row justify-between flex-col lg:pb-10">
           <div className="coupon">
             <Image
               src="https://as2.ftcdn.net/v2/jpg/03/29/10/97/1000_F_329109774_iTsyjzLU5O9cagJ9UhahhNF2ZdkW4OHc.jpg"

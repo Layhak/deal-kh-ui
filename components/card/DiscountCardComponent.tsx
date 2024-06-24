@@ -1,29 +1,24 @@
 import { CartProductType } from '@/libs/difinition';
+import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 export default function DiscountCardComponent() {
-  const [products, setProducts] = useState<CartProductType[]>([]);
   const router = useRouter();
-
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}/api/v1/products`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data.slice(0, 8));
-      })
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
+  const { data, isLoading, error } = useGetProductsQuery({page:1,size:8,field:"",fieldName:""});
+  console.log('data', data);
+  console.log('error', error);
+  console.log('isLoading', isLoading);
 
   return (
     <main>
       {/* for the card section*/}
       <div className="flex flex-wrap justify-between gap-[25px]">
-        {products.map((product) => (
+      {data?.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`/${product.id}`)}
-            key={product.id}
+            onClick={() => router.push(`/${product.slug}`)}
+            key={product.slug}
             isPressable
             className="border-gray relative mb-2 h-[386px] w-[284px] flex-none rounded-xl border bg-white shadow-none dark:border-gray-700 dark:bg-gray-800"
             onPress={() => console.log('item pressed')}
@@ -32,16 +27,16 @@ export default function DiscountCardComponent() {
               <Link href="#">
                 <Image
                   className="h-[193px] w-[284px] object-cover"
-                  src={product.image}
+                  src={product.images[0].url || 'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'}
                   alt={product.name}
                 />
               </Link>
               <span className="absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white">
-                25% OFF
+              {product.discountValue}% OFF
               </span>
               <div className="mt-4 flex h-[20px]">
                 <div className="flex items-center rtl:space-x-reverse">
-                  {[...Array(4)].map((_, index) => (
+                  {[...Array(Math.floor(product.ratingAvg))].map((_, index) => (
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="20"
@@ -68,15 +63,14 @@ export default function DiscountCardComponent() {
                 </div>
 
                 <span className="ml-1 text-[15px] font-medium text-gray-600">
-                  (32) Reviews
+                ({product.ratingAvg}) Reviews
                 </span>
               </div>
               <Link href="#">
                 <h5 className="mt-1 h-[45px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 60)}...`
-                    : product.name}{' '}
-                  For Your Need, Starlight Sport
+                    : product.name || "Product Name"}
                 </h5>
               </Link>
               <div className="h-[30px] pt-2">
@@ -84,25 +78,25 @@ export default function DiscountCardComponent() {
                   Shop :{' '}
                   <Link href="">
                     <span className="text-[14px] font-medium text-blue-800">
-                      {product.shop_name.length > 30
-                        ? `${product.shop_name.substring(0, 20)}...`
-                        : product.shop_name}
+                      {product.shop.length > 30
+                        ? `${product.shop.substring(0, 20)}...`
+                        : product.shop || "Shop Name"}
                     </span>
                   </Link>
                 </p>
                 <p className="text-[14px] font-medium text-gray-600">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
-                    {product.expired_at}
+                    {product.createdAt}
                   </span>
                 </p>
               </div>
               <div className="flex h-[30px] items-center justify-start pt-10 font-semibold">
                 <span className="pt-1 text-base font-bold text-gray-700 line-through dark:text-white">
-                  ${product.original_price}
+                  ${product.price || "Price"}
                 </span>
                 <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                  ${product.discount_price}
+                  ${product.discountPrice || "Price"}
                 </span>
               </div>
             </CardBody>

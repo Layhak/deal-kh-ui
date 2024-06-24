@@ -1,6 +1,7 @@
 "use client"
 
 import { CartProductType } from '@/libs/difinition';
+import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -8,34 +9,28 @@ import { FaRegHeart } from 'react-icons/fa';
 import { LuShoppingCart } from 'react-icons/lu';
 
 export default function NormalProductComponent() {
-  const [products, setProducts] = useState<CartProductType[]>([]);
   const router = useRouter();
-  useEffect(() => {
-    // Fetch data from the fake API
-    fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}/api/v1/products`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data.slice(0,8));
-      })
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
-
+  const { data, isLoading, error } = useGetProductsQuery({page:1,size:8,field:"",fieldName:""});
+  console.log('data', data);
+  console.log('error', error);
+  console.log('isLoading', isLoading);
+  
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-6">
-        {products.map((product) => (
+      {data?.list.map((product: CartProductType) => (
           <Card
-          onClick={() => router.push(`/${product.id}`)}
-            key={product.id}
+          onClick={() => router.push(`/${product.slug}`)}
+            key={product.slug}
             isPressable
             onPress={() => console.log('item pressed')}
             className="relative h-[395px] w-[284px] mb-2 flex-none rounded-xl border shadow-none border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
             <Link href="#">
-                <Image
+            <Image
                   className="h-[193px] w-[284px] object-cover"
-                  src={product.image}
+                  src={product.images[0].url || 'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'}
                   alt={product.name}
                 />
             </Link>
@@ -67,14 +62,14 @@ export default function NormalProductComponent() {
                   </svg>
                 </div>
                 <span className="text-[15px] ml-1 text-gray-600 font-medium">
-                 (32) Reviews
+                 ({product.ratingAvg}) Reviews
                 </span>
               </div>
               <Link href="#">
                 <h5 className="font-semibold mt-1 text-[18px] tracking-tight text-gray-800 dark:text-white h-[45px]">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 60)}...`
-                    : product.name} For Your Need, Starlight Sport 
+                    : product.name || "Product Name"} 
                 </h5>
               </Link>
               <div className=" pt-2 h-[30px]">
@@ -82,23 +77,23 @@ export default function NormalProductComponent() {
                   Shop :{' '}
                   <Link href=''>
                  <span className="text-[14px] font-medium text-blue-800">
-                  {product.shop_name.length > 30
-                    ? `${product.shop_name.substring(0, 20)}...`
-                    : product.shop_name}
+                  {product.shop.length > 30
+                    ? `${product.shop.substring(0, 20)}...`
+                    : product.shop || "Shop Name"}
                   </span>
                   </Link>
                 </p>
                 <p className="font-medium text-[14px] text-gray-600 ">
                   Expired date : {' '}
                   <span className="font-medium text-red-500">
-                    {product.expired_at}
+                    {product.createdAt}
                   </span>
                 </p>
               </div>
               <div className="flex items-center justify-between py-8">
                   <div className="flex items-center justify-start">
                     <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                      ${product.original_price}
+                      ${product.price || "Price"}
                     </span>
                   </div>
                   <div className="flex justify-end gap-[15px]">

@@ -3,35 +3,25 @@
 import { CartProductType } from '@/libs/difinition';
 import { addToCart } from '@/redux/feature/cart/cartSlice';
 import { useAppDispatch } from '@/redux/hook';
+import { useGetProductsQuery } from '@/redux/service/product';
 import { Button, Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 export default function ClearanceCardComponent() {
-  const [products, setProducts] = useState<CartProductType[]>([]);
   const router = useRouter();
-  // const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}/api/v1/products`)
-      .then((response) => response.json())
-      .then((data) => {
-        setProducts(data.slice(0, 3));
-      })
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
-
-  function dispatch(arg0: { payload: CartProductType; type: "cart/addToCart"; }): void {
-    throw new Error('Function not implemented.');
-  }
-
+  const { data, isLoading, error } = useGetProductsQuery({page:1,size:3,field:"",fieldName:""});
+  console.log('data', data);
+  console.log('error', error);
+  console.log('isLoading', isLoading);
+  
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-[35px]">
-        {products.map((product) => (
+        {data?.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`/${product.id}`)}
-            key={product.id}
+            onClick={() => router.push(`/${product.slug}`)}
+            key={product.slug}
             isPressable
             className="w-[387px] shadow-none border border-gray-200"
           >
@@ -39,7 +29,7 @@ export default function ClearanceCardComponent() {
               <Link href="#">
                 <Image
                   className="object-cover h-[250px] w-[400px]"
-                  src={product.image}
+                  src={product.images[0].url || 'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'}
                   alt={product.name}
                 />
               </Link>
@@ -62,15 +52,14 @@ export default function ClearanceCardComponent() {
                   ))}
                 </div>
                 <span className="text-[16px] ml-2 text-gray-600 font-medium">
-                  (32) Reviews
+                  {product.ratingAvg}
                 </span>
               </div>
               <Link href="#">
                 <h5 className="text-gray-800 text-xl font-semibold tracking-tight dark:text-white mb-2">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 60)}...`
-                    : product.name}{' '}
-                  For Your Need, Starlight Sport
+                    : product.name || "Product Name"}
                 </h5>
               </Link>
               <div>
@@ -78,45 +67,30 @@ export default function ClearanceCardComponent() {
                   Shop :{' '}
                   <Link href="">
                     <span className="text-[14px] font-medium text-blue-800">
-                      {product.shop_name.length > 30
-                        ? `${product.shop_name.substring(0, 20)}...`
-                        : product.shop_name}
+                      {product.shop.length > 30
+                        ? `${product.shop.substring(0, 20)}...`
+                        : product.shop || "Shop Name"}
                     </span>
                   </Link>
                 </p>
                 <p className="text-gray-600">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
-                    {product.expired_at}
+                    {product.createdAt}
                   </span>
                 </p>
               </div>
               <div className="flex mt-3 items-center justify-between">
                 <div className="flex items-center justify-start font-semibold">
                   <span className="pt-2 text-lg font-bold text-gray-500 line-through dark:text-white">
-                    ${product.original_price}
+                    ${product.price || "Price"}
                   </span>
                   <span className="bg-gradient-to-r ml-3 from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
-                    ${product.discount_price}
+                    ${product.discountPrice || "Price"}
                   </span>
                 </div>
                 <Button
-                  onClick={() =>
-                    dispatch(
-                      addToCart({
-                        id: product.id,
-                        name: product.name,
-                        image: product.image,
-                        shop_name: product.shop_name,
-                        expired_at: product.expired_at,
-                        original_price: product.original_price,
-                        discount_price: product.discount_price,
-                        discount: product.discount,
-                        description: product.description,
-                        category: product.category,
-                      })
-                    )
-                  }
+                 onClick={() => router.push(`/products`)}
                   className="rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center text-[14px] text-white h-[37px] w-[100px]"
                 >
                   Add To Cart

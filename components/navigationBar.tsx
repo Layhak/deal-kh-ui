@@ -1,4 +1,6 @@
+// components/NavigationBar.tsx
 'use client';
+import { useState, useEffect } from 'react';
 import {
   Avatar,
   Dropdown,
@@ -17,8 +19,7 @@ import {
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
-import { signOut } from 'next-auth/react';
-import { SetStateAction, useEffect, useState } from 'react';
+import { SetStateAction } from 'react';
 import { CartIcon, CloseIcon, HeartIcon, SearchIcon } from '@/components/icons';
 import CategoryButton from './categoryButton';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
@@ -27,6 +28,9 @@ import { usePathname } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import AuthLink from '@/components/auth/AuthLink';
+import { signOut } from '@/app/Auth/auth';
+import { useSubmitFormMutation } from '@/redux/api';
+import { logoutUser, selectLogoutState } from '@/redux/feature/logout/logoutSlice';
 
 type ValueTypes = {
   email: string;
@@ -39,60 +43,22 @@ const initialValues: ValueTypes = {
 };
 
 export const NavigationBar = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  // const { data: session } = useSession()
-  // console.log('Session', session);
+  const [submitForm, { isLoading, isError, error }] = useSubmitFormMutation();
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
-  console.log('Token', token);
+  const logoutState = useAppSelector(selectLogoutState);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-
-  // const users = useSelector(selectUsers);
   const pathname = usePathname();
-  // useEffect(() => {
-  //   const authToken = token || session;
-  //   setIsAuthenticated(!!authToken);
-  // }, [session, token]);
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
-    // Retrieve the dummy text from localStorage
-    // Compare the dummy text
     if (localStorage.getItem('loggedIn') === 'loggedIn') {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
     }
   }, []);
-  const { theme } = useTheme(); // Get the current theme
-
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-  const handleLogout = async () => {
-    try {
-      const response = await fetch(`${baseUrl}logout`, {
-        method: 'POST',
-        credentials: 'include',
-      });
-      if (response.status === 200) {
-        localStorage.removeItem('loggedIn');
-        toast.success('Logout successfully.', {
-          position: 'top-right',
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: theme,
-        });
-        setIsLoggedIn(false);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const [searchValue, setSearchValue] = useState('');
   const [secondValue, setSecondValue] = useState('');
@@ -117,9 +83,61 @@ export const NavigationBar = () => {
     setSecondValue('');
   };
 
-  const handleSubmit = () => {
-    console.log('Search Value:', searchValue);
-    console.log('Second Value:', secondValue);
+  const handleSubmit = async () => {
+    try {
+      await submitForm({ searchValue, secondValue }).unwrap();
+      toast.success('Form submitted successfully.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+    } catch (error) {
+      toast.error('Failed to submit form.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      console.error('Failed to submit form:', error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await dispatch(logoutUser()).unwrap();
+      toast.success('Logout successfully.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      setIsLoggedIn(false);
+    } catch (error) {
+      toast.error('Failed to logout.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      console.error('Failed to logout:', error);
+    }
   };
 
   const searchInput = (
@@ -191,7 +209,7 @@ export const NavigationBar = () => {
     'Shoe',
     'Skincare',
   ];
-  //
+
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
       <NavbarContent className="basis-1/5 sm:basis-full" justify="start">

@@ -6,7 +6,7 @@ const AuthLinks = () => {
     <div className="flex items-center space-x-4">
       <NextLink
         href="/register"
-        className="animate-text-gradient inline-flex bg-[linear-gradient(90deg,#EAB318_0%,#EC4950_50%,#EAB408_100%)] bg-clip-text text-medium font-medium text-transparent dark:bg-[linear-gradient(90deg,#EAB308_0%,#EC4899_50%,#EAB308_100%)] md:ml-1"
+        className=" animate-text-gradient font-mediumhover:bg-transparent/50 inline-flex  bg-[linear-gradient(90deg,#EAB318_0%,#EC4950_50%,#EAB408_100%)] bg-clip-text text-medium text-transparent dark:bg-[linear-gradient(90deg,#EAB308_0%,#EC4899_50%,#EAB308_100%)] md:ml-1"
         style={{
           backgroundSize: '200%',
         }}

@@ -29,7 +29,7 @@ export default function HomePage() {
       });
       localStorage.removeItem('showSuccessToast'); // Clear the flag
     }
-  }, []);
+  }, [theme]);
   return (
     <>
       <main>

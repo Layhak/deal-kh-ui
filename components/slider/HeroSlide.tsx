@@ -7,8 +7,8 @@ import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 
 export default function HeroSlideComponent() {
   return (
-    <div className="mt-2 flex flex-wrap justify-center gap-[25px] overflow-hidden">
-      <div className="sm:w-[350px] md:w-[350px] lg:w-[820px]">
+    <div className="mt-2 flex flex-wrap justify-between gap-[25px] overflow-hidden">
+      <div className="lg:w-[820px] w-full">
         <Swiper
           className="rounded-lg border border-white dark:border-black   "
           spaceBetween={50}
@@ -64,8 +64,8 @@ export default function HeroSlideComponent() {
         </Swiper>
       </div>
 
-      <div className="grid grid-cols-1 gap-[25px] lg:w-[385px]">
-        <div className="relative sm:w-[350px] lg:w-[385px]">
+      <div className="hidden lg:block lg:grid-cols-1 lg:w-[385px]">
+        <div className="w-[385px]">
           <Swiper
             className="rounded-lg border border-white dark:border-black"
             spaceBetween={50}
@@ -121,7 +121,7 @@ export default function HeroSlideComponent() {
           </Swiper>
         </div>
 
-        <div className="relative sm:w-[350px] lg:w-[385px] ">
+        <div className="w-[385px] mt-6">
           <Swiper
             className="h-[195px] rounded-lg border border-white dark:border-black"
             spaceBetween={50}

@@ -7,6 +7,8 @@ import HeroSlideComponent from '@/components/slider/HeroSlide';
 import ShopCardComponent from '@/components/card/Shop';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
+import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
+import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
   useEffect(() => {
@@ -209,7 +211,7 @@ export default function HomePage() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/coupon">
+          <Link href="/coupons">
             <div className="flex items-center  pt-2">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
                 See More
@@ -234,21 +236,8 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <div className="coupon-container flex lg:flex-row justify-between flex-col lg:pb-10">
-          <div className="coupon">
-            <Image
-              src="https://as2.ftcdn.net/v2/jpg/03/29/10/97/1000_F_329109774_iTsyjzLU5O9cagJ9UhahhNF2ZdkW4OHc.jpg"
-              className="h-[250px] w-[550px] object-cover"
-              alt="image"
-            />
-          </div>
-          <div className="coupon">
-            <Image
-              src="https://as1.ftcdn.net/v2/jpg/03/29/10/98/1000_F_329109835_b1coeNquepUkFoSpqVgLLqKFiBKosY7K.jpg"
-              className="h-[250px] w-[550px] object-cover"
-              alt="image"
-            />
-          </div>
+        <div >
+          <CardCouponComponent displayCount={2}/>
         </div>
         {/*<DiscountCardComponent />*/}
         {/* Event Section */}

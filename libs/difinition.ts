@@ -46,19 +46,68 @@ export type ProductType = {
   image: string;
 };
 
-export type CartProductType = {
-  id: number;
-  name: string;
-  image: string;
-  shop_name: string;
-  expired_at: string;
-  original_price: number;
-  discount_price: number;
-  discount: number;
-  description: string;
-  category: string;
-  onClick?: () => void;
+export type Image = {
+  url: string;
 };
+
+export type CartProductType = {
+  seller: string;
+  name: string;
+  slug: string;
+  price: number;
+  discountPrice: number;
+  ratingAvg: number;
+  description: string;
+  images: Image[];
+  shop: string;
+  discountValue: number;
+  discountType: string;
+  expiredAt: string;
+  category: string;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+};
+
+export type Pagination = {
+  pageSize: number;
+  pageNumber: number;
+  totalPages: number;
+  totalElements: number;
+  numberOfElements: number;
+  first: boolean;
+  last: boolean;
+  empty: boolean;
+};
+
+export type Payload = {
+  list: CartProductType[];
+  pagination: Pagination;
+};
+
+export type ApiResponse = {
+  payload: Payload;
+  message: string;
+  status: number;
+};
+
+// types/productScrape.ts
+
+export type ProductResponse = {
+  list: CartProductType[];
+  pagination: {
+    pageSize: number;
+    pageNumber: number;
+    totalPages: number;
+    totalElements: number;
+    numberOfElements: number;
+    first: boolean;
+    last: boolean;
+    empty: boolean;
+  };
+};
+
 export type ModalType = {
   isOpen: boolean;
   onClose: () => void;

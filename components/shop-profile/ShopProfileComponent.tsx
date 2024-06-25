@@ -3,6 +3,7 @@ import { MdOutlineDirections } from 'react-icons/md';
 import { HiOutlinePhone } from 'react-icons/hi';
 import { LuClock10 } from 'react-icons/lu';
 import { BiCategory } from 'react-icons/bi';
+import MapComponent from '../Maps/MapComponent';
 
 export default function ShopProfileComponent() {
   return (
@@ -18,7 +19,7 @@ export default function ShopProfileComponent() {
             backgroundPosition: 'center',
           }}
         >
-          <div className="absolute -bottom-5 left-8 flex translate-y-1/2 transform flex-col items-start justify-start lg:bottom-0 lg:flex-row">
+          <div className="absolute lg:bottom-0 -bottom-5 left-8 flex translate-y-1/2 transform flex-col items-start justify-start lg:flex-row">
             <img
               src="https://i.pinimg.com/564x/c8/5c/4c/c85c4cc81847cc51ff6e21ad0f71eb0d.jpg"
               alt="Profile Picture"
@@ -34,9 +35,9 @@ export default function ShopProfileComponent() {
       {/* page details section */}
       <div className="mt-[74px] flex flex-col lg:mt-28 lg:flex-row">
         {/* description section */}
-        <div className="mt-9 w-full lg:mt-0">
+        <div className="w-full lg:mt-0 mt-9">
           <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 lg:text-2xl">
-            Page&apos;s Detail
+            Page's Detail
           </p>
           <p className="mt-4 text-[16px] text-gray-600 dark:text-gray-300">
             Deliver the best collection for our customer, The best collection of

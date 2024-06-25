@@ -14,7 +14,7 @@ export default function Buy1Get1Component() {
     fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}/api/v1/products`)
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data.slice(34,40));
+        setProducts(data.slice(34, 40));
       })
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
@@ -28,7 +28,7 @@ export default function Buy1Get1Component() {
             key={product.id}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="relative mb-2 h-[330px] w-[250px] flex-none rounded-xl border border-gray-200 bg-white shadow-none dark:border-gray-700 dark:bg-gray-800"
+            className="relative mb-2 h-[330px] w-[250px] flex-none rounded-xl border border-0 bg-white shadow-none dark:border-gray-700 dark:bg-gray-800"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
@@ -56,12 +56,12 @@ export default function Buy1Get1Component() {
               <div className=" h-[30px] pt-3">
                 <p className="text-[14px] font-medium text-gray-600 ">
                   Shop :{' '}
-                  <Link href=''>
-                 <span className="text-[14px] font-medium text-blue-800">
-                  {product.shop_name.length > 30
-                    ? `${product.shop_name.substring(0, 20)}...`
-                    : product.shop_name}
-                  </span>
+                  <Link href="">
+                    <span className="text-[14px] font-medium text-blue-800">
+                      {product.shop_name.length > 30
+                        ? `${product.shop_name.substring(0, 20)}...`
+                        : product.shop_name}
+                    </span>
                   </Link>
                 </p>
                 <p className="text-[14px] font-medium text-gray-600 ">

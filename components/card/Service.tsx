@@ -1,5 +1,5 @@
 import { CartProductType } from '@/libs/difinition';
-import { Card, CardBody, Image, Link } from '@nextui-org/react';
+import { Card, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
@@ -27,17 +27,17 @@ export default function ServiceCardComponent() {
             key={product.id}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="w-[595px] border border-gray-200 shadow-none"
+            className="w-[595px] border border-0 shadow-none"
           >
             <div className="flex p-2">
-                <Link href="#">
-                  <Image
-                    className="w-[350px] h-[195px]  object-cover mx-1"
-                    src={product.image}
-                    alt={product.name}
-                  />
-                </Link>
-              <div className="item-start text-left px-4">
+              <Link href="#">
+                <Image
+                  className="mx-1 h-[195px]  w-[350px] object-cover"
+                  src={product.image}
+                  alt={product.name}
+                />
+              </Link>
+              <div className="item-start px-4 text-left">
                 <a href="#">
                   <h5 className="text-lg font-semibold tracking-tight text-gray-800 dark:text-white">
                     {product.name.length > 60
@@ -46,7 +46,7 @@ export default function ServiceCardComponent() {
                     For Your Need, Starlight Sport
                   </h5>
                 </a>
-                <div className='my-3 flex flex-col gap-1'>
+                <div className="my-3 flex flex-col gap-1">
                   <p className="text-sm text-gray-600">
                     Shop :{' '}
                     <Link href="">
@@ -79,7 +79,7 @@ export default function ServiceCardComponent() {
                       $ 3.5
                     </span>
                   </div>
-                  <div className="flex justify-end gap-[15px] mt-3">
+                  <div className="mt-3 flex justify-end gap-[15px]">
                     <a href="#">
                       <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
                     </a>

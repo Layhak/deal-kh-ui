@@ -1,4 +1,4 @@
-"use client"
+'use client';
 
 import { CartProductType } from '@/libs/difinition';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
@@ -15,7 +15,7 @@ export default function NormalProductComponent() {
     fetch(`${process.env.NEXT_PUBLIC_DEALKH_API_URL}/api/v1/products`)
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data.slice(0,8));
+        setProducts(data.slice(0, 8));
       })
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
@@ -25,21 +25,21 @@ export default function NormalProductComponent() {
       <div className="flex flex-wrap justify-center gap-6">
         {products.map((product) => (
           <Card
-          onClick={() => router.push(`/${product.id}`)}
+            onClick={() => router.push(`/${product.id}`)}
             key={product.id}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="relative h-[395px] w-[284px] mb-2 flex-none rounded-xl border shadow-none border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
+            className="relative mb-2 h-[395px] w-[284px] flex-none rounded-xl border border-0 bg-white shadow-none dark:border-gray-700 dark:bg-gray-800"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
-            <Link href="#">
+              <Link href="#">
                 <Image
                   className="h-[193px] w-[284px] object-cover"
                   src={product.image}
                   alt={product.name}
                 />
-            </Link>
-            <div className="mt-4 flex h-[20px]">
+              </Link>
+              <div className="mt-4 flex h-[20px]">
                 <div className="flex items-center rtl:space-x-reverse">
                   {[...Array(4)].map((_, index) => (
                     <svg
@@ -66,50 +66,51 @@ export default function NormalProductComponent() {
                     <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
                   </svg>
                 </div>
-                <span className="text-[15px] ml-1 text-gray-600 font-medium">
-                 (32) Reviews
+                <span className="ml-1 text-[15px] font-medium text-gray-600">
+                  (32) Reviews
                 </span>
               </div>
               <Link href="#">
-                <h5 className="font-semibold mt-1 text-[18px] tracking-tight text-gray-800 dark:text-white h-[45px]">
+                <h5 className="mt-1 h-[45px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 60)}...`
-                    : product.name} For Your Need, Starlight Sport 
+                    : product.name}{' '}
+                  For Your Need, Starlight Sport
                 </h5>
               </Link>
-              <div className=" pt-2 h-[30px]">
-                <p className="font-medium text-[14px] text-gray-600 ">
+              <div className=" h-[30px] pt-2">
+                <p className="text-[14px] font-medium text-gray-600 ">
                   Shop :{' '}
-                  <Link href=''>
-                 <span className="text-[14px] font-medium text-blue-800">
-                  {product.shop_name.length > 30
-                    ? `${product.shop_name.substring(0, 20)}...`
-                    : product.shop_name}
-                  </span>
+                  <Link href="">
+                    <span className="text-[14px] font-medium text-blue-800">
+                      {product.shop_name.length > 30
+                        ? `${product.shop_name.substring(0, 20)}...`
+                        : product.shop_name}
+                    </span>
                   </Link>
                 </p>
-                <p className="font-medium text-[14px] text-gray-600 ">
-                  Expired date : {' '}
+                <p className="text-[14px] font-medium text-gray-600 ">
+                  Expired date :{' '}
                   <span className="font-medium text-red-500">
                     {product.expired_at}
                   </span>
                 </p>
               </div>
               <div className="flex items-center justify-between py-8">
-                  <div className="flex items-center justify-start">
-                    <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                      ${product.original_price}
-                    </span>
-                  </div>
-                  <div className="flex justify-end gap-[15px]">
-                    <a href="#">
-                      <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    </a>
-                    <a href="">
-                      <LuShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    </a>
-                  </div>
+                <div className="flex items-center justify-start">
+                  <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
+                    ${product.original_price}
+                  </span>
                 </div>
+                <div className="flex justify-end gap-[15px]">
+                  <a href="#">
+                    <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                  </a>
+                  <a href="">
+                    <LuShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                  </a>
+                </div>
+              </div>
             </CardBody>
           </Card>
         ))}

@@ -1,8 +1,6 @@
 'use client';
 
 import { CartProductType } from '@/libs/difinition';
-import { addToCart } from '@/redux/feature/cart/cartSlice';
-import { useAppDispatch } from '@/redux/hook';
 import { Button, Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -21,7 +19,10 @@ export default function ClearanceCardComponent() {
       .catch((error) => console.error('Error fetching data:', error));
   }, []);
 
-  function dispatch(arg0: { payload: CartProductType; type: "cart/addToCart"; }): void {
+  function dispatch(arg0: {
+    payload: CartProductType;
+    type: 'cart/addToCart';
+  }): void {
     throw new Error('Function not implemented.');
   }
 
@@ -33,12 +34,12 @@ export default function ClearanceCardComponent() {
             onClick={() => router.push(`/${product.id}`)}
             key={product.id}
             isPressable
-            className="w-[387px] shadow-none border border-gray-200"
+            className="w-[387px] border border-0 shadow-none"
           >
             <CardBody>
               <Link href="#">
                 <Image
-                  className="object-cover h-[250px] w-[400px]"
+                  className="h-[250px] w-[400px] object-cover"
                   src={product.image}
                   alt={product.name}
                 />
@@ -61,12 +62,12 @@ export default function ClearanceCardComponent() {
                     </svg>
                   ))}
                 </div>
-                <span className="text-[16px] ml-2 text-gray-600 font-medium">
+                <span className="ml-2 text-[16px] font-medium text-gray-600">
                   (32) Reviews
                 </span>
               </div>
               <Link href="#">
-                <h5 className="text-gray-800 text-xl font-semibold tracking-tight dark:text-white mb-2">
+                <h5 className="mb-2 text-xl font-semibold tracking-tight text-gray-800 dark:text-white">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 60)}...`
                     : product.name}{' '}
@@ -91,33 +92,33 @@ export default function ClearanceCardComponent() {
                   </span>
                 </p>
               </div>
-              <div className="flex mt-3 items-center justify-between">
+              <div className="mt-3 flex items-center justify-between">
                 <div className="flex items-center justify-start font-semibold">
                   <span className="pt-2 text-lg font-bold text-gray-500 line-through dark:text-white">
                     ${product.original_price}
                   </span>
-                  <span className="bg-gradient-to-r ml-3 from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
+                  <span className="ml-3 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
                     ${product.discount_price}
                   </span>
                 </div>
                 <Button
-                  onClick={() =>
-                    dispatch(
-                      addToCart({
-                        id: product.id,
-                        name: product.name,
-                        image: product.image,
-                        shop_name: product.shop_name,
-                        expired_at: product.expired_at,
-                        original_price: product.original_price,
-                        discount_price: product.discount_price,
-                        discount: product.discount,
-                        description: product.description,
-                        category: product.category,
-                      })
-                    )
-                  }
-                  className="rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center text-[14px] text-white h-[37px] w-[100px]"
+                  // onClick={() =>
+                  //   dispatch(
+                  //     addToCart({
+                  //       id: product.id,
+                  //       name: product.name,
+                  //       image: product.image,
+                  //       shop_name: product.shop_name,
+                  //       expired_at: product.expired_at,
+                  //       original_price: product.original_price,
+                  //       discount_price: product.discount_price,
+                  //       discount: product.discount,
+                  //       description: product.description,
+                  //       category: product.category,
+                  //     })
+                  //   )
+                  // }
+                  className="h-[37px] w-[100px] rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center text-[14px] text-white"
                 >
                   Add To Cart
                 </Button>

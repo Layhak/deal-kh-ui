@@ -1,20 +1,22 @@
 'use client';
 
 import React from 'react';
-import { ErrorMessage, Field, Form, Formik } from 'formik';
+import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import { Button } from '@nextui-org/react';
 import { signIn } from 'next-auth/react';
 import { Cancel, Facebook, Google, Logo } from '@/components/icons';
 import { ToastContainer } from 'react-toastify';
-import { IoEyeOffSharp, IoEyeSharp } from 'react-icons/io5';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
-import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { useRegisterUserMutation } from '@/redux/service/auth';
-import { togglePasswordVisibility } from '@/redux/feature/password/passwordVisibilitySlice';
-import CustomSelect from '@/components/customSelect/CustomSelect';
-import { router } from 'next/client';
+import CustomSelect from '@/components/customInput/CustomSelect';
+import { format } from 'date-fns';
+import { useRouter } from 'next/navigation';
+import CustomDatePicker from '@/components/customInput/customDatePicker';
+import CustomCheckbox from '@/components/customInput/CustomCheckbox';
+import CustomInput from '@/components/customInput/customInput';
+import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
 
 interface RegisterFormValues {
   firstName: string;
@@ -62,10 +64,9 @@ const validationSchema = Yup.object().shape({
 });
 
 const Register: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const showPassword = useAppSelector((state) => state.passwordVisibility);
   const [registerUser, { isLoading, isError, error }] =
     useRegisterUserMutation();
+  const router = useRouter();
 
   const onSubmit = async (
     values: RegisterFormValues,
@@ -73,9 +74,14 @@ const Register: React.FC = () => {
   ) => {
     setSubmitting(true);
     try {
-      const response = await registerUser(values).unwrap();
+      const formattedValues = {
+        ...values,
+        dob: format(new Date(values.dob), 'yyyy-MM-dd'),
+      };
+
+      const response = await registerUser(formattedValues).unwrap();
       console.log('Register successful!', response);
-      await router.push('/');
+      router.push('/');
       // Handle successful register (e.g., redirect)
     } catch (error) {
       console.error('Error:', error);
@@ -98,13 +104,10 @@ const Register: React.FC = () => {
       callbackUrl: '/', // Redirect to home page after successful authentication
     });
   };
-  const handleShowPassword = () => {
-    dispatch(togglePasswordVisibility());
-  };
 
   return (
     <div
-      className="min-h-[500px] w-full rounded-xl border-1.5 bg-gray-50 p-4 dark:border-0  dark:bg-gray-950 sm:w-[500px] sm:px-7 sm:py-5"
+      className="min-h-[500px] w-full rounded-xl border-1.5 bg-gray-50 p-4 dark:border-0  dark:bg-gray-950 sm:w-[700px] sm:px-7 sm:py-5"
       data-aos="flip-up"
     >
       <div className={'flex items-center justify-between'}>
@@ -134,7 +137,7 @@ const Register: React.FC = () => {
             Create your account
           </h1>
         </div>
-        <p className="mt-2 text-sm leading-6 text-gray-500 dark:text-gray-400">
+        <p className="mt-3 text-sm leading-6 text-gray-500 dark:text-gray-400">
           Already become our member?{' '}
           <NextLink
             href="/login"
@@ -154,180 +157,54 @@ const Register: React.FC = () => {
           >
             {() => (
               <Form action="#" method="POST" className="space-y-2">
-                <div>
-                  <label
-                    htmlFor="firstName"
-                    className="block text-sm font-medium leading-6 text-foreground"
-                  >
-                    First Name
-                  </label>
-                  <div className="mt-2">
-                    <Field
-                      id="firstName"
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="mt-3">
+                    <CustomInput
+                      label="First Name"
                       name="firstName"
                       type="text"
-                      autoComplete="firstName"
-                      required
-                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    />
-                    <ErrorMessage
-                      name="firstName"
-                      component="section"
-                      className={'text-danger'}
+                      placeholder="Enter your first name"
                     />
                   </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="lastName"
-                    className="block text-sm font-medium leading-6 text-foreground"
-                  >
-                    Last Name
-                  </label>
-                  <div className="mt-2">
-                    <Field
-                      id="lastName"
+                  <div className="mt-3">
+                    <CustomInput
+                      label="Last Name"
                       name="lastName"
                       type="text"
-                      autoComplete="lastName"
-                      required
-                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    />
-                    <ErrorMessage
-                      name="lastName"
-                      component="section"
-                      className={'text-danger'}
+                      placeholder="Enter your last name"
                     />
                   </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="username"
-                    className="block text-sm font-medium leading-6 text-foreground"
-                  >
-                    Username
-                  </label>
-                  <div className="mt-2">
-                    <Field
-                      id="username"
+                  <div className="mt-3">
+                    <CustomInput
+                      label="Username"
                       name="username"
                       type="text"
-                      autoComplete="username"
-                      required
-                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    />
-                    <ErrorMessage
-                      name="username"
-                      component="section"
-                      className={'text-danger'}
+                      placeholder="Enter your username"
                     />
                   </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium leading-6 text-foreground"
-                  >
-                    Email address
-                  </label>
-                  <div className="mt-2">
-                    <Field
-                      id="email"
+                  <div className="mt-3">
+                    <CustomInput
+                      label="Email"
                       name="email"
                       type="email"
-                      autoComplete="email"
-                      required
-                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    />
-                    <ErrorMessage
-                      name="email"
-                      component="section"
-                      className={'text-danger'}
+                      placeholder="Enter your email address"
                     />
                   </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-foreground"
-                  >
-                    Password
-                  </label>
-                  <div className="relative mt-2">
-                    <Field
-                      id="password"
+                  <div className={'mt-3'}>
+                    <CustomPasswordInput
+                      label="Password"
                       name="password"
-                      type={showPassword ? 'text' : 'password'}
-                      autoComplete="current-password"
-                      required
-                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    />
-                    {!showPassword ? (
-                      <IoEyeOffSharp
-                        onClick={() => handleShowPassword()}
-                        className="absolute right-3 top-3 cursor-pointer"
-                      />
-                    ) : (
-                      <IoEyeSharp
-                        onClick={() => handleShowPassword()}
-                        className="absolute right-3 top-3 cursor-pointer"
-                      />
-                    )}
-                    <ErrorMessage
-                      name="password"
-                      component="section"
-                      className={'text-danger'}
+                      placeholder="Enter your password"
                     />
                   </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="confirmedPassword"
-                    className="block text-sm font-medium leading-6 text-foreground"
-                  >
-                    Confirm Password
-                  </label>
-                  <div className="relative mt-2">
-                    <Field
-                      id="confirmedPassword"
+                  <div className={'mt-3'}>
+                    <CustomPasswordInput
+                      label="Confirm Password"
                       name="confirmedPassword"
-                      type={showPassword ? 'text' : 'password'}
-                      autoComplete="current-password"
-                      required
-                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    />
-                    {!showPassword ? (
-                      <IoEyeOffSharp
-                        onClick={() => handleShowPassword()}
-                        className="absolute right-3 top-3 cursor-pointer"
-                      />
-                    ) : (
-                      <IoEyeSharp
-                        onClick={() => handleShowPassword()}
-                        className="absolute right-3 top-3 cursor-pointer"
-                      />
-                    )}
-                    <ErrorMessage
-                      name="confirmedPassword"
-                      component="section"
-                      className={'text-danger'}
-                    />
+                      placeholder="Confirm your password"
+                    />{' '}
                   </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="gender"
-                    className="block text-sm font-medium leading-6 text-foreground"
-                  >
-                    Gender
-                  </label>
-                  <div className="mt-2">
+                  <div className={'mt-3'}>
                     <CustomSelect
                       label="Gender"
                       name="gender"
@@ -338,102 +215,39 @@ const Register: React.FC = () => {
                       placeholder="Select gender"
                     />
                   </div>
-                  <ErrorMessage
-                    name="gender"
-                    component="section"
-                    className={'text-danger'}
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="phoneNumber"
-                    className="block text-sm font-medium leading-6 text-foreground"
-                  >
-                    Phone Number
-                  </label>
-                  <div className="mt-2">
-                    <Field
-                      id="phoneNumber"
+                  <div className={'mt-3'}>
+                    <CustomInput
+                      label="Phone Number"
                       name="phoneNumber"
                       type="text"
-                      autoComplete="phoneNumber"
-                      required
-                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    />
-                    <ErrorMessage
-                      name="phoneNumber"
-                      component="section"
-                      className={'text-danger'}
+                      placeholder="Enter your phone number"
                     />
                   </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="dob"
-                    className="block text-sm font-medium leading-6 text-foreground"
-                  >
-                    Date of Birth
-                  </label>
-                  <div className="mt-2">
-                    <Field
-                      id="dob"
-                      name="dob"
-                      type="date"
-                      autoComplete="dob"
-                      required
-                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    />
-                    <ErrorMessage
-                      name="dob"
-                      component="section"
-                      className={'text-danger'}
-                    />
+                  <div className={'mt-3'}>
+                    <CustomDatePicker name="dob" />
                   </div>
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="location"
-                    className="block text-sm font-medium leading-6 text-foreground"
-                  >
-                    Location
-                  </label>
-                  <div className="mt-2">
-                    <Field
-                      id="location"
+                  <div className={'mt-3'}>
+                    <CustomInput
+                      label="Location"
                       name="location"
                       type="text"
-                      autoComplete="location"
-                      required
-                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset  ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    />
-                    <ErrorMessage
-                      name="location"
-                      component="section"
-                      className={'text-danger'}
+                      placeholder="Enter your location"
                     />
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center">
+                <div className=" flex items-center justify-between">
+                  <div className="my-3 flex items-center">
                     <Field
                       type="checkbox"
                       id="acceptPolicy"
-                      name="acceptPolicy"
-                      className="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+                      component={CustomCheckbox}
                     />
-                    <label
-                      htmlFor="acceptPolicy"
-                      className="ml-2 block text-sm text-foreground"
-                    >
-                      I agree with the term and condition
+                    <label htmlFor="acceptPolicy" className={'text-foreground'}>
+                      I agree with the term & condition
                     </label>
                   </div>
                 </div>
-
                 <div>
                   <Button
                     color={'warning'}
@@ -457,7 +271,7 @@ const Register: React.FC = () => {
               className="absolute inset-0 flex items-center"
               aria-hidden="true"
             >
-              <div className="w-full border-t border-gray-200" />
+              <div className="w-full border-0 border-t" />
             </div>
             <div className="relative flex justify-center text-sm font-medium leading-6">
               <span className="bg-gray-100  px-3 text-gray-900 dark:bg-gray-900 dark:text-gray-300">

@@ -30,9 +30,6 @@ const CardCouponComponent: React.FC<Props> = ({ displayCount }) => {
             src={coupon.image}
             alt={`Coupon ${coupon.id}`}
           />
-          <div className="absolute top-2 right-2 bg-white rounded-full px-3 py-1 shadow-md">
-            <span className="text-gray-800 font-semibold">{coupon.id}</span>
-          </div>
         </div>
       ))}
     </div>

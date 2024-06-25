@@ -19,7 +19,7 @@ const CouponDetailPage = ({ params }: Props) => {
     return <p>Coupon not found</p>;
   }
 
-  return (
+  return ( 
     <div>
       <CardCouponDetail coupon={coupons} />
     </div>

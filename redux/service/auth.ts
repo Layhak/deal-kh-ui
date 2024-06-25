@@ -1,14 +1,14 @@
+// redux/service/authApi.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   removeAccessToken,
   setAccessToken,
 } from '@/redux/feature/auth/authSlice';
-import { RootState } from '@/redux/store';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as RootState).auth.token;
+    const token = (getState() as any).auth.token;
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }
@@ -31,7 +31,23 @@ export const authApi = createApi({
           const { data } = await queryFulfilled;
           dispatch(setAccessToken(data.accessToken));
           localStorage.setItem('loggedIn', 'loggedIn');
-          localStorage.setItem('showSuccessToast', 'true');
+          localStorage.setItem('showSuccessLoginToast', 'true');
+        } catch (error) {
+          // Handle error if needed
+        }
+      },
+    }),
+    registerUser: builder.mutation({
+      query: (user) => ({
+        url: 'register',
+        method: 'POST',
+        body: user,
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          await queryFulfilled;
+          // Handle success if needed
+          localStorage.setItem('showSuccessRegisterToast', 'true');
         } catch (error) {
           // Handle error if needed
         }
@@ -52,17 +68,12 @@ export const authApi = createApi({
           // Handle error if needed
         }
       },
-      async onCacheEntryAdded(arg, { dispatch, cacheEntryRemoved }) {
-        try {
-          await cacheEntryRemoved;
-          dispatch(removeAccessToken());
-          localStorage.removeItem('loggedIn');
-        } catch (error) {
-          // Handle error if needed
-        }
-      },
     }),
   }),
 });
 
-export const { useLoginUserMutation, useLogoutUserMutation } = authApi;
+export const {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+  useLogoutUserMutation,
+} = authApi;

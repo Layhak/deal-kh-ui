@@ -16,7 +16,7 @@ export default function HomePage() {
   const { theme } = useTheme(); // Get the current theme
 
   useEffect(() => {
-    if (localStorage.getItem('showSuccessToast') === 'true') {
+    if (localStorage.getItem('showSuccessLoginToast') === 'true') {
       toast.success('Successfully logged in!', {
         position: 'top-right',
         autoClose: 5000,
@@ -27,7 +27,19 @@ export default function HomePage() {
         progress: undefined,
         theme: theme,
       });
-      localStorage.removeItem('showSuccessToast'); // Clear the flag
+      localStorage.removeItem('showSuccessLoginToast'); // Clear the flag
+    } else if (localStorage.getItem('showSuccessRegisterToast') === 'true') {
+      toast.success('Successfully registered!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      localStorage.removeItem('showSuccessRegisterToast'); // Clear the flag
     }
   }, [theme]);
   return (

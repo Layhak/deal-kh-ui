@@ -107,7 +107,7 @@ const Register: React.FC = () => {
 
   return (
     <div
-      className="min-h-[500px] w-full rounded-xl border-1.5 bg-gray-50 p-4 dark:border-0  dark:bg-gray-950 sm:w-[700px] sm:px-7 sm:py-5"
+      className="bg-foreground-50 min-h-[500px] w-full rounded-xl border-1 p-4 dark:border-0  sm:w-[700px] sm:px-7 sm:py-5"
       data-aos="flip-up"
     >
       <div className={'flex items-center justify-between'}>
@@ -265,16 +265,16 @@ const Register: React.FC = () => {
           </Formik>
         </div>
 
-        <div className="mt-5">
+        <div className="mt-2">
           <div className="relative">
             <div
               className="absolute inset-0 flex items-center"
               aria-hidden="true"
             >
-              <div className="w-full border-0 border-t" />
+              <div className="w-full border-0 border-t border-foreground" />
             </div>
             <div className="relative flex justify-center text-sm font-medium leading-6">
-              <span className="bg-gray-100  px-3 text-gray-900 dark:bg-gray-900 dark:text-gray-300">
+              <span className="text-foreground-900  bg-foreground-50 px-3 ">
                 Or
               </span>
             </div>
@@ -283,22 +283,22 @@ const Register: React.FC = () => {
           <div className="mt-6 grid grid-cols-1 gap-4">
             <NextLink
               href="#"
-              className="flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 bg-gray-50 px-3 py-1.5 text-white hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
-              onClick={handleLoginGoogle}
+              className="bg-foreground-100 text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+              onClick={() => signIn('google')}
             >
               <Google />
-              <span className="text-sm font-semibold leading-6 text-gray-800">
+              <span className="text-foreground-800 text-sm font-semibold leading-6">
                 Google
               </span>
             </NextLink>
 
             <NextLink
               href="#"
-              className="flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 bg-gray-50 px-3 py-1 text-white hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
-              onClick={handleLoginFacebook}
+              className="bg-foreground-100 text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+              onClick={() => signIn('facebook')}
             >
               <Facebook size={24} className={'text-primary-500'} />
-              <span className="text-sm font-semibold leading-6 text-gray-800">
+              <span className="text-foreground-800 text-sm font-semibold leading-6">
                 Facebook
               </span>
             </NextLink>

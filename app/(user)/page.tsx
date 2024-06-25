@@ -1,19 +1,20 @@
 'use client';
 
-import { Button, Image, Link } from '@nextui-org/react';
+import { Image, Link } from '@nextui-org/react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect } from 'react';
-import HeroSlideComponent from '@/components/slider/HeroSlide';
-import ShopCardComponent from '@/components/card/Shop';
-import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
-import Buy1Get1Component from '@/components/card/Buy1Get1';
-import DiscountCardComponent from '@/components/card/DiscountCardComponent';
-import ClearanceCardComponent from '@/components/card/ClearanceCard';
-import ServiceCardComponent from '@/components/card/Service';
-import NormalProductComponent from '@/components/card/NormalProduct';
+import { toast } from 'react-toastify';
 import Category from '@/components/card/Category';
+import NormalProductComponent from '@/components/card/NormalProduct';
+import ShopCardComponent from '@/components/card/Shop';
+import DiscountCardComponent from '@/components/card/DiscountCardComponent';
+import ServiceCardComponent from '@/components/card/Service';
+import Buy1Get1Component from '@/components/card/Buy1Get1';
+import ClearanceCardComponent from '@/components/card/ClearanceCard';
+import HeroSlideComponent from '@/components/slider/HeroSlide';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function HomePage() {
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function HomePage() {
   const { theme } = useTheme(); // Get the current theme
 
   useEffect(() => {
-    if (localStorage.getItem('showSuccessToast') === 'true') {
+    if (localStorage.getItem('showSuccessLoginToast') === 'true') {
       toast.success('Successfully logged in!', {
         position: 'top-right',
         autoClose: 5000,
@@ -33,7 +34,19 @@ export default function HomePage() {
         progress: undefined,
         theme: theme,
       });
-      localStorage.removeItem('showSuccessToast'); // Clear the flag
+      localStorage.removeItem('showSuccessLoginToast'); // Clear the flag
+    } else if (localStorage.getItem('showSuccessRegisterToast') === 'true') {
+      toast.success('Successfully registered!', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      localStorage.removeItem('showSuccessRegisterToast'); // Clear the flag
     }
   }, [theme]);
   return (
@@ -45,14 +58,17 @@ export default function HomePage() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold text-gray-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="text-foreground-700 relative w-fit text-[20px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]  lg:text-[26px]">
               Top <span className="text-[#eb7d52]">Sales</span>
             </p>
           </div>
           {/* Right section */}
           <Link href="/discount-off">
             <div className="flex items-center  pt-2">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
+              <p
+                className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal
+              "
+              >
                 See More
               </p>
               {/* Icon */}
@@ -75,17 +91,17 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent/>
+        <DiscountCardComponent />
         {/* Clearance Sale Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-gray-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="text-foreground-700 relative w-fit text-[20px]  font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Clearance <span className="text-[#eb7d52]">Sales</span>
             </p>
           </div>
           <Link href="/flash-sale">
             <div className="flex items-center pt-2">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
+              <p className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal">
                 See More
               </p>
               {/* Icon */}
@@ -114,18 +130,18 @@ export default function HomePage() {
             src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
             className="mt-[35px] h-[200px] w-[1300px] object-cover lg:h-[310px]"
             alt="image"
-          ></Image>
+          />
         </div>
         {/* Buy1 Get1 Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-gray-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="text-foreground-700 relative w-fit text-[20px]  font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Buy More <span className="text-[#eb7d52]">Get More</span>
             </p>
           </div>
           <Link href="/category/buy-more-get-more">
             <div className="flex items-center  pt-2">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
+              <p className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal">
                 See More
               </p>
               {/* Icon */}
@@ -155,7 +171,7 @@ export default function HomePage() {
                 src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
                 className="h-[690px] object-cover"
                 alt="image"
-              ></Image>
+              />
             </Link>
           </div>
           <div className="w-[800px]">
@@ -166,14 +182,14 @@ export default function HomePage() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-gray-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="text-foreground-700 relative w-fit text-[20px]  font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Service
             </p>
           </div>
           {/* Right section */}
           <Link href="/service">
             <div className="flex items-center  pt-2">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
+              <p className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal">
                 See More
               </p>
               {/* Icon */}
@@ -201,14 +217,14 @@ export default function HomePage() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-gray-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="text-foreground-700 relative w-fit text-[20px]  font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Shop <span className="text-[#eb7d52]">Coupons</span>
             </p>
           </div>
           {/* Right section */}
           <Link href="/coupon">
             <div className="flex items-center  pt-2">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
+              <p className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal">
                 See More
               </p>
               {/* Icon */}
@@ -252,14 +268,14 @@ export default function HomePage() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-gray-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="text-foreground-700 relative w-fit text-[20px]  font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Event
             </p>
           </div>
           {/* Right section */}
           <Link href="/event">
             <div className="flex items-center  pt-2">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
+              <p className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal">
                 See More
               </p>
               {/* Icon */}
@@ -294,14 +310,14 @@ export default function HomePage() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-gray-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="text-foreground-700 relative w-fit text-[20px]  font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Popular <span className="text-[#eb7d52]">Shop</span>
             </p>
           </div>
           {/* Right section */}
           <Link href="#">
             <div className="flex items-center  pt-2">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
+              <p className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal">
                 See More
               </p>
               {/* Icon */}
@@ -329,14 +345,14 @@ export default function HomePage() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-gray-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="text-foreground-700 relative w-fit text-[20px]  font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Feature <span className="text-[#eb7d52]">Products</span>
             </p>
           </div>
           {/* Right section */}
           <Link href="/all-product">
             <div className="flex items-center  pt-2">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
+              <p className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal">
                 See More
               </p>
               {/* Icon */}
@@ -364,14 +380,14 @@ export default function HomePage() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-gray-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="text-foreground-700 relative w-fit text-[20px]  font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Category
             </p>
           </div>
           {/* Right section */}
           <Link href="/all-product">
             <div className="flex items-center  pt-2">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
+              <p className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal">
                 See More
               </p>
               {/* Icon */}

@@ -1,20 +1,20 @@
-import { ecommerceApi } from '@/redux/api';
-import { ProductResponse } from '@/libs/difinition';
-
 // Define a service using a base URL and expected endpoints
+import { ecommerceApi } from '@/redux/api';
+
 export const productApi = ecommerceApi.injectEndpoints({
   // The name of the slice of state that will be managed by this api
   endpoints: (builder) => ({
     // get all products
-    getProducts: builder.query<any, { page: number; size: number;field:string,fieldName:any }>({
-      query: ({ page , size ,field,fieldName }) =>
-          `products?page=${page}&size=${size}&${field}=${fieldName}`
-  }),
+    getProducts: builder.query<
+      any,
+      { page: number; size: number; field: string; fieldName: any }
+    >({
+      query: ({ page, size, field, fieldName }) =>
+        `products?page=${page}&size=${size}&${field}=${fieldName}`,
+    }),
 
-
-    getAllProducts: builder.query<any,void>({
-      query: () =>
-        `products`,
+    getAllProducts: builder.query<any, void>({
+      query: () => `products`,
     }),
 
     // get single product
@@ -42,7 +42,8 @@ export const productApi = ecommerceApi.injectEndpoints({
     // page.tsx a product
     updateProduct: builder.mutation<
       any,
-      { id: number; updatedProduct: object }>({
+      { id: number; updatedProduct: object }
+    >({
       query: ({ id, updatedProduct }) => ({
         url: `products/${id}/`,
         method: 'PATCH',
@@ -95,7 +96,7 @@ export const {
   useGetMyProductsQuery,
   useGetProductImagesQuery,
   useGetCategoryImagesQuery,
-  useUploadImageMutation, 
+  useUploadImageMutation,
   useUploadCategoryImageMutation,
-  useGetAllProductsQuery
+  useGetAllProductsQuery,
 } = productApi;

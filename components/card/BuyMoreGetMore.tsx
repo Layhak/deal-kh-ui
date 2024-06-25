@@ -16,13 +16,13 @@ export default function BuyMoreGetMoreComponent() {
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-7">
-      {data?.list.map((product: CartProductType) => (
+      {data?.payload.list.map((product: CartProductType) => (
           <Card
             onClick={() => router.push(`/${product.slug}`)}
             key={product.slug}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="relative mb-2 h-[330px] w-[285px] flex-none rounded-xl border border-gray-200 bg-white shadow-none dark:border-gray-700 dark:bg-gray-800"
+            className="relative mb-2 h-[330px] w-[285px] flex-none rounded-xl  bg-white shadow-none dark:border-gray-700 dark:bg-gray-800"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
@@ -61,7 +61,7 @@ export default function BuyMoreGetMoreComponent() {
                 <p className="text-[14px] font-medium text-gray-600 ">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
-                    {product.createdAt}
+                    {product.expiredAt}
                   </span>
                 </p>
               </div>

@@ -10,7 +10,7 @@ import { Image } from '@nextui-org/react';
 export default function Category() {
   return (
     <Marquee pauseOnHover>
-      <div className="flex h-[250px] w-[250px] items-center justify-center rounded-full border-gray-200 bg-white">
+      <div className="flex h-[250px] w-[250px] items-center justify-center rounded-full  bg-white">
         <Image
           src="https://i.pinimg.com/564x/35/1a/2f/351a2fa0270f82fa85b1019b610d9a46.jpg"
           alt="Category image"

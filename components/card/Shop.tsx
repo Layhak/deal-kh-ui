@@ -14,12 +14,12 @@ export default function ShopCardComponent() {
   return (
     <div>
     <div className="flex flex-wrap justify-center gap-[35px]">
-    {data?.list.map((product: CartProductType) => (
+    {data?.payload.list.map((product: CartProductType) => (
         <Card
           key={product.slug}
           isPressable
           onPress={() => console.log('item pressed')}
-          className="w-[387px] shadow-none border border-gray-200 p-2"
+          className="w-[387px] shadow-none  p-2"
         >
           <CardBody>
           <a href="#">
@@ -31,7 +31,7 @@ export default function ShopCardComponent() {
           </a>
           <Link href="#">
           <Image
-                  className="h-[193px] w-[284px] object-cover"
+                  className="h-[193px] w-[350px] object-cover"
                   src={product.images[0].url || 'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'}
                   alt={product.name}
                 />

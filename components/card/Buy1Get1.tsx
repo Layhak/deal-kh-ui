@@ -1,10 +1,11 @@
 'use client';
-import { CartProductType, ProductResponse } from '@/libs/difinition';
+
 import { Card, CardBody, Image, Link, Pagination } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import {  useGetProductsQuery } from '@/redux/service/product';
+import { CartProductType } from '@/libs/difinition';
 
 
 export default function Buy1Get1Component() {
@@ -14,15 +15,16 @@ export default function Buy1Get1Component() {
   console.log('error', error);
   console.log('isLoading', isLoading);
 
+
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-[25px]">
-        {data?.list.map((product: CartProductType) => (
+        {data?.payload.list.map((product: CartProductType) => (
           <Card
             onClick={() => router.push(`/products`)}
             key={product.slug}
             isPressable
-            className="relative mb-2 h-[330px] w-[250px] flex-none rounded-xl border border-gray-200 bg-white shadow-none dark:border-gray-700 dark:bg-gray-800"
+            className="relative mb-2 h-[330px] w-[250px] flex-none rounded-xl  bg-white shadow-none dark:border-gray-700 dark:bg-gray-800"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
@@ -38,8 +40,8 @@ export default function Buy1Get1Component() {
               <div className="flex flex-wrap justify-between">
                 <Link href="#">
                   <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
-                  {product.name.length > 60
-                      ? `${product.name.substring(0, 60)}...`
+                  {product.name.length > 30
+                      ? `${product.name.substring(0, 25)}...`
                       : product.name || "Product Name"}
                   </h5>
                 </Link>
@@ -52,7 +54,7 @@ export default function Buy1Get1Component() {
                   Shop :{' '}
                   <Link href="">
                     <span className="text-[14px] font-medium text-blue-800">
-                    {product.shop.length > 30
+                    {product.shop.length > 20
                     ? `${product.shop.substring(0, 20)}...`
                     : product.shop || "Shop Name"}
                     </span>
@@ -61,12 +63,12 @@ export default function Buy1Get1Component() {
                 <p className="text-[14px] font-medium text-gray-600 ">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
-                    {product.createdAt || 'Expired Date'}
+                    {product.expiredAt || 'Expired Date'}
                   </span>
                 </p>
               </div>
               <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text pt-8 text-2xl font-bold text-transparent">
-                ${product.price || '0'}
+                ${product.price || 'Price'}
               </span>
             </CardBody>
           </Card>

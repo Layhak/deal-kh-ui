@@ -61,12 +61,35 @@ export type CartProductType = {
   images: Image[];
   shop: string;
   discountValue: number;
+  discountType: string;
+  expiredAt: string;
   category: string;
   createdAt: string;
   updatedAt: string;
   createdBy: string;
-  updateBy: string | null;
-  onClick?: () => void;
+  updatedBy: string;
+};
+
+export type Pagination = {
+  pageSize: number;
+  pageNumber: number;
+  totalPages: number;
+  totalElements: number;
+  numberOfElements: number;
+  first: boolean;
+  last: boolean;
+  empty: boolean;
+};
+
+export type Payload = {
+  list: CartProductType[];
+  pagination: Pagination;
+};
+
+export type ApiResponse = {
+  payload: Payload;
+  message: string;
+  status: number;
 };
 
 // types/productScrape.ts

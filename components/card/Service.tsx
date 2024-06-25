@@ -17,28 +17,27 @@ export default function ServiceCardComponent() {
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-[38px] ">
-      {data?.list.map((product: CartProductType) => (
+      {data?.payload.list.map((product: CartProductType) => (
           <Card
             key={product.slug}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="w-[595px] border border-gray-200 shadow-none"
+            className="w-[595px]  shadow-none"
           >
             <div className="flex p-2">
                 <Link href="#">
                 <Image
-                  className="h-[193px] w-[284px] object-cover"
+                  className="h-[193px] w-[250px] object-cover"
                   src={product.images[0].url || 'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'}
                   alt={product.name}
                 />
                 </Link>
-              <div className="item-start text-left px-4">
+              <div className="item-start text-left pl-4 w-[300px]">
                 <a href="#">
-                  <h5 className="text-lg font-semibold tracking-tight text-gray-800 dark:text-white">
-                    {product.name.length > 60
-                      ? `${product.name.substring(0, 60)}...`
-                      : product.name}{' '}
-                    For Your Need, Starlight Sport
+                  <h5 className="text-lg font-semibold tracking-tight text-gray-800 dark:text-white h-[50px]">
+                    {product.name.length > 50
+                      ? `${product.name.substring(0, 50)}...`
+                      : product.name || "Product Name"}
                   </h5>
                 </a>
                 <div className='my-3 flex flex-col gap-1'>
@@ -55,7 +54,7 @@ export default function ServiceCardComponent() {
                   <p className="text-sm text-gray-600">
                     Expired date :{' '}
                     <span className="text-sm font-medium text-red-500">
-                      {product.createdAt}
+                      {product.expiredAt}
                     </span>
                   </p>
                   <p className="text-sm text-gray-600">

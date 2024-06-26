@@ -64,7 +64,7 @@ export default function HomePage() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discount-off">
+          <Link href="/discount">
             <div className="flex items-center  pt-2">
               <p
                 className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal
@@ -140,7 +140,7 @@ export default function HomePage() {
               Buy More <span className="text-[#eb7d52]">Get More</span>
             </p>
           </div>
-          <Link href="/category/buy-more-get-more">
+          <Link href="/buy-more-get-more">
             <div className="flex items-center  pt-2">
               <p className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal">
                 See More

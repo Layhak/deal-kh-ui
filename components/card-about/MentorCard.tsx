@@ -17,7 +17,7 @@ export default function MentorCard() {
       {mentors.map((item, index) => (
         <div
           key={index}
-          className="w-72 max-w-sm overflow-hidden rounded-xl border-1 border-warning-500 p-8 dark:border-warning-200"
+          className="w-72 max-w-sm overflow-hidden rounded-xl  p-8 "
         >
           <div className="relative flex items-center justify-center">
             <span className="absolute inset-[-0.35%] animate-[spin_3s_linear_infinite] rounded-full bg-[conic-gradient(from_90deg_at_50%_50%,#EC4899_0%,#EAB308_50%,#EC4899_100%)] p-[1px]"></span>

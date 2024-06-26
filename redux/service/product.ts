@@ -18,11 +18,8 @@ export const productApi = ecommerceApi.injectEndpoints({
     }),
 
     // get single product
-    getProductById: builder.query<any, number>({
-      query: (id) => `products/${id}/`,
-    }),
-    getLazyProductById: builder.query<any, number>({
-      query: (id) => `products/${id}/`,
+    getProductBySlug: builder.query<any, string>({
+      query: (slug) => `products/${slug}`,
     }),
     getProductByProfile: builder.query<any, { page: number; pageSize: number }>(
       {
@@ -88,8 +85,7 @@ export const productApi = ecommerceApi.injectEndpoints({
 // Export hooks for usage in components, which are
 export const {
   useGetProductsQuery,
-  useGetProductByIdQuery,
-  useLazyGetProductByIdQuery,
+  useGetProductBySlugQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,

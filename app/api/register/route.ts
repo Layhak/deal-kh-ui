@@ -3,17 +3,33 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(req: NextRequest) {
   const body = await req.json();
   console.log(body);
-  const { email, password1, password2, first_name, last_name } = body;
+  const {
+    email,
+    password,
+    confirmedPassword,
+    firstName,
+    lastName,
+    username,
+    gender,
+    phoneNumber,
+    dob,
+    location,
+  } = body;
 
-  const response = await fetch(`${process.env.DJANGO_API_URL}user/register/`, {
+  const response = await fetch(`${process.env.DEALKH_API_URL}auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       email,
-      password1,
-      password2,
-      first_name,
-      last_name,
+      password,
+      confirmedPassword,
+      firstName,
+      lastName,
+      username,
+      gender,
+      phoneNumber,
+      dob,
+      location,
     }),
   });
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import { ErrorMessage, Field, Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import 'aos/dist/aos.css';
@@ -9,15 +9,14 @@ import Aos from 'aos';
 import { Button, Checkbox } from '@nextui-org/react';
 import { signIn } from 'next-auth/react';
 import { Cancel, Facebook, Google, Logo } from '@/components/icons';
-import { togglePasswordVisibility } from '@/redux/feature/password/passwordVisibilitySlice';
-import { IoEyeOffSharp, IoEyeSharp } from 'react-icons/io5';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { useRouter } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import 'react-toastify/dist/ReactToastify.css';
-import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { useLoginUserMutation } from '@/redux/service/auth';
+import CustomInput from '@/components/customInput/customInput';
+import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
 
 type FormValues = {
   email: string;
@@ -42,15 +41,9 @@ const validationSchema = Yup.object().shape({
 const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
 
 export default function MyShop() {
-  const dispatch = useAppDispatch();
-  const showPassword = useAppSelector((state) => state.passwordVisibility);
   const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
   const router = useRouter();
   const { theme } = useTheme();
-
-  const handleShowPassword = () => {
-    dispatch(togglePasswordVisibility());
-  };
 
   const handleSubmit = async (
     values: FormValues,
@@ -78,7 +71,7 @@ export default function MyShop() {
 
   return (
     <div
-      className="min-h-[500px] w-full rounded-xl border-1.5 bg-gray-50 p-4 dark:border-0  dark:bg-gray-950 sm:w-[500px] sm:px-7 sm:py-10"
+      className=" bg-foreground-50 min-h-[500px] w-full rounded-xl  border-1.5 p-4  dark:border-0 sm:w-[500px] sm:px-7 sm:py-10"
       data-aos="flip-up"
     >
       <div className={'flex items-center justify-between'}>
@@ -128,64 +121,17 @@ export default function MyShop() {
           >
             {() => (
               <Form action="#" method="POST" className="space-y-5">
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium leading-6 text-foreground"
-                  >
-                    Email address
-                  </label>
-                  <div className="mt-2">
-                    <Field
-                      id="email"
-                      name="email"
-                      type="email"
-                      autoComplete="email"
-                      required
-                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-foreground focus:ring-2 focus:ring-inset focus:ring-primary-600 sm:text-sm sm:leading-6"
-                    />
-                  </div>
-                  <ErrorMessage
-                    name="email"
-                    component="section"
-                    className={'text-danger'}
-                  />
-                </div>
-
-                <div>
-                  <label
-                    htmlFor="password"
-                    className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-300"
-                  >
-                    Password
-                  </label>
-                  <div className="relative mt-2">
-                    <Field
-                      id="password"
-                      name="password"
-                      type={showPassword ? 'text' : 'password'}
-                      autoComplete="current-password"
-                      required
-                      className="block w-full rounded-md border-0 px-3 py-1.5 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                    />
-                    {!showPassword ? (
-                      <IoEyeOffSharp
-                        onClick={() => handleShowPassword()}
-                        className="absolute right-3 top-3 cursor-pointer"
-                      />
-                    ) : (
-                      <IoEyeSharp
-                        onClick={() => handleShowPassword()}
-                        className="absolute right-3 top-3 cursor-pointer"
-                      />
-                    )}
-                  </div>
-                  <ErrorMessage
-                    name="password"
-                    component="section"
-                    className={'text-danger'}
-                  />
-                </div>
+                <CustomInput
+                  label={'Email'}
+                  name={'email'}
+                  type={'email'}
+                  placeholder={'Enter your email address'}
+                />
+                <CustomPasswordInput
+                  label={'Password'}
+                  name={'password'}
+                  placeholder={'Please enter your password'}
+                />
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center">
@@ -227,10 +173,10 @@ export default function MyShop() {
               className="absolute inset-0 flex items-center"
               aria-hidden="true"
             >
-              <div className="w-full border-t border-gray-200" />
+              <div className="w-full border-0 border-t border-foreground" />
             </div>
             <div className="relative flex justify-center text-sm font-medium leading-6">
-              <span className="bg-gray-100  px-3 text-gray-900 dark:bg-gray-900 dark:text-gray-300">
+              <span className="text-foreground-900  bg-foreground-50 px-3 ">
                 Or
               </span>
             </div>
@@ -239,22 +185,22 @@ export default function MyShop() {
           <div className="mt-6 grid grid-cols-1 gap-4">
             <NextLink
               href="#"
-              className="flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 bg-gray-50 px-3 py-1.5 text-white hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+              className="bg-foreground-100 text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
               onClick={() => signIn('google')}
             >
               <Google />
-              <span className="text-sm font-semibold leading-6 text-gray-800">
+              <span className="text-foreground-800 text-sm font-semibold leading-6">
                 Google
               </span>
             </NextLink>
 
             <NextLink
               href="#"
-              className="flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 bg-gray-50 px-3 py-1.5 text-white hover:bg-gray-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+              className="bg-foreground-100 text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
               onClick={() => signIn('facebook')}
             >
               <Facebook size={24} className={'text-primary-500'} />
-              <span className="text-sm font-semibold leading-6 text-gray-800">
+              <span className="text-foreground-800 text-sm font-semibold leading-6">
                 Facebook
               </span>
             </NextLink>

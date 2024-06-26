@@ -144,7 +144,7 @@ function AboutPageComponent() {
             <Image
               src="/images/about-forth.png"
               alt="About us"
-              width={800}
+              width={1000}
               height={900}
               data-aos="fade-up"
             />

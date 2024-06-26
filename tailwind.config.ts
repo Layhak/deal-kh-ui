@@ -42,6 +42,7 @@ const config: Config = {
               foreground: '#fef2f2',
               DEFAULT: '#ef4444',
             },
+            background: 'rgb(249, 250, 251)',
           },
         },
         dark: {
@@ -61,6 +62,7 @@ const config: Config = {
               foreground: '#fef2f2',
               DEFAULT: '#ef4444',
             },
+            background: '#0F0F0F',
           },
         },
       },

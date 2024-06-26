@@ -1,3 +1,5 @@
+import React from 'react';
 import NotFoundPage from '@/app/(user)/not-found';
 
-export default NotFoundPage;
+const Page = () => <NotFoundPage />;
+export default Page;

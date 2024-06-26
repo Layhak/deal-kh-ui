@@ -212,21 +212,28 @@ export const NavigationBar = () => {
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent>
-        <NavbarBrand>
-          <NextLink href="/" className="h-12 w-12">
-            <Image src="/logo.png" alt="logo" className="h-12 w-12" />
-          </NextLink>
-        </NavbarBrand>
-      </NavbarContent>
-      <NavbarContent>
-        <div className="flex gap-4">
-          <NavbarItem className="hidden sm:flex ">
-            <CategoryButton categories={categories} />
-          </NavbarItem>
-          <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-        </div>
-      </NavbarContent>
+      <div className='flex'>
+        {/* logo section */}
+        <NavbarContent>
+          <NavbarBrand>
+            <NextLink href="/" className="h-12 w-12">
+              <Image src="/logo.png" alt="logo" className="h-12 w-12" />
+            </NextLink>
+          </NavbarBrand>
+        </NavbarContent>
+
+        {/* category */}
+        <NavbarContent>
+          <div className="flex gap-4">
+            <NavbarItem className="hidden sm:flex ">
+              <CategoryButton categories={categories} />
+            </NavbarItem>
+            <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+          </div>
+        </NavbarContent>
+      </div>
+
+      {/* section menu home, policy, deal, and about */}
       <NavbarContent justify={'start'} className={'hidden gap-4 px-16 sm:flex'}>
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>
@@ -243,6 +250,8 @@ export const NavigationBar = () => {
           </NavbarItem>
         ))}
       </NavbarContent>
+
+      {/* icon section night mode, heart, and cart */}
       <NavbarContent className="hidden gap-4 sm:flex" justify="center">
         <NavbarItem>
           <ThemeSwitch />
@@ -294,6 +303,7 @@ export const NavigationBar = () => {
           )}
         </NavbarItem>
       </NavbarContent>
+
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {/* Search bar */}
@@ -360,6 +370,7 @@ export const NavigationBar = () => {
           ))}
         </div>
       </NavbarMenu>
+
       <NavbarContent className="basis-1 sm:hidden" justify="end">
         <ThemeSwitch />
         <NavbarMenuToggle />

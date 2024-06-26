@@ -15,6 +15,7 @@ import Buy1Get1Component from '@/components/card/Buy1Get1';
 import ClearanceCardComponent from '@/components/card/ClearanceCard';
 import HeroSlideComponent from '@/components/slider/HeroSlide';
 import 'react-toastify/dist/ReactToastify.css';
+import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
 
 export default function HomePage() {
   useEffect(() => {
@@ -222,7 +223,7 @@ export default function HomePage() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/coupon">
+          <Link href="/coupons">
             <div className="flex items-center  pt-2">
               <p className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal">
                 See More
@@ -247,21 +248,8 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <div className="coupon-container flex justify-between pb-10">
-          <div className="coupon">
-            <Image
-              src="https://as2.ftcdn.net/v2/jpg/03/29/10/97/1000_F_329109774_iTsyjzLU5O9cagJ9UhahhNF2ZdkW4OHc.jpg"
-              className="h-[250px] w-[550px] object-cover"
-              alt="image"
-            />
-          </div>
-          <div className="coupon">
-            <Image
-              src="https://as1.ftcdn.net/v2/jpg/03/29/10/98/1000_F_329109835_b1coeNquepUkFoSpqVgLLqKFiBKosY7K.jpg"
-              className="h-[250px] w-[550px] object-cover"
-              alt="image"
-            />
-          </div>
+        <div >
+          <CardCouponComponent displayCount={2}/>
         </div>
         <DiscountCardComponent />
         {/* Event Section */}

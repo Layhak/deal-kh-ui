@@ -1,5 +1,4 @@
-import React from 'react'
-import Accessory from '@/components/pages/Accessory';
+import React from 'react';
 import { Metadata } from 'next';
 import Products from '@/components/pages/AllProduct';
 
@@ -10,17 +9,16 @@ export const metadata: Metadata = {
     images: [
       {
         url: '/icon.png',
-        alt: "DealKH Logo Ecommerce Website",
+        alt: 'DealKH Logo Ecommerce Website',
       },
     ],
   },
 };
 
-
 export default function page() {
   return (
     <main>
-      <Products/>
+      <Products />
     </main>
-  )
+  );
 }

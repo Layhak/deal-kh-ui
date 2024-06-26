@@ -9,6 +9,12 @@ import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
 import { useRouter } from 'next/navigation';
+import Buy1Get1Component from '@/components/card/Buy1Get1';
+import DiscountCardComponent from '@/components/card/DiscountCardComponent';
+import ClearanceCardComponent from '@/components/card/ClearanceCard';
+import ServiceCardComponent from '@/components/card/Service';
+import NormalProductComponent from '@/components/card/NormalProduct';
+import Category from '@/components/card/Category';
 
 export default function HomePage() {
   useEffect(() => {
@@ -70,7 +76,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        {/*<DiscountCardComponent />*/}
+        <DiscountCardComponent/>
         {/* Clearance Sale Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -103,7 +109,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        {/*<ClearanceCardComponent />*/}
+        <ClearanceCardComponent />
         <div>
           <Image
             src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
@@ -118,7 +124,7 @@ export default function HomePage() {
               Buy More <span className="text-[#eb7d52]">Get More</span>
             </p>
           </div>
-          <Link href="/buy-more-get-more">
+          <Link href="/category/buy-more-get-more">
             <div className="flex items-center  pt-2">
               <p className="mr-2 pb-1 text-[17px] font-normal text-gray-500">
                 See More
@@ -153,7 +159,9 @@ export default function HomePage() {
               ></Image>
             </Link>
           </div>
-          <div className="w-[800px]">{/*<Buy1Get1Component />*/}</div>
+          <div className="w-[800px]">
+            <Buy1Get1Component />
+          </div>
         </div>
         {/* Service Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
@@ -189,7 +197,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        {/*<ServiceCardComponent />*/}
+        <ServiceCardComponent />
         {/* Coupon Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -227,7 +235,7 @@ export default function HomePage() {
         <div >
           <CardCouponComponent displayCount={2}/>
         </div>
-        {/*<DiscountCardComponent />*/}
+        <DiscountCardComponent />
         {/* Event Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -339,7 +347,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        {/*<NormalProductComponent />*/}
+        <NormalProductComponent />
         {/* Category */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -374,7 +382,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        {/*<Category />*/}
+        <Category />
       </main>
     </>
   );

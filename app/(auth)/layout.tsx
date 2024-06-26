@@ -44,7 +44,9 @@ export default function RootLayout({
             <Providers
               themeProps={{ attribute: 'class', defaultTheme: 'dark' }}
             >
-              <main>{children}</main>
+              <main className={'grid min-h-screen w-full place-content-center'}>
+                {children}
+              </main>
             </Providers>
           </StoreProvider>
         </body>

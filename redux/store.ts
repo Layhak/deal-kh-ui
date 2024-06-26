@@ -4,7 +4,7 @@ import authSlice from '@/redux/feature/auth/authSlice';
 import cartSlice from '@/redux/feature/cart/cartSlice';
 import passwordVisibilitySlice from '@/redux/feature/password/passwordVisibilitySlice';
 import { ecommerceApi } from './api';
-import logoutSlice from './feature/logout/logoutSlice';
+import { authApi } from '@/redux/service/auth';
 
 export const makeStore = () => {
   return configureStore({
@@ -12,12 +12,14 @@ export const makeStore = () => {
       userProfile: userProfileSlice,
       auth: authSlice,
       cart: cartSlice,
-      logout: logoutSlice,
       passwordVisibility: passwordVisibilitySlice,
       [ecommerceApi.reducerPath]: ecommerceApi.reducer,
+      [authApi.reducerPath]: authApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(ecommerceApi.middleware),
+      getDefaultMiddleware()
+        .concat(ecommerceApi.middleware)
+        .concat(authApi.middleware),
   });
 };
 

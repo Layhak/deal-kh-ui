@@ -15,6 +15,7 @@ import Buy1Get1Component from '@/components/card/Buy1Get1';
 import ClearanceCardComponent from '@/components/card/ClearanceCard';
 import HeroSlideComponent from '@/components/slider/HeroSlide';
 import 'react-toastify/dist/ReactToastify.css';
+import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
 
 export default function HomePage() {
   useEffect(() => {

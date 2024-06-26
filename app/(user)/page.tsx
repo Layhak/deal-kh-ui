@@ -350,7 +350,7 @@ export default function HomePage() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/all-product">
+          <Link href="/products">
             <div className="flex items-center  pt-2">
               <p className="text-foreground-500 mr-2 pb-1 text-[17px] font-normal">
                 See More

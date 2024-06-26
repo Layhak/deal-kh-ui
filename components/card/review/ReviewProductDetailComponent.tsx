@@ -1,8 +1,8 @@
 'use client';
 import { Image, Link } from '@nextui-org/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Reviews } from './review';
-import { MdExpandMore, MdExpandLess } from 'react-icons/md';
+import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 
 export default function ReviewProductDetailComponent() {
   const [showAllReviews, setShowAllReviews] = useState(false);
@@ -13,8 +13,8 @@ export default function ReviewProductDetailComponent() {
 
   return (
     <div className="mb-6 p-4">
-      <div className="mb-8 lg:mb-16 flex-1">
-        <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
+      <div className="mb-8 flex-1 lg:mb-16">
+        <p className="text-fourground-800 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
           Customer <span className="text-[#eb7d52]">Review</span>
         </p>
       </div>
@@ -22,7 +22,7 @@ export default function ReviewProductDetailComponent() {
         (review, index) => (
           <div key={index} className="lg:w-3/5">
             {/* profile */}
-            <div className="flex flex-col gap-2 justify-between lg:flex-row lg:items-center">
+            <div className="flex flex-col justify-between gap-2 lg:flex-row lg:items-center">
               {/* profile section */}
               <div className="flex gap-4 lg:flex-shrink-0">
                 <Image
@@ -31,10 +31,10 @@ export default function ReviewProductDetailComponent() {
                   alt="Profile"
                 />
                 <div className="my-auto">
-                  <div className="text-lg font-semibold text-gray-700 dark:text-white">
+                  <div className="text-fourground-700 text-lg font-semibold dark:text-white">
                     {review.name}
                   </div>
-                  <div className=" text-gray-600 dark:text-gray-300 ">
+                  <div className=" text-fourground-600 dark:text-fourground-300 ">
                     {review.date}
                   </div>
                 </div>
@@ -42,7 +42,7 @@ export default function ReviewProductDetailComponent() {
 
               {/* rating section */}
               <div className="flex gap-2">
-                <p className="lg:font-semibold font-medium text-gray-700 dark:text-white">
+                <p className="text-fourground-700 font-medium dark:text-white lg:font-semibold">
                   Rating: {review.star.toFixed(1)}
                 </p>
                 {/* Star section */}
@@ -64,7 +64,7 @@ export default function ReviewProductDetailComponent() {
                     </svg>
                   ))}
                   <svg
-                    className="h-4 w-4 text-gray-200 dark:text-gray-600"
+                    className="text-fourground-200 dark:text-fourground-600 h-4 w-4"
                     aria-hidden="true"
                     xmlns="http://www.w3.org/2000/svg"
                     fill="currentColor"
@@ -77,9 +77,9 @@ export default function ReviewProductDetailComponent() {
             </div>
 
             {/* comment section */}
-            {/* text-2xl font-semibold text-gray-700 dark:text-white md:text-3xl */}
-            <div className="lg:mt-6 items-start ">
-              <p className="mt-2 text-gray-600 dark:text-gray-300 ">
+            {/* text-2xl font-semibold text-fourground-700 dark:text-white md:text-3xl */}
+            <div className="items-start lg:mt-6 ">
+              <p className="text-fourground-600 dark:text-fourground-300 mt-2 ">
                 {review.comment}
               </p>
               <div className="mb-12 mt-4 flex">
@@ -100,13 +100,13 @@ export default function ReviewProductDetailComponent() {
         <div className="mt-4 flex justify-center">
           <button
             onClick={toggleShowAllReviews}
-            className="mr-2 flex rounded-lg px-4 py-2 pb-1 text-[17px] font-normal text-gray-800"
+            className="text-fourground-800 mr-2 flex rounded-lg px-4 py-2 pb-1 text-[17px] font-normal"
           >
             {showAllReviews ? 'Show Less ' : 'Show More'}
             {showAllReviews ? (
-              <MdExpandLess className="ml-2 mt-[2px] text-2xl text-gray-800" />
+              <MdExpandLess className="text-fourground-800 ml-2 mt-[2px] text-2xl" />
             ) : (
-              <MdExpandMore className="ml-2 mt-[2px] text-2xl text-gray-800" />
+              <MdExpandMore className="text-fourground-800 ml-2 mt-[2px] text-2xl" />
             )}
           </button>
         </div>
@@ -115,13 +115,13 @@ export default function ReviewProductDetailComponent() {
       {/* related product section */}
       <div className="my-8 flex h-[50px] items-center justify-between">
         <div className="flex-1">
-          <p className="relative w-fit text-[26px] font-bold text-gray-800 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
+          <p className="text-fourground-800 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
             Related <span className="text-[#eb7d52]">Product</span>
           </p>
         </div>
         <Link href="/buymoregetmore">
           <div className="flex items-center  pt-1">
-            <p className="mr-2 pb-1 text-[17px] font-normal text-gray-800">
+            <p className="text-fourground-800 mr-2 pb-1 text-[17px] font-normal">
               See More
             </p>
             {/* Icon */}

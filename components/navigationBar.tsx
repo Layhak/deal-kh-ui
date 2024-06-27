@@ -14,6 +14,7 @@ import {
   NavbarItem,
   NavbarMenu,
   NavbarMenuToggle,
+  Tooltip,
 } from '@nextui-org/react';
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
@@ -27,7 +28,6 @@ import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import AuthLink from '@/components/auth/AuthLink';
 import { useSubmitFormMutation } from '@/redux/api';
-import { signOut } from '@/app/Auth/auth';
 import { useLogoutUserMutation } from '@/redux/service/auth';
 
 type ValueTypes = {
@@ -144,7 +144,7 @@ export const NavigationBar = () => {
         aria-label="First Input"
         classNames={{
           inputWrapper:
-            'bg-default-100 rounded-none rounded-l-xl w-[200px] mt-1',
+            'bg-default-100 rounded-none rounded-l-xl w-[150px] lg:w-[200px] mt-1',
           input: 'text-sm',
         }}
         labelPlacement="outside"
@@ -170,7 +170,7 @@ export const NavigationBar = () => {
         aria-label="Second Input"
         classNames={{
           inputWrapper:
-            'bg-default-100 rounded-none rounded-r-xl w-[200px] mt-1',
+            'bg-default-100 rounded-none rounded-r-xl w-[150px] lg:w-[200px] mt-1',
           input: 'text-sm',
         }}
         labelPlacement="outside"
@@ -217,33 +217,48 @@ export const NavigationBar = () => {
           <NextLink href="/" className="h-12 w-12">
             <Image src="/logo.png" alt="logo" className="h-12 w-12" />
           </NextLink>
+          <NavbarItem className="hidden sm:flex ">
+            <CategoryButton categories={categories} />
+          </NavbarItem>
         </NavbarBrand>
       </NavbarContent>
       <NavbarContent>
         <div className="flex gap-4">
-          <NavbarItem className="hidden sm:flex ">
-            <CategoryButton categories={categories} />
-          </NavbarItem>
-          <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+          <NavbarItem className="hidden md:flex">{searchInput}</NavbarItem>
         </div>
       </NavbarContent>
-      <NavbarContent justify={'start'} className={'hidden gap-4 px-16 sm:flex'}>
+      <NavbarContent justify={'start'} className={'hidden gap-4 px-16 lg:flex'}>
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>
-            <NextLink
-              className={`${
-                item.href === pathname
-                  ? 'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
-                  : 'text-foreground'
-              } transition-all ease-linear hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-600 hover:bg-clip-text hover:font-normal hover:text-transparent`}
-              href={item.href}
+            <Tooltip
+              content={
+                <p
+                  className={
+                    'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
+                  }
+                >
+                  {item.tooltip}
+                </p>
+              }
+              offset={10}
+              showArrow
+              className={'hidden lg:block'}
             >
-              {item.label}
-            </NextLink>
+              <NextLink
+                className={`${
+                  item.href === pathname
+                    ? 'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
+                    : 'text-foreground'
+                } transition-all ease-linear hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-600 hover:bg-clip-text hover:font-normal hover:text-transparent`}
+                href={item.href}
+              >
+                {item.label}
+              </NextLink>
+            </Tooltip>
           </NavbarItem>
         ))}
       </NavbarContent>
-      <NavbarContent className="hidden gap-4 sm:flex" justify="center">
+      <NavbarContent className="hidden gap-4 lg:flex" justify="center">
         <NavbarItem>
           <ThemeSwitch />
         </NavbarItem>
@@ -257,7 +272,7 @@ export const NavigationBar = () => {
             <CartIcon size={28} />
           </NextLink>
         </NavbarItem>
-        <NavbarItem>
+        <NavbarItem className={'hidden lg:flex'}>
           {isLoggedIn ? (
             <Dropdown placement="bottom-end" shadow={'md'}>
               <DropdownTrigger>
@@ -295,73 +310,39 @@ export const NavigationBar = () => {
         </NavbarItem>
       </NavbarContent>
       <NavbarMenu>
-        <div className="mx-4 mt-2 flex flex-col gap-2">
-          {/* Search bar */}
-          <NavbarItem>{searchInput}</NavbarItem>
-          {/* Login button */}
-          {!isLoggedIn ? (
-            <>
-              <NavbarItem>
-                <NextLink href="/login">
-                  <button className="rouneded-md bg-warning text-white">
-                    Login
-                  </button>
+        <div className="mx-4 mt-2 flex h-full flex-col justify-between gap-2">
+          <div>
+            {siteConfig.navItems.map((item) => (
+              <NavbarItem key={item.href} isActive={item.href === pathname}>
+                <NextLink
+                  className={
+                    item.href === pathname ? 'text-warning' : 'text-foreground'
+                  }
+                  href={item.href}
+                >
+                  {item.label}
                 </NextLink>
               </NavbarItem>
-            </>
-          ) : (
-            <NavbarItem className="hidden lg:flex">
-              <Dropdown placement="bottom-end" shadow={'md'}>
-                <DropdownTrigger>
-                  <Avatar
-                    isBordered
-                    as="button"
-                    className="transition-transform"
-                    color="warning"
-                    size="sm"
-                    src={`https://i.pravatar.cc/150?u=a042581f4e29026704d`}
-                  />
-                </DropdownTrigger>
-                <DropdownMenu aria-label="Profile Actions" variant="shadow">
-                  <DropdownItem
-                    key="profile"
-                    className="h-14 gap-2"
-                    isDisabled={true}
-                  >
-                    <p className="font-semibold">Signed in as</p>
-                    <p className="font-semibold">{'test@gmail.com'}</p>
-                  </DropdownItem>
-                  <DropdownItem
-                    key="logout"
-                    color="danger"
-                    className={'text-danger'}
-                    onClick={() => signOut()}
-                  >
-                    Log Out
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-            </NavbarItem>
-          )}
-          {/* Nav items */}
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href} isActive={item.href === pathname}>
-              <NextLink
-                className={
-                  item.href === pathname
-                    ? ' bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
-                    : 'text-foreground'
-                }
-                href={item.href}
-              >
-                {item.label}
-              </NextLink>
-            </NavbarItem>
-          ))}
+            ))}
+          </div>
+          <AuthLink />
         </div>
       </NavbarMenu>
-      <NavbarContent className="basis-1 sm:hidden" justify="end">
+      <NavbarContent className=" basis-3 pl-4 lg:hidden" justify="end">
         <ThemeSwitch />
+        <NextLink href="/wishlist">
+          <HeartIcon size={32} />
+        </NextLink>
+        <NextLink href="/cart">
+          <CartIcon size={32} />
+        </NextLink>
+        {/*<ThemeSwitch />*/}
+        <Avatar
+          isBordered
+          color="warning"
+          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+          size={'sm'}
+        />
         <NavbarMenuToggle />
       </NavbarContent>
     </NextUINavbar>

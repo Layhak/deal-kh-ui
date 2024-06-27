@@ -8,52 +8,22 @@ export const siteConfig = {
     {
       label: 'Home',
       href: '/',
+      tooltip: 'Go to Home Page',
     },
     {
       label: 'Deal',
       href: '/deal',
+      tooltip: 'Go to Discount Page',
     },
     {
       label: 'About',
       href: '/about',
+      tooltip: 'go to About Page',
     },
     {
       label: 'Policy',
       href: '/policy',
-    },
-  ],
-  navMenuItems: [
-    {
-      label: 'Profile',
-      href: '/profile',
-    },
-    {
-      label: 'Dashboard',
-      href: '/dashboard',
-    },
-    {
-      label: 'Projects',
-      href: '/projects',
-    },
-    {
-      label: 'Team',
-      href: '/team',
-    },
-    {
-      label: 'Calendar',
-      href: '/calendar',
-    },
-    {
-      label: 'Settings',
-      href: '/settings',
-    },
-    {
-      label: 'Help & Feedback',
-      href: '/help-feedback',
-    },
-    {
-      label: 'Logout',
-      href: '/logout',
+      tooltip: 'Go to Policy Page',
     },
   ],
   links: {

@@ -8,7 +8,10 @@ import 'swiper/css';
 import 'swiper/css/autoplay';
 import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
-import { Autoplay, EffectFade, Pagination } from 'swiper/modules';
+import 'swiper/css/navigation';
+import '@/styles/swiper.css';
+
+import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 
 export default function CardDetailComponent({
   id,
@@ -26,22 +29,6 @@ export default function CardDetailComponent({
   const router = useRouter();
   const [product, setProduct] = useState<ProductDetail | null>(null);
 
-  const staticData = {
-    id: 1,
-    name: 'Spiced Mint Candle',
-    category: 'make up product',
-    description:
-      'All hand-made with natural soy wax, Candleaf is made for your pleasure moments All hand-made with natural soy wax, Candleaf is made for your pleasure moments with natural soy wax, Candleaf is made for your pleasure moment ...',
-    shopName: 'Koko Kaka',
-    discountType: 'Percentage',
-    originalPrice: 50.98,
-    discountPrice: 40.99,
-    open: '6:00AM - 20:00PM',
-    imageUrl:
-      'https://www.slownorth.com/cdn/shop/products/tuscan-sun-candle-8oz-slow-north-1_800x.png?v=1701754012',
-    expiryDate: '2024-12-31',
-  };
-
   return (
     <div className="container mx-auto px-4 lg:py-8">
       <div className="grid grid-cols-1 content-center gap-8 sm:grid-cols-2">
@@ -50,19 +37,24 @@ export default function CardDetailComponent({
           pagination={{
             dynamicBullets: true,
           }}
+          navigation={true}
           slidesPerView={1}
-          modules={[Pagination, Autoplay, EffectFade]}
-          className="mySwiper h-[450px] w-full"
+          modules={[Pagination, Autoplay, EffectFade, Navigation]}
+          className="mySwiper h-[550px] w-[550px]"
           loop={true}
           effect={'fade'}
           autoplay={{
-            delay: 2500,
+            delay: 5000,
             disableOnInteraction: false,
           }}
         >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
-              <Image src={image.url} alt={name} />
+              <Image
+                src={image.url}
+                alt={name}
+                className="h-[550px] w-[550px] object-cover"
+              />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -87,7 +79,7 @@ export default function CardDetailComponent({
               </svg>
             ))}
             <svg
-              className="text-foreground-200 dark:text-fourground-600 h-4 w-4"
+              className="dark:text-fourground-600 h-4 w-4 text-foreground-200"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="currentColor"
@@ -108,8 +100,8 @@ export default function CardDetailComponent({
               {description}
             </p>
             {/* Price */}
-            <div className="mt-4 flex items-end justify-between md:flex-row">
-              <p className="text-fourground-700 text-lg font-bold line-through dark:text-white md:mr-3">
+            <div className="mt-4 flex text-foreground-400 md:flex-row">
+              <p className=" text-lg font-bold line-through dark:text-white md:mr-3">
                 ${originalPrice}
               </p>
               <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">

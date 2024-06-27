@@ -4,6 +4,7 @@ import { Button } from '@nextui-org/react';
 const AuthLinks = () => {
   return (
     <div className="flex items-center space-x-4">
+      {/*Register*/}
       <NextLink
         href="/register"
         className=" inline-flex animate-text-gradient bg-[linear-gradient(90deg,#EAB318_0%,#EC4950_50%,#EAB408_100%)] bg-clip-text  text-medium font-medium text-transparent hover:bg-transparent/50 dark:bg-[linear-gradient(90deg,#EAB308_0%,#EC4899_50%,#EAB308_100%)] md:ml-1"
@@ -14,6 +15,7 @@ const AuthLinks = () => {
         Register
       </NextLink>
       <div className="h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
+      {/*Login*/}
       <NextLink href="/login">
         <div className="st-current group relative flex min-w-[120px] items-center gap-2 overflow-hidden rounded-full border-0 p-[2px] font-semibold text-gray-50 outline-0 dark:text-gray-100 ">
           <span

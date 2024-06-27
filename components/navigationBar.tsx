@@ -29,6 +29,8 @@ import AuthLink from '@/components/auth/AuthLink';
 import { useSubmitFormMutation } from '@/redux/api';
 import { signOut } from '@/app/Auth/auth';
 import { useLogoutUserMutation } from '@/redux/service/auth';
+import SearchProductDropDown from './search/SearchProductDropDown';
+import SearchLocationDropDown from './search/SearchLocationDropDown';
 
 type ValueTypes = {
   email: string;
@@ -49,6 +51,10 @@ export const NavigationBar = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { theme } = useTheme();
+
+  // for search drop down
+  const [productDropdown, setProductDropdown] = useState(false);
+  const [locationDropdown, setLocationDropdown] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem('loggedIn') === 'loggedIn') {
@@ -138,8 +144,56 @@ export const NavigationBar = () => {
     }
   };
 
+  const handleInputFocusProduct = () => {
+    setProductDropdown(true);
+  };
+
+  const handleInputBlurProduct = () => {
+    setProductDropdown(false);
+  };
+
+  const handleInputFocusLocation = () => {
+    setLocationDropdown(true);
+  };
+
+  const handleInputBlurLocation = () => {
+    setLocationDropdown(false);
+  };
+
+  const categories = [
+    'Accessory',
+    'All-product',
+    'Clothes',
+    'Coupon',
+    'Discount-Off',
+    'Drink',
+    'Electronic',
+    'Event',
+    'Flash-Sale',
+    'Food',
+    'Shoe',
+    'Skincare',
+  ];
+
+  const locations = [
+    'Phnom Penh',
+    'Siem Reap',
+    'Battambang',
+    'Sihanoukville',
+    'Kampong Cham',
+    'Kampot',
+    'Pursat',
+    'Svay Rieng',
+    'Prey Veng',
+    'Kratie',
+  ];
+  const handleLocationSelect = (location: string) => {
+    setSearchValue(location);
+  };
+
   const searchInput = (
     <>
+      {productDropdown && <SearchProductDropDown categories={categories} />}
       <Input
         aria-label="First Input"
         classNames={{
@@ -165,54 +219,47 @@ export const NavigationBar = () => {
         type="se"
         value={searchValue}
         onChange={handleSearchChange}
+        onFocus={handleInputFocusProduct}
+        onBlur={handleInputBlurProduct}
       />
+
+      {locationDropdown && (
+        <SearchLocationDropDown
+          location={locations}
+          onLocationSelect={handleLocationSelect}
+        />
+      )}
       <Input
-        aria-label="Second Input"
+        aria-label="Location Search"
         classNames={{
           inputWrapper:
             'bg-default-100 rounded-none rounded-r-xl w-[200px] mt-1',
           input: 'text-sm',
         }}
         labelPlacement="outside"
-        placeholder="Toul Kork"
+        placeholder={searchValue || 'Search locations'}
         endContent={
           secondValue ? (
             <CloseIcon
-              onClick={handleClearSecond}
+              onClick={() => setSearchValue('')}
               className="flex-shrink-0 cursor-pointer text-base text-default-400"
             />
           ) : (
-            <SearchIcon
-              onClick={handleSubmit}
-              className="pointer-events-none flex-shrink-0 text-base text-default-400"
-            />
+            <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
           )
         }
         type="se"
         value={secondValue}
-        onChange={handleSecondChange}
+        onChange={(e) => setSearchValue(e.target.value)}
+        onFocus={handleInputFocusLocation}
+        onBlur={handleInputBlurLocation}
       />
     </>
   );
 
-  const categories = [
-    'Accessory',
-    'All-product',
-    'Clothes',
-    'Coupon',
-    'Discount-Off',
-    'Drink',
-    'Electronic',
-    'Event',
-    'Flash-Sale',
-    'Food',
-    'Shoe',
-    'Skincare',
-  ];
-
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
-      <div className='flex'>
+      <div className="flex">
         {/* logo section */}
         <NavbarContent>
           <NavbarBrand>

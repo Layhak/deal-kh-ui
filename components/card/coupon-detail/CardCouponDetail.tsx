@@ -2,7 +2,7 @@ import { Image } from '@nextui-org/react';
 import React from 'react';
 
 type CouponData = {
-  id: number;
+  slug: number;
   images: string;
   name: string;
   duration: string;

@@ -13,7 +13,7 @@ import {
   NavbarContent,
   NavbarItem,
   NavbarMenu,
-  NavbarMenuToggle,
+  NavbarMenuToggle, Tooltip,
 } from '@nextui-org/react';
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
@@ -57,7 +57,7 @@ export const NavigationBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { theme } = useTheme();
   const router = useRouter();
-
+  
 
   useEffect(() => {
     if (localStorage.getItem('loggedIn') === 'loggedIn') {
@@ -214,21 +214,35 @@ useEffect(() => {
       <NavbarContent justify={'start'} className={'hidden gap-4 px-16 sm:flex'}>
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>
-            <NextLink
-              className={`${item.href === pathname
-                ? 'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
-                : 'text-foreground'
-                } transition-all ease-linear hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-600 hover:bg-clip-text hover:font-normal hover:text-transparent`}
-              href={item.href}
+            <Tooltip
+              content={
+                <p
+                  className={
+                    'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
+                  }
+                >
+                  {item.tooltip}
+                </p>
+              }
+              offset={10}
+              showArrow
+              className={'hidden lg:block'}
             >
-              {item.label}
-            </NextLink>
+              <NextLink
+                className={`${
+                  item.href === pathname
+                    ? 'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
+                    : 'text-foreground'
+                } transition-all ease-linear hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-600 hover:bg-clip-text hover:font-normal hover:text-transparent`}
+                href={item.href}
+              >
+                {item.label}
+              </NextLink>
+            </Tooltip>
           </NavbarItem>
         ))}
       </NavbarContent>
-
-      {/* icon section night mode, heart, and cart */}
-      <NavbarContent className="hidden gap-4 sm:flex" justify="center">
+      <NavbarContent className="hidden gap-4 lg:flex" justify="center">
         <NavbarItem>
           <ThemeSwitch />
         </NavbarItem>
@@ -243,7 +257,7 @@ useEffect(() => {
   </NextLink>
 </NavbarItem>
 
-<NavbarItem className="hidden sm:flex">
+<NavbarItem className="hidden lg:flex">
   <div className={'relative'} onClick={() => router.push(`/cart`)}>
     <CartIcon size={28} />
     <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
@@ -355,9 +369,21 @@ useEffect(() => {
           ))}
         </div>
       </NavbarMenu>
-
-      <NavbarContent className="basis-1 sm:hidden" justify="end">
+      <NavbarContent className=" basis-3 pl-4 lg:hidden" justify="end">
         <ThemeSwitch />
+        <NextLink href="/wishlist">
+          <HeartIcon size={32} />
+        </NextLink>
+        <NextLink href="/cart">
+          <CartIcon size={32} />
+        </NextLink>
+        {/*<ThemeSwitch />*/}
+        <Avatar
+          isBordered
+          color="warning"
+          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+          size={'sm'}
+        />
         <NavbarMenuToggle />
       </NavbarContent>
     </NextUINavbar>

@@ -1,24 +1,29 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+import 'swiper/css/navigation';
+import '@/styles/swiper.css';
 import { Image } from '@nextui-org/react';
 // import required modules
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 
 export default function HeroSlideComponent() {
   return (
-    <div className="mt-2 flex flex-wrap justify-between gap-[25px] overflow-hidden">
-      <div className="lg:w-[820px] w-full">
+    <div className="mt-2 grid  w-full grid-cols-1 gap-2 lg:grid-cols-3">
+      <div className={'col-span-2'}>
         <Swiper
-          className="rounded-lg border border-white dark:border-black   "
+          className="  rounded-2xl"
           spaceBetween={50}
           slidesPerView={1}
           autoplay={{
-            delay: 2500,
+            delay: 5000,
             disableOnInteraction: false,
           }}
           pagination={{
             clickable: true,
+            dynamicBullets: true,
           }}
           navigation={true}
           modules={[Autoplay, Pagination, Navigation]}
@@ -30,152 +35,154 @@ export default function HeroSlideComponent() {
             <Image
               src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
               alt=""
-              className="h-full w-full rounded-none object-cover"
+              className=" object-cover"
             />
           </SwiperSlide>
           <SwiperSlide>
             <Image
               src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
               alt=""
-              className="h-full w-full rounded-none object-cover"
+              className=" object-cover"
             />
           </SwiperSlide>
           <SwiperSlide>
             <Image
               src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
               alt=""
-              className="h-full w-full rounded-none object-cover"
+              className=" object-cover"
             />
           </SwiperSlide>
           <SwiperSlide>
             <Image
               src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
               alt=""
-              className="h-full w-full rounded-none object-cover"
+              className=" object-cover"
             />
           </SwiperSlide>
           <SwiperSlide>
             <Image
               src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
               alt=""
-              className="h-full w-full rounded-none object-cover"
+              className=" object-cover"
             />
           </SwiperSlide>
         </Swiper>
       </div>
 
-      <div className="hidden lg:block lg:grid-cols-1 lg:w-[385px]">
-        <div className="w-[385px]">
-          <Swiper
-            className="rounded-lg border border-white dark:border-black"
-            spaceBetween={50}
-            slidesPerView={1}
-            onSlideChange={() => {}}
-            // onSwiper={(swiper: any) => console.log(swiper)}
-            autoplay={{
-              delay: 1500,
-              disableOnInteraction: false,
-            }}
-            pagination={{
-              clickable: true,
-            }}
-            navigation={true}
-            modules={[Autoplay, Pagination, Navigation]}
-            loop={true}
-          >
-            <SwiperSlide>
-              <Image
-                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-                alt=""
-                className="h-full w-full rounded-none object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-                alt=""
-                className="h-full w-full rounded-none object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-                alt=""
-                className="h-full w-full rounded-none object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-                alt=""
-                className="h-full w-full rounded-none object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-                alt=""
-                className="h-full w-full rounded-none object-cover"
-              />
-            </SwiperSlide>
-          </Swiper>
-        </div>
+      <div
+        className={
+          ' flex flex-col items-center gap-2 md:flex-row md:justify-between  lg:flex-col'
+        }
+      >
+        <Swiper
+          className=" w-full rounded-2xl lg:w-[400px]"
+          spaceBetween={50}
+          slidesPerView={1}
+          onSlideChange={() => {}}
+          // onSwiper={(swiper: any) => console.log(swiper)}
+          autoplay={{
+            delay: 1500,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
+          }}
+          navigation={true}
+          modules={[Autoplay, Pagination, Navigation]}
+          loop={true}
+        >
+          <SwiperSlide>
+            <Image
+              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              alt=""
+              className="object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              alt=""
+              className=" object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              alt=""
+              className=" object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              alt=""
+              className=" object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              alt=""
+              className=" object-cover"
+            />
+          </SwiperSlide>
+        </Swiper>
 
-        <div className="w-[385px] mt-6">
-          <Swiper
-            className="h-[195px] rounded-lg border border-white dark:border-black"
-            spaceBetween={50}
-            slidesPerView={1}
-            onSlideChange={() => {}}
-            // onSwiper={(swiper: any) => console.log(swiper)}
-            autoplay={{
-              delay: 2500,
-              disableOnInteraction: false,
-            }}
-            pagination={{
-              clickable: true,
-            }}
-            navigation={true}
-            modules={[Autoplay, Pagination, Navigation]}
-            loop={true}
-          >
-            <SwiperSlide>
-              <Image
-                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-                alt=""
-                className="h-full w-full rounded-none object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-                alt=""
-                className="h-full w-full rounded-none object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-                alt=""
-                className="h-full w-full rounded-none object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-                alt=""
-                className="h-full w-full rounded-none object-cover"
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <Image
-                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-                alt=""
-                className="h-full w-full rounded-none object-cover"
-              />
-            </SwiperSlide>
-          </Swiper>
-        </div>
+        <Swiper
+          className=" w-full rounded-2xl lg:w-[400px]"
+          spaceBetween={50}
+          slidesPerView={1}
+          onSlideChange={() => {}}
+          // onSwiper={(swiper: any) => console.log(swiper)}
+          autoplay={{
+            delay: 1500,
+            disableOnInteraction: false,
+          }}
+          pagination={{
+            clickable: true,
+            dynamicBullets: true,
+          }}
+          navigation={true}
+          modules={[Autoplay, Pagination, Navigation]}
+          loop={true}
+        >
+          <SwiperSlide>
+            <Image
+              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              alt=""
+              className="object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              alt=""
+              className=" object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              alt=""
+              className=" object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              alt=""
+              className=" object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              alt=""
+              className=" object-cover"
+            />
+          </SwiperSlide>
+        </Swiper>
       </div>
     </div>
   );

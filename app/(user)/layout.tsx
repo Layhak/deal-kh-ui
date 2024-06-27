@@ -42,7 +42,7 @@ export default function RootLayout({
           <StoreProvider>
             <Providers>
               <NavigationBar />
-              <main className="container mx-auto min-h-[680px] max-w-7xl px-6">
+              <main className="container mx-auto min-h-screen max-w-7xl px-0 lg:px-6">
                 <ErrorBoundary errorComponent={error}>
                   <Suspense fallback={<Loading />}>{children}</Suspense>
                 </ErrorBoundary>

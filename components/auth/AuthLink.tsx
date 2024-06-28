@@ -14,7 +14,7 @@ const AuthLinks = () => {
       >
         Register
       </NextLink>
-      <div className="h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
+      <Divider className="my-4" />
       {/*Login*/}
       <Divider className="my-4" />
       {/*Login*/}

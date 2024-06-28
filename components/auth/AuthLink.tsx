@@ -1,5 +1,5 @@
 import NextLink from 'next/link';
-import { Button } from '@nextui-org/react';
+import { Button, Divider } from '@nextui-org/react';
 
 const AuthLinks = () => {
   return (
@@ -14,7 +14,7 @@ const AuthLinks = () => {
       >
         Register
       </NextLink>
-      <div className="h-6 w-px bg-gray-300 dark:bg-gray-600"></div>
+      <Divider className="my-4" />
       {/*Login*/}
       <NextLink href="/login">
         <div className="st-current group relative flex min-w-[120px] items-center gap-2 overflow-hidden rounded-full border-0 p-[2px] font-semibold text-gray-50 outline-0 dark:text-gray-100 ">

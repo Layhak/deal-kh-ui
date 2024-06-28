@@ -8,7 +8,7 @@ import {
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as any).auth.token;
+    const token = (getState() as any).auth.accessToken;
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }

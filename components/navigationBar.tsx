@@ -22,13 +22,14 @@ import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { CartIcon, CloseIcon, HeartIcon, SearchIcon } from '@/components/icons';
 import CategoryButton from './categoryButton';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
-import { selectToken } from '@/redux/feature/auth/authSlice';
+import { removeAccessToken, selectToken } from '@/redux/feature/auth/authSlice';
 import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import AuthLink from '@/components/auth/AuthLink';
 import { useSubmitFormMutation } from '@/redux/api';
 import { useLogoutUserMutation } from '@/redux/service/auth';
+import { useGetProfileQuery } from '@/redux/service/user';
 import { selectProducts } from '@/redux/feature/cart/cartSlice';
 import { CartProductType } from '@/libs/difinition';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
@@ -48,20 +49,39 @@ export const NavigationBar = () => {
   const dispatch = useAppDispatch();
   const token = useAppSelector(selectToken);
   const [logoutUser, { isLoading: isLoggingOut }] = useLogoutUserMutation();
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { theme } = useTheme();
   const router = useRouter();
 
 
+  const { data: userProfile, isLoading: isLoadingUserProfile } =
+    useGetProfileQuery();
+
+  // const avatarUrl = useAppSelector(selectAvatar);
+  // const email = useAppSelector(selectEmail);
+  // console.log('Profile:', avatarUrl);
+  // console.log('Email:', email);
+  // useEffect(() => {
+  //   dispatch(fetchUserProfile());
+  // }, [dispatch]);
+  //
+  // useEffect(() => {
+  //   if (email) {
+  //     setIsLoggedIn(true);
+  //   } else {
+  //     setIsLoggedIn(false);
+  //   }
+  // }, [email]);
+  console.log(userProfile);
   useEffect(() => {
-    if (localStorage.getItem('loggedIn') === 'loggedIn') {
+    if (userProfile) {
       setIsLoggedIn(true);
     } else {
       setIsLoggedIn(false);
     }
-  }, []);
+  }, [userProfile]);
+
 
    //For Carts
    const products = useAppSelector(selectProducts);
@@ -95,6 +115,7 @@ useEffect(() => {
   // Update the state with the unique wishlist products
   setUniqueWishlistProducts(uniqueWishlist);
 }, [wishlistProducts]);
+
 
   const [searchValue, setSearchValue] = useState('');
   const [secondValue, setSecondValue] = useState('');
@@ -161,6 +182,7 @@ useEffect(() => {
         theme: theme,
       });
       setIsLoggedIn(false);
+      dispatch(removeAccessToken());
     } catch (error) {
       toast.error('Failed to logout.', {
         position: 'top-right',
@@ -255,7 +277,7 @@ useEffect(() => {
           <NextLink href="/" className="h-12 w-12">
             <Image src="/logo.png" alt="logo" className="h-12 w-12" />
           </NextLink>
-          <NavbarItem className="hidden sm:flex ">
+          <NavbarItem className="hidden sm:flex">
             <CategoryButton categories={categories} />
           </NavbarItem>
         </NavbarBrand>
@@ -265,22 +287,18 @@ useEffect(() => {
           <NavbarItem className="hidden md:flex">{searchInput}</NavbarItem>
         </div>
       </NavbarContent>
-      <NavbarContent justify={'start'} className={'hidden gap-4 px-16 lg:flex'}>
+      <NavbarContent justify="start" className="hidden gap-4 px-16 lg:flex">
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>
             <Tooltip
               content={
-                <p
-                  className={
-                    'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
-                  }
-                >
+                <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
                   {item.tooltip}
                 </p>
               }
               offset={10}
               showArrow
-              className={'hidden lg:block'}
+              className="hidden lg:block"
             >
               <NextLink
                 className={`${
@@ -311,7 +329,7 @@ useEffect(() => {
   </NextLink>
 </NavbarItem>
 
-<NavbarItem className="hidden lg:flex">
+<NavbarItem className="hidden sm:flex">
   <div className={'relative'} onClick={() => router.push(`/cart`)}>
     <CartIcon size={28} />
     <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
@@ -321,30 +339,29 @@ useEffect(() => {
 </NavbarItem>
         <NavbarItem>
           {isLoggedIn ? (
-            <Dropdown placement="bottom-end" shadow={'md'}>
+            <Dropdown placement="bottom-end" shadow="md">
               <DropdownTrigger>
                 <Avatar
-                  isBordered
                   as="button"
                   className="transition-transform"
-                  color="warning"
                   size="sm"
-                  src={`https://i.pravatar.cc/150?u=a042581f4e29026704d`}
+                  isBordered
+                  color={'default'}
+                  src={
+                    userProfile.payload.images[0].url ??
+                    `https://i.pravatar.cc/150?u=a042581`
+                  }
                 />
               </DropdownTrigger>
               <DropdownMenu aria-label="Profile Actions" variant="shadow">
-                <DropdownItem
-                  key="profile"
-                  className="h-14 gap-2"
-                  isDisabled={true}
-                >
+                <DropdownItem key="profile" className="h-14 gap-2" isDisabled>
                   <p className="font-semibold">Signed in as</p>
-                  <p className="font-semibold">{'test@gmail.com'}</p>
+                  <p className="font-semibold">{userProfile.payload?.email}</p>
                 </DropdownItem>
                 <DropdownItem
                   key="logout"
                   color="danger"
-                  className={'text-danger'}
+                  className="text-danger"
                   onClick={handleLogout}
                 >
                   Log Out
@@ -376,7 +393,7 @@ useEffect(() => {
           <AuthLink />
         </div>
       </NavbarMenu>
-      <NavbarContent className=" basis-3 pl-4 lg:hidden" justify="end">
+      <NavbarContent className="basis-3 pl-4 lg:hidden" justify="end">
         <ThemeSwitch />
         <NextLink href="/wishlist">
           <HeartIcon size={32} />
@@ -384,12 +401,11 @@ useEffect(() => {
         <NextLink href="/cart">
           <CartIcon size={32} />
         </NextLink>
-        {/*<ThemeSwitch />*/}
         <Avatar
           isBordered
           color="warning"
           src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          size={'sm'}
+          size="sm"
         />
         <NavbarMenuToggle />
       </NavbarContent>

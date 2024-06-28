@@ -12,10 +12,16 @@ import Marquee from 'react-fast-marquee';
 export default function BuyMoreGetMoreComponent() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { data, isLoading, error } = useGetProductsQuery({page:1,size:8,field:"",fieldName:""});
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+
+  const { data, isLoading, error } = useGetProductsQuery({
+    page: 1,
+    size: 8,
+    field: '',
+    fieldName: '',
+  });
+  // console.log('data', data);
+  // console.log('error', error);
+  // console.log('isLoading', isLoading);
 
   return (
     <div>
@@ -26,7 +32,7 @@ export default function BuyMoreGetMoreComponent() {
             key={product.slug}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="dark:border-foreground-700 dark:bg-foreground-800 bg-foreground-100 border-foreground-200 relative mb-2 h-[330px] w-[285px]  flex-none rounded-xl border-1  shadow-none"
+            className="relative mb-2 h-[330px] w-[285px] flex-none rounded-xl border-1 border-foreground-200  bg-foreground-100 shadow-none dark:border-foreground-700  dark:bg-foreground-800"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
@@ -73,7 +79,7 @@ export default function BuyMoreGetMoreComponent() {
                  </div>
               </div>
               <div className=" h-[30px] pt-3">
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Shop :{' '}
                   <Link href="">
                     <span className="text-[14px] font-medium text-blue-800">
@@ -83,7 +89,7 @@ export default function BuyMoreGetMoreComponent() {
                     </span>
                   </Link>
                 </p>
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
                     {product.expiredAt}

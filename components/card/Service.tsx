@@ -19,9 +19,9 @@ export default function ServiceCardComponent() {
     field: '',
     fieldName: '',
   });
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+  // console.log('data', data);
+  // console.log('error', error);
+  // console.log('isLoading', isLoading);
 
   return (
     <div>

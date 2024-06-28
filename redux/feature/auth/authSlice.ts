@@ -1,5 +1,6 @@
-import { RootState } from '@/redux/store';
+// redux/feature/auth/authSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '@/redux/store';
 
 const initialState = {
   token: null as string | null,
@@ -13,6 +14,7 @@ const authSlice = createSlice({
       state.token = action.payload;
     },
     removeAccessToken(state) {
+      console.log('Removing token'); // Log when the token is removed
       state.token = null;
     },
   },

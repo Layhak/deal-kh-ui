@@ -31,6 +31,7 @@ import { signOut } from '@/app/Auth/auth';
 import { useLogoutUserMutation } from '@/redux/service/auth';
 import SearchProductDropDown from './search/SearchProductDropDown';
 import SearchLocationDropDown from './search/SearchLocationDropDown';
+import Category from './card/Category';
 
 type ValueTypes = {
   email: string;
@@ -187,73 +188,76 @@ export const NavigationBar = () => {
     'Prey Veng',
     'Kratie',
   ];
-  const handleLocationSelect = (location: string) => {
-    setSearchValue(location);
+  
+  const handleLocationSelect = (location: SetStateAction<string>) => {
+    setSecondValue(location);
+    // Implement location-based filtering logic here
   };
 
   const searchInput = (
     <>
       {productDropdown && <SearchProductDropDown categories={categories} />}
-      <Input
-        aria-label="First Input"
-        classNames={{
-          inputWrapper:
-            'bg-default-100 rounded-none rounded-l-xl w-[200px] mt-1',
-          input: 'text-sm',
-        }}
-        labelPlacement="outside"
-        placeholder="Search Deal-KH"
-        endContent={
-          searchValue ? (
-            <CloseIcon
-              onClick={handleClearSearch}
-              className="flex-shrink-0 cursor-pointer text-base text-default-400"
-            />
-          ) : (
-            <SearchIcon
-              onClick={handleSubmit}
-              className="pointer-events-none flex-shrink-0 text-base text-default-400"
-            />
-          )
-        }
-        type="se"
-        value={searchValue}
-        onChange={handleSearchChange}
-        onFocus={handleInputFocusProduct}
-        onBlur={handleInputBlurProduct}
-      />
-
-      {locationDropdown && (
-        <SearchLocationDropDown
-          location={locations}
-          onLocationSelect={handleLocationSelect}
+      <div className="flex items-center">
+        {/* product name search filtering */}
+        <Input
+          aria-label="Product Search"
+          classNames={{
+            inputWrapper: 'bg-default-100 rounded-none rounded-l-xl w-[200px] mt-1',
+            input: 'text-sm',
+          }}
+          labelPlacement="outside"
+          placeholder={searchValue || "Search Deal-KH"}
+          endContent={
+            searchValue ? (
+              <CloseIcon
+                onClick={handleClearSearch}
+                className="flex-shrink-0 cursor-pointer text-base text-default-400"
+              />
+            ) : (
+              <SearchIcon
+                onClick={handleSubmit}
+                className="pointer-events-none flex-shrink-0 text-base text-default-400"
+              />
+            )
+          }
+          type="search"
+          value={searchValue}
+          onChange={handleSearchChange}
+          onFocus={handleInputFocusProduct}
+          onBlur={handleInputBlurProduct}
+          autoComplete="off"
         />
-      )}
-      <Input
-        aria-label="Location Search"
-        classNames={{
-          inputWrapper:
-            'bg-default-100 rounded-none rounded-r-xl w-[200px] mt-1',
-          input: 'text-sm',
-        }}
-        labelPlacement="outside"
-        placeholder={searchValue || 'Search locations'}
-        endContent={
-          secondValue ? (
-            <CloseIcon
-              onClick={() => setSearchValue('')}
-              className="flex-shrink-0 cursor-pointer text-base text-default-400"
-            />
-          ) : (
-            <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
-          )
-        }
-        type="se"
-        value={secondValue}
-        onChange={(e) => setSearchValue(e.target.value)}
-        onFocus={handleInputFocusLocation}
-        onBlur={handleInputBlurLocation}
-      />
+        {locationDropdown && (
+          <SearchLocationDropDown
+            location={locations}
+            onLocationSelect={handleLocationSelect}
+          />
+        )}
+        {/* location search filtering */}
+        <Input
+          aria-label="Location Search"
+          classNames={{
+            inputWrapper: 'bg-default-100 rounded-none rounded-r-xl w-[200px] mt-1 ml-2',
+            input: 'text-sm',
+          }}
+          labelPlacement="outside"
+          placeholder={'Search locations'}
+          endContent={
+            secondValue ? (
+              <CloseIcon
+                onClick={handleClearSecond}
+                className="flex-shrink-0 cursor-pointer text-base text-default-400"
+              />
+            ) : null
+          }
+          type="search"
+          value={secondValue}
+          onChange={handleSecondChange}
+          onFocus={handleInputFocusLocation}
+          onBlur={handleInputBlurLocation}
+          autoComplete="off"
+        />
+      </div>
     </>
   );
 
@@ -275,6 +279,7 @@ export const NavigationBar = () => {
             <NavbarItem className="hidden sm:flex ">
               <CategoryButton categories={categories} />
             </NavbarItem>
+            {/* search input */}
             <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
           </div>
         </NavbarContent>
@@ -285,11 +290,10 @@ export const NavigationBar = () => {
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>
             <NextLink
-              className={`${
-                item.href === pathname
-                  ? 'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
-                  : 'text-foreground'
-              } transition-all ease-linear hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-600 hover:bg-clip-text hover:font-normal hover:text-transparent`}
+              className={`${item.href === pathname
+                ? 'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
+                : 'text-foreground'
+                } transition-all ease-linear hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-600 hover:bg-clip-text hover:font-normal hover:text-transparent`}
               href={item.href}
             >
               {item.label}

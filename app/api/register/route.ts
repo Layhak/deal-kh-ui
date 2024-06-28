@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     body: JSON.stringify({
       email,
       password,
-      confirmedPassword,
+      confirmedPassword,  
       firstName,
       lastName,
       username,

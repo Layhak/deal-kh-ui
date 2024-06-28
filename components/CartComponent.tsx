@@ -1,18 +1,22 @@
 'use client';
 
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import {
+  decrementQuantity,
+  incrementQuantity,
+  removeFromCart,
+  selectProducts,
+  selectTotalPrice,
+} from '@/redux/feature/cart/cartSlice';
 import { useEffect, useState } from 'react';
-import { CartProductType } from '@/libs/difinition';
+import { CartProductType, ShopPayload } from '@/libs/difinition';
 import { Image, InternalForwardRefRenderFunction, Table, TableBody, TableCell, TableColumn, TableHeader, TableProps, TableRow } from '@nextui-org/react';
 import { LuMinus, LuPlus, LuTrash } from 'react-icons/lu';
 import { Button } from '@nextui-org/button';
-import { Input } from '@nextui-org/react';
-import { shops } from './seller/component/table/dataOwnShop';
-import { decrementQuantity, incrementQuantity, removeFromWishList, selectTotalWishlistPrice, selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 
-export default function WishListComponent() {
-  const products = useAppSelector(selectWishlistProducts);
-  const totalWishlistPrice = useAppSelector(selectTotalWishlistPrice);
+export default function CartComponent() {
+  const products = useAppSelector(selectProducts);
+  const totalPrice = useAppSelector(selectTotalPrice);
 
   const dispatch = useAppDispatch();
 
@@ -38,8 +42,8 @@ export default function WishListComponent() {
     dispatch(decrementQuantity(product.slug));
   };
 
-  const handleRemoveFromWishList = (product: CartProductType) => {
-    dispatch(removeFromWishList(product.slug));
+  const handleRemoveFromCart = (product: CartProductType) => {
+    dispatch(removeFromCart(product.slug));
   };
 
   const renderCell = (product: CartProductType,columnKey: string) => {
@@ -103,7 +107,7 @@ export default function WishListComponent() {
             <Button
                           isIconOnly
                           onClick={() =>
-                            dispatch(removeFromWishList(product.slug))
+                            dispatch(removeFromCart(product.slug))
                           }
                           className="rounded-xl bg-red-500 p-2 text-white"
                         >
@@ -126,7 +130,7 @@ export default function WishListComponent() {
             width={200}
             height={200}
           />
-          <p className="mt-4 text-2xl font-semibold ">Your wishlist is empty!</p>
+          <p className="mt-4 text-2xl font-semibold ">Your cart is empty!</p>
           {/* eslint-disable-next-line react/no-unescaped-entities */}
           <p>Look like you haven't make any choice yet...</p>
         </div>
@@ -137,11 +141,11 @@ export default function WishListComponent() {
           <div className="col-span-3 p-4">
             <div className="flex justify-between">
               <p className="relative w-fit text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]  lg:text-[26px]">
-                Your <span className="text-[#eb7d52]">Wishlist</span>
+                Your <span className="text-[#eb7d52]">Cart</span>
               </p>
             </div>
   
-            <Table aria-label="Wishlist" className='mt-8'>
+            <Table aria-label="Cart" className='mt-8'>
               <TableHeader  columns={[
                 { uid: 'image', name: 'Image' },
                 { uid: 'name', name: 'Name' },
@@ -167,6 +171,11 @@ export default function WishListComponent() {
                 )}
               </TableBody>
             </Table>
+          </div>
+          <div className="flex justify-end mt-4">
+            <div>
+              <div>Total Price: ${totalPrice}</div>
+            </div>
           </div>
         </div>
       )}

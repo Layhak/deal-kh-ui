@@ -1,18 +1,23 @@
 'use client';
 
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import {
+  decrementQuantity,
+  incrementQuantity,
+  removeFromCart,
+  selectProducts,
+  selectTotalPrice,
+} from '@/redux/feature/cart/cartSlice';
 import { useEffect, useState } from 'react';
 import { CartProductType } from '@/libs/difinition';
-import { Image, InternalForwardRefRenderFunction, Table, TableBody, TableCell, TableColumn, TableHeader, TableProps, TableRow } from '@nextui-org/react';
+import { Image, Table, TableBody, TableCell, TableColumn, TableHeader, TableRow } from '@nextui-org/react';
 import { LuMinus, LuPlus, LuTrash } from 'react-icons/lu';
 import { Button } from '@nextui-org/button';
 import { Input } from '@nextui-org/react';
-import { shops } from './seller/component/table/dataOwnShop';
-import { decrementQuantity, incrementQuantity, removeFromWishList, selectTotalWishlistPrice, selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 
-export default function WishListComponent() {
-  const products = useAppSelector(selectWishlistProducts);
-  const totalWishlistPrice = useAppSelector(selectTotalWishlistPrice);
+export default function CartComponent() {
+  const products = useAppSelector(selectProducts);
+  const totalPrice = useAppSelector(selectTotalPrice);
 
   const dispatch = useAppDispatch();
 
@@ -38,11 +43,11 @@ export default function WishListComponent() {
     dispatch(decrementQuantity(product.slug));
   };
 
-  const handleRemoveFromWishList = (product: CartProductType) => {
-    dispatch(removeFromWishList(product.slug));
+  const handleRemoveFromCart = (product: CartProductType) => {
+    dispatch(removeFromCart(product.slug));
   };
 
-  const renderCell = (product: CartProductType,columnKey: string) => {
+  const renderCell = (product: CartProductType, columnKey: string) => {
     switch (columnKey) {
       case 'image':
         return (
@@ -52,18 +57,9 @@ export default function WishListComponent() {
           </div>
         );
       case 'name':
-        return <div>{product.name.length > 30
-          ? `${product.name.substring(0, 26)}...`
-          : product.name || "Product Name"} 
-          </div>;
-      case 'shop':
-        return <div>{product.shop}</div>;
-      case 'location':
-        return <div>{product.address || 'N/A'}</div>      
+        return <div>{product.name}</div>;
       case 'price':
         return <div>${product.price}</div>;
-      case 'discount price':
-        return <div>${product.discountPrice}</div>  
       case 'quantity':
         return (
           <div className="flex items-center">
@@ -89,21 +85,40 @@ export default function WishListComponent() {
                           />
                         </div>
                       </div>
+
+                      <div>
+                        <p className="text-orange-10 text-lg font-bold">
+                          ${product.quantity}
+                        </p>
+                      </div>
+
+                      {/* remoove button */}
+                      <div>
+                        <Button
+                          isIconOnly
+                          onClick={() =>
+                            dispatch(removeFromCart(product.slug))
+                          }
+                          className="rounded-xl bg-red-500 p-2 text-white"
+                        >
+                          <LuTrash />
+                        </Button>
+                      </div>
           </div>
         );
       case 'total':
         return (
           <div>
-            ${product.discountPrice * (product.quantity || 1)}
+            ${product.price * (product.quantity || 1)}
           </div>
         );
-      case 'delete':
+      case 'actions':
         return (
           <div className="flex justify-center">
             <Button
                           isIconOnly
                           onClick={() =>
-                            dispatch(removeFromWishList(product.slug))
+                            dispatch(removeFromCart(product.slug))
                           }
                           className="rounded-xl bg-red-500 p-2 text-white"
                         >
@@ -118,40 +133,22 @@ export default function WishListComponent() {
 
   return (
     <main>
-      {products.length === 0 && (
-        <div className="flex flex-col items-center justify-center ">
-          <Image
-            alt="cartEmpty"
-            src={'https://store.istad.co/media/product_images/cartEmpty.png'}
-            width={200}
-            height={200}
-          />
-          <p className="mt-4 text-2xl font-semibold ">Your wishlist is empty!</p>
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          <p>Look like you haven't make any choice yet...</p>
-        </div>
-      )}
-  
-      {products.length !== 0 && (
         <div>
-          <div className="col-span-3 p-4">
+          <div className="col-span-3 p-4 ">
             <div className="flex justify-between">
               <p className="relative w-fit text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]  lg:text-[26px]">
-                Your <span className="text-[#eb7d52]">Wishlist</span>
+                Your <span className="text-[#eb7d52]">Cart</span>
               </p>
             </div>
   
-            <Table aria-label="Wishlist" className='mt-8'>
-              <TableHeader  columns={[
+            <Table aria-label="Cart">
+              <TableHeader columns={[
                 { uid: 'image', name: 'Image' },
                 { uid: 'name', name: 'Name' },
-                { uid: 'shop', name: 'Shop Name' },
-                { uid: 'location', name: 'Location' },
                 { uid: 'price', name: 'Price' },
-                { uid: 'discount price', name: 'Discount Price' },
                 { uid: 'quantity', name: 'Quantity' },
                 { uid: 'total', name: 'Total' },
-                { uid: 'delete', name: 'Remove' },
+                { uid: 'actions', name: 'Actions' },
               ]}>
                 {(column) => (
                   <TableColumn key={column.uid} align={column.uid === 'actions' ? 'center' : 'start'}>
@@ -162,15 +159,18 @@ export default function WishListComponent() {
               <TableBody items={uniqueProducts}>
                 {(product) => (
                   <TableRow key={product.slug}>
-                    {(columnKey) => <TableCell>{renderCell(product,columnKey)}</TableCell>}
+                    {(columnKey) => <TableCell>{renderCell(product, columnKey)}</TableCell>}
                   </TableRow>
                 )}
               </TableBody>
             </Table>
           </div>
+          <div className="flex justify-end mt-4">
+            <div>
+              <div>Total Price: ${totalPrice.toFixed(2)}</div>
+            </div>
+          </div>
         </div>
-      )}
     </main>
   );
 }
-

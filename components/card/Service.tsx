@@ -1,13 +1,18 @@
 import { CartProductType } from '@/libs/difinition';
+import { addToCart } from '@/redux/feature/cart/cartSlice';
+import { useAppDispatch } from '@/redux/hook';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { LuShoppingCart } from 'react-icons/lu';
 
 export default function ServiceCardComponent() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
+
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 4,
@@ -24,8 +29,6 @@ export default function ServiceCardComponent() {
         {data?.payload.list.map((product: CartProductType) => (
           <Card
             key={product.slug}
-            isPressable
-            onPress={() => console.log('item pressed')}
             className="w-[595px]  shadow-none"
           >
             <div className="flex p-2">
@@ -77,16 +80,52 @@ export default function ServiceCardComponent() {
                       From
                     </span>
                     <span className="ml-3 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-[28px] font-semibold text-transparent">
-                      $ {product.price}
+                      ${product.price}
                     </span>
                   </div>
                   <div className="mt-3 flex justify-end gap-[15px]">
-                    <a href="#">
-                      <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    </a>
-                    <a href="">
-                      <LuShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    </a>
+                    <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" 
+                    onClick={() => dispatch(addToCart({
+                    slug: product.slug,
+                    seller: product.seller,
+                    name: product.name,
+                    price: product.price,
+                    discountPrice: product.discountPrice,
+                    ratingAvg: product.ratingAvg,
+                    description: product.description,
+                    images: product.images,
+                    shop: product.shop,
+                    discountValue: product.discountValue,
+                    discountType: product.discountType,
+                    expiredAt: product.expiredAt,
+                    category: product.category,
+                    createdAt: product.createdAt,
+                    updatedAt: product.updatedAt,
+                    createdBy: product.createdBy,
+                    updatedBy: product.updatedBy,
+                    address: product.address,
+                  }))}/>
+                      <LuShoppingCart className="h-[25px] w-[25px] text-[#eb7d52] " 
+                      onClick={() => dispatch(addToCart({
+                        slug: product.slug,
+                        seller: product.seller,
+                        name: product.name,
+                        price: product.price,
+                        discountPrice: product.discountPrice,
+                        ratingAvg: product.ratingAvg,
+                        description: product.description,
+                        images: product.images,
+                        shop: product.shop,
+                        discountValue: product.discountValue,
+                        discountType: product.discountType,
+                        expiredAt: product.expiredAt,
+                        category: product.category,
+                        createdAt: product.createdAt,
+                        updatedAt: product.updatedAt,
+                        createdBy: product.createdBy,
+                        updatedBy: product.updatedBy,
+                        address: product.address,
+                      }))}/>
                   </div>
                 </div>
               </div>

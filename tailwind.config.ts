@@ -27,7 +27,7 @@ const config: Config = {
       themes: {
         light: {
           extend: 'light',
-          colors: {
+          colors: { 
             danger: {
               50: '#fef2f2',
               100: '#fee2e2',

@@ -5,6 +5,7 @@ import cartSlice from '@/redux/feature/cart/cartSlice';
 import passwordVisibilitySlice from '@/redux/feature/password/passwordVisibilitySlice';
 import { ecommerceApi } from './api';
 import { authApi } from '@/redux/service/auth';
+import wishListSlice from './feature/wishList/wishListSlice';
 
 export const makeStore = () => {
   return configureStore({
@@ -12,6 +13,7 @@ export const makeStore = () => {
       userProfile: userProfileSlice,
       auth: authSlice,
       cart: cartSlice,
+      wishlist: wishListSlice,
       passwordVisibility: passwordVisibilitySlice,
       [ecommerceApi.reducerPath]: ecommerceApi.reducer,
       [authApi.reducerPath]: authApi.reducer,

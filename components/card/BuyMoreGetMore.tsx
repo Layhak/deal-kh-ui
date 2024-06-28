@@ -1,4 +1,6 @@
 import { CartProductType } from '@/libs/difinition';
+import { addToWishList } from '@/redux/feature/wishList/wishListSlice';
+import { useAppDispatch } from '@/redux/hook';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
@@ -8,6 +10,7 @@ import { FaRegHeart } from 'react-icons/fa';
 
 export default function BuyMoreGetMoreComponent() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { data, isLoading, error } = useGetProductsQuery({page:1,size:8,field:"",fieldName:""});
   console.log('data', data);
   console.log('error', error);
@@ -15,10 +18,9 @@ export default function BuyMoreGetMoreComponent() {
 
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-7">
+      <div className="flex flex-wrap justify-center gap-[25px]">
       {data?.payload.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`/${product.slug}`)}
             key={product.slug}
             isPressable
             onPress={() => console.log('item pressed')}
@@ -27,6 +29,7 @@ export default function BuyMoreGetMoreComponent() {
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
                 <Image
+                  onClick={() => router.push(`/${product.slug}`)}
                   className="h-[160px] w-[284px] object-cover"
                   src={product.images[0].url || 'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'}
                   alt={product.name}
@@ -36,16 +39,33 @@ export default function BuyMoreGetMoreComponent() {
                 BUY 1 GET 1
               </span>
               <div className="flex flex-wrap justify-between">
-                <Link href="#">
                   <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
-                    {product.name.length > 60
-                      ? `${product.name.substring(0, 60)}...`
+                    {product.name.length > 30
+                      ? `${product.name.substring(0, 26)}...`
                       : product.name}
                   </h5>
-                </Link>
-                <a href="" className="right-4 mt-3">
-                  <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                </a>
+                <div className="right-4 mt-3" onClick={() => dispatch(addToWishList({
+                    slug: product.slug,
+                    seller: product.seller,
+                    name: product.name,
+                    price: product.price,
+                    discountPrice: product.discountPrice,
+                    ratingAvg: product.ratingAvg,
+                    description: product.description,
+                    images: product.images,
+                    shop: product.shop,
+                    discountValue: product.discountValue,
+                    discountType: product.discountType,
+                    expiredAt: product.expiredAt,
+                    category: product.category,
+                    createdAt: product.createdAt,
+                    updatedAt: product.updatedAt,
+                    createdBy: product.createdBy,
+                    updatedBy: product.updatedBy,
+                    address: product.address,
+                  }))}>
+                 <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                 </div>
               </div>
               <div className=" h-[30px] pt-3">
                 <p className="text-[14px] font-medium text-gray-600 ">

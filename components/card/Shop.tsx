@@ -26,7 +26,7 @@ export default function ShopCardComponent() {
             onPress={() => console.log('item pressed')}
             className="w-[387px] p-2  shadow-none"
           >
-            <CardBody>
+            <CardBody> 
               <a href="#">
                 <h5 className="text-foreground-800 mb-2 h-[52px] text-xl font-semibold tracking-tight dark:text-white">
                   {product.shop.length > 50

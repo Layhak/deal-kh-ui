@@ -7,32 +7,33 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 import { LuShoppingCart } from 'react-icons/lu';
+import { addToCart } from '@/redux/feature/cart/cartSlice';
+import { useAppDispatch } from '@/redux/hook';
+import { addToWishList } from '@/redux/feature/wishList/wishListSlice';
 
 export default function NormalProductComponent() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 8,
     field: '',
     fieldName: '',
   });
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-6">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`/${product.slug}`)}
+            
             key={product.slug}
-            isPressable
-            onPress={() => console.log('item pressed')}
             className="dark:border-foreground-700 bg-foreground-50 relative mb-2 h-[395px] w-[284px]  flex-none  rounded-xl  shadow-none"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
                 <Image
+                onClick={() => router.push(`/${product.slug}`)}
                   className="h-[193px] w-[284px] object-cover"
                   src={
                     product.images[0].url ||
@@ -106,12 +107,47 @@ export default function NormalProductComponent() {
                   </span>
                 </div>
                 <div className="flex justify-end gap-[15px]">
-                  <a href="#">
-                    <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                  </a>
-                  <a href="">
-                    <LuShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                  </a>
+                    <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" onClick={() => dispatch(addToWishList({
+                        slug: product.slug,
+                        seller: product.seller,
+                        name: product.name,
+                        price: product.price,
+                        discountPrice: product.discountPrice,
+                        ratingAvg: product.ratingAvg,
+                        description: product.description,
+                        images: product.images,
+                        shop: product.shop,
+                        discountValue: product.discountValue,
+                        discountType: product.discountType,
+                        expiredAt: product.expiredAt,
+                        category: product.category,
+                        createdAt: product.createdAt,
+                        updatedAt: product.updatedAt,
+                        createdBy: product.createdBy,
+                        updatedBy: product.updatedBy,
+                        address: product.address,
+                      }))} />
+                  <LuShoppingCart className="h-[25px] w-[25px] text-[#eb7d52] " 
+                      onClick={() => dispatch(addToCart({
+                        slug: product.slug,
+                        seller: product.seller,
+                        name: product.name,
+                        price: product.price,
+                        discountPrice: product.discountPrice,
+                        ratingAvg: product.ratingAvg,
+                        description: product.description,
+                        images: product.images,
+                        shop: product.shop,
+                        discountValue: product.discountValue,
+                        discountType: product.discountType,
+                        expiredAt: product.expiredAt,
+                        category: product.category,
+                        createdAt: product.createdAt,
+                        updatedAt: product.updatedAt,
+                        createdBy: product.createdBy,
+                        updatedBy: product.updatedBy,
+                        address: product.address,
+                      }))}/>
                 </div>
               </div>
             </CardBody>

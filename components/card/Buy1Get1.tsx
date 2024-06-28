@@ -6,9 +6,12 @@ import { FaRegHeart } from 'react-icons/fa';
 import { useRouter } from 'next/navigation';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { CartProductType } from '@/libs/difinition';
+import { addToWishList } from '@/redux/feature/wishList/wishListSlice';
+import { useAppDispatch } from '@/redux/hook';
 
 export default function Buy1Get1Component() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 6,
@@ -24,14 +27,13 @@ export default function Buy1Get1Component() {
       <div className="flex flex-wrap justify-center gap-[25px]">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`/products`)}
             key={product.slug}
-            isPressable
             className="dark:border-foreground-700 bg-foreground-50 relative mb-2 h-[330px] w-[250px]  flex-none rounded-xl  shadow-none"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
                 <Image
+                  onClick={() => router.push(`/${product.slug}`)}
                   className="h-[160px] w-[224px] object-cover"
                   src={
                     product.images[0].url ||
@@ -51,9 +53,30 @@ export default function Buy1Get1Component() {
                       : product.name || 'Product Name'}
                   </h5>
                 </Link>
-                <a href="" className="right-4 mt-3">
-                  <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                </a>
+               
+                 <div className="right-4 mt-3" onClick={() => dispatch(addToWishList({
+                    slug: product.slug,
+                    seller: product.seller,
+                    name: product.name,
+                    price: product.price,
+                    discountPrice: product.discountPrice,
+                    ratingAvg: product.ratingAvg,
+                    description: product.description,
+                    images: product.images,
+                    shop: product.shop,
+                    discountValue: product.discountValue,
+                    discountType: product.discountType,
+                    expiredAt: product.expiredAt,
+                    category: product.category,
+                    createdAt: product.createdAt,
+                    updatedAt: product.updatedAt,
+                    createdBy: product.createdBy,
+                    updatedBy: product.updatedBy,
+                    address: product.address,
+                  }))}>
+                 <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                 </div>
+
               </div>
               <div className=" h-[30px] pt-3">
                 <p className="text-foreground-600 text-[14px] font-medium ">

@@ -16,9 +16,9 @@ export default function NormalProductComponent() {
     field: '',
     fieldName: '',
   });
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+  // console.log('data', data);
+  // console.log('error', error);
+  // console.log('isLoading', isLoading);
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-6">
@@ -28,7 +28,7 @@ export default function NormalProductComponent() {
             key={product.slug}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="dark:border-foreground-700 bg-foreground-50 relative mb-2 h-[395px] w-[284px]  flex-none  rounded-xl  shadow-none"
+            className="relative mb-2 h-[395px] w-[284px] flex-none rounded-xl  bg-foreground-50  shadow-none  dark:border-foreground-700"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
@@ -59,7 +59,7 @@ export default function NormalProductComponent() {
                     (_, index) => (
                       <svg
                         key={index}
-                        className="text-foreground-200 dark:text-foreground-600 h-4 w-4"
+                        className="h-4 w-4 text-foreground-200 dark:text-foreground-600"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
@@ -70,19 +70,19 @@ export default function NormalProductComponent() {
                     )
                   )}
                 </div>
-                <span className="text-foreground-600 ml-1 text-[15px] font-medium">
+                <span className="ml-1 text-[15px] font-medium text-foreground-600">
                   ({product.ratingAvg}) Reviews
                 </span>
               </div>
               <Link href="#">
-                <h5 className="text-foreground-800 mt-1 h-[45px] text-[18px] font-semibold tracking-tight dark:text-white">
+                <h5 className="mt-1 h-[45px] text-[18px] font-semibold tracking-tight text-foreground-800 dark:text-white">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 45)}...`
                     : product.name || 'Product Name'}
                 </h5>
               </Link>
               <div className=" h-[30px] pt-2">
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Shop :{' '}
                   <Link href="">
                     <span className="text-info-800 text-[14px] font-medium">
@@ -92,7 +92,7 @@ export default function NormalProductComponent() {
                     </span>
                   </Link>
                 </p>
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
                     {product.expiredAt}

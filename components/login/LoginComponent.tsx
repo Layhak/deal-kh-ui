@@ -51,6 +51,17 @@ export default function MyShop() {
   ) => {
     try {
       await loginUser(values).unwrap();
+      // const res = await fetch(`http://localhost:3000/api/login`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(values),
+      // });
+      // if (res.ok) {
+      //   const data = await res.json();
+      //   console.log('After Login data: ', data);
+      // }
       router.push('/');
     } catch (error: any) {
       console.error('Login error:', error);
@@ -71,7 +82,7 @@ export default function MyShop() {
 
   return (
     <div
-      className=" bg-foreground-50 min-h-[500px] w-full rounded-xl  border-1.5 p-4  dark:border-0 sm:w-[500px] sm:px-7 sm:py-10"
+      className=" min-h-[500px] w-full rounded-xl border-1.5  bg-foreground-50 p-4  dark:border-0 sm:w-[500px] sm:px-7 sm:py-10"
       data-aos="flip-up"
     >
       <div className={'flex items-center justify-between'}>
@@ -176,7 +187,7 @@ export default function MyShop() {
               <div className="w-full border-0 border-t border-foreground" />
             </div>
             <div className="relative flex justify-center text-sm font-medium leading-6">
-              <span className="text-foreground-900  bg-foreground-50 px-3 ">
+              <span className="bg-foreground-50  px-3 text-foreground-900 ">
                 Or
               </span>
             </div>
@@ -185,22 +196,22 @@ export default function MyShop() {
           <div className="mt-6 grid grid-cols-1 gap-4">
             <NextLink
               href="#"
-              className="bg-foreground-100 text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+              className="text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 bg-foreground-100 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
               onClick={() => signIn('google')}
             >
               <Google />
-              <span className="text-foreground-800 text-sm font-semibold leading-6">
+              <span className="text-sm font-semibold leading-6 text-foreground-800">
                 Google
               </span>
             </NextLink>
 
             <NextLink
               href="#"
-              className="bg-foreground-100 text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+              className="text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 bg-foreground-100 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
               onClick={() => signIn('facebook')}
             >
               <Facebook size={24} className={'text-primary-500'} />
-              <span className="text-foreground-800 text-sm font-semibold leading-6">
+              <span className="text-sm font-semibold leading-6 text-foreground-800">
                 Facebook
               </span>
             </NextLink>

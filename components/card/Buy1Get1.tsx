@@ -15,9 +15,9 @@ export default function Buy1Get1Component() {
     field: '',
     fieldName: '',
   });
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+  // console.log('data', data);
+  // console.log('error', error);
+  // console.log('isLoading', isLoading);
 
   return (
     <div>
@@ -27,7 +27,7 @@ export default function Buy1Get1Component() {
             onClick={() => router.push(`/products`)}
             key={product.slug}
             isPressable
-            className="dark:border-foreground-700 bg-foreground-50 relative mb-2 h-[330px] w-[250px]  flex-none rounded-xl  shadow-none"
+            className="relative mb-2 h-[330px] w-[250px] flex-none rounded-xl  bg-foreground-50 shadow-none  dark:border-foreground-700"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
@@ -45,7 +45,7 @@ export default function Buy1Get1Component() {
               </span>
               <div className="flex flex-wrap justify-between">
                 <Link href="#">
-                  <h5 className="text-foreground-800 mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight dark:text-white">
+                  <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-foreground-800 dark:text-white">
                     {product.name.length > 30
                       ? `${product.name.substring(0, 25)}...`
                       : product.name || 'Product Name'}
@@ -56,7 +56,7 @@ export default function Buy1Get1Component() {
                 </a>
               </div>
               <div className=" h-[30px] pt-3">
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Shop :{' '}
                   <Link href="">
                     <span className="text-info-800 text-[14px] font-medium">
@@ -66,7 +66,7 @@ export default function Buy1Get1Component() {
                     </span>
                   </Link>
                 </p>
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
                     {product.expiredAt || 'Expired Date'}

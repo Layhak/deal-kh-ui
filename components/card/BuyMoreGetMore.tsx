@@ -15,9 +15,9 @@ export default function BuyMoreGetMoreComponent() {
     field: '',
     fieldName: '',
   });
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+  // console.log('data', data);
+  // console.log('error', error);
+  // console.log('isLoading', isLoading);
 
   return (
     <div>
@@ -28,7 +28,7 @@ export default function BuyMoreGetMoreComponent() {
             key={product.slug}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="dark:border-foreground-700 dark:bg-foreground-800 bg-foreground-100 border-foreground-200 relative mb-2 h-[330px] w-[285px]  flex-none rounded-xl border-1  shadow-none"
+            className="relative mb-2 h-[330px] w-[285px] flex-none rounded-xl border-1 border-foreground-200  bg-foreground-100 shadow-none dark:border-foreground-700  dark:bg-foreground-800"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
@@ -48,14 +48,14 @@ export default function BuyMoreGetMoreComponent() {
                 {product.name.length > 20 ? (
                   <Link href="#" className={'block w-[200px]'}>
                     <Marquee speed={20}>
-                      <h5 className="text-foreground-800 mt-3  text-[18px] font-semibold ">
+                      <h5 className="mt-3 text-[18px]  font-semibold text-foreground-800 ">
                         {product.name}
                       </h5>
                     </Marquee>
                   </Link>
                 ) : (
                   <Link href="#">
-                    <h5 className="text-foreground-800 mt-3  text-[18px] font-semibold ">
+                    <h5 className="mt-3 text-[18px]  font-semibold text-foreground-800 ">
                       {product.name}
                     </h5>
                   </Link>
@@ -65,7 +65,7 @@ export default function BuyMoreGetMoreComponent() {
                 </Link>
               </div>
               <div className=" h-[30px] pt-3">
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Shop :{' '}
                   <Link href="">
                     <span className="text-[14px] font-medium text-blue-800">
@@ -75,7 +75,7 @@ export default function BuyMoreGetMoreComponent() {
                     </span>
                   </Link>
                 </p>
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
                     {product.expiredAt}

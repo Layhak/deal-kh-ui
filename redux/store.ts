@@ -1,10 +1,11 @@
+// redux/store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import userProfileSlice from '@/redux/feature/userProfile/userProfileSlice';
 import authSlice from '@/redux/feature/auth/authSlice';
 import cartSlice from '@/redux/feature/cart/cartSlice';
 import passwordVisibilitySlice from '@/redux/feature/password/passwordVisibilitySlice';
 import { ecommerceApi } from './api';
 import { authApi } from '@/redux/service/auth';
+import userProfileSlice from '@/redux/feature/userProfile/userProfileSlice';
 
 export const makeStore = () => {
   return configureStore({

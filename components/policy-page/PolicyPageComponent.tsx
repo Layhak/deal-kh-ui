@@ -1,22 +1,21 @@
-"use  client";
-
-import React, { useEffect } from 'react';
+import { ScrollShadow } from '@nextui-org/react';
+import React from 'react';
 import 'aos/dist/aos.css';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
+('use  client');
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Policy Page',
-	description: 'This is a Policy Page',
+  title: 'Policy Page',
+  description: 'This is a Policy Page',
 };
 
 export default function PolicyPage() {
   return (
-    <>
-      <div className="container mx-auto p-6">
-      {/* Privacy Policy section */}
+    <ScrollShadow hideScrollBar className="h-[700px] w-full">
       <div className="mt-12">
         <p className="text-2xl font-bold">Privacy Policy</p>
         <ul className="mx-8 list-disc">
@@ -145,7 +144,6 @@ export default function PolicyPage() {
           </li>
         </ul>
       </div>
-    </div>
-    </>
+    </ScrollShadow>
   );
 }

@@ -7,11 +7,11 @@ const initialState = {
   totalPrice: 0,
 };
 
-const cartSlice = createSlice({
-  name: 'cart',
+const wishListSlice = createSlice({
+  name: 'wishList',
   initialState,
   reducers: {
-    addToCart: (state, action: PayloadAction<CartProductType>) => {
+    addToWishList: (state, action: PayloadAction<CartProductType>) => {
 		const productExists = state.products.some(
 		  (product) => product.slug === action.payload.slug
 		);
@@ -22,12 +22,8 @@ const cartSlice = createSlice({
 		  state.totalPrice += price;
 		}
 	  },
-	  removeFromCart: (state, action: PayloadAction<string>) => {
+	  removeFromWishList: (state, action: PayloadAction<string>) => {
 		const product = state.products.find((product) => product.slug === action.payload);
-		if (product) {
-		  state.totalPrice -= product.price;
-		  state.products = state.products.filter((p) => p.slug !== action.payload);
-		}
 		if (product) {
 		  state.totalPrice -= product.price;
 		  state.products = state.products.filter((p) => p.slug !== action.payload);
@@ -58,13 +54,13 @@ const cartSlice = createSlice({
 
 // export actions
 export const {
-  addToCart,
-  removeFromCart,
+  addToWishList,
+  removeFromWishList,
   incrementQuantity,
   decrementQuantity,
-} = cartSlice.actions;
-export default cartSlice.reducer;
+} = wishListSlice.actions;
+export default wishListSlice.reducer;
 
 // create selector
-export const selectProducts = (state: RootState) => state.cart.products;
-export const selectTotalPrice = (state: RootState) => state.cart.totalPrice;
+export const selectWishlistProducts = (state: RootState) => state.wishlist.products;
+export const selectTotalWishlistPrice = (state: RootState) => state.wishlist.totalPrice;

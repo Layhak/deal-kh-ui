@@ -1,22 +1,25 @@
 'use client';
 
 import { CartProductType } from '@/libs/difinition';
+import { addToCart } from '@/redux/feature/cart/cartSlice';
+import { useAppDispatch } from '@/redux/hook';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Button, Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 export default function ClearanceCardComponent() {
   const router = useRouter();
+  const dispatch = useAppDispatch();
+
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 3,
     field: '',
     fieldName: '',
   });
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+  
 
   return (
     <div>
@@ -109,7 +112,26 @@ export default function ClearanceCardComponent() {
                   </span>
                 </div>
                 <Button
-                  onClick={() => router.push(`/products`)}
+                  onClick={() => dispatch(addToCart({
+                    slug: product.slug,
+                    seller: product.seller,
+                    name: product.name,
+                    price: product.price,
+                    discountPrice: product.discountPrice,
+                    ratingAvg: product.ratingAvg,
+                    description: product.description,
+                    images: product.images,
+                    shop: product.shop,
+                    discountValue: product.discountValue,
+                    discountType: product.discountType,
+                    expiredAt: product.expiredAt,
+                    category: product.category,
+                    createdAt: product.createdAt,
+                    updatedAt: product.updatedAt,
+                    createdBy: product.createdBy,
+                    updatedBy: product.updatedBy,
+                    address: product.address,
+                  }))}
                   className="h-[37px] w-[100px] rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center text-[14px] text-white"
                 >
                   Add To Cart

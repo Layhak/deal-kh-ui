@@ -22,13 +22,16 @@ import { CartIcon, CloseIcon, HeartIcon, SearchIcon } from '@/components/icons';
 import CategoryButton from './categoryButton';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { selectToken } from '@/redux/feature/auth/authSlice';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import AuthLink from '@/components/auth/AuthLink';
 import { useSubmitFormMutation } from '@/redux/api';
 import { signOut } from '@/app/Auth/auth';
 import { useLogoutUserMutation } from '@/redux/service/auth';
+import { selectProducts } from '@/redux/feature/cart/cartSlice';
+import { CartProductType } from '@/libs/difinition';
+import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 
 type ValueTypes = {
   email: string;
@@ -49,6 +52,8 @@ export const NavigationBar = () => {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { theme } = useTheme();
+  const router = useRouter();
+  
 
   useEffect(() => {
     if (localStorage.getItem('loggedIn') === 'loggedIn') {
@@ -57,6 +62,39 @@ export const NavigationBar = () => {
       setIsLoggedIn(false);
     }
   }, []);
+
+   //For Carts
+   const products = useAppSelector(selectProducts);
+   //display number of product that only unique select
+   const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
+
+  useEffect(() => {
+    // Filter unique products based on their slugs
+    const unique = products.filter(
+      (product, index, self) =>
+        index === self.findIndex((t) => t.slug === product.slug)
+    );
+
+    // Update the state with the unique products
+    setUniqueProducts(unique);
+  }, [products]);
+
+
+
+  // For Wishlist
+const wishlistProducts = useAppSelector(selectWishlistProducts);
+const [uniqueWishlistProducts, setUniqueWishlistProducts] = useState<CartProductType[]>([]);
+
+useEffect(() => {
+  // Filter unique products based on their slugs
+  const uniqueWishlist = wishlistProducts.filter(
+    (product, index, self) =>
+      index === self.findIndex((t) => t.slug === product.slug)
+  );
+
+  // Update the state with the unique wishlist products
+  setUniqueWishlistProducts(uniqueWishlist);
+}, [wishlistProducts]);
 
   const [searchValue, setSearchValue] = useState('');
   const [secondValue, setSecondValue] = useState('');
@@ -257,15 +295,24 @@ export const NavigationBar = () => {
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem className="hidden sm:flex">
-          <NextLink href="/wishlist">
-            <HeartIcon size={28} />
-          </NextLink>
-        </NavbarItem>
-        <NavbarItem className="hidden sm:flex">
-          <NextLink href="/cart">
-            <CartIcon size={28} />
-          </NextLink>
-        </NavbarItem>
+  <NextLink href="/wishlist">
+    <div className={'relative'} onClick={() => router.push(`/wishlist`)}>
+      <HeartIcon size={28} />
+      <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+        {uniqueWishlistProducts.length}
+      </div>
+    </div>
+  </NextLink>
+</NavbarItem>
+
+<NavbarItem className="hidden sm:flex">
+  <div className={'relative'} onClick={() => router.push(`/cart`)}>
+    <CartIcon size={28} />
+    <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+      {uniqueProducts.length}
+    </div>
+  </div>
+</NavbarItem>
         <NavbarItem>
           {isLoggedIn ? (
             <Dropdown placement="bottom-end" shadow={'md'}>

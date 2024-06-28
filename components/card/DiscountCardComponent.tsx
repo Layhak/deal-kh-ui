@@ -39,7 +39,7 @@ export default function DiscountCardComponent() {
                   alt={product.name}
                 />
               </Link>
-              <span className="text-grey-50 absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold">
+              <span className="text-white absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold">
                 {product.discountValue}% OFF
               </span>
               <div className="mt-4 flex h-[20px]">

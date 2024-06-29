@@ -32,6 +32,7 @@ export default function DiscountCardComponent() {
               <Link href={`products/${product.slug}`}>
                 <Image
                   className="h-[193px] w-[284px] object-cover"
+                  isZoomed
                   src={
                     product.images[0].url ||
                     'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
@@ -39,7 +40,7 @@ export default function DiscountCardComponent() {
                   alt={product.name}
                 />
               </Link>
-              <span className="text-white absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold">
+              <span className="absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white">
                 {product.discountValue}% OFF
               </span>
               <div className="mt-4 h-[16] w-full">

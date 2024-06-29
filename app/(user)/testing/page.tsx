@@ -1,10 +1,12 @@
-import GoogleMapsComponent from '@/components/search/page'
-import React from 'react'
+import ShopMap from "@/components/search/LocationTesting";
 
-export default function page() {
+const OtherPage = () => {
   return (
     <div>
-      <GoogleMapsComponent apiKey='NEXT_PUBLIC_GOOGLE_MAPS_API_KEY'/>
+      <h1>Other Page</h1>
+      <ShopMap />
     </div>
-  )
-}
+  );
+};
+
+export default OtherPage;

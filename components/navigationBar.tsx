@@ -29,9 +29,11 @@ import AuthLink from '@/components/auth/AuthLink';
 import { useSubmitFormMutation } from '@/redux/api';
 import { signOut } from '@/app/Auth/auth';
 import { useLogoutUserMutation } from '@/redux/service/auth';
-import SearchProductDropDown from './search/SearchProductDropDown';
-import SearchLocationDropDown from './search/SearchLocationDropDown';
-import Category from './card/Category';
+import SearchProductDropDown from './search/SearchProduct';
+import SearchLocation from './search/SearchLocation';
+import SearchProduct from './search/SearchProduct';
+import { productSearchList } from '@/types/productSearch';
+import { LocationSearchList } from '@/types/locationSearch';
 
 type ValueTypes = {
   email: string;
@@ -53,10 +55,6 @@ export const NavigationBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { theme } = useTheme();
 
-  // for search drop down
-  const [productDropdown, setProductDropdown] = useState(false);
-  const [locationDropdown, setLocationDropdown] = useState(false);
-
   useEffect(() => {
     if (localStorage.getItem('loggedIn') === 'loggedIn') {
       setIsLoggedIn(true);
@@ -67,26 +65,6 @@ export const NavigationBar = () => {
 
   const [searchValue, setSearchValue] = useState('');
   const [secondValue, setSecondValue] = useState('');
-
-  const handleSearchChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setSearchValue(event.target.value);
-  };
-
-  const handleSecondChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setSecondValue(event.target.value);
-  };
-
-  const handleClearSearch = () => {
-    setSearchValue('');
-  };
-
-  const handleClearSecond = () => {
-    setSecondValue('');
-  };
 
   const handleSubmit = async () => {
     try {
@@ -145,21 +123,6 @@ export const NavigationBar = () => {
     }
   };
 
-  const handleInputFocusProduct = () => {
-    setProductDropdown(true);
-  };
-
-  const handleInputBlurProduct = () => {
-    setProductDropdown(false);
-  };
-
-  const handleInputFocusLocation = () => {
-    setLocationDropdown(true);
-  };
-
-  const handleInputBlurLocation = () => {
-    setLocationDropdown(false);
-  };
 
   const categories = [
     'Accessory',
@@ -174,90 +137,15 @@ export const NavigationBar = () => {
     'Food',
     'Shoe',
     'Skincare',
-  ];
-
-  const locations = [
-    'Phnom Penh',
-    'Siem Reap',
-    'Battambang',
-    'Sihanoukville',
-    'Kampong Cham',
-    'Kampot',
-    'Pursat',
-    'Svay Rieng',
-    'Prey Veng',
-    'Kratie',
-  ];
-  
-  const handleLocationSelect = (location: SetStateAction<string>) => {
-    setSecondValue(location);
-    // Implement location-based filtering logic here
-  };
+  ]
 
   const searchInput = (
     <>
-      {productDropdown && <SearchProductDropDown categories={categories} />}
-      <div className="flex items-center">
-        {/* product name search filtering */}
-        <Input
-          aria-label="Product Search"
-          classNames={{
-            inputWrapper: 'bg-default-100 rounded-none rounded-l-xl w-[200px] mt-1',
-            input: 'text-sm',
-          }}
-          labelPlacement="outside"
-          placeholder={searchValue || "Search Deal-KH"}
-          endContent={
-            searchValue ? (
-              <CloseIcon
-                onClick={handleClearSearch}
-                className="flex-shrink-0 cursor-pointer text-base text-default-400"
-              />
-            ) : (
-              <SearchIcon
-                onClick={handleSubmit}
-                className="pointer-events-none flex-shrink-0 text-base text-default-400"
-              />
-            )
-          }
-          type="search"
-          value={searchValue}
-          onChange={handleSearchChange}
-          onFocus={handleInputFocusProduct}
-          onBlur={handleInputBlurProduct}
-          autoComplete="off"
-        />
-        {locationDropdown && (
-          <SearchLocationDropDown
-            location={locations}
-            onLocationSelect={handleLocationSelect}
-          />
-        )}
-        {/* location search filtering */}
-        <Input
-          aria-label="Location Search"
-          classNames={{
-            inputWrapper: 'bg-default-100 rounded-none rounded-r-xl w-[200px] mt-1 ml-2',
-            input: 'text-sm',
-          }}
-          labelPlacement="outside"
-          placeholder={'Search locations'}
-          endContent={
-            secondValue ? (
-              <CloseIcon
-                onClick={handleClearSecond}
-                className="flex-shrink-0 cursor-pointer text-base text-default-400"
-              />
-            ) : null
-          }
-          type="search"
-          value={secondValue}
-          onChange={handleSecondChange}
-          onFocus={handleInputFocusLocation}
-          onBlur={handleInputBlurLocation}
-          autoComplete="off"
-        />
-      </div>
+      {/* for searching product */}
+      <SearchProduct products={productSearchList}/>
+
+      {/* for searching location */}
+      <SearchLocation locations={LocationSearchList}/>
     </>
   );
 

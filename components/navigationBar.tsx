@@ -1,4 +1,5 @@
 'use client';
+import * as React from 'react';
 import { SetStateAction, useEffect, useState } from 'react';
 import {
   Avatar,
@@ -54,7 +55,6 @@ export const NavigationBar = () => {
   const { theme } = useTheme();
   const router = useRouter();
 
-
   const { data: userProfile, isLoading: isLoadingUserProfile } =
     useGetProfileQuery();
 
@@ -82,11 +82,10 @@ export const NavigationBar = () => {
     }
   }, [userProfile]);
 
-
-   //For Carts
-   const products = useAppSelector(selectProducts);
-   //display number of product that only unique select
-   const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
+  //For Carts
+  const products = useAppSelector(selectProducts);
+  //display number of product that only unique select
+  const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
 
   useEffect(() => {
     // Filter unique products based on their slugs
@@ -99,23 +98,22 @@ export const NavigationBar = () => {
     setUniqueProducts(unique);
   }, [products]);
 
-
-
   // For Wishlist
-const wishlistProducts = useAppSelector(selectWishlistProducts);
-const [uniqueWishlistProducts, setUniqueWishlistProducts] = useState<CartProductType[]>([]);
+  const wishlistProducts = useAppSelector(selectWishlistProducts);
+  const [uniqueWishlistProducts, setUniqueWishlistProducts] = useState<
+    CartProductType[]
+  >([]);
 
-useEffect(() => {
-  // Filter unique products based on their slugs
-  const uniqueWishlist = wishlistProducts.filter(
-    (product, index, self) =>
-      index === self.findIndex((t) => t.slug === product.slug)
-  );
+  useEffect(() => {
+    // Filter unique products based on their slugs
+    const uniqueWishlist = wishlistProducts.filter(
+      (product, index, self) =>
+        index === self.findIndex((t) => t.slug === product.slug)
+    );
 
-  // Update the state with the unique wishlist products
-  setUniqueWishlistProducts(uniqueWishlist);
-}, [wishlistProducts]);
-
+    // Update the state with the unique wishlist products
+    setUniqueWishlistProducts(uniqueWishlist);
+  }, [wishlistProducts]);
 
   const [searchValue, setSearchValue] = useState('');
   const [secondValue, setSecondValue] = useState('');
@@ -319,24 +317,22 @@ useEffect(() => {
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem className="hidden sm:flex">
-  <NextLink href="/wishlist">
-    <div className={'relative'} onClick={() => router.push(`/wishlist`)}>
-      <HeartIcon size={28} />
-      <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
-        {uniqueWishlistProducts.length}
-      </div>
-    </div>
-  </NextLink>
-</NavbarItem>
+          <NextLink className={'relative'} href="/wishlist">
+            <HeartIcon size={28} />
+            <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+              {uniqueWishlistProducts.length}
+            </div>
+          </NextLink>
+        </NavbarItem>
 
-<NavbarItem className="hidden sm:flex">
-  <div className={'relative'} onClick={() => router.push(`/cart`)}>
-    <CartIcon size={28} />
-    <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
-      {uniqueProducts.length}
-    </div>
-  </div>
-</NavbarItem>
+        <NavbarItem className="hidden sm:flex">
+          <NextLink href="/cart" className={'relative'}>
+            <CartIcon size={28} />
+            <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+              {uniqueProducts.length}
+            </div>
+          </NextLink>
+        </NavbarItem>
         <NavbarItem>
           {isLoggedIn ? (
             <Dropdown placement="bottom-end" shadow="md">
@@ -348,7 +344,7 @@ useEffect(() => {
                   isBordered
                   color={'default'}
                   src={
-                    userProfile.payload.images[0].url ??
+                    userProfile?.payload?.images[0]?.url ??
                     `https://i.pravatar.cc/150?u=a042581`
                   }
                 />
@@ -393,13 +389,19 @@ useEffect(() => {
           <AuthLink />
         </div>
       </NavbarMenu>
-      <NavbarContent className="basis-3 pl-4 lg:hidden" justify="end">
+      <NavbarContent className="basis-1  pl-4 lg:hidden">
         <ThemeSwitch />
-        <NextLink href="/wishlist">
-          <HeartIcon size={32} />
+        <NextLink className={'relative'} href="/wishlist">
+          <HeartIcon size={28} />
+          <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+            {uniqueWishlistProducts.length}
+          </div>
         </NextLink>
-        <NextLink href="/cart">
-          <CartIcon size={32} />
+        <NextLink className={'relative'} href="/cart">
+          <CartIcon size={28} />
+          <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+            {uniqueProducts.length}
+          </div>
         </NextLink>
         <Avatar
           isBordered

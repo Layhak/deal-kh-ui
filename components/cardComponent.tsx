@@ -87,6 +87,7 @@ export default function CardComponent({ category }: { category: string }) {
                   height="100%"
                   className="rounded-[7px] object-cover"
                   src={product.image}
+                  alt='product'
                 />
               </div>
             </Link>

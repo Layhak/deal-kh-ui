@@ -6,12 +6,13 @@ import { FaRegHeart, FaHeart } from 'react-icons/fa';
 
 import { useGetProductsQuery } from '@/redux/service/product';
 import { CartProductType } from '@/libs/difinition';
-import { addToWishList } from '@/redux/feature/wishList/wishListSlice';
-import { useAppDispatch } from '@/redux/hook';
+import { addToWishList, removeFromWishList } from '@/redux/feature/wishList/wishListSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 
 const Buy1Get1Component = () => {
-
   const dispatch = useAppDispatch();
+  const wishlistProducts = useAppSelector(selectWishlistProducts);
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 6,
@@ -30,13 +31,21 @@ const Buy1Get1Component = () => {
     }
   }, []);
 
-  const handleHeartClick = (slug: string) => {
+  const handleHeartClick = (product: CartProductType) => {
     setHeartStates((prevHeartStates) => {
+      const isAddedToWishlist = !prevHeartStates[product.slug];
       const updatedHeartStates = {
         ...prevHeartStates,
-        [slug]: !prevHeartStates[slug], // Toggle the heart state
+        [product.slug]: isAddedToWishlist, // Toggle the heart state
       };
-      localStorage.setItem('heartStates', JSON.stringify(updatedHeartStates)); // Save to localStorage
+
+      if (isAddedToWishlist) {
+        dispatch(addToWishList(product));
+      } else {
+        dispatch(removeFromWishList(product.slug));
+      }
+
+      localStorage.setItem('heartStates', JSON.stringify(updatedHeartStates));
       return updatedHeartStates;
     });
   };
@@ -75,32 +84,9 @@ const Buy1Get1Component = () => {
 
                 <div
                   className="right-4 mt-3 cursor-pointer"
-                  onClick={() =>
-                    dispatch(
-                      addToWishList({
-                        slug: product.slug,
-                        seller: product.seller,
-                        name: product.name,
-                        price: product.price,
-                        discountPrice: product.discountPrice,
-                        ratingAvg: product.ratingAvg,
-                        description: product.description,
-                        images: product.images,
-                        shop: product.shop,
-                        discountValue: product.discountValue,
-                        discountType: product.discountType,
-                        expiredAt: product.expiredAt,
-                        category: product.category,
-                        createdAt: product.createdAt,
-                        updatedAt: product.updatedAt,
-                        createdBy: product.createdBy,
-                        updatedBy: product.updatedBy,
-                        address: product.address,
-                      })
-                    )
-                  }
+                  onClick={() => handleHeartClick(product)}
                 >
-                  <div key={product.slug} onClick={() => handleHeartClick(product.slug)}>
+                  <div key={product.slug}>
                     {heartStates[product.slug] ? (
                       <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
                     ) : (

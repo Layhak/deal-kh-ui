@@ -12,24 +12,24 @@ export default function DiscountCardComponent() {
     field: '',
     fieldName: '',
   });
-  console.log('data', data);
   console.log('error', error);
   console.log('isLoading', isLoading);
 
+  console.log('data from discount:', data);
   return (
     <main>
       {/* for the card section*/}
       <div className="flex flex-wrap justify-between gap-[25px]">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`/${product.slug}`)}
+            onClick={() => router.push(`products/${product.slug}`)}
             key={product.slug}
             isPressable
             className=" dark:border-foreground-700 dark:bg-foreground-800 relative mb-2 h-[386px] w-[284px]  flex-none rounded-xl shadow-none"
             onPress={() => console.log('item pressed')}
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
-              <Link href="#">
+              <Link href={`products/${product.slug}`}>
                 <Image
                   className="h-[193px] w-[284px] object-cover"
                   src={
@@ -76,7 +76,7 @@ export default function DiscountCardComponent() {
                   ({product.ratingAvg}) Reviews
                 </span>
               </div>
-              <Link href="#">
+              <Link href={`products/${product.slug}`}>
                 <h5 className="text-foreground-800 mt-1 h-[45px] text-[18px] font-semibold tracking-tight">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 45)}...`

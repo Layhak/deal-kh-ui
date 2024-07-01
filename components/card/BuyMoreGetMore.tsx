@@ -5,8 +5,9 @@ import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FaRegHeart } from 'react-icons/fa';
+import Marquee from 'react-fast-marquee';
 
 export default function BuyMoreGetMoreComponent() {
   const router = useRouter();
@@ -24,14 +25,17 @@ export default function BuyMoreGetMoreComponent() {
             key={product.slug}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="relative mb-2 h-[330px] w-[285px] flex-none rounded-xl  bg-white shadow-none dark:border-gray-700 dark:bg-gray-800"
+            className="dark:border-foreground-700 dark:bg-foreground-800 bg-foreground-100 border-foreground-200 relative mb-2 h-[330px] w-[285px]  flex-none rounded-xl border-1  shadow-none"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
                 <Image
                   onClick={() => router.push(`/${product.slug}`)}
                   className="h-[160px] w-[284px] object-cover"
-                  src={product.images[0].url || 'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'}
+                  src={
+                    product.images[0].url ||
+                    'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
+                  }
                   alt={product.name}
                 />
               </Link>
@@ -68,24 +72,24 @@ export default function BuyMoreGetMoreComponent() {
                  </div>
               </div>
               <div className=" h-[30px] pt-3">
-                <p className="text-[14px] font-medium text-gray-600 ">
+                <p className="text-foreground-600 text-[14px] font-medium ">
                   Shop :{' '}
-                  <Link href=''>
-                 <span className="text-[14px] font-medium text-blue-800">
-                  {product.shop.length > 20
-                    ? `${product.shop.substring(0, 20)}...`
-                    : product.shop}
-                  </span>
+                  <Link href="">
+                    <span className="text-[14px] font-medium text-blue-800">
+                      {product.shop.length > 20
+                        ? `${product.shop.substring(0, 20)}...`
+                        : product.shop}
+                    </span>
                   </Link>
                 </p>
-                <p className="text-[14px] font-medium text-gray-600 ">
+                <p className="text-foreground-600 text-[14px] font-medium ">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
                     {product.expiredAt}
                   </span>
                 </p>
               </div>
-              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text pt-8 text-2xl font-bold text-transparent">
+              <span className="bg-gradient-to-r from-pink-500 from-20% to-yellow-500 to-100% bg-clip-text pt-8 text-2xl font-bold text-transparent">
                 ${product.price}
               </span>
             </CardBody>

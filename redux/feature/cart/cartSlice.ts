@@ -2,10 +2,39 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from '@/redux/store';
 import { CartProductType } from '@/libs/difinition';
 
-const initialState = {
-  products: [] as CartProductType[],
-  totalPrice: 0,
-};
+// Load the initial state from localStorage or use the default initial state
+const loadStateFromLocalStorage = () => {
+	try {
+	  const serializedState = localStorage.getItem('cart');
+	  if (serializedState === null) {
+		return {
+		  products: [] as CartProductType[],
+		  totalPrice: 0,
+		};
+	  }
+	  return JSON.parse(serializedState);
+	} catch (e) {
+	  console.error('Could not load state from localStorage', e);
+	  return {
+		products: [] as CartProductType[],
+		totalPrice: 0,
+	  };
+	}
+  };
+  
+  // Save the state to localStorage
+  const saveStateToLocalStorage = (state: any) => {
+	try {
+	  const serializedState = JSON.stringify(state);
+	  localStorage.setItem('cart', serializedState);
+	} catch (e) {
+	  console.error('Could not save state to localStorage', e);
+	}
+  };
+
+
+const initialState = loadStateFromLocalStorage();
+
 
 const cartSlice = createSlice({
   name: 'cart',

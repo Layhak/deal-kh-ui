@@ -6,9 +6,14 @@ import * as Yup from 'yup';
 import NextLink from 'next/link';
 import 'aos/dist/aos.css';
 import Aos from 'aos';
-import { Button, Checkbox } from '@nextui-org/react';
+import { Button, Checkbox, Divider, Spacer } from '@nextui-org/react';
 import { signIn } from 'next-auth/react';
-import { Cancel, Facebook, Google, Logo } from '@/components/icons';
+import {
+  Cancel,
+  FacebookWithColorIcon,
+  Google,
+  Logo,
+} from '@/components/icons';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { useRouter } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
@@ -51,6 +56,17 @@ export default function MyShop() {
   ) => {
     try {
       await loginUser(values).unwrap();
+      // const res = await fetch(`http://localhost:3000/api/login`, {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify(values),
+      // });
+      // if (res.ok) {
+      //   const data = await res.json();
+      //   console.log('After Login data: ', data);
+      // }
       router.push('/');
     } catch (error: any) {
       console.error('Login error:', error);
@@ -71,48 +87,52 @@ export default function MyShop() {
 
   return (
     <div
-      className=" bg-foreground-50 min-h-[500px] w-full rounded-xl  border-1.5 p-4  dark:border-0 sm:w-[500px] sm:px-7 sm:py-10"
-      data-aos="flip-up"
+      className={
+        'flex h-screen w-screen items-center justify-center bg-foreground-200 p-2 sm:p-4 lg:p-8'
+      }
     >
-      <div className={'flex items-center justify-between'}>
-        <NextLink href="/">
-          <Button
-            color={'danger'}
-            radius={'full'}
-            variant={'bordered'}
-            className={'border-0'}
-            size={'sm'}
-            isIconOnly={true}
-          >
-            <Cancel size={28} />
-          </Button>
-        </NextLink>
-        <ThemeSwitch />
-      </div>
-      <div>
-        <div className={'my-5 flex items-center gap-1'}>
-          <Logo size={46} />
-          <h2 className=" bg-gradient-to-r  from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold leading-9 tracking-tight text-transparent">
-            Deal KH
-          </h2>
+      <div
+        className="flex w-full max-w-md flex-col gap-4 rounded-large bg-background/60 px-8 pb-10 pt-6  backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+        data-aos="flip-up"
+      >
+        <div className={'flex items-center justify-between'}>
+          <NextLink href="/">
+            <Button
+              color={'danger'}
+              radius={'full'}
+              variant={'bordered'}
+              className={'border-0'}
+              size={'sm'}
+              isIconOnly={true}
+            >
+              <Cancel size={28} />
+            </Button>
+          </NextLink>
+          <ThemeSwitch />
         </div>
         <div>
-          <h1 className=" text-3xl  font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-200">
-            Sign in to your account
-          </h1>
+          <div className={' flex items-center gap-1'}>
+            <Logo size={56} />
+            <h2 className=" bg-gradient-to-r  from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold leading-9 tracking-tight text-transparent">
+              Deal KH
+            </h2>
+          </div>
+          <div>
+            <h1 className=" text-3xl  font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-200">
+              Sign in to your account
+            </h1>
+          </div>
+          <p className="mt-2 text-sm leading-6 text-gray-500 dark:text-gray-400">
+            Not a member?{' '}
+            <NextLink
+              href="/register"
+              className="font-semibold text-primary-500 hover:text-blue-600"
+            >
+              Start a new account with us!
+            </NextLink>
+          </p>
         </div>
-        <p className="mt-2 text-sm leading-6 text-gray-500 dark:text-gray-400">
-          Not a member?{' '}
-          <NextLink
-            href="/register"
-            className="font-semibold text-primary-500 hover:text-blue-600"
-          >
-            Start a new account with us!
-          </NextLink>
-        </p>
-      </div>
 
-      <div className="mt-5">
         <div>
           <Formik
             initialValues={initialValues}
@@ -127,6 +147,7 @@ export default function MyShop() {
                   type={'email'}
                   placeholder={'Enter your email address'}
                 />
+                <Spacer y={5} />
                 <CustomPasswordInput
                   label={'Password'}
                   name={'password'}
@@ -165,45 +186,32 @@ export default function MyShop() {
               </Form>
             )}
           </Formik>
-        </div>
-
-        <div className="mt-10">
-          <div className="relative">
-            <div
-              className="absolute inset-0 flex items-center"
-              aria-hidden="true"
-            >
-              <div className="w-full border-0 border-t border-foreground" />
-            </div>
-            <div className="relative flex justify-center text-sm font-medium leading-6">
-              <span className="text-foreground-900  bg-foreground-50 px-3 ">
-                Or
-              </span>
-            </div>
+          <Spacer y={3} />
+          <div className="flex items-center gap-4 py-2">
+            <Divider className="flex-1" />
+            <p className="shrink-0 text-tiny text-default-500">OR</p>
+            <Divider className="flex-1" />
           </div>
-
-          <div className="mt-6 grid grid-cols-1 gap-4">
-            <NextLink
-              href="#"
-              className="bg-foreground-100 text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+          <div className="mt-3 grid grid-cols-1 gap-3">
+            <Button
+              className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"
               onClick={() => signIn('google')}
+              startContent={<Google className={'text-gray-50'} />}
             >
-              <Google />
-              <span className="text-foreground-800 text-sm font-semibold leading-6">
+              <span className="text-sm font-semibold leading-6 text-foreground-800">
                 Google
               </span>
-            </NextLink>
+            </Button>
 
-            <NextLink
-              href="#"
-              className="bg-foreground-100 text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
+            <Button
+              className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"
+              startContent={<FacebookWithColorIcon />}
               onClick={() => signIn('facebook')}
             >
-              <Facebook size={24} className={'text-primary-500'} />
-              <span className="text-foreground-800 text-sm font-semibold leading-6">
+              <span className="text-sm font-semibold leading-6 text-foreground-800">
                 Facebook
               </span>
-            </NextLink>
+            </Button>
           </div>
         </div>
       </div>

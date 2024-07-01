@@ -19,7 +19,10 @@ export default function ClearanceCardComponent() {
     field: '',
     fieldName: '',
   });
-  
+  // console.log('data', data);
+  // console.log('error', error);
+  // console.log('isLoading', isLoading);
+
 
   return (
     <div>

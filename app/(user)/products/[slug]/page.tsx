@@ -20,13 +20,13 @@ const ProductPage = ({ params }: ProductPageProps) => {
     error,
     isLoading,
   }: any = useGetProductBySlugQuery(slug);
-  console.log(error);
-  console.log(isLoading);
+  // console.log(error);
+  // console.log(isLoading);
   if (isLoading) return <Loading />;
   if (error) {
     return <NotFoundPage />;
   }
-  console.log('product', product.payload.discountType);
+  // console.log('product', product.payload.discountType);
   return (
     <>
       <CardDetailComponent

@@ -1,16 +1,16 @@
 'use client';
 
-import { Card, CardBody, Image, Link } from '@nextui-org/react';
-import React from 'react';
-import { FaRegHeart } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
+import { Card, CardBody, Link, Image } from '@nextui-org/react';
+import React, { useState, useEffect } from 'react';
+import { FaRegHeart, FaHeart } from 'react-icons/fa';
+
 import { useGetProductsQuery } from '@/redux/service/product';
 import { CartProductType } from '@/libs/difinition';
 import { addToWishList } from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch } from '@/redux/hook';
 
-export default function Buy1Get1Component() {
-  const router = useRouter();
+const Buy1Get1Component = () => {
+
   const dispatch = useAppDispatch();
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
@@ -18,9 +18,29 @@ export default function Buy1Get1Component() {
     field: '',
     fieldName: '',
   });
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+
+  // Initialize the heart state for each product
+  const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
+
+  // Load heart state from local storage on mount
+  useEffect(() => {
+    const savedHeartStates = localStorage.getItem('heartStates');
+    if (savedHeartStates) {
+      setHeartStates(JSON.parse(savedHeartStates));
+    }
+  }, []);
+
+  // Save heart state to local storage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('heartStates', JSON.stringify(heartStates));
+  }, [heartStates]);
+
+  const handleHeartClick = (slug: string) => {
+    setHeartStates((prevHeartStates) => ({
+      ...prevHeartStates,
+      [slug]: !prevHeartStates[slug], // Toggle the heart state
+    }));
+  };
 
   return (
     <div>
@@ -28,12 +48,12 @@ export default function Buy1Get1Component() {
         {data?.payload.list.map((product: CartProductType) => (
           <Card
             key={product.slug}
-            className="dark:border-foreground-700 bg-foreground-50 relative mb-2 h-[330px] w-[250px]  flex-none rounded-xl  shadow-none"
+            isPressable
+            className="relative mb-2 h-[330px] w-[250px] flex-none rounded-xl  bg-foreground-50 shadow-none  dark:border-foreground-700"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
-              <Link href="#">
+              <Link href={`products/${product.slug}`}>
                 <Image
-                  onClick={() => router.push(`/${product.slug}`)}
                   className="h-[160px] w-[224px] object-cover"
                   src={
                     product.images[0].url ||
@@ -47,39 +67,51 @@ export default function Buy1Get1Component() {
               </span>
               <div className="flex flex-wrap justify-between">
                 <Link href="#">
-                  <h5 className="text-foreground-800 mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight dark:text-white">
+                  <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-foreground-800 dark:text-white">
                     {product.name.length > 30
                       ? `${product.name.substring(0, 25)}...`
                       : product.name || 'Product Name'}
                   </h5>
                 </Link>
-               
-                 <div className="right-4 mt-3" onClick={() => dispatch(addToWishList({
-                    slug: product.slug,
-                    seller: product.seller,
-                    name: product.name,
-                    price: product.price,
-                    discountPrice: product.discountPrice,
-                    ratingAvg: product.ratingAvg,
-                    description: product.description,
-                    images: product.images,
-                    shop: product.shop,
-                    discountValue: product.discountValue,
-                    discountType: product.discountType,
-                    expiredAt: product.expiredAt,
-                    category: product.category,
-                    createdAt: product.createdAt,
-                    updatedAt: product.updatedAt,
-                    createdBy: product.createdBy,
-                    updatedBy: product.updatedBy,
-                    address: product.address,
-                  }))}>
-                 <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                 </div>
 
+                <div
+                  className="right-4 mt-3 cursor-pointer"
+                  onClick={() =>
+                    dispatch(
+                      addToWishList({
+                        slug: product.slug,
+                        seller: product.seller,
+                        name: product.name,
+                        price: product.price,
+                        discountPrice: product.discountPrice,
+                        ratingAvg: product.ratingAvg,
+                        description: product.description,
+                        images: product.images,
+                        shop: product.shop,
+                        discountValue: product.discountValue,
+                        discountType: product.discountType,
+                        expiredAt: product.expiredAt,
+                        category: product.category,
+                        createdAt: product.createdAt,
+                        updatedAt: product.updatedAt,
+                        createdBy: product.createdBy,
+                        updatedBy: product.updatedBy,
+                        address: product.address,
+                      })
+                    )
+                  }
+                >
+                  <div key={product.slug} onClick={() => handleHeartClick(product.slug)}>
+                    {heartStates[product.slug] ? (
+                      <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    ) : (
+                      <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    )}
+                  </div>
+                </div>
               </div>
               <div className=" h-[30px] pt-3">
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Shop :{' '}
                   <Link href="">
                     <span className="text-info-800 text-[14px] font-medium">
@@ -89,7 +121,7 @@ export default function Buy1Get1Component() {
                     </span>
                   </Link>
                 </p>
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
                     {product.expiredAt || 'Expired Date'}
@@ -103,17 +135,8 @@ export default function Buy1Get1Component() {
           </Card>
         ))}
       </div>
-
-      {/* Pagination */}
-      {/*<div className="flex justify-center mt-4">*/}
-      {/*  <Pagination*/}
-      {/*    currentPage={page}*/}
-      {/*    pageSize={pageSize}*/}
-      {/*    totalItems={data?.count || 0}*/}
-      {/*    onPageChange={handlePageChange}*/}
-      {/*    onPageSizeChange={handlePageSizeChange}*/}
-      {/*  />*/}
-      {/*</div>*/}
     </div>
   );
-}
+};
+
+export default Buy1Get1Component;

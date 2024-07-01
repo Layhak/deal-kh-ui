@@ -14,9 +14,10 @@ export function middleware(request: NextRequest) {
     request.nextUrl.pathname === '/register'
   ) {
     // If there is a session, redirect them away from /login or /register
-    if (dealkhSessionToken) {
+    if (dealkhSessionToken && authSessionToken) {
       return NextResponse.redirect(new URL('/', request.url)); // Redirect to home page or another appropriate page
     }
+    
   }
 
   return NextResponse.next();

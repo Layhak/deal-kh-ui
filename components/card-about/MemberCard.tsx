@@ -20,21 +20,20 @@ export default function MemberCard() {
         {members.map((item, index) => (
           <div
             key={index}
-            className="relative w-80 max-w-sm  items-center  overflow-hidden rounded-3xl   px-5 py-10 dark:border-warning-200"
+            className="relative w-[250px] max-w-sm  items-center  overflow-hidden rounded-3xl   px-5 py-10 dark:border-warning-200"
           >
             <div className="relative flex items-center justify-center">
-              <span className="absolute inset-[-0.5%] animate-[spin_3s_linear_infinite] rounded-full bg-[conic-gradient(from_90deg_at_50%_50%,#EC4899_0%,#EAB308_50%,#EC4899_100%)] p-[1px]"></span>
-              <div className="relative rounded-full bg-background p-1">
-                <Image
-                  isBlurred
-                  radius={'full'}
-                  src={item.img}
-                  alt={item.name}
-                  className="h-[270px] w-[270px] "
-                />
-              </div>
+              <span className="absolute inset-[0%] animate-[spin_3s_linear_infinite] rounded-full bg-[conic-gradient(from_90deg_at_50%_50%,#EC4899_0%,#EAB308_50%,#EC4899_100%)]  blur-sm"></span>
+              <Image
+                isBlurred
+                isZoomed
+                radius={'full'}
+                src={item.img}
+                alt={item.name}
+                className="h-[200px] w-[200px]"
+              />
             </div>
-            <div className="px-6 py-4 text-center">
+            <div className="py-4 text-center">
               <div className="mb-2 text-2xl font-bold">{item.name}</div>
               <div className="mb-2 text-lg ">{item.role}</div>
             </div>

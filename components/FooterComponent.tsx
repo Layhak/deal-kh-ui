@@ -66,9 +66,12 @@ const navigation = [
 
 function FooterComponent() {
   return (
-    <footer className="flex flex-col justify-center dark:bg-black dark:text-white">
-      <div className="mx-auto space-y-8 py-4 lg:py-16 lg:space-y-16">
-        <div className="grid grid-cols-1 lg:gap-40 justify-between lg:grid-cols-2">
+    <footer
+      className="text-foregroundground-800 
+     mt-10 flex flex-col justify-center"
+    >
+      <div className="mx-auto space-y-8 py-4 lg:space-y-16 lg:py-16">
+        <div className="grid grid-cols-1 justify-between lg:grid-cols-2 lg:gap-40">
           {/* Logo */}
           <div className="flex flex-col items-center lg:items-start">
             <div className="flex items-center justify-center lg:justify-start">
@@ -80,11 +83,11 @@ function FooterComponent() {
               <h1 className="mt-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-4xl font-bold text-transparent lg:ml-3 lg:mt-0">
                 Deal
               </h1>
-              <span className="mt-4 text-4xl font-bold text-black lg:mt-0">
+              <span className="text-foreground-800 mt-4 text-4xl font-bold lg:mt-0">
                 -KH
               </span>
             </div>
-            <p className="mt-4 max-w-xs text-gray-500 text-left">
+            <p className="text-foreground-500 mt-4 max-w-xs text-left">
               A wholesale e-commerce platform for retail store owners to source
               products.
             </p>
@@ -93,14 +96,14 @@ function FooterComponent() {
           {/* Links */}
           <div className=" flex flex-col lg:flex-row lg:items-start lg:justify-center lg:space-x-16">
             <div>
-              <p className="mt-6 text-left font-bold text-gray-900 lg:mt-0">
+              <p className="text-foreground-900 mt-6 text-left font-bold lg:mt-0">
                 Make Money with Us
               </p>
               <ul className=" mt-2 text-left text-sm">
                 <li>
                   <Link
                     href="#"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Sell products
                   </Link>
@@ -108,7 +111,7 @@ function FooterComponent() {
                 <li>
                   <Link
                     href="#"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Create shop
                   </Link>
@@ -116,7 +119,7 @@ function FooterComponent() {
                 <li>
                   <Link
                     href="#"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Advertise your products
                   </Link>
@@ -124,7 +127,7 @@ function FooterComponent() {
                 <li>
                   <Link
                     href="#"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Self-Public with Us
                   </Link>
@@ -132,7 +135,7 @@ function FooterComponent() {
                 <li>
                   <Link
                     href="#"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Enjoy your business
                   </Link>
@@ -141,14 +144,14 @@ function FooterComponent() {
             </div>
 
             <div>
-              <p className="mt-6 text-left font-bold text-gray-900 lg:mt-0">
+              <p className="text-foreground-900 mt-6 text-left font-bold lg:mt-0">
                 About Deal-Kh
               </p>
               <ul className="mt-2 text-left text-sm">
                 <li>
                   <Link
                     href="#"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Join with Us
                   </Link>
@@ -156,7 +159,7 @@ function FooterComponent() {
                 <li>
                   <Link
                     href="/about"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     About Us
                   </Link>
@@ -164,7 +167,7 @@ function FooterComponent() {
                 <li>
                   <Link
                     href="#"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Contact Us
                   </Link>
@@ -172,7 +175,7 @@ function FooterComponent() {
                 <li>
                   <Link
                     href="#"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Live share
                   </Link>
@@ -181,14 +184,14 @@ function FooterComponent() {
             </div>
 
             <div>
-              <p className="mt-6 text-left font-bold text-gray-900 lg:mt-0">
+              <p className="text-foreground-900 mt-6 text-left font-bold lg:mt-0">
                 Shopping Cart
               </p>
               <ul className=" mt-2 text-left text-sm">
                 <li>
                   <Link
                     href="/category/discount-off"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Discount
                   </Link>
@@ -196,7 +199,7 @@ function FooterComponent() {
                 <li>
                   <Link
                     href="/category/coupon"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Coupon
                   </Link>
@@ -204,7 +207,7 @@ function FooterComponent() {
                 <li>
                   <Link
                     href="#"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Ads and boost
                   </Link>
@@ -212,7 +215,7 @@ function FooterComponent() {
                 <li>
                   <Link
                     href="/wishlist"
-                    className="text-gray-700 transition hover:opacity-75"
+                    className="text-foreground-700 transition hover:opacity-75"
                   >
                     Wishlist
                   </Link>
@@ -223,24 +226,24 @@ function FooterComponent() {
         </div>
       </div>
       <hr />
-      <div className="mx-8 lg: flex flex-col justify-start border-gray-100 lg:flex-row lg:justify-between">
+      <div className="lg:border-foreground-100 mx-8 flex flex-col justify-start lg:flex-row lg:justify-between">
         <Link
           href="#"
-          className="text-base text-gray-500 transition hover:opacity-75"
+          className="text-foreground-500 text-base transition hover:opacity-75"
         >
           @ 2024. ecommerce website by kon khmer!
         </Link>
 
         <ul className="mt-8 flex justify-center gap-6 sm:mt-0 lg:justify-end">
           <li>
-            <p className="text-gray-500">Let start with us :</p>
+            <p className="text-foreground-500">Let start with us :</p>
           </li>
           {navigation.map((item) => (
             <li key={item.name}>
               <Link
                 href={item.href}
                 target="_blank"
-                className="text-gray-700 transition hover:opacity-75"
+                className="text-foreground-700 transition hover:opacity-75"
               >
                 <span className="sr-only">{item.name}</span>
                 <item.icon className="h-6 w-6" aria-hidden="true" />

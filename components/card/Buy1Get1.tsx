@@ -30,16 +30,15 @@ const Buy1Get1Component = () => {
     }
   }, []);
 
-  // Save heart state to local storage whenever it changes
-  useEffect(() => {
-    localStorage.setItem('heartStates', JSON.stringify(heartStates));
-  }, [heartStates]);
-
   const handleHeartClick = (slug: string) => {
-    setHeartStates((prevHeartStates) => ({
-      ...prevHeartStates,
-      [slug]: !prevHeartStates[slug], // Toggle the heart state
-    }));
+    setHeartStates((prevHeartStates) => {
+      const updatedHeartStates = {
+        ...prevHeartStates,
+        [slug]: !prevHeartStates[slug], // Toggle the heart state
+      };
+      localStorage.setItem('heartStates', JSON.stringify(updatedHeartStates)); // Save to localStorage
+      return updatedHeartStates;
+    });
   };
 
   return (

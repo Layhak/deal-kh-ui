@@ -13,7 +13,7 @@ import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 const Buy1Get1Component = () => {
   const dispatch = useAppDispatch();
   const wishlistProducts = useAppSelector(selectWishlistProducts);
-  const { data, isLoading, error } = useGetProductsQuery({
+  const { data } = useGetProductsQuery({
     page: 1,
     size: 6,
     field: '',
@@ -62,6 +62,7 @@ const Buy1Get1Component = () => {
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
               <Link href={`products/${product.slug}`}>
                 <Image
+                isZoomed
                   className="h-[160px] w-[224px] object-cover"
                   src={
                     product.images[0].url ||
@@ -81,7 +82,6 @@ const Buy1Get1Component = () => {
                       : product.name || 'Product Name'}
                   </h5>
                 </Link>
-
                 <div
                   className="right-4 mt-3 cursor-pointer"
                   onClick={() => handleHeartClick(product)}

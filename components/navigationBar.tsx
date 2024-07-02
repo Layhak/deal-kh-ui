@@ -345,7 +345,7 @@ export const NavigationBar = () => {
                   isBordered
                   color={'default'}
                   src={
-                    userProfile?.payload?.images[0]?.url ??
+                    userProfile?.payload?.profile?.url ??
                     `https://i.pravatar.cc/150?u=a042581`
                   }
                 />

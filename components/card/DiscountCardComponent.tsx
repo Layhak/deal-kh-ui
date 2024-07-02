@@ -12,10 +12,7 @@ export default function DiscountCardComponent() {
     field: '',
     fieldName: '',
   });
-  // console.log('error', error);
-  // console.log('isLoading', isLoading);
-  //
-  // console.log('data from discount:', data);
+  
   return (
     <main>
       {/* for the card section*/}

@@ -1,17 +1,18 @@
 import { CartProductType } from '@/libs/difinition';
-import { addToWishList } from '@/redux/feature/wishList/wishListSlice';
-import { useAppDispatch } from '@/redux/hook';
+import { addToWishList, removeFromWishList, selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 
-import React from 'react';
-import { FaRegHeart } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import Marquee from 'react-fast-marquee';
 
 export default function BuyMoreGetMoreComponent() {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const wishlistProducts = useAppSelector(selectWishlistProducts);
 
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
@@ -19,9 +20,35 @@ export default function BuyMoreGetMoreComponent() {
     field: '',
     fieldName: '',
   });
-  // console.log('data', data);
-  // console.log('error', error);
-  // console.log('isLoading', isLoading);
+  // Initialize the heart state for each product
+  const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
+
+  // Load heart state from local storage on mount
+  useEffect(() => {
+    const savedHeartStates = localStorage.getItem('heartStates');
+    if (savedHeartStates) {
+      setHeartStates(JSON.parse(savedHeartStates));
+    }
+  }, []);
+
+  const handleHeartClick = (product: CartProductType) => {
+    setHeartStates((prevHeartStates) => {
+      const isAddedToWishlist = !prevHeartStates[product.slug];
+      const updatedHeartStates = {
+        ...prevHeartStates,
+        [product.slug]: isAddedToWishlist, // Toggle the heart state
+      };
+
+      if (isAddedToWishlist) {
+        dispatch(addToWishList(product));
+      } else {
+        dispatch(removeFromWishList(product.slug));
+      }
+
+      localStorage.setItem('heartStates', JSON.stringify(updatedHeartStates));
+      return updatedHeartStates;
+    });
+  };
 
   return (
     <div>
@@ -55,28 +82,18 @@ export default function BuyMoreGetMoreComponent() {
                       ? `${product.name.substring(0, 26)}...`
                       : product.name}
                   </h5>
-                <div className="right-4 mt-3" onClick={() => dispatch(addToWishList({
-                    slug: product.slug,
-                    seller: product.seller,
-                    name: product.name,
-                    price: product.price,
-                    discountPrice: product.discountPrice,
-                    ratingAvg: product.ratingAvg,
-                    description: product.description,
-                    images: product.images,
-                    shop: product.shop,
-                    discountValue: product.discountValue,
-                    discountType: product.discountType,
-                    expiredAt: product.expiredAt,
-                    category: product.category,
-                    createdAt: product.createdAt,
-                    updatedAt: product.updatedAt,
-                    createdBy: product.createdBy,
-                    updatedBy: product.updatedBy,
-                    address: product.address,
-                  }))}>
-                 <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                 </div>
+                  <div
+                  className="right-4 mt-3 cursor-pointer"
+                  onClick={() => handleHeartClick(product)}
+                >
+                  <div key={product.slug}>
+                    {heartStates[product.slug] ? (
+                      <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    ) : (
+                      <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    )}
+                  </div>
+                  </div>
               </div>
               <div className=" h-[30px] pt-3">
                 <p className="text-[14px] font-medium text-foreground-600 ">

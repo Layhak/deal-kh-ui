@@ -1,17 +1,22 @@
+'use client';
 import { CartProductType } from '@/libs/difinition';
-import { addToCart } from '@/redux/feature/cart/cartSlice';
+import { addToCart, removeFromCart } from '@/redux/feature/cart/cartSlice';
 import { useAppDispatch } from '@/redux/hook';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
-import { FaRegHeart } from 'react-icons/fa';
+
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { LuShoppingCart } from 'react-icons/lu';
+import React, { useState, useEffect } from 'react';
+import { addToWishList, removeFromWishList } from '@/redux/feature/wishList/wishListSlice';
+import { MdOutlineShoppingCart, MdShoppingCart } from 'react-icons/md';
 
 export default function ServiceCardComponent() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-
+  const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
+  const [cartStates, setCartStates] = useState<Record<string, boolean>>({});
 
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
@@ -19,9 +24,57 @@ export default function ServiceCardComponent() {
     field: '',
     fieldName: '',
   });
-  // console.log('data', data);
-  // console.log('error', error);
-  // console.log('isLoading', isLoading);
+  
+  // load saved states from local storage when the component mounts.
+  useEffect(() => {
+    const savedHeartStates = localStorage.getItem('heartStates');
+    if (savedHeartStates) {
+      setHeartStates(JSON.parse(savedHeartStates));
+    }
+  
+    const savedCartStates = localStorage.getItem('cartStates');
+    if (savedCartStates) {
+      setCartStates(JSON.parse(savedCartStates));
+    }
+  }, []);
+
+  // toggle the state for a product when the heart icon is clicked.
+  const handleHeartClick = (product: CartProductType) => {
+    setHeartStates((prevHeartStates) => {
+      const isAddedToWishlist = !prevHeartStates[product.slug];
+      const updatedHeartStates = {
+        ...prevHeartStates,
+        [product.slug]: isAddedToWishlist, // Toggle the heart state
+      };
+  
+      if (isAddedToWishlist) {
+        dispatch(addToWishList(product));
+      } else {
+        dispatch(removeFromWishList(product.slug));
+      }
+      localStorage.setItem('heartStates', JSON.stringify(updatedHeartStates));
+      return updatedHeartStates;
+    });
+  };
+   // toggle the state for a product when the cart icon is clicked.
+  const handleCartClick = (product: CartProductType) => {
+    setCartStates((prevCartStates) => {
+      const isAddedToCart = !prevCartStates[product.slug];
+      const updatedCartStates = {
+        ...prevCartStates,
+        [product.slug]: isAddedToCart, // Toggle the cart state
+      };
+  
+      if (isAddedToCart) {
+        dispatch(addToCart(product));
+      } else {
+        dispatch(removeFromCart(product.slug));
+      }
+  
+      localStorage.setItem('cartStates', JSON.stringify(updatedCartStates));
+      return updatedCartStates;
+    });
+  };
 
   return (
     <div>
@@ -84,48 +137,28 @@ export default function ServiceCardComponent() {
                     </span>
                   </div>
                   <div className="mt-3 flex justify-end gap-[15px]">
-                    <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" 
-                    onClick={() => dispatch(addToCart({
-                    slug: product.slug,
-                    seller: product.seller,
-                    name: product.name,
-                    price: product.price,
-                    discountPrice: product.discountPrice,
-                    ratingAvg: product.ratingAvg,
-                    description: product.description,
-                    images: product.images,
-                    shop: product.shop,
-                    discountValue: product.discountValue,
-                    discountType: product.discountType,
-                    expiredAt: product.expiredAt,
-                    category: product.category,
-                    createdAt: product.createdAt,
-                    updatedAt: product.updatedAt,
-                    createdBy: product.createdBy,
-                    updatedBy: product.updatedBy,
-                    address: product.address,
-                  }))}/>
-                      <LuShoppingCart className="h-[25px] w-[25px] text-[#eb7d52] " 
-                      onClick={() => dispatch(addToCart({
-                        slug: product.slug,
-                        seller: product.seller,
-                        name: product.name,
-                        price: product.price,
-                        discountPrice: product.discountPrice,
-                        ratingAvg: product.ratingAvg,
-                        description: product.description,
-                        images: product.images,
-                        shop: product.shop,
-                        discountValue: product.discountValue,
-                        discountType: product.discountType,
-                        expiredAt: product.expiredAt,
-                        category: product.category,
-                        createdAt: product.createdAt,
-                        updatedAt: product.updatedAt,
-                        createdBy: product.createdBy,
-                        updatedBy: product.updatedBy,
-                        address: product.address,
-                      }))}/>
+                    <div
+                  className="cursor-pointer"
+                  onClick={() => handleHeartClick(product)}
+                >
+                  <div key={product.slug}>
+                    {heartStates[product.slug] ? (
+                      <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    ) : (
+                      <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    )}
+                  </div>
+                </div>
+                 <div className="cursor-pointer"
+                  onClick={() => handleCartClick(product)}>
+                 <div key={product.slug}>
+                    {cartStates[product.slug] ? (
+                      <MdShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    ) : (
+                      <MdOutlineShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    )}
+                  </div>
+                 </div>
                   </div>
                 </div>
               </div>

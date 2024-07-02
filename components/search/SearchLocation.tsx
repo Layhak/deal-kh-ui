@@ -1,19 +1,12 @@
-"use client"
-
 import React, { SetStateAction, useRef, useState } from 'react';
-import { CartIcon, CloseIcon, HeartIcon, SearchIcon } from '@/components/icons';
-import { Input, dropdown } from '@nextui-org/react';
+import { CloseIcon, SearchIcon } from '@/components/icons';
+import { CiLocationOn } from "react-icons/ci";
+import { Input } from '@nextui-org/react';
 import { useSubmitFormMutation } from '@/redux/api';
-import { LocationSearch } from '@/types/locationSearch';
 import { useRouter } from 'next/navigation';
 
-type Location = {
-  locations: LocationSearch[];
-}
-
-const SearchLocation: React.FC<Location> = ({ locations }) => {
-  // for product search bar
-  const [submitForm, { isLoading, isError, error }] = useSubmitFormMutation();
+const SearchLocation: React.FC = () => {
+  const [submitForm] = useSubmitFormMutation();
   const [searchValue, setSearchValue] = useState('');
   const [productDropdown, setProductDropdown] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,12 +16,17 @@ const SearchLocation: React.FC<Location> = ({ locations }) => {
   const handleSearchChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
-    setSearchValue(event.target.value);
+    const newSearchValue = event.target.value;
+    setSearchValue(newSearchValue);
+    setProductDropdown(newSearchValue.length > 0);
   };
 
-  const handleSubmit = () => {
-    // Navigate to the search results page and pass the filtered products
-    router.push(`/testing?searchValue=${searchValue}`);
+  const handleSubmitSearch = () => {
+    router.push(`/searching-shop-name?searchValue=${searchValue}`);
+  };
+
+  const handleSubmitSearchNearby = () => {
+    router.push(`/searching-nearby`);
   };
 
   const handleClearSearch = () => {
@@ -44,25 +42,18 @@ const SearchLocation: React.FC<Location> = ({ locations }) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      setProductDropdown(false)
-      handleSubmit();
+      setProductDropdown(false);
+      handleSubmitSearch();
     }
   };
 
-  // for drop-down menu of product
   const [searchQuery, setSearchQuery] = useState('');
   const [selectItem, setSelectItem] = useState('');
-  const half = Math.ceil(locations.length);
-  const productList = locations
-    .filter((location) =>
-      location.name.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .slice(0, half);
 
-    const handleOnSelectProduct = (item: string) => {
-      setSearchValue(item);
-      console.log("This is the value that I have Clicked: ", item)
-    };
+  const handleOnSelectProduct = (item: string) => {
+    setSearchValue(item);
+    console.log("This is the value that I have Clicked: ", item);
+  };
 
   return (
     <div
@@ -87,7 +78,7 @@ const SearchLocation: React.FC<Location> = ({ locations }) => {
             />
           ) : (
             <SearchIcon
-              onClick={handleSubmit}
+              onClick={handleSubmitSearch}
               className="pointer-events-none flex-shrink-0 text-base text-default-400"
             />
           )
@@ -111,17 +102,16 @@ const SearchLocation: React.FC<Location> = ({ locations }) => {
               <h1 className="text-gray py-2 text-center text-warning">
                 Locations
               </h1>
-              {productList.map((location, index) => (
-                <a
-                  key={index}
-                  // href={`/category/${encodeURIComponent(location.name.toLowerCase())}`}
-                  className="block px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white"
+              <a
+                  className="block px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white items-center justify-between"
                   role="menuitem"
-                  onClick={ () => handleOnSelectProduct(location.name)}
+                  onClick={() => handleSubmitSearchNearby()}
                 >
-                  {location.name}
+                  <div className="flex items-center gap-2">
+                    <CiLocationOn  size={24} color='gray-700'/>
+                    <span>Search nearby</span>
+                  </div>
                 </a>
-              ))}
             </div>
           </div>
         </div>

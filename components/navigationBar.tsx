@@ -33,7 +33,6 @@ import SearchProductDropDown from './search/SearchProduct';
 import SearchLocation from './search/SearchLocation';
 import SearchProduct from './search/SearchProduct';
 import { productSearchList } from '@/types/productSearch';
-import { LocationSearchList } from '@/types/locationSearch';
 
 type ValueTypes = {
   email: string;
@@ -145,7 +144,7 @@ export const NavigationBar = () => {
       <SearchProduct products={productSearchList}/>
 
       {/* for searching location */}
-      <SearchLocation locations={LocationSearchList}/>
+      <SearchLocation />
     </>
   );
 

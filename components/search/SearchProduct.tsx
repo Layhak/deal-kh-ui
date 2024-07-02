@@ -28,19 +28,20 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
 
   const handleSubmit = () => {
     // Navigate to the search results page and pass the filtered products
-    router.push(`/product-searching?searchValue=${searchValue}`);
+    router.push(`/searching-product?searchValue=${searchValue}`);
   };
 
   const handleSearchChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
-    setSearchValue(event.target.value);
+    const newSearchValue = event.target.value;
+    setSearchValue(newSearchValue);
+    setProductDropdown(newSearchValue.length > 0);
   };
 
   const handleClearSearch = () => {
     setSearchValue('');
   };
-
 
   const handleInputClick = () => {
     setProductDropdown(true);
@@ -69,6 +70,10 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
     setSearchValue(item);
     console.log('This is the value that I have Clicked: ', item);
   };
+
+  const filteredProducts = products.filter((product) =>
+    product.name.toLowerCase().includes(searchValue.toLowerCase())
+  );
 
   return (
     <div
@@ -115,10 +120,12 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
               aria-orientation="vertical"
               aria-labelledby="options-menu"
             >
-              <h1 className="text-gray py-2 text-center text-warning">
-                Product
-              </h1>
-              {productList.map((product, index) => (
+              {filteredProducts.length > 0 && (
+                <h1 className="text-gray py-2 text-center text-warning">
+                  Product
+                </h1>
+              )}
+              {filteredProducts.map((product, index) => (
                 <a
                   key={index}
                   className="block px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white group-hover:grid"

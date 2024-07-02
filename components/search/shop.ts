@@ -8,7 +8,7 @@ export type Shop = {
   };
   
   // Sample shops
-  const sampleShops: Shop[] = [
+  export const sampleShops: Shop[] = [
     {
       id: '1',
       name: 'Acme Coffee Roasters',

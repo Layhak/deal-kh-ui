@@ -5,6 +5,8 @@ import { CartProductType, ProductType } from '@/libs/difinition';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
+import Loading from '../loading';
+import Error from '../error';
 
 const TestingPage: React.FC = () => {
 
@@ -30,13 +32,15 @@ const TestingPage: React.FC = () => {
   return (
     <div>
       {isLoading ? (
-        <div>Loading...</div>
+        <Loading/>
       ) : error ? (
-        <div>Error: {(error as any).message}</div>
+        <div>
+          Error
+        </div>
       ) : data?.payload.list.length === 0 ? (
         <div>No products found</div>
       ) : (
-        <div className="flex flex-wrap justify-between gap-[25px]">
+        <div className="flex flex-wrap justify-start my-8 gap-[25px]">
         {filteredProducts.map((product: CartProductType) => (
           <Card
             onClick={() => router.push(`/${product.slug}`)}

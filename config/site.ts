@@ -18,7 +18,7 @@ export const siteConfig = {
     {
       label: 'About',
       href: '/about',
-      tooltip: 'go to About Page',
+      tooltip: 'Go to About Page',
     },
     {
       label: 'Policy',

@@ -25,7 +25,7 @@ export default function HeroSlideComponent() {
             clickable: true,
             dynamicBullets: true,
           }}
-          navigation={true}
+          navigation={false}
           modules={[Autoplay, Pagination, Navigation]}
           onSlideChange={() => {}}
           // onSwiper={}
@@ -93,7 +93,7 @@ export default function HeroSlideComponent() {
             clickable: true,
             dynamicBullets: true,
           }}
-          navigation={true}
+          navigation={false}
           modules={[Autoplay, Pagination, Navigation]}
           loop={true}
         >
@@ -146,14 +146,14 @@ export default function HeroSlideComponent() {
           onSlideChange={() => {}}
           // onSwiper={(swiper: any) => console.log(swiper)}
           autoplay={{
-            delay: 1500,
+            delay: 2500,
             disableOnInteraction: false,
           }}
           pagination={{
             clickable: true,
             dynamicBullets: true,
           }}
-          navigation={true}
+          navigation={false}
           modules={[Autoplay, Pagination, Navigation]}
           loop={true}
         >

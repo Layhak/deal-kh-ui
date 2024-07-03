@@ -47,7 +47,7 @@ export default function DiscountCardComponent() {
                       (_, index) => (
                         <svg
                           key={index}
-                          className="h-3 w-3 text-yellow-300"
+                          className="h-4 w-4 text-yellow-300"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           fill="currentColor"
@@ -61,7 +61,7 @@ export default function DiscountCardComponent() {
                       (_, index) => (
                         <svg
                           key={index}
-                          className="h-3 w-3 text-foreground-200"
+                          className="h-4 w-4 text-foreground-200"
                           aria-hidden="true"
                           xmlns="http://www.w3.org/2000/svg"
                           fill="currentColor"
@@ -71,11 +71,11 @@ export default function DiscountCardComponent() {
                         </svg>
                       )
                     )}
-                    <span className="ml-1 text-[11px] font-medium text-foreground-600">
+                    <span className="ml-1 text-[13px] font-medium text-foreground-600">
                       ({product.ratingAvg}) Reviews
                     </span>
                   </div>
-                  <Chip
+                  {/* <Chip
                     variant="shadow"
                     classNames={{
                       base: 'bg-gradient-to-br from-indigo-500 to-pink-500 border-small border-white/50 shadow-pink-500/30',
@@ -85,7 +85,7 @@ export default function DiscountCardComponent() {
                     size={'sm'}
                   >
                     {product?.category ?? 'New'}
-                  </Chip>
+                  </Chip> */}
                 </div>
               </div>
               <Link href={`products/${product.slug}`}>
@@ -99,7 +99,7 @@ export default function DiscountCardComponent() {
                 <p className="text-[14px] font-medium text-foreground-600">
                   Shop :{' '}
                   <Link href="">
-                    <span className="text-info-800 text-[14px] font-medium">
+                    <span className="text-blue-800 text-[14px] font-medium">
                       {product.shop.length > 30
                         ? `${product.shop.substring(0, 20)}...`
                         : product.shop || 'Shop Name'}
@@ -114,7 +114,7 @@ export default function DiscountCardComponent() {
                 </p>
               </div>
               <div className="flex h-[30px] items-center justify-start pt-10 font-semibold">
-                <span className="pt-1 text-base font-bold text-foreground-700 line-through dark:text-white">
+                <span className="pt-1 text-xl font-bold text-foreground-500 line-through dark:text-white">
                   ${product.price || 'Price'}
                 </span>
                 <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">

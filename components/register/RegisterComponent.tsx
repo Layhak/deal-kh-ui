@@ -22,6 +22,7 @@ import CustomDatePicker from '@/components/customInput/customDatePicker';
 import CustomCheckbox from '@/components/customInput/CustomCheckbox';
 import CustomInput from '@/components/customInput/customInput';
 import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
+import { format } from 'node:util';
 
 interface RegisterFormValues {
   firstName: string;

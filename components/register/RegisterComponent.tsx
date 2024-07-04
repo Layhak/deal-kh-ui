@@ -64,7 +64,16 @@ const validationSchema = Yup.object().shape({
     .required('Confirm password is required'),
   gender: Yup.string().required('Gender is required'),
   phoneNumber: Yup.string().required('Phone number is required'),
-  dob: Yup.date().required('Date of birth is required').nullable(),
+  dob: Yup.date()
+    .required('Date of birth is required')
+    .min(
+      new Date(new Date().getFullYear() - 100, 0, 1),
+      "Your age can't be more than 100 "
+    )
+    .max(
+      new Date(new Date().getFullYear() - 18, 0, 1),
+      "Your age can't not be less than 18 "
+    ),
   location: Yup.string().required('Location is required'),
 });
 

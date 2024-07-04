@@ -1,5 +1,5 @@
 'use client';
-import { SetStateAction, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Avatar,
   Dropdown,
@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownTrigger,
   Image,
-  Input,
   Navbar as NextUINavbar,
   NavbarBrand,
   NavbarContent,
@@ -19,7 +18,7 @@ import {
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
-import { CartIcon, CloseIcon, HeartIcon, SearchIcon } from '@/components/icons';
+import { CartIcon, HeartIcon } from '@/components/icons';
 import CategoryButton from './categoryButton';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { removeAccessToken, selectToken } from '@/redux/feature/auth/authSlice';
@@ -30,9 +29,8 @@ import AuthLink from '@/components/auth/AuthLink';
 import { useSubmitFormMutation } from '@/redux/api';
 import { useLogoutUserMutation } from '@/redux/service/auth';
 import { useGetProfileQuery } from '@/redux/service/user';
-import SearchProductDropDown from './search/SearchProduct';
-import SearchLocation from './search/SearchLocation';
 import SearchProduct from './search/SearchProduct';
+import SearchLocation from './search/SearchLocation';
 import { productSearchList } from '@/types/productSearch';
 import { selectProducts } from '@/redux/feature/cart/cartSlice';
 import { CartProductType } from '@/libs/difinition';
@@ -57,7 +55,6 @@ export const NavigationBar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { theme } = useTheme();
   const router = useRouter();
-
 
   const { data: userProfile, isLoading: isLoadingUserProfile } =
     useGetProfileQuery();
@@ -86,11 +83,10 @@ export const NavigationBar = () => {
     }
   }, [userProfile]);
 
-
-   //For Carts
-   const products = useAppSelector(selectProducts);
-   //display number of product that only unique select
-   const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
+  //For Carts
+  const products = useAppSelector(selectProducts);
+  //display number of product that only unique select
+  const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
 
   useEffect(() => {
     // Filter unique products based on their slugs
@@ -103,23 +99,22 @@ export const NavigationBar = () => {
     setUniqueProducts(unique);
   }, [products]);
 
-
-
   // For Wishlist
-const wishlistProducts = useAppSelector(selectWishlistProducts);
-const [uniqueWishlistProducts, setUniqueWishlistProducts] = useState<CartProductType[]>([]);
+  const wishlistProducts = useAppSelector(selectWishlistProducts);
+  const [uniqueWishlistProducts, setUniqueWishlistProducts] = useState<
+    CartProductType[]
+  >([]);
 
-useEffect(() => {
-  // Filter unique products based on their slugs
-  const uniqueWishlist = wishlistProducts.filter(
-    (product, index, self) =>
-      index === self.findIndex((t) => t.slug === product.slug)
-  );
+  useEffect(() => {
+    // Filter unique products based on their slugs
+    const uniqueWishlist = wishlistProducts.filter(
+      (product, index, self) =>
+        index === self.findIndex((t) => t.slug === product.slug)
+    );
 
-  // Update the state with the unique wishlist products
-  setUniqueWishlistProducts(uniqueWishlist);
-}, [wishlistProducts]);
-
+    // Update the state with the unique wishlist products
+    setUniqueWishlistProducts(uniqueWishlist);
+  }, [wishlistProducts]);
 
   const [searchValue, setSearchValue] = useState('');
   const [secondValue, setSecondValue] = useState('');
@@ -195,12 +190,12 @@ useEffect(() => {
     'Food',
     'Shoe',
     'Skincare',
-  ]
+  ];
 
   const searchInput = (
     <>
       {/* for searching product */}
-      <SearchProduct products={productSearchList}/>
+      <SearchProduct products={productSearchList} />
 
       {/* for searching location */}
       <SearchLocation />
@@ -224,29 +219,6 @@ useEffect(() => {
           <NavbarItem className="hidden md:flex">{searchInput}</NavbarItem>
         </div>
       </NavbarContent>
-      <NavbarContent justify={'start'} className={'hidden gap-4 px-16 lg:flex'}>
-      <div className="flex">
-        {/* logo section */}
-        <NavbarContent>
-          <NavbarBrand>
-            <NextLink href="/" className="h-12 w-12">
-              <Image src="/logo.png" alt="logo" className="h-12 w-12" />
-            </NextLink>
-          </NavbarBrand>
-        </NavbarContent>
-
-        {/* category */}
-        <NavbarContent>
-          <div className="flex gap-4">
-            <NavbarItem className="hidden sm:flex ">
-              <CategoryButton categories={categories} />
-            </NavbarItem>
-            {/* search input */}
-            <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-          </div>
-        </NavbarContent>
-      </div>
-
       {/* section menu home, policy, deal, and about */}
       <NavbarContent justify={'start'} className={'hidden gap-4 px-16 sm:flex'}>
         {siteConfig.navItems.map((item) => (
@@ -280,24 +252,27 @@ useEffect(() => {
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem className="hidden sm:flex">
-  <NextLink href="/wishlist">
-    <div className={'relative'} onClick={() => router.push(`/wishlist`)}>
-      <HeartIcon size={28} />
-      <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
-        {uniqueWishlistProducts.length}
-      </div>
-    </div>
-  </NextLink>
-</NavbarItem>
+          <NextLink href="/wishlist">
+            <div
+              className={'relative'}
+              onClick={() => router.push(`/wishlist`)}
+            >
+              <HeartIcon size={28} />
+              <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+                {uniqueWishlistProducts.length}
+              </div>
+            </div>
+          </NextLink>
+        </NavbarItem>
 
-<NavbarItem className="hidden lg:flex">
-  <div className={'relative'} onClick={() => router.push(`/cart`)}>
-    <CartIcon size={28} />
-    <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
-      {uniqueProducts.length}
-    </div>
-  </div>
-</NavbarItem>
+        <NavbarItem className="hidden lg:flex">
+          <div className={'relative'} onClick={() => router.push(`/cart`)}>
+            <CartIcon size={28} />
+            <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+              {uniqueProducts.length}
+            </div>
+          </div>
+        </NavbarItem>
         <NavbarItem>
           {isLoggedIn ? (
             <Dropdown placement="bottom-end" shadow="md">

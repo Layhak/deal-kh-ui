@@ -1,7 +1,7 @@
 "use client";
+import { MenuList } from '@/components/seller/component/sidebar/menu';
 import { Image, Link } from '@nextui-org/react';
 import React, { useState } from 'react';
-import { MenuList } from "@/app/(seller)/component/sidebar/menu";
 import { HiOutlineMenuAlt1, HiOutlineX } from "react-icons/hi";
 
 type MenuItem = {

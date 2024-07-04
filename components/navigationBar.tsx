@@ -1,30 +1,40 @@
 'use client';
+import * as React from 'react';
+import { SetStateAction, useEffect, useState } from 'react';
 import {
   Avatar,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
+  Image,
+  Input,
   Navbar as NextUINavbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
   NavbarMenu,
   NavbarMenuToggle,
-  Button,
+  Tooltip,
   Link,
 } from '@nextui-org/react';
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
-import SearchBar from '@/components/SearchBar';
-
-import { usePathname } from 'next/navigation';
-import { signOut, signIn, useSession } from 'next-auth/react';
-import { useState } from 'react';
-import { Input, Image } from "@nextui-org/react";
-import { SearchIcon, HeartIcon, CartIcon } from '@/components/icons';
-
+import { CartIcon, CloseIcon, HeartIcon, SearchIcon } from '@/components/icons';
+import CategoryButton from './categoryButton';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { removeAccessToken, selectToken } from '@/redux/feature/auth/authSlice';
+import { usePathname, useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { useTheme } from 'next-themes';
+import AuthLink from '@/components/auth/AuthLink';
+import { useSubmitFormMutation } from '@/redux/api';
+import { useLogoutUserMutation } from '@/redux/service/auth';
+import { useGetProfileQuery } from '@/redux/service/user';
+import { selectProducts } from '@/redux/feature/cart/cartSlice';
+import { CartProductType } from '@/libs/difinition';
+import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 
 type ValueTypes = {
   email: string;
@@ -36,110 +46,339 @@ const initialValues: ValueTypes = {
   password: '',
 };
 
-
 export const NavigationBar = () => {
-  // const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [submitForm, { isLoading, isError, error }] = useSubmitFormMutation();
+  const dispatch = useAppDispatch();
+  const token = useAppSelector(selectToken);
+  const [logoutUser, { isLoading: isLoggingOut }] = useLogoutUserMutation();
   const pathname = usePathname();
-  const [loading, setLoading] = useState(false);
-  const { data: session, status } = useSession();
-  const isAuthenticated = status === 'authenticated'
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { theme } = useTheme();
+  const router = useRouter();
 
-  const handleLogin = (values: ValueTypes) => {
-    setLoading(true);
+  const { data: userProfile, isLoading: isLoadingUserProfile } =
+    useGetProfileQuery();
 
-    // handle request api via login
-    fetch(`http://localhost:3000/api/login`, {
+  // const avatarUrl = useAppSelector(selectAvatar);
+  // const email = useAppSelector(selectEmail);
+  // console.log('Profile:', avatarUrl);
+  // console.log('Email:', email);
+  // useEffect(() => {
+  //   dispatch(fetchUserProfile());
+  // }, [dispatch]);
+  //
+  // useEffect(() => {
+  //   if (email) {
+  //     setIsLoggedIn(true);
+  //   } else {
+  //     setIsLoggedIn(false);
+  //   }
+  // }, [email]);
+  console.log(userProfile);
+  useEffect(() => {
+    if (userProfile) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [userProfile]);
 
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
+  //For Carts
+  const products = useAppSelector(selectProducts);
+  //display number of product that only unique select
+  const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
+
+  useEffect(() => {
+    // Filter unique products based on their slugs
+    const unique = products.filter(
+      (product, index, self) =>
+        index === self.findIndex((t) => t.slug === product.slug)
+    );
+
+    // Update the state with the unique products
+    setUniqueProducts(unique);
+  }, [products]);
+
+  // For Wishlist
+  const wishlistProducts = useAppSelector(selectWishlistProducts);
+  const [uniqueWishlistProducts, setUniqueWishlistProducts] = useState<
+    CartProductType[]
+  >([]);
+
+  useEffect(() => {
+    // Filter unique products based on their slugs
+    const uniqueWishlist = wishlistProducts.filter(
+      (product, index, self) =>
+        index === self.findIndex((t) => t.slug === product.slug)
+    );
+
+    // Update the state with the unique wishlist products
+    setUniqueWishlistProducts(uniqueWishlist);
+  }, [wishlistProducts]);
+
+  const [searchValue, setSearchValue] = useState('');
+  const [secondValue, setSecondValue] = useState('');
+
+  const handleSearchChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setSearchValue(event.target.value);
   };
 
-  const handleLogout = () => {
-    signOut();
+  const handleSecondChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    setSecondValue(event.target.value);
+  };
+
+  const handleClearSearch = () => {
+    setSearchValue('');
+  };
+
+  const handleClearSecond = () => {
+    setSecondValue('');
+  };
+
+  const handleSubmit = async () => {
+    try {
+      await submitForm({ searchValue, secondValue }).unwrap();
+      toast.success('Form submitted successfully.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+    } catch (error) {
+      toast.error('Failed to submit form.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      console.error('Failed to submit form:', error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logoutUser({}).unwrap();
+      toast.success('Logout successfully.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      setIsLoggedIn(false);
+      dispatch(removeAccessToken());
+    } catch (error) {
+      toast.error('Failed to logout.', {
+        position: 'top-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      console.error('Failed to logout:', error);
+    }
   };
 
   const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper: 'bg-default-100',
-        input: 'text-sm',
-      }}
-      labelPlacement="outside"
-      placeholder="Search..."
-      endContent={
-        <SearchIcon className="pointer-events-none flex-shrink-0 text-base text-default-400" />
-      }
-      type="search"
-    />
+    <>
+      <Input
+        aria-label="First Input"
+        classNames={{
+          inputWrapper:
+            'bg-default-100 rounded-none rounded-l-xl w-[150px] lg:w-[200px] mt-1',
+          input: 'text-sm',
+        }}
+        labelPlacement="outside"
+        placeholder="Search Deal-KH"
+        endContent={
+          searchValue ? (
+            <CloseIcon
+              onClick={handleClearSearch}
+              className="flex-shrink-0 cursor-pointer text-base text-default-400"
+            />
+          ) : (
+            <SearchIcon
+              onClick={handleSubmit}
+              className="pointer-events-none flex-shrink-0 text-base text-default-400"
+            />
+          )
+        }
+        type="se"
+        value={searchValue}
+        onChange={handleSearchChange}
+      />
+      <Input
+        aria-label="Second Input"
+        classNames={{
+          inputWrapper:
+            'bg-default-100 rounded-none rounded-r-xl w-[150px] lg:w-[200px] mt-1',
+          input: 'text-sm',
+        }}
+        labelPlacement="outside"
+        placeholder="Toul Kork"
+        endContent={
+          secondValue ? (
+            <CloseIcon
+              onClick={handleClearSecond}
+              className="flex-shrink-0 cursor-pointer text-base text-default-400"
+            />
+          ) : (
+            <SearchIcon
+              onClick={handleSubmit}
+              className="pointer-events-none flex-shrink-0 text-base text-default-400"
+            />
+          )
+        }
+        type="se"
+        value={secondValue}
+        onChange={handleSecondChange}
+      />
+    </>
   );
 
-  // 
-  if (!session) {
-    return (
-      <NextUINavbar maxWidth="xl" position="sticky">
-        <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-          <NavbarBrand className="max-w-fit gap-4">
-            <NextLink className="flex items-center justify-start gap-1" href="/">
-              <Image
-                src="/logo.png"
-                alt="Description of the image"
-                width={32}
-                height={32}
-              />
-              <p className="font-bold text-inherit text-sm hidden">DealKH</p>
-            </NextLink>
-            <NavbarItem className="lg:flex w-[140px]">{searchInput}</NavbarItem>
-          </NavbarBrand>
-        </NavbarContent>
-        <NavbarContent justify={'start'} className={'hidden sm:flex gap-4 '}>
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href} isActive={item.href === pathname}>
+  const categories = [
+    'Accessory',
+    'All-product',
+    'Clothes',
+    'Coupon',
+    'Discount-Off',
+    'Drink',
+    'Electronic',
+    'Event',
+    'Flash-Sale',
+    'Food',
+    'Shoe',
+    'Skincare',
+  ];
+
+  return (
+    <NextUINavbar maxWidth="xl" position="sticky">
+      <NavbarContent>
+        <NavbarBrand>
+          <NextLink href="/" className="h-12 w-12">
+            <Image src="/logo.png" alt="logo" className="h-12 w-12" />
+          </NextLink>
+          <NavbarItem className="hidden sm:flex">
+            <CategoryButton categories={categories} />
+          </NavbarItem>
+        </NavbarBrand>
+      </NavbarContent>
+      <NavbarContent>
+        <div className="flex gap-4">
+          <NavbarItem className="hidden md:flex">{searchInput}</NavbarItem>
+        </div>
+      </NavbarContent>
+      <NavbarContent justify="start" className="hidden gap-4 px-16 lg:flex">
+        {siteConfig.navItems.map((item) => (
+          <NavbarItem key={item.href} isActive={item.href === pathname}>
+            <Tooltip
+              content={
+                <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                  {item.tooltip}
+                </p>
+              }
+              offset={10}
+              showArrow
+              className="hidden lg:block"
+            >
               <NextLink
-                className={`${item.href === pathname ? 'text-warning' : 'text-foreground'
-                  } hover:text-warning transition-all ease-in-out`}
+                className={`${
+                  item.href === pathname
+                    ? 'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
+                    : 'text-foreground'
+                } transition-all ease-linear hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-600 hover:bg-clip-text hover:font-normal hover:text-transparent`}
                 href={item.href}
               >
                 {item.label}
               </NextLink>
-            </NavbarItem>
-          ))}
-        </NavbarContent>
-        <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarItem>
-            <ThemeSwitch />
+            </Tooltip>
           </NavbarItem>
-          <NavbarItem className="hidden sm:flex">
-            <NextLink href="/wishlist">
-              <HeartIcon />
-            </NextLink>
-          </NavbarItem>
-          <NavbarItem className="hidden sm:flex">
-            <NextLink href="/cart">
-              <CartIcon />
-            </NextLink>
-          </NavbarItem>
-          <NavbarItem>
-            <NextLink href="/login">
-              <button className="bg-warning px-6 py-2 rounded-md border border-warning hover:bg-white hover:text-warning transition-all ease-in-out text-white active:bg-warning active:text-white">Login</button>
-            </NextLink>
-          </NavbarItem>
-        </NavbarContent>
-        <NavbarMenu>
-          <div className="mx-4 mt-2 flex flex-col gap-2">
+        ))}
+      </NavbarContent>
+      <NavbarContent className="hidden gap-4 lg:flex" justify="center">
+        <NavbarItem>
+          <ThemeSwitch />
+        </NavbarItem>
+        <NavbarItem className="hidden sm:flex">
+          <NextLink className={'relative'} href="/wishlist">
+            <HeartIcon size={28} />
+            <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+              {uniqueWishlistProducts.length}
+            </div>
+          </NextLink>
+        </NavbarItem>
+
+        <NavbarItem className="hidden sm:flex">
+          <NextLink href="/cart" className={'relative'}>
+            <CartIcon size={28} />
+            <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+              {uniqueProducts.length}
+            </div>
+          </NextLink>
+        </NavbarItem>
+        <NavbarItem>
+          {isLoggedIn ? (
+            <Dropdown placement="bottom-end" shadow="md">
+              <DropdownTrigger>
+                <Avatar
+                  as="button"
+                  className="transition-transform"
+                  size="sm"
+                  isBordered
+                  color={'default'}
+                  src={
+                    userProfile?.payload?.profile?.url ??
+                    `https://i.pravatar.cc/150?u=a042581`
+                  }
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="shadow">
+                <DropdownItem key="profile" className="h-14 gap-2" isDisabled>
+                  <p className="font-semibold">Signed in as</p>
+                  <p className="font-semibold">{userProfile.payload?.email}</p>
+                </DropdownItem>
+                <DropdownItem key="logout" color="danger" className="text-danger" >
+                  <Link href="/profile"> 
+                    <p className="text-red-500 hover:text-white">Profile</p>
+                  </Link>
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  color="danger"
+                  className="text-danger"
+                  onClick={handleLogout}
+                >
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          ) : (
+            <AuthLink />
+          )}
+        </NavbarItem>
+      </NavbarContent>
+
+      <NavbarMenu>
+        <div className="mx-4 mt-2 flex h-full flex-col justify-between gap-2">
+          <div>
             {siteConfig.navItems.map((item) => (
               <NavbarItem key={item.href} isActive={item.href === pathname}>
                 <NextLink
@@ -153,133 +392,29 @@ export const NavigationBar = () => {
               </NavbarItem>
             ))}
           </div>
-        </NavbarMenu>
-        <NavbarContent className="basis-1 sm:hidden" justify="end">
-          <ThemeSwitch />
-          <NavbarMenuToggle />
-        </NavbarContent>
-      </NextUINavbar>
-    );
-  }
-  // when have session   
-  return (
-    <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand className="max-w-fit gap-3">
-          <NextLink className="flex items-center justify-start gap-1" href="/">
-            <Image
-              src="/logo.png"
-              alt="Description of the image"
-              width={50}
-              height={500}
-            />
-            <p className="font-bold text-inherit">DealKH</p>
-          </NextLink>
-          <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
-        </NavbarBrand>
-      </NavbarContent>
-      {/* List of nav bar */}
-      <NavbarContent justify={'center'} className={'hidden lg:flex'}>
-        {siteConfig.navItems.map((item) => (
-          <NavbarItem key={item.href} isActive={item.href === pathname}>
-            <NextLink
-              className={`${item.href === pathname ? 'text-warning' : 'text-foreground'
-                } hover:text-warning transition-all ease-in-out`}
-              href={item.href}
-            >
-              {item.label}
-            </NextLink>
-          </NavbarItem>
-        ))}
-      </NavbarContent>
-      <NavbarContent
-        className="hidden basis-1/5 sm:flex sm:basis-full enter lg:flex"
-        justify="end"
-      >
-        <NavbarItem className="hidden gap-4 lg:flex justify-center">
-          <ThemeSwitch />
-          <NextLink href="/wishlist">
-            <HeartIcon />
-          </NextLink>
-          <NextLink href="/cart">
-            <CartIcon />
-          </NextLink>
-        </NavbarItem>
-
-        {isAuthenticated ? (
-          <NavbarItem className="">
-            <Dropdown placement="bottom-end" shadow={'md'}>
-              <DropdownTrigger>
-                {/* profile authentication */}
-                <Avatar
-                  isBordered
-                  src={session.user?.image as string}
-                  color="warning"
-                  className="w-8 h-8  mb-2"
-                />
-                {/*  */}
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Profile Actions" variant="shadow">
-                <DropdownItem
-                  key="profile"
-                  className="h-14 gap-2"
-                  isDisabled={false}
-                >
-                  <p className="font-semibold">Signed in as</p>
-                  <p className="font-semibold">{session.user?.name}</p>
-                </DropdownItem>
-                <DropdownItem
-                  key="logout"
-                  color="warning"
-                  className={'font-semibold'}
-                  href="/profile"
-                >
-                  Profile
-                </DropdownItem>
-                <DropdownItem
-                  key="logout"
-                  color="danger"
-                  className={'text-danger'}
-                  onClick={handleLogout}
-                >
-                  Log Out
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
-
-          </NavbarItem>
-        ) : (
-          <NavbarItem className="hidden lg:flex">
-
-            <NextLink href="/login">
-              <button className="bg-warning px-2 text-white rouneded-md">Login</button>
-            </NextLink>
-
-          </NavbarItem>
-        )}
-      </NavbarContent>
-
-      <NavbarMenu>
-        <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navItems.map((item) => (
-            <NavbarItem key={item.href} isActive={item.href === pathname}>
-              <NextLink
-                className={
-                  item.href === pathname ? 'text-warning' : 'text-foreground'
-                }
-                href={item.href}
-              >
-                {item.label}
-              </NextLink>
-            </NavbarItem>
-          ))}
+          <AuthLink />
         </div>
       </NavbarMenu>
-
-      <NavbarContent className="basis-1 pl-4 lg:hidden" justify="end">
+      <NavbarContent className="basis-1  pl-4 lg:hidden">
         <ThemeSwitch />
-        <HeartIcon />
-        <CartIcon />
+        <NextLink className={'relative'} href="/wishlist">
+          <HeartIcon size={28} />
+          <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+            {uniqueWishlistProducts.length}
+          </div>
+        </NextLink>
+        <NextLink className={'relative'} href="/cart">
+          <CartIcon size={28} />
+          <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
+            {uniqueProducts.length}
+          </div>
+        </NextLink>
+        <Avatar
+          isBordered
+          color="warning"
+          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+          size="sm"
+        />
         <NavbarMenuToggle />
       </NavbarContent>
     </NextUINavbar>

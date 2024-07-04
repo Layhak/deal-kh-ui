@@ -5,3 +5,4 @@ export type Shop = {
     name: string;
     googleMapsUrl: string;
 }
+

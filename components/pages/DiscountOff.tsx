@@ -50,6 +50,7 @@ export default function Discount() {
           </Link>
         </div>
         <DiscountCardComponent />
+        
         {/* Drink */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}

@@ -1,59 +1,29 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: 'My Ecommerce',
+  name: 'Deal Kh',
   description:
     'Best ecommerce platform for your business needs with a modern design and easy to use.',
   navItems: [
     {
       label: 'Home',
       href: '/',
+      tooltip: 'Go to Home Page',
     },
     {
       label: 'Deal',
       href: '/deal',
+      tooltip: 'Go to Discount Page',
     },
     {
       label: 'About',
       href: '/about',
+      tooltip: 'go to About Page',
     },
     {
       label: 'Policy',
       href: '/policy',
-    },
-  ],
-  navMenuItems: [
-    {
-      label: 'Profile',
-      href: '/profile',
-    },
-    {
-      label: 'Dashboard',
-      href: '/dashboard',
-    },
-    {
-      label: 'Projects',
-      href: '/projects',
-    },
-    {
-      label: 'Team',
-      href: '/team',
-    },
-    {
-      label: 'Calendar',
-      href: '/calendar',
-    },
-    {
-      label: 'Settings',
-      href: '/settings',
-    },
-    {
-      label: 'Help & Feedback',
-      href: '/help-feedback',
-    },
-    {
-      label: 'Logout',
-      href: '/logout',
+      tooltip: 'Go to Policy Page',
     },
   ],
   links: {

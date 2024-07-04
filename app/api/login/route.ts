@@ -1,54 +1,52 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
-import { compare } from 'bcryptjs'; // Assuming you are using bcrypt for hashing passwords
+import { NextRequest, NextResponse } from 'next/server';
+import { serialize } from 'cookie';
 
-// This should be replaced with your database call to get user by email
-const getUserByEmail = async (email: string) => {
-  // Mock user for demonstration purposes
-  const user = {
-    id: 1,
-    email: 'user@example.com',
-    password: '$2a$10$EixZaYVK1fsbw1ZfbX3OXePaWxn96p36Gx9/27H2KJ5nX6g71sBBq', // bcrypt hash for 'password'
-  };
-
-  if (email === user.email) {
-    return user;
-  } else {
-    return null;
-  }
-};
-
-export default async function loginHandler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ message: 'Method not allowed' });
-  }
-
-  const { email, password } = req.body;
-
-  if (!email || !password) {
-    return res.status(400).json({ message: 'Email and password are required' });
+export async function POST(req: NextRequest) {
+  const body = await req.json();
+  const { email, password } = body;
+  // console.log('body', body);
+  // console.log('Env', process.env.DEALKH_API_URL);
+  const response = await fetch(`${process.env.DEALKH_API_URL}auth/login`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password }),
+  });
+  // console.log('Response Login:', response);
+  if (!response.ok) {
+    return NextResponse.json(
+      {
+        message: 'Fail to login',
+      },
+      {
+        status: response.status,
+      }
+    );
   }
 
-  try {
-    const user = await getUserByEmail(email);
+  const data = await response.json();
+  // console.log('Data Login:', data);
+  // const user = data?.user || null;
+  const accessToken = data?.payload?.accessToken || null;
+  const refreshToken = data?.payload?.refreshToken || null;
 
-    if (!user) {
-      return res.status(401).json({ message: 'Invalid email or password' });
+  const cookieName = process.env.COOKIE_REFRESH_TOKEN_NAME || 'refresh';
+  const serialized = serialize(cookieName, refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    path: '/',
+    sameSite: 'lax',
+  });
+
+  return NextResponse.json(
+    {
+      // user: user,
+      accessToken: accessToken,
+    },
+    {
+      status: 200,
+      headers: {
+        'Set-Cookie': serialized,
+      },
     }
-
-    const isPasswordValid = await compare(password, user.password);
-
-    if (!isPasswordValid) {
-      return res.status(401).json({ message: 'Invalid email or password' });
-    }
-
-    // Here, you would generate a token or session
-    // For example, using NextAuth.js, you might want to create a session manually
-    // But typically, NextAuth.js would handle this via its own routes
-
-    return res.status(200).json({ message: 'Login successful' });
-  } catch (error) {
-    console.error('Login error:', error);
-    return res.status(500).json({ message: 'Internal server error' });
-  }
+  );
 }

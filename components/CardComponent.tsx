@@ -2,7 +2,7 @@ import { Image, Link } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 
 // Fake product data API URL
-const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products';
+const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products/';
 
 type Product = {
   id: number;
@@ -40,7 +40,9 @@ export default function CardComponent({ category }: { category: string }) {
       <div className="my-8 flex items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-        <p className="relative text-lg font-bold w-fit after:absolute after:left-0 after:bottom-0 after:w-full after:h-1 after:bg-gradient-to-r after:from-pink-500 after:to-yellow-500">{category}</p>
+          <p className="relative w-fit text-lg font-bold after:absolute after:bottom-0 after:left-0 after:h-1 after:w-full after:bg-gradient-to-r after:from-pink-500 after:to-yellow-500">
+            {category}
+          </p>
         </div>
 
         {/* Right section */}
@@ -51,7 +53,7 @@ export default function CardComponent({ category }: { category: string }) {
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
-            color='black'
+            color="black"
             viewBox="0 0 48 48"
           >
             <path
@@ -71,7 +73,7 @@ export default function CardComponent({ category }: { category: string }) {
         {products.map((product) => (
           <div
             key={product.id}
-            className="relative w-72 flex-none rounded-lg border border-gray-200 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
+            className="relative w-72 flex-none rounded-lg border border-0 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
           >
             <div className="absolute -right-[1px] -top-[0.5px] z-10 h-14 w-14 rounded-bl-[10%] rounded-tr-[10%] bg-gradient-to-tr from-pink-500 to-yellow-500 px-4 py-1">
               <span className="text-start text-sm font-bold text-white">

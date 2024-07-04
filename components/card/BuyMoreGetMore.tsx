@@ -1,89 +1,104 @@
+import { CartProductType } from '@/libs/difinition';
+import { addToWishList } from '@/redux/feature/wishList/wishListSlice';
+import { useAppDispatch } from '@/redux/hook';
+import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
-import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
+import React from 'react';
 import { FaRegHeart } from 'react-icons/fa';
-
-// Fake product data API URL
-const API_URL = 'https://665d3148e88051d60405a47d.mockapi.io/api/v1/products';
-
-type Product = {
-  id: number;
-  name: string;
-  image: string;
-  shop_name: string;
-  expired_date: any;
-  original_price: number;
-  discount_price: number;
-  discount: number;
-};
+import Marquee from 'react-fast-marquee';
 
 export default function BuyMoreGetMoreComponent() {
-  const [products, setProducts] = useState<Product[]>([]);
+  const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    // Fetch data from the fake API
-    fetch(API_URL)
-      .then((response) => response.json())
-      .then((data) => setProducts(data.slice(0, 8)))
-      .catch((error) => console.error('Error fetching data:', error));
-  }, []);
-
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
-    const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-    const day = String(date.getDate()).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${month}/${day}/${year}`;
-  };
+  const { data, isLoading, error } = useGetProductsQuery({
+    page: 1,
+    size: 8,
+    field: '',
+    fieldName: '',
+  });
+  // console.log('data', data);
+  // console.log('error', error);
+  // console.log('isLoading', isLoading);
 
   return (
     <div>
-      <div className="flex flex-wrap justify-between gap-[25px]">
-        {products.map((product) => (
+      <div className="flex flex-wrap justify-center gap-7">
+        {data?.payload.list.map((product: CartProductType) => (
           <Card
-            key={product.id}
+            onClick={() => router.push(`/${product.slug}`)}
+            key={product.slug}
             isPressable
             onPress={() => console.log('item pressed')}
-            className="relative h-[330px] w-[250px] mb-2 flex-none rounded-xl border shadow-none border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
+            className="relative mb-2 h-[330px] w-[285px] flex-none rounded-xl border-1 border-foreground-200  bg-foreground-100 shadow-none dark:border-foreground-700  dark:bg-foreground-800"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
-            <Link href="#">
-                <Image
-                  className="h-[160px] w-[224px] object-cover"
-                  src={product.image}
-                />
-            </Link>
-            <span className='absolute right-4 top-3 z-20 h-[54px] w-[54px] rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-medium text-white'>
-            BUY 1 GET 1
-            </span>
-              <div className='flex flex-wrap justify-between'>
               <Link href="#">
-                <h5 className="font-semibold mt-1.5 text-[18px] tracking-tight text-gray-800 dark:text-white h-[45px] w-[160px]">
-                  {product.name.length > 60
-                    ? `${product.name.substring(0, 60)}...`
-                    : product.name} 
-                </h5>
+                <Image
+                  onClick={() => router.push(`/${product.slug}`)}
+                  className="h-[160px] w-[284px] object-cover"
+                  src={
+                    product.images[0]?.url ||
+                    'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
+                  }
+                  alt={product.name}
+                />
               </Link>
-              <a href="" className='mt-2 right-3'>
-              <FaRegHeart className='w-[30px] h-[30px] text-[#eb7d52]' />
-              </a>
+              <span className="absolute right-4 top-3 z-20 h-[54px] w-[54px] rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-medium text-white">
+                BUY 1 GET 1
+              </span>
+              <div className="flex flex-wrap justify-between">
+                  <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
+                    {product.name.length > 30
+                      ? `${product.name.substring(0, 26)}...`
+                      : product.name}
+                  </h5>
+                <div className="right-4 mt-3" onClick={() => dispatch(addToWishList({
+                    slug: product.slug,
+                    seller: product.seller,
+                    name: product.name,
+                    price: product.price,
+                    discountPrice: product.discountPrice,
+                    ratingAvg: product.ratingAvg,
+                    description: product.description,
+                    images: product.images,
+                    shop: product.shop,
+                    discountValue: product.discountValue,
+                    discountType: product.discountType,
+                    expiredAt: product.expiredAt,
+                    category: product.category,
+                    createdAt: product.createdAt,
+                    updatedAt: product.updatedAt,
+                    createdBy: product.createdBy,
+                    updatedBy: product.updatedBy,
+                    address: product.address,
+                  }))}>
+                 <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                 </div>
               </div>
-              <div className=" pt-3 h-[30px]">
-                <p className="font-medium text-[14px] text-gray-600 ">
+              <div className=" h-[30px] pt-3">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Shop :{' '}
-                  {product.shop_name.length > 20
-                    ? `${product.shop_name.substring(0, 20)}...`
-                    : product.shop_name}
+                  <Link href="">
+                    <span className="text-[14px] font-medium text-blue-800">
+                      {product.shop.length > 20
+                        ? `${product.shop.substring(0, 20)}...`
+                        : product.shop}
+                    </span>
+                  </Link>
                 </p>
-                <p className="font-medium text-[14px] text-gray-600 ">
-                  Expired date : {' '}
+                <p className="text-[14px] font-medium text-foreground-600 ">
+                  Expired date :{' '}
                   <span className="font-medium text-red-500">
-                    {formatDate(product.expired_date)}
+                    {product.expiredAt}
                   </span>
                 </p>
               </div>
-                <span className="bg-gradient-to-r pt-8 from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                  ${product.discount_price}
-                </span>
+              <span className="bg-gradient-to-r from-pink-500 from-20% to-yellow-500 to-100% bg-clip-text pt-8 text-2xl font-bold text-transparent">
+                ${product.price}
+              </span>
             </CardBody>
           </Card>
         ))}

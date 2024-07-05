@@ -1,4 +1,7 @@
+"use client"
 import ShopProfileComponent from '@/components/shop-profile/ShopProfileComponent';
+import { useGetShopsQuery } from '@/redux/service/shop';
+import { ShopDetail } from '@/types/shopDtail';
 import shopFakes, { ShopFake } from '@/types/shopFake';
 import React from 'react';
 
@@ -11,8 +14,15 @@ type Props = {
 const ShopProfile = ({ params }: Props) => {
   const { slug } = params;
 
-  const shopProfiles = shopFakes.find(
-    (shopProfile: ShopFake) => shopProfile.slug === slug
+  const { data, isLoading, error } = useGetShopsQuery({
+    page: 1,
+    size: 10,
+    field: '',
+    fieldName: '',
+  });
+
+  const shopProfiles = data?.payload?.list.find(
+    (shopProfile: ShopDetail) => shopProfile.slug === slug
   );
 
   if (!shopProfiles) {

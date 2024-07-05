@@ -35,7 +35,7 @@
     "app/(user)/_not-found.js",
     "utils/nodemailer.js",
     "app/_error.js"
-  ],
+, "app/(user)/[...slug]"  ],
   "exclude": [
     "node_modules"
   ],

@@ -1,24 +1,20 @@
 import { CartProductType } from '@/libs/difinition';
 import { useGetProductsQuery } from '@/redux/service/product';
+import { useGetAllShopsQuery } from '@/redux/service/shop';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
 export default function ShopCardComponent() {
   const router = useRouter();
-  const { data, isLoading, error } = useGetProductsQuery({
+  const { data, isLoading, error } = useGetAllShopsQuery({
     page: 1,
     size: 3,
-    field: '',
-    fieldName: '',
   });
-  // console.log('data', data);
-  // console.log('error', error);
-  // console.log('isLoading', isLoading);
 
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-[35px]">
+      {/* <div className="flex flex-wrap justify-center gap-[35px]">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
             key={product.slug}
@@ -83,7 +79,7 @@ export default function ShopCardComponent() {
             </CardBody>
           </Card>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 }

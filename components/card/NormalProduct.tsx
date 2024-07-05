@@ -12,7 +12,7 @@ import { useAppDispatch } from '@/redux/hook';
 import { addToWishList, removeFromWishList } from '@/redux/feature/wishList/wishListSlice';
 import { MdOutlineShoppingCart, MdShoppingCart } from 'react-icons/md';
 
-export default function NormalProductComponent() {
+export default function NormalProductComponent({category,discountType}:any) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
@@ -20,8 +20,8 @@ export default function NormalProductComponent() {
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 8,
-    field: '',
-    fieldName: '',
+    category:category,
+    discountType:discountType
   });
 
   // load saved states from local storage when the component mounts.
@@ -96,7 +96,7 @@ export default function NormalProductComponent() {
                   alt={product.name}
                 />
               </Link>
-              <div className="mt-4 flex h-[20px]">
+              <div className="mt-2 flex h-[20px]">
                 <div className="flex items-center rtl:space-x-reverse">
                   {[...Array(Math.floor(product.ratingAvg))].map((_, index) => (
                     <svg
@@ -140,7 +140,7 @@ export default function NormalProductComponent() {
                 <p className="text-[14px] font-medium text-foreground-600 ">
                   Shop :{' '}
                   <Link href="">
-                    <span className="text-info-800 text-[14px] font-medium">
+                    <span className="text-blue-800 text-[14px] font-medium">
                       {product.shop.length > 30
                         ? `${product.shop.substring(0, 20)}...`
                         : product.shop || 'Shop Name'}

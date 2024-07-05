@@ -22,7 +22,7 @@ export default function WishListComponent() {
   useEffect(() => {
     // Filter unique products based on their IDs
     const unique = products.filter(
-      (product, index, self) =>
+      (product: { slug: any; }, index: any, self: any[]) =>
         index === self.findIndex((t) => t.slug === product.slug)
     );
 

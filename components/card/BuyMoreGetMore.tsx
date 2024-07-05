@@ -9,7 +9,7 @@ import React, { useState, useEffect } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import Marquee from 'react-fast-marquee';
 
-export default function BuyMoreGetMoreComponent() {
+export default function BuyMoreGetMoreComponent({category,discountType}:any) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const wishlistProducts = useAppSelector(selectWishlistProducts);
@@ -17,8 +17,8 @@ export default function BuyMoreGetMoreComponent() {
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 8,
-    field: '',
-    fieldName: '',
+    category:category,
+    discountType:discountType
   });
   // Initialize the heart state for each product
   const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});

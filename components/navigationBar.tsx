@@ -30,12 +30,14 @@ import { useTheme } from 'next-themes';
 import AuthLink from '@/components/auth/AuthLink';
 import { useSubmitFormMutation } from '@/redux/api';
 import { useLogoutUserMutation } from '@/redux/service/auth';
-import { useGetProfileQuery } from '@/redux/service/user';
-import { selectProducts } from '@/redux/feature/cart/cartSlice';
+import SearchProductDropDown from './search/SearchProduct';
+import SearchLocation from './search/SearchLocation';
+import SearchProduct from './search/SearchProduct';
+import { productSearchList } from '@/types/productSearch';
 import { CartProductType } from '@/libs/difinition';
+import { useGetProfileQuery } from '@/redux/service/user';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
-
-
+import { selectProducts } from '@/redux/feature/cart/cartSlice';
 
 type ValueTypes = {
   email: string;
@@ -92,7 +94,7 @@ export const NavigationBar = () => {
   useEffect(() => {
     // Filter unique products based on their slugs
     const unique = products.filter(
-      (product, index, self) =>
+      (product: { slug: any; }, index: any, self: any[]) =>
         index === self.findIndex((t) => t.slug === product.slug)
     );
 
@@ -109,7 +111,7 @@ export const NavigationBar = () => {
   useEffect(() => {
     // Filter unique products based on their slugs
     const uniqueWishlist = wishlistProducts.filter(
-      (product, index, self) =>
+      (product: { slug: any; }, index: any, self: any[]) =>
         index === self.findIndex((t) => t.slug === product.slug)
     );
 
@@ -119,26 +121,6 @@ export const NavigationBar = () => {
 
   const [searchValue, setSearchValue] = useState('');
   const [secondValue, setSecondValue] = useState('');
-
-  const handleSearchChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setSearchValue(event.target.value);
-  };
-
-  const handleSecondChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    setSecondValue(event.target.value);
-  };
-
-  const handleClearSearch = () => {
-    setSearchValue('');
-  };
-
-  const handleClearSecond = () => {
-    setSecondValue('');
-  };
 
   const handleSubmit = async () => {
     try {
@@ -198,62 +180,6 @@ export const NavigationBar = () => {
     }
   };
 
-  const searchInput = (
-    <>
-      <Input
-        aria-label="First Input"
-        classNames={{
-          inputWrapper:
-            'bg-default-100 rounded-none rounded-l-xl w-[150px] lg:w-[200px] mt-1',
-          input: 'text-sm',
-        }}
-        labelPlacement="outside"
-        placeholder="Search Deal-KH"
-        endContent={
-          searchValue ? (
-            <CloseIcon
-              onClick={handleClearSearch}
-              className="flex-shrink-0 cursor-pointer text-base text-default-400"
-            />
-          ) : (
-            <SearchIcon
-              onClick={handleSubmit}
-              className="pointer-events-none flex-shrink-0 text-base text-default-400"
-            />
-          )
-        }
-        type="se"
-        value={searchValue}
-        onChange={handleSearchChange}
-      />
-      <Input
-        aria-label="Second Input"
-        classNames={{
-          inputWrapper:
-            'bg-default-100 rounded-none rounded-r-xl w-[150px] lg:w-[200px] mt-1',
-          input: 'text-sm',
-        }}
-        labelPlacement="outside"
-        placeholder="Toul Kork"
-        endContent={
-          secondValue ? (
-            <CloseIcon
-              onClick={handleClearSecond}
-              className="flex-shrink-0 cursor-pointer text-base text-default-400"
-            />
-          ) : (
-            <SearchIcon
-              onClick={handleSubmit}
-              className="pointer-events-none flex-shrink-0 text-base text-default-400"
-            />
-          )
-        }
-        type="se"
-        value={secondValue}
-        onChange={handleSecondChange}
-      />
-    </>
-  );
 
   const categories = [
     'Accessory',
@@ -268,49 +194,55 @@ export const NavigationBar = () => {
     'Food',
     'Shoe',
     'Skincare',
-  ];
+  ]
+
+  const searchInput = (
+    <>
+      {/* for searching product */}
+      <SearchProduct products={productSearchList}/>
+
+      {/* for searching location */}
+      <SearchLocation />
+    </>
+  );
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent>
-        <NavbarBrand>
-          <NextLink href="/" className="h-12 w-12">
-            <Image src="/logo.png" alt="logo" className="h-12 w-12" />
-          </NextLink>
-          <NavbarItem className="hidden sm:flex">
-            <CategoryButton categories={categories} />
-          </NavbarItem>
-        </NavbarBrand>
-      </NavbarContent>
-      <NavbarContent>
-        <div className="flex gap-4">
-          <NavbarItem className="hidden md:flex">{searchInput}</NavbarItem>
-        </div>
-      </NavbarContent>
-      <NavbarContent justify="start" className="hidden gap-4 px-16 lg:flex">
+      <div className="flex">
+        {/* logo section */}
+        <NavbarContent>
+          <NavbarBrand>
+            <NextLink href="/" className="h-12 w-12">
+              <Image src="/logo.png" alt="logo" className="h-12 w-12" />
+            </NextLink>
+          </NavbarBrand>
+        </NavbarContent>
+
+        {/* category */}
+        <NavbarContent>
+          <div className="flex gap-4">
+            <NavbarItem className="hidden sm:flex ">
+              <CategoryButton categories={categories} />
+            </NavbarItem>
+            {/* search input */}
+            <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+          </div>
+        </NavbarContent>
+      </div>
+
+      {/* section menu home, policy, deal, and about */}
+      <NavbarContent justify={'start'} className={'hidden gap-4 px-16 sm:flex'}>
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>
-            <Tooltip
-              content={
-                <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                  {item.tooltip}
-                </p>
-              }
-              offset={10}
-              showArrow
-              className="hidden lg:block"
-            >
-              <NextLink
-                className={`${
-                  item.href === pathname
-                    ? 'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
-                    : 'text-foreground'
+            <NextLink
+              className={`${item.href === pathname
+                ? 'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
+                : 'text-foreground'
                 } transition-all ease-linear hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-600 hover:bg-clip-text hover:font-normal hover:text-transparent`}
-                href={item.href}
-              >
-                {item.label}
-              </NextLink>
-            </Tooltip>
+              href={item.href}
+            >
+              {item.label}
+            </NextLink>
           </NavbarItem>
         ))}
       </NavbarContent>

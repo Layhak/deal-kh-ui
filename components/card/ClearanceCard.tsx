@@ -9,20 +9,16 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { useSelector } from 'react-redux';
 
-export default function ClearanceCardComponent() {
+export default function ClearanceCardComponent({category,discountType}:any) {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 3,
-    field: '',
-    fieldName: '',
+    category:category,
+    discountType:discountType
   });
-  // console.log('data', data);
-  // console.log('error', error);
-  // console.log('isLoading', isLoading);
-
 
   return (
     <div>
@@ -31,12 +27,12 @@ export default function ClearanceCardComponent() {
           <Card
             onClick={() => router.push(`/${product.slug}`)}
             key={product.slug}
-            isPressable
             className="w-[387px] shadow-none"
           >
             <CardBody>
               <Link href="#">
                 <Image
+                isZoomed
                   className="h-[250px] w-[400px] object-cover"
                   src={
                     product.images[0].url ||
@@ -88,7 +84,7 @@ export default function ClearanceCardComponent() {
                 </h5>
               </Link>
               <div>
-                <p className="text-foreground-600">
+                <p className="text-foreground-600 font-medium">
                   Shop :{' '}
                   <Link href="">
                     <span className="text-blue-800 font-medium">
@@ -98,7 +94,7 @@ export default function ClearanceCardComponent() {
                     </span>
                   </Link>
                 </p>
-                <p className="text-foreground-600">
+                <p className="text-foreground-600 font-medium">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
                     {product.expiredAt}
@@ -107,7 +103,7 @@ export default function ClearanceCardComponent() {
               </div>
               <div className="mt-3 flex items-center justify-between">
                 <div className="flex items-center justify-start font-semibold">
-                  <span className="text-foreground-500 pt-2 text-lg font-bold line-through dark:text-white">
+                  <span className="text-foreground-500 pt-2 text-xl font-bold line-through dark:text-white">
                     ${product.price || 'Price'}
                   </span>
                   <span className="ml-3 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
@@ -134,6 +130,11 @@ export default function ClearanceCardComponent() {
                     createdBy: product.createdBy,
                     updatedBy: product.updatedBy,
                     address: product.address,
+                    openAt: '',
+                    closeAt: '',
+                    shopSlug: '',
+                    location: '',
+                    isPercentage: false
                   }))}
                   className="h-[37px] w-[100px] rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center text-[14px] text-white"
                 >

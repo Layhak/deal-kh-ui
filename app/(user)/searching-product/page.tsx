@@ -1,34 +1,58 @@
-import { CartProductType } from '@/libs/difinition';
-import { useGetProductsQuery } from '@/redux/service/product';
-import { Card, CardBody, Chip, Image, Link } from '@nextui-org/react';
-import { useRouter } from 'next/navigation';
-import React from 'react';
+'use client';
 
-export default function DiscountCardComponent({category,discountType}:any) {
+import { useSearchParams } from 'next/navigation';
+import { CartProductType, ProductType } from '@/libs/difinition';
+import { useGetProductsQuery } from '@/redux/service/product';
+import { Card, CardBody, Image, Link } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
+import Loading from '../loading';
+import Error from '../error';
+
+const TestingPage: React.FC = () => {
+
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const searchValue = searchParams.get('searchValue') || '';
+  
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
-    size: 8,
-    category:category,
-    discountType:discountType
+    size: 10,
+    field: '',
+    fieldName: '',
   });
 
+  const filteredProducts = data?.payload.list.filter((product: ProductType) => {
+    const productName = product.name.toLowerCase();
+    return productName.includes(searchValue.toLowerCase()); 
+  }); 
+
+  console.log("Here is Search Value: ", searchValue)
+  
   return (
-    <main>
-      {/* for the card section*/}
-      <div className="flex flex-wrap justify-between gap-[25px]">
-        {data?.payload.list.map((product: CartProductType) => (
+    <div>
+      {isLoading ? (
+        <Loading/>
+      ) : error ? (
+        <div>
+          Error
+        </div>
+      ) : data?.payload.list.length === 0 ? (
+        <div>No products found</div>
+      ) : (
+        <div className="flex flex-wrap justify-start my-8 gap-[25px]">
+        {filteredProducts.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`products/${product.slug}`)}
+            onClick={() => router.push(`/${product.slug}`)}
             key={product.slug}
             isPressable
-            className=" relative mb-2 h-[386px] w-[284px] flex-none  rounded-xl  text-gray-50 shadow-none"
+            className=" dark:border-foreground-700 dark:bg-foreground-800 relative mb-2 h-[386px] w-[284px]  flex-none rounded-xl shadow-none"
+            onPress={() => console.log('item pressed')}
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
-              <Link href={`products/${product.slug}`}>
+              <Link href="#">
                 <Image
                   className="h-[193px] w-[284px] object-cover"
-                  isZoomed
                   src={
                     product.images[0].url ||
                     'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
@@ -36,11 +60,11 @@ export default function DiscountCardComponent({category,discountType}:any) {
                   alt={product.name}
                 />
               </Link>
-              <span className="absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white">
-              {`${product.discountValue}${product.isPercentage ? '%' : '$'} OFF`}
-              </span>  
-              <div className="mt-2 flex h-[20px]">
-                <div className="flex items-center rtl:space-x-reverse">
+              <span className="text-grey-50 absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold">
+                {product.discountValue}% OFF
+              </span>
+              <div className="mt-4 flex h-[20px]">
+                <div className="flex items-center space-x-1 rtl:space-x-reverse">
                   {[...Array(Math.floor(product.ratingAvg))].map((_, index) => (
                     <svg
                       key={index}
@@ -57,7 +81,7 @@ export default function DiscountCardComponent({category,discountType}:any) {
                     (_, index) => (
                       <svg
                         key={index}
-                        className="h-4 w-4 text-foreground-200 dark:text-foreground-600"
+                        className="text-foreground-200 h-4 w-4"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
@@ -68,29 +92,30 @@ export default function DiscountCardComponent({category,discountType}:any) {
                     )
                   )}
                 </div>
-                <span className="ml-1 text-[15px] font-medium text-foreground-600">
+
+                <span className="text-foreground-600 ml-1 text-[15px] font-medium">
                   ({product.ratingAvg}) Reviews
                 </span>
               </div>
-              <Link href={`products/${product.slug}`}>
-                <h5 className="mt-1 h-[45px] text-[18px] font-semibold tracking-tight text-foreground-800">
+              <Link href="#">
+                <h5 className="text-foreground-800 mt-1 h-[45px] text-[18px] font-semibold tracking-tight">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 45)}...`
                     : product.name || 'Product Name'}
                 </h5>
               </Link>
               <div className="h-[30px] pt-2">
-                <p className="text-[14px] font-medium text-foreground-600">
+                <p className="text-foreground-600 text-[14px] font-medium">
                   Shop :{' '}
                   <Link href="">
-                    <span className="text-blue-800 text-[14px] font-medium">
+                    <span className="text-info-800 text-[14px] font-medium">
                       {product.shop.length > 30
                         ? `${product.shop.substring(0, 20)}...`
                         : product.shop || 'Shop Name'}
                     </span>
                   </Link>
                 </p>
-                <p className="text-[14px] font-medium text-foreground-600">
+                <p className="text-foreground-600 text-[14px] font-medium">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
                     {product.expiredAt}
@@ -98,7 +123,7 @@ export default function DiscountCardComponent({category,discountType}:any) {
                 </p>
               </div>
               <div className="flex h-[30px] items-center justify-start pt-10 font-semibold">
-                <span className="pt-1 text-xl font-bold text-foreground-500 line-through dark:text-white">
+                <span className="text-foreground-700 pt-1 text-base font-bold line-through dark:text-white">
                   ${product.price || 'Price'}
                 </span>
                 <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
@@ -109,6 +134,9 @@ export default function DiscountCardComponent({category,discountType}:any) {
           </Card>
         ))}
       </div>
-    </main>
+      )}
+    </div>
   );
-}
+};
+
+export default TestingPage;

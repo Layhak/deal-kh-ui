@@ -73,7 +73,12 @@ export type CartProductType = {
   createdBy: string;
   updatedBy: string;
   quantity?: number | 0;
-  address?: string;
+  address: string;
+  openAt: string;
+  closeAt: string;
+  shopSlug: string;
+  location: string;
+  isPercentage: boolean;
 };
 
 export type ShopResponse= {

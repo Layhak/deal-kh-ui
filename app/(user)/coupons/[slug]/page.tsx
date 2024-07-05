@@ -5,15 +5,15 @@ import { CouponDetail, couponDetail } from '@/components/card/coupon-detail/coup
 // card coupon deatail
 type Props = {
   params: {
-    id: number;
+    slug: number;
   };
 };
 
 const CouponDetailPage = ({ params }: Props) => {
 
-  const { id } = params;
+  const { slug } = params;
 
-  const coupons = couponDetail.find((coupon: CouponDetail) => coupon.id == id);
+  const coupons = couponDetail.find((coupon: CouponDetail) => coupon.slug == slug);
 
   if (!coupons) {
     return <p>Coupon not found</p>;

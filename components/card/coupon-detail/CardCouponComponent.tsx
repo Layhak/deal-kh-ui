@@ -22,13 +22,13 @@ const CardCouponComponent: React.FC<Props> = ({ displayCount }) => {
       {couponsToDisplay.map((coupon: CouponData, index: number) => (
         <div
           key={index}
-          onClick={() => handleClick(coupon.id)}
+          onClick={() => handleClick(coupon.slug)}
           className="cursor-pointer relative"
         >
           <Image
             className="h-[250px] w-[550px] object-cover"
             src={coupon.image}
-            alt={`Coupon ${coupon.id}`}
+            alt={`Coupon ${coupon.slug}`}
           />
         </div>
       ))}

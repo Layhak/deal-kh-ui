@@ -16,7 +16,7 @@ import { ToastContainer } from 'react-toastify';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { useRegisterUserMutation } from '@/redux/service/auth';
 import CustomSelect from '@/components/customInput/CustomSelect';
-import { format } from 'date-fns';
+// import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import CustomDatePicker from '@/components/customInput/customDatePicker';
 import CustomCheckbox from '@/components/customInput/CustomCheckbox';

@@ -7,11 +7,12 @@ export const productApi = ecommerceApi.injectEndpoints({
     // get all products
     getProducts: builder.query<
       any,
-      { page: number; size: number; field: string; fieldName: any }
+      { page: number; size: number; discountType: string; category: any }
     >({
-      query: ({ page, size, field, fieldName }) =>
-        `products?page=${page}&size=${size}&${field}=${fieldName}`,
+      query: ({ page, size, discountType, category }) =>
+        `products?page=${page}&size=${size}&category=${category}&discountType=${discountType}`,
     }),
+
 
     getAllProducts: builder.query<any, void>({
       query: () => `products`,

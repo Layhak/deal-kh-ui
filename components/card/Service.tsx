@@ -12,7 +12,7 @@ import React, { useState, useEffect } from 'react';
 import { addToWishList, removeFromWishList } from '@/redux/feature/wishList/wishListSlice';
 import { MdOutlineShoppingCart, MdShoppingCart } from 'react-icons/md';
 
-export default function ServiceCardComponent() {
+export default function ServiceCardComponent({category,discountType}:any) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
@@ -21,8 +21,8 @@ export default function ServiceCardComponent() {
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 4,
-    field: '',
-    fieldName: '',
+    category:category,
+    discountType:discountType
   });
   
   // load saved states from local storage when the component mounts.

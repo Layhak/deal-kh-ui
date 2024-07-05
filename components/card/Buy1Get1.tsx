@@ -10,14 +10,14 @@ import { addToWishList, removeFromWishList } from '@/redux/feature/wishList/wish
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 
-const Buy1Get1Component = () => {
+const Buy1Get1Component = ({category,discountType}:any) => {
   const dispatch = useAppDispatch();
   const wishlistProducts = useAppSelector(selectWishlistProducts);
   const { data } = useGetProductsQuery({
     page: 1,
     size: 6,
-    field: '',
-    fieldName: '',
+    category:category,
+    discountType:discountType
   });
 
   // Initialize the heart state for each product

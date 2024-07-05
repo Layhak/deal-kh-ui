@@ -1,9 +1,15 @@
-"use client";
+'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { GoogleMap, useJsApiLoader, Marker, InfoWindow } from '@react-google-maps/api';
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  InfoWindow,
+} from '@react-google-maps/api';
 import shopFakes, { ShopFake } from '@/types/shopFake';
 import { Image } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 
 type GoogleMapProps = {
   apiKey: string;
@@ -15,10 +21,15 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
     googleMapsApiKey: apiKey,
   });
 
+  const router = useRouter();
+
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [center, setCenter] = useState<google.maps.LatLngLiteral>({ lat: 0, lng: 0 });
+  const [center, setCenter] = useState<google.maps.LatLngLiteral>({
+    lat: 0,
+    lng: 0,
+  });
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
   const [nearbyShops, setNearbyShops] = useState<ShopFake[]>([]);
@@ -59,9 +70,9 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
   }, []);
 
   const findNearbyShops = (lat: number, lng: number) => {
-
     const filteredShops = shopFakes.filter((shop) => {
-      const distance = calculateDistance(lat, lng, shop.location.latitude, shop.location.longitude);
+      const [shopLat, shopLng] = shop.location.split(',').map(parseFloat);
+      const distance = calculateDistance(lat, lng, shopLat, shopLng);
       return distance <= 1000;
     });
 
@@ -92,13 +103,13 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
     zoomControl: true,
     scrollwheel: true,
     disableDoubleClickZoom: false,
-    maxZoom: 18, // Increase the maximum zoom level
-  minZoom: 10, // Increase the minimum zoom level
-  zoom: 14, // Set the default zoom level to 12
+    maxZoom: 18,
+    minZoom: 10,
+    zoom: 14,
   };
 
   return isLoaded ? (
-    <div style={{height: '100vh'}}>
+    <div style={{ height: '100vh' }}>
       <GoogleMap
         mapContainerStyle={{ width: '100%', height: '91%' }}
         center={center}
@@ -108,26 +119,49 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
         options={options}
       >
         <Marker position={center} />
-        {nearbyShops.map((shop, index) => (
-          <Marker
-            key={index}
-            position={{
-              lat: shop.location.latitude,
-              lng: shop.location.longitude
-            }}
-            onMouseOver={() => setSelectedShop(shop)}
-            // onMouseOut={() => setSelectedShop(null)}
-          >
-            {selectedShop && selectedShop.location.latitude === shop.location.latitude && selectedShop.location.longitude === shop.location.longitude && (
-              <InfoWindow>
-                <div className='w-40 h-44'>
-                  <Image className='h-36 w-40 object-cover' src={shop.imageUrl} alt={shop.name} />
-                  <p className='mt-2 text-foreground-900 font-medium'>{shop.name}</p>
+        {nearbyShops.map((shop, index) => {
+          const [shopLat, shopLng] = shop.location.split(',').map(parseFloat);
+
+          return (
+            <Marker
+              key={index}
+              position={{
+                lat: shopLat,
+                lng: shopLng,
+              }}
+              onMouseOver={() => setSelectedShop(shop)}
+              // onMouseOut={() => setSelectedShop(null)}
+            >
+              {selectedShop && selectedShop.location === shop.location && (
+                
+                <InfoWindow
+                onCloseClick={() => setSelectedShop(null)}
+                onDomReady={() => {
+                  // Add a click event handler to the InfoWindow
+                  const infoWindowElement = document.querySelector('.gm-style-iw-c');
+                  if (infoWindowElement) {
+                    infoWindowElement.addEventListener('click', () => {
+                      // Navigate to the shop's page with the slug
+                      router.push(`/shop/${shop.slug}`);
+                    });
+                  }
+                }}
+              >
+                <div className="h-44 w-40">
+                  <Image
+                    className="h-36 w-40 object-cover"
+                    src={shop.profile}
+                    alt={shop.name}
+                  />
+                  <p className="mt-2 font-medium text-foreground-900">
+                    {shop.name}
+                  </p>
                 </div>
               </InfoWindow>
-            )}
-          </Marker>
-        ))}
+              )}
+            </Marker>
+          );
+        })}
       </GoogleMap>
     </div>
   ) : (

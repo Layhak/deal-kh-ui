@@ -24,6 +24,7 @@ export const shopApi = ecommerceApi.injectEndpoints({
     
   }),
 });
+
 // Export hooks for usage in components, which are
 export const {
   useGetShopsQuery,

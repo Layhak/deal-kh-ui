@@ -48,7 +48,7 @@ export default function Buy1Get1Component() {
             </div>
           </Link>
         </div>
-        <BuyMoreGetMoreComponent />
+        <BuyMoreGetMoreComponent category={"food"} discountType={"Buy More Get More"}/>
         {/* Drink */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -83,7 +83,7 @@ export default function Buy1Get1Component() {
             </div>
           </Link>
         </div>
-        <BuyMoreGetMoreComponent />
+        {/* <BuyMoreGetMoreComponent /> */}
         {/* Clothes */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -118,7 +118,7 @@ export default function Buy1Get1Component() {
             </div>
           </Link>
         </div>
-        <BuyMoreGetMoreComponent />
+        {/* <BuyMoreGetMoreComponent /> */}
         {/* Accessories */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -153,7 +153,7 @@ export default function Buy1Get1Component() {
             </div>
           </Link>
         </div>
-        <BuyMoreGetMoreComponent />
+        {/* <BuyMoreGetMoreComponent /> */}
         {/* Skin Care */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -188,7 +188,7 @@ export default function Buy1Get1Component() {
             </div>
           </Link>
         </div>
-        <BuyMoreGetMoreComponent />
+        {/* <BuyMoreGetMoreComponent /> */}
         {/* Electronic */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -223,7 +223,7 @@ export default function Buy1Get1Component() {
             </div>
           </Link>
         </div>
-        <BuyMoreGetMoreComponent />
+        {/* <BuyMoreGetMoreComponent /> */}
     </main>
   )
 }

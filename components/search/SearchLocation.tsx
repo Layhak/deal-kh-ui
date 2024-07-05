@@ -69,7 +69,7 @@ const SearchLocation: React.FC = () => {
           input: 'text-sm',
         }}
         labelPlacement="outside"
-        placeholder={searchValue || 'Search Deal-KH'}
+        placeholder={searchValue || 'Search Shop'}
         endContent={
           searchValue ? (
             <CloseIcon

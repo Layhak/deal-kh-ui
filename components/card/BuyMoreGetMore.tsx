@@ -6,10 +6,10 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FaRegHeart } from 'react-icons/fa';
 
-export default function BuyMoreGetMoreComponent() {
+export default function BuyMoreGetMoreComponent({category,discountType} : any) {
   const router = useRouter();
-  const { data, isLoading, error } = useGetProductsQuery({page:1,size:8,field:"",fieldName:""});
-  console.log('data', data);
+  const { data, isLoading, error } = useGetProductsQuery({page:1,size:8,category:category,discountType:discountType});
+  console.log('data type : ', data);
   console.log('error', error);
   console.log('isLoading', isLoading);
 

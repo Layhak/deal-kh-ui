@@ -1,26 +1,26 @@
-export type ShopDetail = {
+export type ShopDetailFake = {
     name: string;
-    address: string;
     slug: string,
+    address: string;
     description: string,
-    phoneNumber: number,
+    phoneNumber: string,
     email: string,
+    isDeleted: boolean,
+    isDisable: string,
     openAt: string,
     closeAt: string,
     shopType: string,
-    // location: string,
+    profile: string,
+    cover: string,
+    owners: [string],
     category: string,
     open: string,
     imageUrl: string,
-    location: {
-        latitude: number;
-        longitude: number;
-      };
-    image:[
-        {
-            url: string
-        }
-    ],
+    location: string,
+    createdAt: string,
+    updatedAt: string,
+    createdBy: string,
+    updateBy: string,
     socialMedias: [
         {
             socialName: string,

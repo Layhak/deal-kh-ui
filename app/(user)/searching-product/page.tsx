@@ -54,7 +54,7 @@ const TestingPage: React.FC = () => {
                 <Image
                   className="h-[193px] w-[284px] object-cover"
                   src={
-                    product.images[0].url ||
+                    product.profile ||
                     'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
                   }
                   alt={product.name}

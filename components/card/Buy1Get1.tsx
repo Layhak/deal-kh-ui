@@ -7,13 +7,13 @@ import { useRouter } from 'next/navigation';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { CartProductType } from '@/libs/difinition';
 
-export default function Buy1Get1Component() {
+export default function Buy1Get1Component({category} : any) {
   const router = useRouter();
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 6,
-    field: '',
-    fieldName: '',
+    category :"",
+    discountType: ""
   });
   console.log('data', data);
   console.log('error', error);

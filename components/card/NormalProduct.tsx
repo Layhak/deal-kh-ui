@@ -9,7 +9,10 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { LuShoppingCart } from 'react-icons/lu';
 import { addToCart, removeFromCart } from '@/redux/feature/cart/cartSlice';
 import { useAppDispatch } from '@/redux/hook';
-import { addToWishList, removeFromWishList } from '@/redux/feature/wishList/wishListSlice';
+import {
+  addToWishList,
+  removeFromWishList,
+} from '@/redux/feature/wishList/wishListSlice';
 import { MdOutlineShoppingCart, MdShoppingCart } from 'react-icons/md';
 
 export default function NormalProductComponent() {
@@ -17,11 +20,9 @@ export default function NormalProductComponent() {
   const dispatch = useAppDispatch();
   const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
   const [cartStates, setCartStates] = useState<Record<string, boolean>>({});
-  const { data, isLoading, error } = useGetProductsQuery({
+  const { data, error } = useGetProductsQuery({
     page: 1,
     size: 8,
-    field: '',
-    fieldName: '',
   });
 
   // load saved states from local storage when the component mounts.
@@ -30,7 +31,7 @@ export default function NormalProductComponent() {
     if (savedHeartStates) {
       setHeartStates(JSON.parse(savedHeartStates));
     }
-  
+
     const savedCartStates = localStorage.getItem('cartStates');
     if (savedCartStates) {
       setCartStates(JSON.parse(savedCartStates));
@@ -45,7 +46,7 @@ export default function NormalProductComponent() {
         ...prevHeartStates,
         [product.slug]: isAddedToWishlist, // Toggle the heart state
       };
-  
+
       if (isAddedToWishlist) {
         dispatch(addToWishList(product));
       } else {
@@ -55,7 +56,7 @@ export default function NormalProductComponent() {
       return updatedHeartStates;
     });
   };
-   // toggle the state for a product when the cart icon is clicked.
+  // toggle the state for a product when the cart icon is clicked.
   const handleCartClick = (product: CartProductType) => {
     setCartStates((prevCartStates) => {
       const isAddedToCart = !prevCartStates[product.slug];
@@ -63,31 +64,30 @@ export default function NormalProductComponent() {
         ...prevCartStates,
         [product.slug]: isAddedToCart, // Toggle the cart state
       };
-  
+
       if (isAddedToCart) {
         dispatch(addToCart(product));
       } else {
         dispatch(removeFromCart(product.slug));
       }
-  
+
       localStorage.setItem('cartStates', JSON.stringify(updatedCartStates));
       return updatedCartStates;
     });
   };
-  
-  
+
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-[25px]">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
             key={product.slug}
-            className="dark:border-foreground-700 bg-foreground-50 relative mb-2 h-[395px] w-[284px]  flex-none  rounded-xl  shadow-none"
+            className="relative mb-2 h-[395px] w-[284px] flex-none rounded-xl  bg-foreground-50  shadow-none  dark:border-foreground-700"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
                 <Image
-                onClick={() => router.push(`/${product.slug}`)}
+                  onClick={() => router.push(`/${product.slug}`)}
                   className="h-[193px] w-[284px] object-cover"
                   src={
                     product.images[0].url ||
@@ -161,28 +161,30 @@ export default function NormalProductComponent() {
                   </span>
                 </div>
                 <div className="flex justify-end gap-[15px]">
-                <div
-                  className="cursor-pointer"
-                  onClick={() => handleHeartClick(product)}
-                >
-                  <div key={product.slug}>
-                    {heartStates[product.slug] ? (
-                      <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    ) : (
-                      <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    )}
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => handleHeartClick(product)}
+                  >
+                    <div key={product.slug}>
+                      {heartStates[product.slug] ? (
+                        <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                      ) : (
+                        <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                      )}
+                    </div>
                   </div>
-                </div>
-                 <div className="cursor-pointer"
-                  onClick={() => handleCartClick(product)}>
-                 <div key={product.slug}>
-                    {cartStates[product.slug] ? (
-                      <MdShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    ) : (
-                      <MdOutlineShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    )}
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => handleCartClick(product)}
+                  >
+                    <div key={product.slug}>
+                      {cartStates[product.slug] ? (
+                        <MdShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                      ) : (
+                        <MdOutlineShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                      )}
+                    </div>
                   </div>
-                 </div>
                 </div>
               </div>
             </CardBody>

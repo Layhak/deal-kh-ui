@@ -9,7 +9,10 @@ import { useRouter } from 'next/navigation';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { LuShoppingCart } from 'react-icons/lu';
 import React, { useState, useEffect } from 'react';
-import { addToWishList, removeFromWishList } from '@/redux/feature/wishList/wishListSlice';
+import {
+  addToWishList,
+  removeFromWishList,
+} from '@/redux/feature/wishList/wishListSlice';
 import { MdOutlineShoppingCart, MdShoppingCart } from 'react-icons/md';
 
 export default function ServiceCardComponent() {
@@ -18,20 +21,18 @@ export default function ServiceCardComponent() {
   const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
   const [cartStates, setCartStates] = useState<Record<string, boolean>>({});
 
-  const { data, isLoading, error } = useGetProductsQuery({
+  const { data, error } = useGetProductsQuery({
     page: 1,
-    size: 4,
-    field: '',
-    fieldName: '',
+    size: 6,
   });
-  
+
   // load saved states from local storage when the component mounts.
   useEffect(() => {
     const savedHeartStates = localStorage.getItem('heartStates');
     if (savedHeartStates) {
       setHeartStates(JSON.parse(savedHeartStates));
     }
-  
+
     const savedCartStates = localStorage.getItem('cartStates');
     if (savedCartStates) {
       setCartStates(JSON.parse(savedCartStates));
@@ -46,7 +47,7 @@ export default function ServiceCardComponent() {
         ...prevHeartStates,
         [product.slug]: isAddedToWishlist, // Toggle the heart state
       };
-  
+
       if (isAddedToWishlist) {
         dispatch(addToWishList(product));
       } else {
@@ -56,7 +57,7 @@ export default function ServiceCardComponent() {
       return updatedHeartStates;
     });
   };
-   // toggle the state for a product when the cart icon is clicked.
+  // toggle the state for a product when the cart icon is clicked.
   const handleCartClick = (product: CartProductType) => {
     setCartStates((prevCartStates) => {
       const isAddedToCart = !prevCartStates[product.slug];
@@ -64,13 +65,13 @@ export default function ServiceCardComponent() {
         ...prevCartStates,
         [product.slug]: isAddedToCart, // Toggle the cart state
       };
-  
+
       if (isAddedToCart) {
         dispatch(addToCart(product));
       } else {
         dispatch(removeFromCart(product.slug));
       }
-  
+
       localStorage.setItem('cartStates', JSON.stringify(updatedCartStates));
       return updatedCartStates;
     });
@@ -80,10 +81,7 @@ export default function ServiceCardComponent() {
     <div>
       <div className="flex flex-wrap justify-center gap-[38px] ">
         {data?.payload.list.map((product: CartProductType) => (
-          <Card
-            key={product.slug}
-            className="w-[595px]  shadow-none"
-          >
+          <Card key={product.slug} className="w-[595px]  shadow-none">
             <div className="flex p-2">
               <Link href="#">
                 <Image
@@ -97,14 +95,14 @@ export default function ServiceCardComponent() {
               </Link>
               <div className="item-start w-[300px] pl-4 text-left">
                 <a href="#">
-                  <h5 className="text-foreground-800 h-[50px] text-lg font-semibold tracking-tight dark:text-white">
+                  <h5 className="h-[50px] text-lg font-semibold tracking-tight text-foreground-800 dark:text-white">
                     {product.name.length > 50
                       ? `${product.name.substring(0, 50)}...`
                       : product.name || 'Product Name'}
                   </h5>
                 </a>
                 <div className="my-3 flex flex-col gap-1">
-                  <p className="text-foreground-600 text-sm">
+                  <p className="text-sm text-foreground-600">
                     Shop :{' '}
                     <Link href="">
                       <span className="text-info-800 text-sm font-medium">
@@ -114,22 +112,22 @@ export default function ServiceCardComponent() {
                       </span>
                     </Link>
                   </p>
-                  <p className="text-foreground-600 text-sm">
+                  <p className="text-sm text-foreground-600">
                     Expired date :{' '}
                     <span className="text-sm font-medium text-red-500">
                       {product.expiredAt}
                     </span>
                   </p>
-                  <p className="text-foreground-600 text-sm">
+                  <p className="text-sm text-foreground-600">
                     Open :{' '}
-                    <span className="text-foreground-900 text-sm font-medium">
+                    <span className="text-sm font-medium text-foreground-900">
                       09:00 AM - 08:00 PM
                     </span>
                   </p>
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="mt-3">
-                    <span className="text-foreground-500 text-base dark:text-white">
+                    <span className="text-base text-foreground-500 dark:text-white">
                       From
                     </span>
                     <span className="ml-3 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-[28px] font-semibold text-transparent">
@@ -138,27 +136,29 @@ export default function ServiceCardComponent() {
                   </div>
                   <div className="mt-3 flex justify-end gap-[15px]">
                     <div
-                  className="cursor-pointer"
-                  onClick={() => handleHeartClick(product)}
-                >
-                  <div key={product.slug}>
-                    {heartStates[product.slug] ? (
-                      <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    ) : (
-                      <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    )}
-                  </div>
-                </div>
-                 <div className="cursor-pointer"
-                  onClick={() => handleCartClick(product)}>
-                 <div key={product.slug}>
-                    {cartStates[product.slug] ? (
-                      <MdShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    ) : (
-                      <MdOutlineShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    )}
-                  </div>
-                 </div>
+                      className="cursor-pointer"
+                      onClick={() => handleHeartClick(product)}
+                    >
+                      <div key={product.slug}>
+                        {heartStates[product.slug] ? (
+                          <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                        ) : (
+                          <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                        )}
+                      </div>
+                    </div>
+                    <div
+                      className="cursor-pointer"
+                      onClick={() => handleCartClick(product)}
+                    >
+                      <div key={product.slug}>
+                        {cartStates[product.slug] ? (
+                          <MdShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                        ) : (
+                          <MdOutlineShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

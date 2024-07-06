@@ -6,13 +6,11 @@ import React from 'react';
 
 export default function DiscountCardComponent() {
   const router = useRouter();
-  const { data, isLoading, error } = useGetProductsQuery({
+  const { data, error } = useGetProductsQuery({
     page: 1,
     size: 8,
-    field: '',
-    fieldName: '',
   });
-  
+
   return (
     <main>
       {/* for the card section*/}
@@ -37,9 +35,11 @@ export default function DiscountCardComponent() {
                   alt={product.name}
                 />
               </Link>
+
               <span className="absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white">
-                {product.discountValue}% OFF
+                {`${product.discountValue}${product.isPercentage ? '%' : '$'} OFF`}
               </span>
+
               <div className="mt-4 h-[16] w-full">
                 <div className={'flex items-center justify-between'}>
                   <div className="flex">
@@ -99,7 +99,7 @@ export default function DiscountCardComponent() {
                 <p className="text-[14px] font-medium text-foreground-600">
                   Shop :{' '}
                   <Link href="">
-                    <span className="text-blue-800 text-[14px] font-medium">
+                    <span className="text-[14px] font-medium text-blue-800">
                       {product.shop.length > 30
                         ? `${product.shop.substring(0, 20)}...`
                         : product.shop || 'Shop Name'}
@@ -118,7 +118,7 @@ export default function DiscountCardComponent() {
                   ${product.price || 'Price'}
                 </span>
                 <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                  ${product.discountPrice || 'Price'}
+                  ${product.price - product.discountPrice || '0'}
                 </span>
               </div>
             </CardBody>

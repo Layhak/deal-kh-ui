@@ -64,7 +64,12 @@ export type CartProductType = {
   description: string;
   images: Image[];
   shop: string;
+  shopSlug: string;
+  location: string;
+  openAt: string;
+  closeAt: string;
   discountValue: number;
+  isPercentage: boolean;
   discountType: string;
   expiredAt: string;
   category: string;
@@ -76,7 +81,7 @@ export type CartProductType = {
   address?: string;
 };
 
-export type ShopResponse= {
+export type ShopResponse = {
   name: string;
   slug: string;
   address: string;
@@ -95,27 +100,26 @@ export type ShopResponse= {
   updatedAt: string;
   createdBy: string;
   updatedBy: string;
-}
+};
 
 export type Payload = {
   list: CartProductType[];
   pagination: Pagination;
 };
 
-export type ShopPayload= {
+export type ShopPayload = {
   list: ShopResponse[];
   pagination: Pagination;
-}
+};
 
-export type ShopsResponse={
-  payload:ShopPayload;
-}
+export type ShopsResponse = {
+  payload: ShopPayload;
+};
 
 export interface Coordinates {
   lat: number;
   lng: number;
 }
-
 
 export type Pagination = {
   pageSize: number;
@@ -127,8 +131,6 @@ export type Pagination = {
   last: boolean;
   empty: boolean;
 };
-
-
 
 export type ApiResponse = {
   payload: Payload;

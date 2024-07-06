@@ -3,51 +3,26 @@ import 'swiper/css';
 // import required modules
 import Marquee from 'react-fast-marquee';
 import { Image } from '@nextui-org/react';
+import { useGetCategoryQuery } from '@/redux/service/category';
+import { CategoryType } from '@/types/category';
 
 export default function Category() {
+  const { data, isLoading, error } = useGetCategoryQuery();
+  console.log('data car=t', data?.payload[0]);
+  console.log('error', error);
+  console.log('isLoading', isLoading);
+
   return (
     <Marquee pauseOnHover>
       <div className={'flex gap-x-5'}>
-        <Image
-          src="https://i.pinimg.com/564x/35/1a/2f/351a2fa0270f82fa85b1019b610d9a46.jpg"
-          alt="Category image"
-          className="ms-5 h-[240px] w-[240px] rounded-full object-contain"
-        />
-        <Image
-          src="https://i.pinimg.com/564x/35/1a/2f/351a2fa0270f82fa85b1019b610d9a46.jpg"
-          alt="Category image"
-          className="h-[240px] w-[240px] rounded-full object-contain"
-        />
-        <Image
-          src="https://i.pinimg.com/564x/35/1a/2f/351a2fa0270f82fa85b1019b610d9a46.jpg"
-          alt="Category image"
-          className="h-[240px] w-[240px] rounded-full object-contain"
-        />
-        <Image
-          src="https://i.pinimg.com/564x/35/1a/2f/351a2fa0270f82fa85b1019b610d9a46.jpg"
-          alt="Category image"
-          className="h-[240px] w-[240px] rounded-full object-contain"
-        />
-        <Image
-          src="https://i.pinimg.com/564x/35/1a/2f/351a2fa0270f82fa85b1019b610d9a46.jpg"
-          alt="Category image"
-          className="h-[240px] w-[240px] rounded-full object-contain"
-        />
-        <Image
-          src="https://i.pinimg.com/564x/35/1a/2f/351a2fa0270f82fa85b1019b610d9a46.jpg"
-          alt="Category image"
-          className="h-[240px] w-[240px] rounded-full object-contain"
-        />
-        <Image
-          src="https://i.pinimg.com/564x/35/1a/2f/351a2fa0270f82fa85b1019b610d9a46.jpg"
-          alt="Category image"
-          className="h-[240px] w-[240px] rounded-full object-contain"
-        />
-        <Image
-          src="https://i.pinimg.com/564x/35/1a/2f/351a2fa0270f82fa85b1019b610d9a46.jpg"
-          alt="Category image"
-          className="h-[240px] w-[240px] rounded-full object-contain"
-        />
+        {data?.payload.map((category: CategoryType) => (
+          // eslint-disable-next-line react/jsx-key
+          <Image
+            src={category.icon}
+            alt="Category image"
+            className="ms-5 h-[240px] w-[240px] rounded-full object-contain"
+          />
+        ))}
       </div>
     </Marquee>
   );

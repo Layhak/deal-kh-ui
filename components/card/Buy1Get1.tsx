@@ -12,11 +12,9 @@ import { useAppDispatch } from '@/redux/hook';
 export default function Buy1Get1Component() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { data, isLoading, error } = useGetProductsQuery({
+  const { data, error } = useGetProductsQuery({
     page: 1,
     size: 6,
-    field: '',
-    fieldName: '',
   });
   // console.log('data', data);
   // console.log('error', error);
@@ -56,29 +54,40 @@ export default function Buy1Get1Component() {
                   </h5>
                 </Link>
 
-                 <div className="right-4 mt-3" onClick={() => dispatch(addToWishList({
-                    slug: product.slug,
-                    seller: product.seller,
-                    name: product.name,
-                    price: product.price,
-                    discountPrice: product.discountPrice,
-                    ratingAvg: product.ratingAvg,
-                    description: product.description,
-                    images: product.images,
-                    shop: product.shop,
-                    discountValue: product.discountValue,
-                    discountType: product.discountType,
-                    expiredAt: product.expiredAt,
-                    category: product.category,
-                    createdAt: product.createdAt,
-                    updatedAt: product.updatedAt,
-                    createdBy: product.createdBy,
-                    updatedBy: product.updatedBy,
-                    address: product.address,
-                  }))}>
-                 <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                 </div>
-
+                <div
+                  className="right-4 mt-3"
+                  onClick={() =>
+                    dispatch(
+                      addToWishList({
+                        slug: product.slug,
+                        seller: product.seller,
+                        name: product.name,
+                        price: product.price,
+                        discountPrice: product.discountPrice,
+                        ratingAvg: product.ratingAvg,
+                        description: product.description,
+                        images: product.images,
+                        shop: product.shop,
+                        shopSlug: product.shopSlug,
+                        location: product.location,
+                        openAt: product.openAt,
+                        closeAt: product.closeAt,
+                        discountValue: product.discountValue,
+                        isPercentage: product.isPercentage,
+                        discountType: product.discountType,
+                        expiredAt: product.expiredAt,
+                        category: product.category,
+                        createdAt: product.createdAt,
+                        updatedAt: product.updatedAt,
+                        createdBy: product.createdBy,
+                        updatedBy: product.updatedBy,
+                        address: product.address,
+                      })
+                    )
+                  }
+                >
+                  <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                </div>
               </div>
               <div className=" h-[30px] pt-3">
                 <p className="text-[14px] font-medium text-foreground-600 ">

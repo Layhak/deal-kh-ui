@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import {
   Avatar,
+  Badge,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -20,13 +21,16 @@ import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { CartIcon, HeartIcon } from '@/components/icons';
 import CategoryButton from './categoryButton';
-import { useAppDispatch, useAppSelector } from '@/redux/hook';
-import { removeAccessToken, selectToken } from '@/redux/feature/auth/authSlice';
+import {
+  removeAccessToken,
+  selectLoginSuccess,
+  setLoginSuccess,
+  setLogoutSuccess,
+} from '@/redux/feature/auth/authSlice';
 import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import AuthLink from '@/components/auth/AuthLink';
-import { useSubmitFormMutation } from '@/redux/api';
 import { useLogoutUserMutation } from '@/redux/service/auth';
 import { useGetProfileQuery } from '@/redux/service/user';
 import SearchProduct from './search/SearchProduct';
@@ -35,46 +39,17 @@ import { productSearchList } from '@/types/productSearch';
 import { selectProducts } from '@/redux/feature/cart/cartSlice';
 import { CartProductType } from '@/libs/difinition';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
-
-type ValueTypes = {
-  email: string;
-  password: string;
-};
-
-const initialValues: ValueTypes = {
-  email: '',
-  password: '',
-};
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
 export const NavigationBar = () => {
-  const [submitForm, { isLoading, isError, error }] = useSubmitFormMutation();
-  const dispatch = useAppDispatch();
-  const token = useAppSelector(selectToken);
-  const [logoutUser, { isLoading: isLoggingOut }] = useLogoutUserMutation();
   const pathname = usePathname();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { theme } = useTheme();
   const router = useRouter();
 
   const { data: userProfile, isLoading: isLoadingUserProfile } =
     useGetProfileQuery();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // const avatarUrl = useAppSelector(selectAvatar);
-  // const email = useAppSelector(selectEmail);
-  // console.log('Profile:', avatarUrl);
-  // console.log('Email:', email);
-  // useEffect(() => {
-  //   dispatch(fetchUserProfile());
-  // }, [dispatch]);
-  //
-  // useEffect(() => {
-  //   if (email) {
-  //     setIsLoggedIn(true);
-  //   } else {
-  //     setIsLoggedIn(false);
-  //   }
-  // }, [email]);
-  console.log(userProfile);
   useEffect(() => {
     if (userProfile) {
       setIsLoggedIn(true);
@@ -83,73 +58,13 @@ export const NavigationBar = () => {
     }
   }, [userProfile]);
 
-  //For Carts
-  const products = useAppSelector(selectProducts);
-  //display number of product that only unique select
-  const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
-
-  useEffect(() => {
-    // Filter unique products based on their slugs
-    const unique = products.filter(
-      (product, index, self) =>
-        index === self.findIndex((t) => t.slug === product.slug)
-    );
-
-    // Update the state with the unique products
-    setUniqueProducts(unique);
-  }, [products]);
-
-  // For Wishlist
-  const wishlistProducts = useAppSelector(selectWishlistProducts);
-  const [uniqueWishlistProducts, setUniqueWishlistProducts] = useState<
-    CartProductType[]
-  >([]);
-
-  useEffect(() => {
-    // Filter unique products based on their slugs
-    const uniqueWishlist = wishlistProducts.filter(
-      (product, index, self) =>
-        index === self.findIndex((t) => t.slug === product.slug)
-    );
-
-    // Update the state with the unique wishlist products
-    setUniqueWishlistProducts(uniqueWishlist);
-  }, [wishlistProducts]);
-
-  const [searchValue, setSearchValue] = useState('');
-  const [secondValue, setSecondValue] = useState('');
-
-  const handleSubmit = async () => {
-    try {
-      await submitForm({ searchValue, secondValue }).unwrap();
-      toast.success('Form submitted successfully.', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: theme,
-      });
-    } catch (error) {
-      toast.error('Failed to submit form.', {
-        position: 'top-right',
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: theme,
-      });
-      console.error('Failed to submit form:', error);
-    }
-  };
-
+  const dispatch = useAppDispatch();
+  const [logoutUser, { isLoading: isLoggingOut }] = useLogoutUserMutation();
   const handleLogout = async () => {
     try {
       await logoutUser({}).unwrap();
+      dispatch(removeAccessToken());
+      dispatch(setLogoutSuccess(true));
       toast.success('Logout successfully.', {
         position: 'top-right',
         autoClose: 5000,
@@ -161,7 +76,6 @@ export const NavigationBar = () => {
         theme: theme,
       });
       setIsLoggedIn(false);
-      dispatch(removeAccessToken());
     } catch (error) {
       toast.error('Failed to logout.', {
         position: 'top-right',
@@ -176,6 +90,34 @@ export const NavigationBar = () => {
       console.error('Failed to logout:', error);
     }
   };
+
+  const products = useAppSelector(selectProducts);
+  const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
+
+  useEffect(() => {
+    const unique = products.filter(
+      (product, index, self) =>
+        index === self.findIndex((t) => t.slug === product.slug)
+    );
+    setUniqueProducts(unique);
+  }, [products]);
+
+  // For Wishlist
+  const wishlistProducts = useAppSelector(selectWishlistProducts);
+  const [uniqueWishlistProducts, setUniqueWishlistProducts] = useState<
+    CartProductType[]
+  >([]);
+
+  useEffect(() => {
+    const uniqueWishlist = wishlistProducts.filter(
+      (product, index, self) =>
+        index === self.findIndex((t) => t.slug === product.slug)
+    );
+    setUniqueWishlistProducts(uniqueWishlist);
+  }, [wishlistProducts]);
+
+  const [searchValue, setSearchValue] = useState('');
+  const [secondValue, setSecondValue] = useState('');
 
   const categories = [
     'Accessory',
@@ -194,10 +136,7 @@ export const NavigationBar = () => {
 
   const searchInput = (
     <>
-      {/* for searching product */}
       <SearchProduct products={productSearchList} />
-
-      {/* for searching location */}
       <SearchLocation />
     </>
   );
@@ -219,7 +158,6 @@ export const NavigationBar = () => {
           <NavbarItem className="hidden md:flex">{searchInput}</NavbarItem>
         </div>
       </NavbarContent>
-      {/* section menu home, policy, deal, and about */}
       <NavbarContent justify={'start'} className={'hidden gap-4 px-16 sm:flex'}>
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>
@@ -267,10 +205,16 @@ export const NavigationBar = () => {
 
         <NavbarItem className="hidden lg:flex">
           <div className={'relative'} onClick={() => router.push(`/cart`)}>
-            <CartIcon size={28} />
-            <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
-              {uniqueProducts.length}
-            </div>
+            <Badge
+              content={uniqueProducts.length}
+              color="danger"
+              className={'bg-gradient-to-r from-pink-500 to-yellow-500'}
+            >
+              <CartIcon size={28} />
+            </Badge>
+            {/*<div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">*/}
+            {/*  {uniqueProducts.length}*/}
+            {/*</div>*/}
           </div>
         </NavbarItem>
         <NavbarItem>
@@ -284,7 +228,7 @@ export const NavigationBar = () => {
                   isBordered
                   color={'default'}
                   src={
-                    userProfile.payload.images[0].url ??
+                    userProfile?.payload?.profile ||
                     `https://i.pravatar.cc/150?u=a042581`
                   }
                 />
@@ -292,7 +236,7 @@ export const NavigationBar = () => {
               <DropdownMenu aria-label="Profile Actions" variant="shadow">
                 <DropdownItem key="profile" className="h-14 gap-2" isDisabled>
                   <p className="font-semibold">Signed in as</p>
-                  <p className="font-semibold">{userProfile.payload?.email}</p>
+                  <p className="font-semibold">{userProfile?.payload?.email}</p>
                 </DropdownItem>
                 <DropdownItem
                   key="logout"

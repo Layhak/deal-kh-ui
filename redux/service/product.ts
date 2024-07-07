@@ -55,7 +55,7 @@ export const productApi = ecommerceApi.injectEndpoints({
     // create a product
     createProduct: builder.mutation<any, { newProduct: object }>({
       query: ({ newProduct }) => ({
-        url: '/products/',
+        url: '/products',
         method: 'POST',
         body: newProduct,
       }),

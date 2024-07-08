@@ -35,6 +35,7 @@ const ShopsPage = () => {
   return (
     <div>
       {filteredProducts?.map((shop: ShopDetail) => (
+        // eslint-disable-next-line react/jsx-key
         <ShopNearbyComponent shop={shop} />
       ))}
     </div>

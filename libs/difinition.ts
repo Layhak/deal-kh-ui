@@ -50,7 +50,7 @@ export type Image = {
   url: string;
 };
 
-interface ImageResponse {
+export type ImageResponse = {
   url: string;
 }
 
@@ -82,7 +82,9 @@ export type CartProductType = {
   address?: string;
 };
 
+
 export type ShopResponse = {
+  profile: string;
   name: string;
   slug: string;
   address: string;

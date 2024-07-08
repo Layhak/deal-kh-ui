@@ -11,6 +11,7 @@ const Testing = () => {
       <div className="w-[70%] overflow-y-auto pr-4 scrollbar-hide">
         {shopFakes.map((shop, index) => (
           // <ShopNearbyComponent key={index} shop={shop} />
+          // eslint-disable-next-line react/jsx-key
           <ShopNearbyComponent shop={shop} />
         ))}
       </div>

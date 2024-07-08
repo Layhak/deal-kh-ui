@@ -5,12 +5,15 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { StarIcon } from '@/components/review/StarIcon';
 
-export default function DiscountCardComponent() {
+export default function DiscountCardComponent({category,discountType}:any) {
   const router = useRouter();
   const { data, error } = useGetProductsQuery({
     page: 1,
     size: 8,
+    category:category,
+    discountType:discountType
   });
+
 
   return (
     <main>
@@ -21,8 +24,7 @@ export default function DiscountCardComponent() {
             onClick={() => router.push(`products/${product.slug}`)}
             key={product.slug}
             isPressable
-            className=" relative mb-2 h-[386px] w-[284px] flex-none  rounded-xl bg-foreground-100 text-gray-50 shadow-none"
-            onPress={() => console.log('item pressed')}
+            className=" relative mb-2 h-[386px] w-[284px] flex-none  rounded-xl  text-gray-50 shadow-none"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
               <Link href={`products/${product.slug}`}>

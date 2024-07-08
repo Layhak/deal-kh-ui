@@ -73,7 +73,7 @@ export default function CardComponent({ category }: { category: string }) {
         {products.map((product) => (
           <div
             key={product.id}
-            className="relative w-72 flex-none rounded-lg border border-0 bg-white shadow dark:border-gray-700 dark:bg-gray-800"
+            className="relative w-72 flex-none rounded-lg bg-white shadow dark:border-gray-700 dark:bg-gray-800"
           >
             <div className="absolute -right-[1px] -top-[0.5px] z-10 h-14 w-14 rounded-bl-[10%] rounded-tr-[10%] bg-gradient-to-tr from-pink-500 to-yellow-500 px-4 py-1">
               <span className="text-start text-sm font-bold text-white">

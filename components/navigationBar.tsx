@@ -96,7 +96,7 @@ export const NavigationBar = () => {
 
   useEffect(() => {
     const unique = products.filter(
-      (product, index, self) =>
+      (product: { slug: any; }, index: any, self: any[]) =>
         index === self.findIndex((t) => t.slug === product.slug)
     );
     setUniqueProducts(unique);
@@ -110,7 +110,7 @@ export const NavigationBar = () => {
 
   useEffect(() => {
     const uniqueWishlist = wishlistProducts.filter(
-      (product, index, self) =>
+      (product: { slug: any; }, index: any, self: any[]) =>
         index === self.findIndex((t) => t.slug === product.slug)
     );
     setUniqueWishlistProducts(uniqueWishlist);
@@ -189,34 +189,23 @@ export const NavigationBar = () => {
         <NavbarItem>
           <ThemeSwitch />
         </NavbarItem>
-        <NavbarItem className="hidden sm:flex">
-          <NextLink href="/wishlist">
-            <div
-              className={'relative'}
-              onClick={() => router.push(`/wishlist`)}
-            >
-              <HeartIcon size={28} />
-              <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
-                {uniqueWishlistProducts.length}
-              </div>
-            </div>
+        <NavbarItem className="sm:flex">
+          <NextLink className={'relative'}  href={isLoggedIn ? '/wishlist' : '/login'}>
+          <Badge  color="danger"
+  className={'bg-gradient-to-r from-pink-500 to-yellow-500'} content={uniqueWishlistProducts.length} isInvisible={uniqueWishlistProducts.length <= 0} variant="solid" shape="circle" size="sm" >
+          <HeartIcon className="fill-current" size={30} />
+          </Badge>
+          </NextLink>
+        </NavbarItem>
+        <NavbarItem className="sm:flex">
+          <NextLink  href={isLoggedIn ? '/cart' : '/login'} className={'relative'}>
+          <Badge  color="danger"
+  className={'bg-gradient-to-r from-pink-500 to-yellow-500'} content={uniqueProducts.length} isInvisible={uniqueProducts.length <= 0} variant="solid" shape="circle" size="sm" >
+          <CartIcon className="fill-current" size={30} />
+          </Badge>
           </NextLink>
         </NavbarItem>
 
-        <NavbarItem className="hidden lg:flex">
-          <div className={'relative'} onClick={() => router.push(`/cart`)}>
-            <Badge
-              content={uniqueProducts.length}
-              color="danger"
-              className={'bg-gradient-to-r from-pink-500 to-yellow-500'}
-            >
-              <CartIcon size={28} />
-            </Badge>
-            {/*<div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">*/}
-            {/*  {uniqueProducts.length}*/}
-            {/*</div>*/}
-          </div>
-        </NavbarItem>
         <NavbarItem>
           {isLoggedIn ? (
             <Dropdown placement="bottom-end" shadow="md">

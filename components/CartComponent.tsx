@@ -1,5 +1,4 @@
 'use client';
-
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import {
   decrementQuantity,
@@ -10,14 +9,13 @@ import {
 } from '@/redux/feature/cart/cartSlice';
 import { useEffect, useState } from 'react';
 import { CartProductType, ShopPayload } from '@/libs/difinition';
-import { Image, InternalForwardRefRenderFunction, Table, TableBody, TableCell, TableColumn, TableHeader, TableProps, TableRow } from '@nextui-org/react';
+import { Image, Table, TableBody, TableCell, TableColumn, TableHeader, TableProps, TableRow } from '@nextui-org/react';
 import { LuMinus, LuPlus, LuTrash } from 'react-icons/lu';
 import { Button } from '@nextui-org/button';
 
 export default function CartComponent() {
   const products = useAppSelector(selectProducts);
   const totalPrice = useAppSelector(selectTotalPrice);
-
   const dispatch = useAppDispatch();
 
   // Display number of product that only unique select
@@ -26,7 +24,7 @@ export default function CartComponent() {
   useEffect(() => {
     // Filter unique products based on their IDs
     const unique = products.filter(
-      (product, index, self) =>
+      (product: { slug: any; }, index: any, self: any[]) =>
         index === self.findIndex((t) => t.slug === product.slug)
     );
 
@@ -135,7 +133,6 @@ export default function CartComponent() {
           <p>Look like you haven't make any choice yet...</p>
         </div>
       )}
-  
       {products.length !== 0 && (
         <div>
           <div className="col-span-3 p-4">
@@ -155,7 +152,7 @@ export default function CartComponent() {
                 { uid: 'discount price', name: 'Discount Price' },
                 { uid: 'quantity', name: 'Quantity' },
                 { uid: 'total', name: 'Total' },
-                { uid: 'delete', name: 'Remove' },
+                { uid: 'delete', name: 'Delete' },
               ]}>
                 {(column) => (
                   <TableColumn key={column.uid} align={column.uid === 'actions' ? 'center' : 'start'}>

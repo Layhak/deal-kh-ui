@@ -3,12 +3,24 @@
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { useEffect, useState } from 'react';
 import { CartProductType } from '@/libs/difinition';
-import { Image, InternalForwardRefRenderFunction, Table, TableBody, TableCell, TableColumn, TableHeader, TableProps, TableRow } from '@nextui-org/react';
+import {
+  Image,
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
+} from '@nextui-org/react';
 import { LuMinus, LuPlus, LuTrash } from 'react-icons/lu';
 import { Button } from '@nextui-org/button';
-import { Input } from '@nextui-org/react';
-import { shops } from './seller/component/table/dataOwnShop';
-import { decrementQuantity, incrementQuantity, removeFromWishList, selectTotalWishlistPrice, selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
+import {
+  decrementQuantity,
+  incrementQuantity,
+  removeFromWishList,
+  selectTotalWishlistPrice,
+  selectWishlistProducts,
+} from '@/redux/feature/wishList/wishListSlice';
 
 export default function WishListComponent() {
   const products = useAppSelector(selectWishlistProducts);
@@ -22,7 +34,7 @@ export default function WishListComponent() {
   useEffect(() => {
     // Filter unique products based on their IDs
     const unique = products.filter(
-      (product: { slug: any; }, index: any, self: any[]) =>
+      (product: { slug: any }, index: any, self: any[]) =>
         index === self.findIndex((t) => t.slug === product.slug)
     );
 
@@ -42,73 +54,73 @@ export default function WishListComponent() {
     dispatch(removeFromWishList(product.slug));
   };
 
-  const renderCell = (product: CartProductType,columnKey: string) => {
+  const renderCell = (product: CartProductType, columnKey: string) => {
     switch (columnKey) {
       case 'image':
         return (
           <div className="flex items-center">
-            <Image src={product.images?.[0]?.url ||
-                          'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'} width={50} height={50} alt={product.name} />
+            <Image
+              src={
+                product.images?.[0]?.url ||
+                'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
+              }
+              width={50}
+              height={50}
+              alt={product.name}
+            />
           </div>
         );
       case 'name':
-        return <div>{product.name.length > 30
-          ? `${product.name.substring(0, 26)}...`
-          : product.name || "Product Name"} 
-          </div>;
+        return (
+          <div>
+            {product.name.length > 30
+              ? `${product.name.substring(0, 26)}...`
+              : product.name || 'Product Name'}
+          </div>
+        );
       case 'shop':
         return <div>{product.shop}</div>;
       case 'location':
-        return <div>{product.address || 'N/A'}</div>      
+        return <div>{product.address || 'N/A'}</div>;
       case 'price':
         return <div>${product.price}</div>;
       case 'discount price':
-        return <div>${product.discountPrice}</div>  
+        return <div>${product.discountPrice}</div>;
       case 'quantity':
         return (
           <div className="flex items-center">
-             {/* increase button */}
-             <div className="flex ">
-                        <div className="flex h-8 w-8 items-center justify-center rounded-l-lg border">
-                          <LuPlus
-                            onClick={() =>
-                              dispatch(incrementQuantity(product.slug))
-                            }
-                          />
-                        </div>
+            {/* increase button */}
+            <div className="flex ">
+              <div className="flex h-8 w-8 items-center justify-center rounded-l-lg border">
+                <LuPlus
+                  onClick={() => dispatch(incrementQuantity(product.slug))}
+                />
+              </div>
 
-                        <div className="flex h-8  w-8 items-center justify-center border">
-                          <span>{product.quantity}</span>
-                        </div>
+              <div className="flex h-8  w-8 items-center justify-center border">
+                <span>{product.quantity}</span>
+              </div>
 
-                        <div className=" flex h-8  w-8 items-center justify-center rounded-r-lg border">
-                          <LuMinus
-                            onClick={() =>
-                              dispatch(decrementQuantity(product.slug))
-                            }
-                          />
-                        </div>
-                      </div>
+              <div className=" flex h-8  w-8 items-center justify-center rounded-r-lg border">
+                <LuMinus
+                  onClick={() => dispatch(decrementQuantity(product.slug))}
+                />
+              </div>
+            </div>
           </div>
         );
       case 'total':
-        return (
-          <div>
-            ${product.discountPrice * (product.quantity || 1)}
-          </div>
-        );
+        return <div>${product.discountPrice * (product.quantity || 1)}</div>;
       case 'delete':
         return (
           <div className="flex justify-center">
             <Button
-                          isIconOnly
-                          onClick={() =>
-                            dispatch(removeFromWishList(product.slug))
-                          }
-                          className="rounded-xl bg-red-500 p-2 text-white"
-                        >
-                          <LuTrash />
-                        </Button>
+              isIconOnly
+              onClick={() => dispatch(removeFromWishList(product.slug))}
+              className="rounded-xl bg-red-500 p-2 text-white"
+            >
+              <LuTrash />
+            </Button>
           </div>
         );
       default:
@@ -126,12 +138,14 @@ export default function WishListComponent() {
             width={200}
             height={200}
           />
-          <p className="mt-4 text-2xl font-semibold ">Your wishlist is empty!</p>
+          <p className="mt-4 text-2xl font-semibold ">
+            Your wishlist is empty!
+          </p>
           {/* eslint-disable-next-line react/no-unescaped-entities */}
           <p>Look like you haven't make any choice yet...</p>
         </div>
       )}
-  
+
       {products.length !== 0 && (
         <div>
           <div className="col-span-3 p-4">
@@ -140,21 +154,26 @@ export default function WishListComponent() {
                 Your <span className="text-[#eb7d52]">Wishlist</span>
               </p>
             </div>
-  
-            <Table aria-label="Wishlist" className='mt-8'>
-              <TableHeader  columns={[
-                { uid: 'image', name: 'Image' },
-                { uid: 'name', name: 'Name' },
-                { uid: 'shop', name: 'Shop Name' },
-                { uid: 'location', name: 'Location' },
-                { uid: 'price', name: 'Price' },
-                { uid: 'discount price', name: 'Discount Price' },
-                { uid: 'quantity', name: 'Quantity' },
-                { uid: 'total', name: 'Total' },
-                { uid: 'delete', name: 'Remove' },
-              ]}>
+
+            <Table aria-label="Wishlist" className="mt-8">
+              <TableHeader
+                columns={[
+                  { uid: 'image', name: 'Image' },
+                  { uid: 'name', name: 'Name' },
+                  { uid: 'shop', name: 'Shop Name' },
+                  { uid: 'location', name: 'Location' },
+                  { uid: 'price', name: 'Price' },
+                  { uid: 'discount price', name: 'Discount Price' },
+                  { uid: 'quantity', name: 'Quantity' },
+                  { uid: 'total', name: 'Total' },
+                  { uid: 'delete', name: 'Remove' },
+                ]}
+              >
                 {(column) => (
-                  <TableColumn key={column.uid} align={column.uid === 'actions' ? 'center' : 'start'}>
+                  <TableColumn
+                    key={column.uid}
+                    align={column.uid === 'actions' ? 'center' : 'start'}
+                  >
                     {column.name}
                   </TableColumn>
                 )}
@@ -162,7 +181,9 @@ export default function WishListComponent() {
               <TableBody items={uniqueProducts}>
                 {(product) => (
                   <TableRow key={product.slug}>
-                    {(columnKey) => <TableCell>{renderCell(product,columnKey)}</TableCell>}
+                    {(columnKey: any) => (
+                      <TableCell>{renderCell(product, columnKey)}</TableCell>
+                    )}
                   </TableRow>
                 )}
               </TableBody>
@@ -173,4 +194,3 @@ export default function WishListComponent() {
     </main>
   );
 }
-

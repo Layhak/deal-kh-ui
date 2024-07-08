@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useGetShopsQuery } from '@/redux/service/shops';
+import { useGetShopsQuery } from '@/redux/service/shop';
 import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ShopDetail } from '@/types/shopDetail';
-import ShopNearbyComponent from '@/components/search/ShopNearbyComponent';
 import Loading from '../loading';
+import SearchNearbyShopComponent from '@/components/SearchNearbyShopComponent';
+import { ShopDetail } from '@/types/shopDetail';
 
 const ShopsPage = () => {
   const router = useRouter();
@@ -15,8 +15,6 @@ const ShopsPage = () => {
   const { data, isLoading, error } = useGetShopsQuery({
     page: 1,
     size: 10,
-    field: '',
-    fieldName: '',
   });
 
   const filteredProducts = data?.payload.list.filter((product: ShopDetail) => {
@@ -25,7 +23,11 @@ const ShopsPage = () => {
   });
 
   if (isLoading) {
-    return <div><Loading/></div>;
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
   }
 
   if (error) {
@@ -35,8 +37,7 @@ const ShopsPage = () => {
   return (
     <div>
       {filteredProducts?.map((shop: ShopDetail) => (
-        // eslint-disable-next-line react/jsx-key
-        <ShopNearbyComponent shop={shop} />
+        <SearchNearbyShopComponent key={shop.slug} shop={shop} />
       ))}
     </div>
   );

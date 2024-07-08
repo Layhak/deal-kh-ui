@@ -1,5 +1,4 @@
 import React from 'react';
-import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';

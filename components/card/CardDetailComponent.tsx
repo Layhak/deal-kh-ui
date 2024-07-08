@@ -3,7 +3,7 @@
 import { ProductDetail } from '@/types/productDetail';
 import { Button, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -13,8 +13,8 @@ import 'swiper/css/navigation';
 import '@/styles/swiper.css';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 import {
-  useGetProductRatingsByProductSlugQuery,
   useGetProductFeedbackQuery,
+  useGetProductRatingsByProductSlugQuery,
 } from '@/redux/service/ratingAndFeedback';
 import Loading from '@/app/(user)/loading';
 import { StarIcon } from '@/components/review/StarIcon';
@@ -140,7 +140,7 @@ export default function CardDetailComponent({
                 ${originalPrice}
               </p>
               <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
-                ${discountPrice}
+                ${(originalPrice - discountPrice).toFixed(2)}
               </p>
             </div>
             {/* Shop and other details */}
@@ -164,11 +164,18 @@ export default function CardDetailComponent({
             </div>
           </div>
           {/* Buttons */}
-          <div className="mt-4 flex gap-2 md:flex-row md:gap-4">
-            <Button className=" h-12 w-40 rounded-lg bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-base font-medium text-transparent outline-0 ring-2 ring-orange-500 hover:from-pink-600 hover:to-orange-600 lg:w-64 lg:text-lg lg:font-semibold">
+          <div className="mt-4 grid grid-cols-1 gap-8 md:grid-cols-2">
+            <Button
+              variant={'solid'}
+              radius={'lg'}
+              className=" cursor-pointer border-1  border-warning-500 bg-foreground-50  hover:bg-foreground-100"
+            >
               Add to Cart
             </Button>
-            <Button className=" h-12 w-40 rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-base font-medium text-white lg:w-64 lg:text-lg lg:font-semibold">
+            <Button
+              radius={'lg'}
+              className="bg-gradient-to-r from-pink-500 to-yellow-500 text-base font-medium text-gray-50 "
+            >
               Add to Wishlist
             </Button>
           </div>

@@ -1,9 +1,19 @@
-import React from 'react';
-import { Image } from '@nextui-org/react';
+import React, { useState } from 'react';
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Image,
+} from '@nextui-org/react';
 import { StarIcon } from '@/components/review/StarIcon';
+import DeleteFeedbackModal from './DeleteFeedbackModal';
+import { DeleteIcon, EditIcon, MoreIcon } from '@/components/icons';
 
 interface FeedbackItemProps {
   review: {
+    uuid: string;
     profile?: string;
     username: string;
     ratingValue: number;
@@ -11,9 +21,25 @@ interface FeedbackItemProps {
     createdAt: string;
     images: { url: string }[];
   };
+  currentUser: string;
+  refetchFeedback: () => void;
 }
 
-const FeedbackCard: React.FC<FeedbackItemProps> = ({ review }) => {
+const FeedbackCard: React.FC<FeedbackItemProps> = ({
+  review,
+  currentUser,
+  refetchFeedback,
+}) => {
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedFeedbackId, setSelectedFeedbackId] = useState<string | null>(
+    null
+  );
+
+  const handleDeleteClick = (uuid: string) => {
+    setSelectedFeedbackId(uuid);
+    setIsDeleteModalOpen(true);
+  };
+
   const renderStars = (rating: number) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
@@ -57,6 +83,31 @@ const FeedbackCard: React.FC<FeedbackItemProps> = ({ review }) => {
             </div>
             <div className="flex items-center gap-1">
               {renderStars(review.ratingValue)}
+              {review.username === currentUser && (
+                <div className="flex gap-2">
+                  <Dropdown>
+                    <DropdownTrigger>
+                      <Button isIconOnly variant="light">
+                        <MoreIcon size={32} />
+                      </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Example with disabled actions">
+                      <DropdownItem key="edit" startContent={<EditIcon />}>
+                        Edit
+                      </DropdownItem>
+                      <DropdownItem
+                        key="delete"
+                        className="text-danger"
+                        color="danger"
+                        startContent={<DeleteIcon />}
+                        onClick={() => handleDeleteClick(review.uuid)}
+                      >
+                        Delete
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                </div>
+              )}
             </div>
           </div>
           <div className="mt-4 w-full">
@@ -74,6 +125,14 @@ const FeedbackCard: React.FC<FeedbackItemProps> = ({ review }) => {
           </div>
         </div>
       </div>
+      {selectedFeedbackId && (
+        <DeleteFeedbackModal
+          isOpen={isDeleteModalOpen}
+          onClose={() => setIsDeleteModalOpen(false)}
+          feedbackId={selectedFeedbackId}
+          refetchFeedback={refetchFeedback}
+        />
+      )}
     </div>
   );
 };

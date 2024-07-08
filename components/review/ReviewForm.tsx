@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useFormik, FormikProvider, FieldArray } from 'formik';
+import { ErrorMessage, FieldArray, FormikProvider, useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, Tooltip, Image, Badge } from '@nextui-org/react';
+import { Badge, Button, Image, Tooltip } from '@nextui-org/react';
 import { toast, ToastContainer } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import 'react-toastify/dist/ReactToastify.css';
@@ -41,7 +41,10 @@ const fileValidation = Yup.mixed<any>()
   });
 
 const validationSchema = Yup.object().shape({
-  description: Yup.string().required('Description is required').max(2000),
+  description: Yup.string()
+    .required('Description is required')
+    .max(2000)
+    .trim('Please enter a valid description'),
   productSlug: Yup.string().required('Product slug is required'),
   images: Yup.array().of(
     Yup.object().shape({
@@ -128,10 +131,10 @@ export default function ReviewForm({
   return (
     <FormikProvider value={formik}>
       <form
-        className="flex w-full flex-col items-start rounded-medium bg-default-100 transition-colors hover:bg-default-200/70"
+        className="flex w-full flex-col items-start rounded-medium bg-foreground-50 transition-colors hover:bg-foreground-100/70"
         onSubmit={handleSubmit}
       >
-        <div className="group flex gap-2 px-4 pt-4">
+        <div className="group flex gap-2 ps-4 pt-4">
           <FieldArray name="images">
             {({ remove }) =>
               values.images.map((imageObj, index) => (
@@ -175,7 +178,7 @@ export default function ReviewForm({
           endContent={
             <div className="absolute right-0 flex h-full flex-col items-end justify-between gap-2">
               <Tooltip showArrow content="Share">
-                <Button isIconOnly radius="full" size="sm" variant="light">
+                <Button isIconOnly radius="full" size="sm" variant="solid">
                   <ShareIcon size={20} />
                 </Button>
               </Tooltip>
@@ -203,14 +206,8 @@ export default function ReviewForm({
           radius="lg"
           startContent={
             <Tooltip showArrow content="Add Image">
-              <Button
-                isIconOnly
-                as="label"
-                radius="full"
-                size="sm"
-                variant="light"
-              >
-                <PhotoIcon size={20} />
+              <Button isIconOnly as="label" radius="full" variant="light">
+                <PhotoIcon size={28} />
                 <input
                   type="file"
                   accept="image/*"
@@ -222,10 +219,15 @@ export default function ReviewForm({
             </Tooltip>
           }
           value={values.description}
-          variant="flat"
+          variant={'flat'}
           onValueChange={(val) => setFieldValue('description', val)}
         />
       </form>
+      <ErrorMessage
+        name={'description'}
+        component={'div'}
+        className={'text-red-500'}
+      />
       <ToastContainer />
     </FormikProvider>
   );

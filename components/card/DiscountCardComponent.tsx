@@ -1,19 +1,18 @@
 import { CartProductType } from '@/libs/difinition';
 import { useGetProductsQuery } from '@/redux/service/product';
-import { Card, CardBody, Chip, Image, Link } from '@nextui-org/react';
+import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { StarIcon } from '@/components/review/StarIcon';
 
-export default function DiscountCardComponent({category,discountType}:any) {
+export default function DiscountCardComponent({ category, discountType }: any) {
   const router = useRouter();
   const { data, error } = useGetProductsQuery({
     page: 1,
     size: 8,
-    category:category,
-    discountType:discountType
+    category: category,
+    discountType: discountType,
   });
-
 
   return (
     <main>
@@ -108,7 +107,7 @@ export default function DiscountCardComponent({category,discountType}:any) {
                   ${product.price || 'Price'}
                 </span>
                 <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                  ${product.price - product.discountPrice || '0'}
+                  ${(product.price - product.discountPrice).toFixed(2) || '0'}
                 </span>
               </div>
             </CardBody>

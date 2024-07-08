@@ -5,9 +5,8 @@ import {
   GoogleMap,
   useJsApiLoader,
   Marker,
-  InfoWindow,
-} from '@react-google-maps/api';
-import shopFakes, { ShopFake } from '@/types/shopFake';
+  InfoWindow,} from '@react-google-maps/api';
+
 import { Card, CardBody, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { useGetShopsQuery } from '@/redux/service/shop';
@@ -122,7 +121,7 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
   };
 
   return isLoaded ? (
-    <div className="flex h-screen flex-row">
+    <div className="flex h-screen w-full flex-row">
       {/* Card Shop Seciton */}
       <div className="w-[70%] overflow-y-auto pr-4 scrollbar-hide">
         {nearbyShops.length > 0 ? (

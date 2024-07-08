@@ -5,9 +5,10 @@ import { LuClock10 } from 'react-icons/lu';
 import { BiCategory } from 'react-icons/bi';
 import { Image } from '@nextui-org/react';
 import { ShopFake } from '@/types/shopFake';
+import { ShopDetail } from '@/types/shopDtail';
 
 type Props = {
-  shopProfile: ShopFake;
+  shopProfile: ShopDetail;
 };
 export default function ShopProfileComponent({ shopProfile }: Props) {
   if (!shopProfile) {
@@ -76,7 +77,9 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
               <LuClock10 />
             </div>
             <p className="text-[16px] text-gray-600 dark:text-gray-300">
-              {shopProfile.openAt}
+              {shopProfile.openAt.slice(0,5)}
+              {"  to  "}
+              {shopProfile.closeAt.slice(0,5)}
             </p>
           </div>
           {/* mail */}

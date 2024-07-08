@@ -1,7 +1,7 @@
 'use client';
 import GoogleMapComponent from '@/components/search/GoogleMapComponent';
 
-const Testing = () => {
+const SearchNearBy = () => {
   return (
     <div className="flex h-screen flex-row">
       <GoogleMapComponent
@@ -11,4 +11,4 @@ const Testing = () => {
   );
 };
 
-export default Testing;
+export default SearchNearBy;

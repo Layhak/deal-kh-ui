@@ -58,7 +58,6 @@ export default function BuyMoreGetMoreComponent({category,discountType}:any) {
             onClick={() => router.push(`/${product.slug}`)}
             key={product.slug}
             isPressable
-            onPress={() => console.log('item pressed')}
             className="relative mb-2 h-[330px] w-[285px] flex-none rounded-xl border-1 border-foreground-200  bg-foreground-100 shadow-none dark:border-foreground-700  dark:bg-foreground-800"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
@@ -66,6 +65,7 @@ export default function BuyMoreGetMoreComponent({category,discountType}:any) {
                 <Image
                   onClick={() => router.push(`/${product.slug}`)}
                   className="h-[160px] w-[284px] object-cover"
+                  isZoomed
                   src={
                     product.images[0].url ||
                     'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'

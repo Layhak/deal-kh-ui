@@ -16,6 +16,7 @@ import {
   NavbarMenu,
   NavbarMenuToggle,
   Tooltip,
+  Badge,
 } from '@nextui-org/react';
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
@@ -38,6 +39,7 @@ import { CartProductType } from '@/libs/difinition';
 import { useGetProfileQuery } from '@/redux/service/user';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import { selectProducts } from '@/redux/feature/cart/cartSlice';
+
 
 type ValueTypes = {
   email: string;
@@ -149,6 +151,7 @@ export const NavigationBar = () => {
       console.error('Failed to submit form:', error);
     }
   };
+  const [isInvisible, setIsInvisible] = React.useState(false);
 
   const handleLogout = async () => {
     try {
@@ -248,22 +251,22 @@ export const NavigationBar = () => {
       </NavbarContent>
       <NavbarContent className="hidden gap-4 lg:flex" justify="center">
         <NavbarItem>
-          <ThemeSwitch />
+          <ThemeSwitch/>
         </NavbarItem>
-        <NavbarItem className="hidden sm:flex">
+        <NavbarItem className="sm:flex">
           <NextLink className={'relative'}  href={isLoggedIn ? '/wishlist' : '/login'}>
-            <HeartIcon size={28} />
-            <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
-              {uniqueWishlistProducts.length}
-            </div>
+          <Badge  color="danger"
+  className={'bg-gradient-to-r from-pink-500 to-yellow-500'} content={uniqueWishlistProducts.length} isInvisible={uniqueWishlistProducts.length <= 0} variant="solid" shape="circle" size="sm" >
+          <HeartIcon className="fill-current" size={30} />
+          </Badge>
           </NextLink>
         </NavbarItem>
-        <NavbarItem className="hidden sm:flex">
+        <NavbarItem className="sm:flex">
           <NextLink  href={isLoggedIn ? '/cart' : '/login'} className={'relative'}>
-            <CartIcon size={28} />
-            <div className="bg-yellow-10 absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full text-xs">
-              {uniqueProducts.length}
-            </div>
+          <Badge  color="danger"
+  className={'bg-gradient-to-r from-pink-500 to-yellow-500'} content={uniqueProducts.length} isInvisible={uniqueProducts.length <= 0} variant="solid" shape="circle" size="sm" >
+          <CartIcon className="fill-current" size={30} />
+          </Badge>
           </NextLink>
         </NavbarItem>
         <NavbarItem>

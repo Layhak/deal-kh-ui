@@ -92,7 +92,7 @@ export default function FlashSale() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/cloth">
+          <Link href="/clothes">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More

@@ -102,7 +102,7 @@ export default function DiscountCardComponent({category,discountType}:any) {
                   ${product.price || 'Price'}
                 </span>
                 <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                  ${product.discountPrice || 'Price'}
+                  ${product.price - product.discountPrice || 'Price'}
                 </span>
               </div>
             </CardBody>

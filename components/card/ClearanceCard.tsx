@@ -107,7 +107,7 @@ export default function ClearanceCardComponent({category,discountType}:any) {
                     ${product.price || 'Price'}
                   </span>
                   <span className="ml-3 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
-                    ${product.discountPrice || 'Price'}
+                    ${product.price - product.discountPrice || 'Price'}
                   </span>
                 </div>
                 <Button

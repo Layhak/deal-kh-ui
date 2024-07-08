@@ -74,7 +74,7 @@ export default function Cloth() {
           </div>
           {/* Right section */}
         </div>
-        <NormalProductComponent category={"clothes"} discountType={"no discount"}/>
+        <NormalProductComponent category={"clothes"} discountType={"event"}/>
     </main>
   )
 }

@@ -50,7 +50,7 @@ export type Image = {
   url: string;
 };
 
-interface ImageResponse {
+export type ImageResponse = {
   url: string;
 }
 

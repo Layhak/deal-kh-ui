@@ -213,7 +213,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <ServiceCardComponent category={"skin care"} discountType={"no discount"}/>
+        <ServiceCardComponent category={"accessories"} discountType={"no discount"}/>
         {/* Coupon Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -251,7 +251,7 @@ export default function HomePage() {
         <div >
           <CardCouponComponent displayCount={2}/>
         </div>
-        <DiscountCardComponent category={"electronic"} discountType={"discount off"}/>
+        <DiscountCardComponent category={"clothes"} discountType={"shop coupons"}/>
         {/* Event Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -327,7 +327,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <NormalProductComponent category={"accessories"} discountType={"no discount"}/>
+        <NormalProductComponent category={"electronic"} discountType={"no discount"}/>
         {/* Category */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}

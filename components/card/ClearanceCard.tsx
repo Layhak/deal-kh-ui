@@ -72,12 +72,12 @@ export default function ClearanceCardComponent({category,discountType}:any) {
                       )
                     )}
                 </div>
-                <span className="text-foreground-600 ml-2 text-[16px] font-medium">
+                <span className="ml-2 text-[16px] font-medium text-foreground-600">
                   ({product.ratingAvg}) Reviews
                 </span>
               </div>
               <Link href="#">
-                <h5 className="text-foreground-800 mb-2 h-[70px] text-xl font-semibold tracking-tight dark:text-white">
+                <h5 className="mb-2 h-[70px] text-xl font-semibold tracking-tight text-foreground-800 dark:text-white">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 60)}...`
                     : product.name || 'Product Name'}

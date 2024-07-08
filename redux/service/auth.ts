@@ -1,14 +1,15 @@
 // redux/service/authApi.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  removeAccessToken,
   setAccessToken,
+  removeAccessToken,
+  setLoginSuccess,
 } from '@/redux/feature/auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
   prepareHeaders: (headers, { getState }) => {
-    const token = (getState() as any).auth.accessToken;
+    const token = (getState() as any).auth.token;
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }
@@ -29,9 +30,9 @@ export const authApi = createApi({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
+          localStorage.setItem('token', 'log in');
           dispatch(setAccessToken(data.accessToken));
-          localStorage.setItem('loggedIn', 'loggedIn');
-          localStorage.setItem('showSuccessLoginToast', 'true');
+          dispatch(setLoginSuccess(true));
         } catch (error) {
           // Handle error if needed
         }
@@ -46,8 +47,6 @@ export const authApi = createApi({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           await queryFulfilled;
-          // Handle success if needed
-          localStorage.setItem('showSuccessRegisterToast', 'true');
         } catch (error) {
           // Handle error if needed
         }
@@ -63,7 +62,6 @@ export const authApi = createApi({
         try {
           await queryFulfilled;
           dispatch(removeAccessToken());
-          localStorage.removeItem('loggedIn');
         } catch (error) {
           // Handle error if needed
         }

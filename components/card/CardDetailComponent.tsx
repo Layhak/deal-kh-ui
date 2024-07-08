@@ -10,7 +10,6 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import '@/styles/swiper.css';
-
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
 
 export default function CardDetailComponent({
@@ -40,7 +39,7 @@ export default function CardDetailComponent({
           navigation={true}
           slidesPerView={1}
           modules={[Pagination, Autoplay, EffectFade, Navigation]}
-          className="mySwiper h-[550px] w-[550px]"
+          className="h-full  w-full md:w-[80%] "
           loop={true}
           effect={'fade'}
           autoplay={{
@@ -49,12 +48,17 @@ export default function CardDetailComponent({
           }}
         >
           {images.map((image, index) => (
-            <SwiperSlide key={index}>
-              <Image
-                src={image.url}
-                alt={name}
-                className="h-[550px] w-[550px] object-cover"
-              />
+            <SwiperSlide key={index} className={'rounded-2xl'}>
+              <div className=" overflow-hidden rounded-2xl border-2 border-foreground/80 bg-foreground-100 ">
+                <Image
+                  isZoomed
+                  isBlurred
+                  src={image.url}
+                  alt={name}
+                  radius={'lg'}
+                  className="h-full w-full object-cover"
+                />
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>

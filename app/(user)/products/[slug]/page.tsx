@@ -43,7 +43,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
         promotionDate={product.payload.createdAt}
         expiryDate={product.payload.expiredAt}
       />
-      <ReviewProductDetailComponent />
+      <ReviewProductDetailComponent productSlug={product.payload.slug} />
       {product.payload.discountType === 'Top Sales' ? (
         <DiscountCardComponent />
       ) : (

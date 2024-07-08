@@ -6,12 +6,13 @@ import React from 'react';
 
 export default function DiscountCardComponent({category,discountType}:any) {
   const router = useRouter();
-  const { data, isLoading, error } = useGetProductsQuery({
+  const { data, error } = useGetProductsQuery({
     page: 1,
     size: 8,
     category:category,
     discountType:discountType
   });
+
 
   return (
     <main>
@@ -36,6 +37,7 @@ export default function DiscountCardComponent({category,discountType}:any) {
                   alt={product.name}
                 />
               </Link>
+
               <span className="absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white">
               {`${product.discountValue}${product.isPercentage ? '%' : '$'} OFF`}
               </span>  

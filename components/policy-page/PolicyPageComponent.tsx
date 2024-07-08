@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 
 export default function PolicyPage() {
   return (
-    <ScrollShadow hideScrollBar size={100} className="mt-10 h-[750px] w-full">
+    <ScrollShadow hideScrollBar size={70} className="mt-10 h-[750px] w-full">
       <p className="text-2xl font-bold">Privacy Policy</p>
       <ul className="mx-8 list-disc">
         <li className="mt-2">

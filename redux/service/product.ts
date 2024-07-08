@@ -4,6 +4,15 @@ import { ecommerceApi } from '@/redux/api';
 export const productApi = ecommerceApi.injectEndpoints({
   // The name of the slice of state that will be managed by this api
   endpoints: (builder) => ({
+    // // get all products
+    // getProducts: builder.query<
+    //   any,
+    //   { page: number; size: number; field: string; fieldName: any }
+    // >({
+    //   query: ({ page, size, field, fieldName }) =>
+    //     `products?page=${page}&size=${size}&${field}=${fieldName}`,
+    // }),
+
     // get all products
     getProducts: builder.query<
       any,
@@ -31,7 +40,7 @@ export const productApi = ecommerceApi.injectEndpoints({
     // create a product
     createProduct: builder.mutation<any, { newProduct: object }>({
       query: ({ newProduct }) => ({
-        url: '/products/',
+        url: '/products',
         method: 'POST',
         body: newProduct,
       }),

@@ -3,6 +3,8 @@ import { useGetAllShopsQuery } from '@/redux/service/shop';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { FaShopLock } from 'react-icons/fa6';
+import { bgGreen } from 'next/dist/lib/picocolors';
 
 export default function ShopCardComponent() {
   const router = useRouter();
@@ -21,7 +23,7 @@ export default function ShopCardComponent() {
             onPress={() => console.log('item pressed')}
             className="w-[387px] p-2  shadow-none"
           >
-            <CardBody> 
+            <CardBody>
               <a href="#">
                 <h5 className="text-foreground-800 mb-2 h-[52px] text-xl font-semibold tracking-tight dark:text-white">
                   {shop.name.length > 50
@@ -40,7 +42,7 @@ export default function ShopCardComponent() {
                 />
               </Link>
               <div className="mb-2 mt-2.5 flex items-center"></div>
-              <div className="text-foreground-600 mb-12 h-[30px]">
+              <div className="mb-12 h-[30px] text-foreground-600">
                 <p>
                   {shop.description.length > 115
                     ? `${shop.description.substring(0, 115)}...`
@@ -54,7 +56,7 @@ export default function ShopCardComponent() {
                     {shop.shopType || 'shop Category'}
                   </span>
                 </p>
-                <p className="text-foreground-600 text-sm">
+                <p className="text-sm text-foreground-600">
                   Open :{' '}
                   <span className="text-foreground-900 text-sm font-medium">
                     {shop.openAt} AM - {shop.closeAt} PM

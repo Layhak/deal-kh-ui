@@ -4,11 +4,9 @@ export type ProductDetail = {
   category: string;
   description: string;
   open: string;
-  images: [
-    {
-      url: string;
-    },
-  ];
+  images: {
+    url: string;
+  }[];
   shopName: string;
   discountType: string;
   originalPrice: number;

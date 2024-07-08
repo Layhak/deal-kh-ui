@@ -16,6 +16,49 @@ export const CategoryIcon = (props: IconSvgProps) => (
   </svg>
 );
 
+export const PhotoIcon = ({
+  size = 24,
+  width,
+  height,
+  ...props
+}: IconSvgProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size || width}
+    height={size || height}
+    {...props}
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="currentColor"
+      d="M5 21q-.825 0-1.412-.587T3 19V5q0-.825.588-1.412T5 3h9v2H5v14h14v-9h2v9q0 .825-.587 1.413T19 21zM17 9V7h-2V5h2V3h2v2h2v2h-2v2zM6 17h12l-3.75-5l-3 4L9 13zM5 5v14z"
+    />
+  </svg>
+);
+
+export const ShareIcon = ({
+  size = 24,
+  width,
+  height,
+  ...props
+}: IconSvgProps) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={size || width}
+    height={size || height}
+    {...props}
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      d="M3 12a3 3 0 1 0 6 0a3 3 0 1 0-6 0m12-6a3 3 0 1 0 6 0a3 3 0 1 0-6 0m0 12a3 3 0 1 0 6 0a3 3 0 1 0-6 0m-6.3-7.3l6.6-3.4m-6.6 6l6.6 3.4"
+    />
+  </svg>
+);
 
 export const GoogleIcon = (props: IconSvgProps) => (
   <svg className="h-5 w-5 text-gray-700" viewBox="0 0 48 48">

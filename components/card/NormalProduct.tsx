@@ -82,12 +82,12 @@ export default function NormalProductComponent({category,discountType}:any) {
         {data?.payload.list.map((product: CartProductType) => (
           <Card
             key={product.slug}
-            className="dark:border-foreground-700 bg-foreground-50 relative mb-2 h-[395px] w-[284px]  flex-none  rounded-xl  shadow-none"
+            className="relative mb-2 h-[395px] w-[284px] flex-none rounded-xl  bg-foreground-50  shadow-none  dark:border-foreground-700"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
                 <Image
-                onClick={() => router.push(`/${product.slug}`)}
+                  onClick={() => router.push(`/${product.slug}`)}
                   className="h-[193px] w-[284px] object-cover"
                   src={
                     product.images[0].url ||

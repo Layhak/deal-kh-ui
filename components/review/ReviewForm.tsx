@@ -6,7 +6,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import 'react-toastify/dist/ReactToastify.css';
 
-import PromptInput from '@/components/card/review/PromptInput';
+import PromptInput from '@/components/review/PromptInput';
 import { useUploadImagesMutation } from '@/redux/service/image';
 import {
   useCreateProductFeedbackMutation,

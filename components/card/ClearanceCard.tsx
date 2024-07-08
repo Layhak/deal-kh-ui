@@ -33,7 +33,7 @@ export default function ClearanceCardComponent() {
       <div className="flex flex-wrap justify-center gap-[35px]">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`/${product.slug}`)}
+            onClick={() => router.push(`products/${product.slug}`)}
             key={product.slug}
             isPressable
             className="w-[387px] shadow-none"

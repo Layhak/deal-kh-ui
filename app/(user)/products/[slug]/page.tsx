@@ -4,7 +4,7 @@ import { useGetProductBySlugQuery } from '@/redux/service/product';
 import Loading from '@/app/(user)/loading';
 import CardDetailComponent from '@/components/card/CardDetailComponent';
 import NotFoundPage from '@/app/(user)/not-found';
-import ReviewProductDetailComponent from '@/components/card/review/ReviewProductDetailComponent';
+import ReviewProductDetailComponent from '@/components/review/ReviewProductDetailComponent';
 import DiscountCardComponent from '@/components/card/DiscountCardComponent';
 
 type ProductPageProps = {

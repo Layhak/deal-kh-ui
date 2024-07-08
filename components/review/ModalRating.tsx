@@ -14,8 +14,8 @@ import {
 } from '@nextui-org/react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import RatingDisplay from '@/components/card/review/RatingDisplay';
-import RatingSlider from '@/components/card/review/RatingSlider';
+import RatingDisplay from '@/components/review/RatingDisplay';
+import RatingSlider from '@/components/review/RatingSlider';
 import {
   useLazyGetProductFeedbackQuery,
   useGetProductFeedbackQuery,

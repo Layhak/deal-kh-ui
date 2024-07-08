@@ -1,16 +1,20 @@
+// ratingAndFeedbackApi.js
 import { ecommerceApi } from '@/redux/api';
 import {
   RatingResponse,
   FeedbackResponse,
   CreateFeedbackRequest,
-  CreateRatingRequest, // Add this line
+  CreateRatingRequest,
 } from '@/types/ratings';
 
 export const ratingAndFeedbackApi = ecommerceApi.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
-    getAllProductRatings: builder.query<RatingResponse[], void>({
-      query: () => `/product-ratings`,
+    getProductRatingsByProductSlug: builder.query<
+      RatingResponse[],
+      { productSlug: string }
+    >({
+      query: ({ productSlug }) => `/product-ratings/${productSlug}`,
     }),
     getProductFeedback: builder.query<
       FeedbackResponse,
@@ -42,9 +46,9 @@ export const ratingAndFeedbackApi = ecommerceApi.injectEndpoints({
 });
 
 export const {
-  useGetAllProductRatingsQuery,
+  useGetProductRatingsByProductSlugQuery,
   useGetProductFeedbackQuery,
   useCreateProductFeedbackMutation,
   useLazyGetProductFeedbackQuery,
-  useCreateProductRatingMutation, // Add this line
+  useCreateProductRatingMutation,
 } = ratingAndFeedbackApi;

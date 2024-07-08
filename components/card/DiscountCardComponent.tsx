@@ -3,6 +3,7 @@ import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Chip, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { StarIcon } from '@/components/review/StarIcon';
 
 export default function DiscountCardComponent() {
   const router = useRouter();
@@ -43,49 +44,36 @@ export default function DiscountCardComponent() {
               <div className="mt-4 h-[16] w-full">
                 <div className={'flex items-center justify-between'}>
                   <div className="flex">
-                    {[...Array(Math.floor(product.ratingAvg))].map(
-                      (_, index) => (
-                        <svg
-                          key={index}
-                          className="h-4 w-4 text-yellow-300"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 22 20"
-                        >
-                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                        </svg>
-                      )
-                    )}
-                    {[...Array(5 - Math.floor(product.ratingAvg))].map(
-                      (_, index) => (
-                        <svg
-                          key={index}
-                          className="h-4 w-4 text-foreground-200"
-                          aria-hidden="true"
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="currentColor"
-                          viewBox="0 0 22 20"
-                        >
-                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                        </svg>
-                      )
-                    )}
+                    {Array.from({ length: 5 }, (_, index) => {
+                      if (product.ratingAvg >= index + 1) {
+                        return (
+                          <StarIcon
+                            key={index}
+                            filled
+                            className="h-4 w-4 text-yellow-500"
+                          />
+                        );
+                      } else if (product.ratingAvg >= index + 0.5) {
+                        return (
+                          <StarIcon
+                            key={index}
+                            half
+                            className="h-4 w-4 text-yellow-500"
+                          />
+                        );
+                      } else {
+                        return (
+                          <StarIcon
+                            key={index}
+                            className="h-4 w-4 text-yellow-500"
+                          />
+                        );
+                      }
+                    })}
                     <span className="ml-1 text-[13px] font-medium text-foreground-600">
                       ({product.ratingAvg}) Reviews
                     </span>
                   </div>
-                  {/* <Chip
-                    variant="shadow"
-                    classNames={{
-                      base: 'bg-gradient-to-br from-indigo-500 to-pink-500 border-small border-white/50 shadow-pink-500/30',
-                      content:
-                        'drop-shadow shadow-black text-gray-100 text-small',
-                    }}
-                    size={'sm'}
-                  >
-                    {product?.category ?? 'New'}
-                  </Chip> */}
                 </div>
               </div>
               <Link href={`products/${product.slug}`}>

@@ -1,17 +1,18 @@
+// ReviewProductDetailComponent.jsx
 'use client';
 import { Button, Image, Link, ScrollShadow } from '@nextui-org/react';
 import React, { useState, useEffect } from 'react';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
-import SummaryRatingCard from '@/components/card/review/SummaryRatingCard';
+import SummaryRatingCard from '@/components/review/SummaryRatingCard';
 import { RatingResponse, FeedbackItem } from '@/types/ratings';
 import {
   useGetProductFeedbackQuery,
-  useGetAllProductRatingsQuery,
+  useGetProductRatingsByProductSlugQuery,
 } from '@/redux/service/ratingAndFeedback';
-import ModalRating from '@/components/card/review/ModalRating';
-import ReviewForm from '@/components/card/review/ReviewForm';
+import ModalRating from '@/components/review/ModalRating';
+import ReviewForm from '@/components/review/ReviewForm';
 import Loading from '@/app/(user)/loading';
-import FeedbackCard from '@/components/card/review/FeedbackCard'; // Import FeedbackCard
+import FeedbackCard from '@/components/review/FeedbackCard';
 
 interface CombinedFeedbackItem extends FeedbackItem {
   ratingValue: number;
@@ -27,9 +28,7 @@ export default function ReviewProductDetailComponent({
 }: ReviewProductDetailComponentProps) {
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [averageRating, setAverageRating] = useState(0);
-  const [ratingCounts, setRatingCounts] = useState<number[]>([
-    0, 0, 0, 0, 0, 0,
-  ]);
+  const [ratingCounts, setRatingCounts] = useState<number[]>(Array(11).fill(0)); // Array for 0.5 to 5 ratings
   const [combinedFeedback, setCombinedFeedback] = useState<
     CombinedFeedbackItem[]
   >([]);
@@ -50,7 +49,7 @@ export default function ReviewProductDetailComponent({
     error: ratingError,
     isLoading: ratingLoading,
     refetch: refetchRatings,
-  } = useGetAllProductRatingsQuery();
+  } = useGetProductRatingsByProductSlugQuery({ productSlug });
 
   const {
     data: feedbackData,
@@ -101,13 +100,19 @@ export default function ReviewProductDetailComponent({
   };
 
   const calculateRatings = (ratings: RatingResponse[]) => {
+    if (ratings.length === 0) {
+      setAverageRating(0);
+      setRatingCounts(Array(11).fill(0));
+      return;
+    }
+
     let totalRating = 0;
-    let ratingCount = [0, 0, 0, 0, 0, 0];
+    let ratingCount = Array(11).fill(0);
 
     ratings.forEach((rating) => {
       totalRating += rating.ratingValue;
-      const roundedStar = Math.round(rating.ratingValue);
-      ratingCount[roundedStar]++;
+      const halfStarIndex = Math.round(rating.ratingValue * 2);
+      ratingCount[halfStarIndex]++;
     });
 
     setAverageRating(totalRating / ratings.length);
@@ -149,13 +154,19 @@ export default function ReviewProductDetailComponent({
           <section className="mx-auto w-full max-w-md lg:px-8">
             <div className="flex flex-col gap-4">
               <SummaryRatingCard
-                averageRating={averageRating}
+                averageRating={isNaN(averageRating) ? 0 : averageRating}
                 ratings={[
-                  { rating: 5, count: ratingCounts[5] },
-                  { rating: 4, count: ratingCounts[4] },
-                  { rating: 3, count: ratingCounts[3] },
-                  { rating: 2, count: ratingCounts[2] },
-                  { rating: 1, count: ratingCounts[1] },
+                  { rating: 5, count: ratingCounts[10] },
+                  { rating: 4.5, count: ratingCounts[9] },
+                  { rating: 4, count: ratingCounts[8] },
+                  { rating: 3.5, count: ratingCounts[7] },
+                  { rating: 3, count: ratingCounts[6] },
+                  { rating: 2.5, count: ratingCounts[5] },
+                  { rating: 2, count: ratingCounts[4] },
+                  { rating: 1.5, count: ratingCounts[3] },
+                  { rating: 1, count: ratingCounts[2] },
+                  { rating: 0.5, count: ratingCounts[1] },
+                  { rating: 0, count: ratingCounts[0] },
                 ]}
                 totalRatingCount={ratingsData ? ratingsData.length : 0}
                 onWriteReview={toggleModal}

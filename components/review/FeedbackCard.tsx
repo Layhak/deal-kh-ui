@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from '@nextui-org/react';
-import { StarIcon } from '@/components/card/review/StarIcon';
+import { StarIcon } from '@/components/review/StarIcon';
 
 interface FeedbackItemProps {
   review: {

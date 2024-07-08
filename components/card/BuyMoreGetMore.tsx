@@ -1,5 +1,9 @@
 import { CartProductType } from '@/libs/difinition';
-import { addToWishList, removeFromWishList, selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
+import {
+  addToWishList,
+  removeFromWishList,
+  selectWishlistProducts,
+} from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
@@ -17,8 +21,7 @@ export default function BuyMoreGetMoreComponent() {
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 8,
-    field: '',
-    fieldName: '',
+    filters: { category: 'all' },
   });
   // Initialize the heart state for each product
   const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
@@ -77,12 +80,12 @@ export default function BuyMoreGetMoreComponent() {
                 BUY 1 GET 1
               </span>
               <div className="flex flex-wrap justify-between">
-                  <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
-                    {product.name.length > 30
-                      ? `${product.name.substring(0, 26)}...`
-                      : product.name}
-                  </h5>
-                  <div
+                <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
+                  {product.name.length > 30
+                    ? `${product.name.substring(0, 26)}...`
+                    : product.name}
+                </h5>
+                <div
                   className="right-4 mt-3 cursor-pointer"
                   onClick={() => handleHeartClick(product)}
                 >
@@ -93,7 +96,7 @@ export default function BuyMoreGetMoreComponent() {
                       <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
                     )}
                   </div>
-                  </div>
+                </div>
               </div>
               <div className=" h-[30px] pt-3">
                 <p className="text-[14px] font-medium text-foreground-600 ">

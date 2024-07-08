@@ -3,7 +3,7 @@
 import { cn, RadioGroup, RadioGroupProps } from '@nextui-org/react';
 
 import React from 'react';
-import RatingRadioItem from '@/components/card/review/RatingRadioItem';
+import RatingRadioItem from '@/components/review/RatingRadioItem';
 
 export type RatingRadioGroupProps = RadioGroupProps & {
   hideStarsText?: boolean;

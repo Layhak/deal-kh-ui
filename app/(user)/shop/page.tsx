@@ -13,7 +13,6 @@ export default function page() {
       {/* normal card section */}
       <NormalProductComponent/>
       {/* about us section */}
-      
     </div>
   );
 }

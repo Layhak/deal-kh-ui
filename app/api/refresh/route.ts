@@ -20,10 +20,10 @@ export async function POST() {
 
   const refreshToken = credential.value;
 
-  const response = await fetch(`${process.env.DEALKH_API_URL}auth/refresh/`, {
+  const response = await fetch(`${process.env.DEALKH_API_URL}auth/refresh`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ refresh: refreshToken }),
+    body: JSON.stringify({ refreshToken: refreshToken }),
   });
 
   if (!response.ok) {
@@ -38,8 +38,8 @@ export async function POST() {
   }
 
   const data = await response.json();
-  const refresh = data?.refresh || null;
-  const access = data?.access || null;
+  const refresh = data?.payload?.refreshToken || null;
+  const access = data?.payload?.accessToken || null;
 
   const serialized = serialize(cookieName, refresh, {
     httpOnly: true,

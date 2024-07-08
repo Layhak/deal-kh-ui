@@ -52,7 +52,7 @@ DealKh is an online marketplace and platform that offers deals and discounts on 
 - **Advanced Search Options**: Users can quickly locate the services they need with advanced search options.
 - **Discounts and Coupons**: Special campaigns featuring discounts and coupons provide additional ways for businesses to attract attention.
 - **Marketing Tools**: Helps businesses attract more customers and increase their visibility.
-- **User Reviews**: Customers can read user reviews to make informed decisions.
+- **User reviews**: Customers can read user reviews to make informed decisions.
 
 
 # Selected Technology

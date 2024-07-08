@@ -5,15 +5,13 @@ import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import { Suspense } from 'react';
 import Loading from '@/app/(user)/loading';
 import error from '@/app/(user)/error';
-
+import 'react-toastify/dist/ReactToastify.css';
 import FooterComponent from '@/components/FooterComponent';
 import SessionWrapper from '../SessionProvider';
 import { Metadata } from 'next';
-
 import { NavigationBar } from '@/components/navigationBar';
 import StoreProvider from '@/app/StoreProvider';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -42,13 +40,15 @@ export default function RootLayout({
           <StoreProvider>
             <Providers>
               <NavigationBar />
-              <main className="container mx-auto max-w-7xl min-h-[680px] px-6">
+              <main className="container mx-auto  min-h-screen max-w-7xl px-0 lg:px-6">
                 <ErrorBoundary errorComponent={error}>
-                  <Suspense fallback={<Loading />}>{children}</Suspense>
+                  <Suspense fallback={<Loading />}>
+                    <ToastContainer />
+                    {children}
+                  </Suspense>
                 </ErrorBoundary>
               </main>
               <FooterComponent />
-              <ToastContainer />
             </Providers>
           </StoreProvider>
         </body>

@@ -1,58 +1,55 @@
-"use  client";
-
-import React, { useEffect } from 'react';
+import { ScrollShadow } from '@nextui-org/react';
+import React from 'react';
 import 'aos/dist/aos.css';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
+('use  client');
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Policy Page',
-	description: 'This is a Policy Page',
+  title: 'Policy Page',
+  description: 'This is a Policy Page',
 };
 
 export default function PolicyPage() {
   return (
-    <>
-      <div className="container mx-auto p-6">
-      {/* Privacy Policy section */}
-      <div className="mt-12">
-        <p className="text-2xl font-bold">Privacy Policy</p>
-        <ul className="mx-8 list-disc">
-          <li className="mt-2">
-            We value your privacy and are committed to protecting your personal
-            information. This policy explains what data we collect, how we use
-            it, and your rights regarding your information.
-          </li>
-          <li className="mt-2">
-            We collect personal information when you register on our site, place
-            an order, subscribe to our newsletter, or fill out a form. The data
-            collected includes your name, email address, mailing address, phone
-            number, and payment information.
-          </li>
-          <li className="mt-2">
-            The information we collect is used to process transactions, improve
-            customer service, and send periodic emails for order updates and
-            promotional offers.
-          </li>
-          <li className="mt-2">
-            We do not sell, trade, or otherwise transfer your personally
-            identifiable information to outside parties, except as necessary to
-            fulfill orders or comply with the law.
-          </li>
-          <li className="mt-2">
-            Our website uses cookies to enhance your experience and gather
-            general visitor information. You can choose to disable cookies
-            through your browser settings.
-          </li>
-          <li className="mt-2">
-            You have the right to access, rectify, or delete your personal data.
-            For any privacy-related concerns, please contact us at
-            privacy@example.com.
-          </li>
-        </ul>
-      </div>
+    <ScrollShadow hideScrollBar size={70} className="mt-10 h-[750px] w-full">
+      <p className="text-2xl font-bold">Privacy Policy</p>
+      <ul className="mx-8 list-disc">
+        <li className="mt-2">
+          We value your privacy and are committed to protecting your personal
+          information. This policy explains what data we collect, how we use it,
+          and your rights regarding your information.
+        </li>
+        <li className="mt-2">
+          We collect personal information when you register on our site, place
+          an order, subscribe to our newsletter, or fill out a form. The data
+          collected includes your name, email address, mailing address, phone
+          number, and payment information.
+        </li>
+        <li className="mt-2">
+          The information we collect is used to process transactions, improve
+          customer service, and send periodic emails for order updates and
+          promotional offers.
+        </li>
+        <li className="mt-2">
+          We do not sell, trade, or otherwise transfer your personally
+          identifiable information to outside parties, except as necessary to
+          fulfill orders or comply with the law.
+        </li>
+        <li className="mt-2">
+          Our website uses cookies to enhance your experience and gather general
+          visitor information. You can choose to disable cookies through your
+          browser settings.
+        </li>
+        <li className="mt-2">
+          You have the right to access, rectify, or delete your personal data.
+          For any privacy-related concerns, please contact us at
+          privacy@example.com.
+        </li>
+      </ul>
 
       {/* Terms and Conditions section */}
       <div className="mt-12">
@@ -145,7 +142,6 @@ export default function PolicyPage() {
           </li>
         </ul>
       </div>
-    </div>
-    </>
+    </ScrollShadow>
   );
 }

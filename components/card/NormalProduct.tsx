@@ -4,35 +4,90 @@ import { CartProductType } from '@/libs/difinition';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import React from 'react';
-import { FaRegHeart } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import { LuShoppingCart } from 'react-icons/lu';
+import { addToCart, removeFromCart } from '@/redux/feature/cart/cartSlice';
+import { useAppDispatch } from '@/redux/hook';
+import {
+  addToWishList,
+  removeFromWishList,
+} from '@/redux/feature/wishList/wishListSlice';
+import { MdOutlineShoppingCart, MdShoppingCart } from 'react-icons/md';
 
 export default function NormalProductComponent() {
   const router = useRouter();
-  const { data, isLoading, error } = useGetProductsQuery({
+  const dispatch = useAppDispatch();
+  const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
+  const [cartStates, setCartStates] = useState<Record<string, boolean>>({});
+  const { data, error } = useGetProductsQuery({
     page: 1,
     size: 8,
-    field: '',
-    fieldName: '',
   });
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+
+  // load saved states from local storage when the component mounts.
+  useEffect(() => {
+    const savedHeartStates = localStorage.getItem('heartStates');
+    if (savedHeartStates) {
+      setHeartStates(JSON.parse(savedHeartStates));
+    }
+
+    const savedCartStates = localStorage.getItem('cartStates');
+    if (savedCartStates) {
+      setCartStates(JSON.parse(savedCartStates));
+    }
+  }, []);
+
+  // toggle the state for a product when the heart icon is clicked.
+  const handleHeartClick = (product: CartProductType) => {
+    setHeartStates((prevHeartStates) => {
+      const isAddedToWishlist = !prevHeartStates[product.slug];
+      const updatedHeartStates = {
+        ...prevHeartStates,
+        [product.slug]: isAddedToWishlist, // Toggle the heart state
+      };
+
+      if (isAddedToWishlist) {
+        dispatch(addToWishList(product));
+      } else {
+        dispatch(removeFromWishList(product.slug));
+      }
+      localStorage.setItem('heartStates', JSON.stringify(updatedHeartStates));
+      return updatedHeartStates;
+    });
+  };
+  // toggle the state for a product when the cart icon is clicked.
+  const handleCartClick = (product: CartProductType) => {
+    setCartStates((prevCartStates) => {
+      const isAddedToCart = !prevCartStates[product.slug];
+      const updatedCartStates = {
+        ...prevCartStates,
+        [product.slug]: isAddedToCart, // Toggle the cart state
+      };
+
+      if (isAddedToCart) {
+        dispatch(addToCart(product));
+      } else {
+        dispatch(removeFromCart(product.slug));
+      }
+
+      localStorage.setItem('cartStates', JSON.stringify(updatedCartStates));
+      return updatedCartStates;
+    });
+  };
+
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-6">
+      <div className="flex flex-wrap justify-center gap-[25px]">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`/${product.slug}`)}
             key={product.slug}
-            isPressable
-            onPress={() => console.log('item pressed')}
-            className="dark:border-foreground-700 bg-foreground-50 relative mb-2 h-[395px] w-[284px]  flex-none  rounded-xl  shadow-none"
+            className="relative mb-2 h-[395px] w-[284px] flex-none rounded-xl  bg-foreground-50  shadow-none  dark:border-foreground-700"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
                 <Image
+                  onClick={() => router.push(`/${product.slug}`)}
                   className="h-[193px] w-[284px] object-cover"
                   src={
                     product.images[0].url ||
@@ -59,7 +114,7 @@ export default function NormalProductComponent() {
                     (_, index) => (
                       <svg
                         key={index}
-                        className="text-foreground-200 dark:text-foreground-600 h-4 w-4"
+                        className="h-4 w-4 text-foreground-200 dark:text-foreground-600"
                         aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="currentColor"
@@ -70,19 +125,19 @@ export default function NormalProductComponent() {
                     )
                   )}
                 </div>
-                <span className="text-foreground-600 ml-1 text-[15px] font-medium">
+                <span className="ml-1 text-[15px] font-medium text-foreground-600">
                   ({product.ratingAvg}) Reviews
                 </span>
               </div>
               <Link href="#">
-                <h5 className="text-foreground-800 mt-1 h-[45px] text-[18px] font-semibold tracking-tight dark:text-white">
+                <h5 className="mt-1 h-[45px] text-[18px] font-semibold tracking-tight text-foreground-800 dark:text-white">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 45)}...`
                     : product.name || 'Product Name'}
                 </h5>
               </Link>
               <div className=" h-[30px] pt-2">
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Shop :{' '}
                   <Link href="">
                     <span className="text-info-800 text-[14px] font-medium">
@@ -92,7 +147,7 @@ export default function NormalProductComponent() {
                     </span>
                   </Link>
                 </p>
-                <p className="text-foreground-600 text-[14px] font-medium ">
+                <p className="text-[14px] font-medium text-foreground-600 ">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
                     {product.expiredAt}
@@ -106,12 +161,30 @@ export default function NormalProductComponent() {
                   </span>
                 </div>
                 <div className="flex justify-end gap-[15px]">
-                  <a href="#">
-                    <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                  </a>
-                  <a href="">
-                    <LuShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                  </a>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => handleHeartClick(product)}
+                  >
+                    <div key={product.slug}>
+                      {heartStates[product.slug] ? (
+                        <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                      ) : (
+                        <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                      )}
+                    </div>
+                  </div>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => handleCartClick(product)}
+                  >
+                    <div key={product.slug}>
+                      {cartStates[product.slug] ? (
+                        <MdShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                      ) : (
+                        <MdOutlineShoppingCart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                      )}
+                    </div>
+                  </div>
                 </div>
               </div>
             </CardBody>

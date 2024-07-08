@@ -12,6 +12,7 @@ const baseQuery = fetchBaseQuery({
   baseUrl: process.env.NEXT_PUBLIC_DEALKH_API_URL,
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
+    console.log('Setting token:', token);
     if (token) {
       headers.set('authorization', `Bearer ${token}`);
     }
@@ -26,7 +27,7 @@ const baseQueryWithReAuth = async (
 ) => {
   let result = await baseQuery(args, api, extraOptions);
   if (result.error?.status === 401) {
-    const res = await fetch(`${process.env.EXT_PUBLIC_BASE_URL}refresh`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}refresh`, {
       method: 'POST',
       credentials: 'include',
     });
@@ -36,7 +37,7 @@ const baseQueryWithReAuth = async (
       result = await baseQuery(args, api, extraOptions);
     } else {
       const logoutRes = await fetch(
-        `${process.env.EXT_PUBLIC_BASE_URL}logout`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}logout`,
         {
           method: 'POST',
           credentials: 'include',

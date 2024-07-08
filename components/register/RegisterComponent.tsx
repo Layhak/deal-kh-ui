@@ -4,9 +4,14 @@ import React from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
-import { Button } from '@nextui-org/react';
+import { Button, Divider } from '@nextui-org/react';
 import { signIn } from 'next-auth/react';
-import { Cancel, Facebook, Google, Logo } from '@/components/icons';
+import {
+  Cancel,
+  FacebookWithColorIcon,
+  Google,
+  Logo,
+} from '@/components/icons';
 import { ToastContainer } from 'react-toastify';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { useRegisterUserMutation } from '@/redux/service/auth';
@@ -17,6 +22,7 @@ import CustomDatePicker from '@/components/customInput/customDatePicker';
 import CustomCheckbox from '@/components/customInput/CustomCheckbox';
 import CustomInput from '@/components/customInput/customInput';
 import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
+import { format } from 'node:util';
 
 interface RegisterFormValues {
   firstName: string;
@@ -59,7 +65,16 @@ const validationSchema = Yup.object().shape({
     .required('Confirm password is required'),
   gender: Yup.string().required('Gender is required'),
   phoneNumber: Yup.string().required('Phone number is required'),
-  dob: Yup.date().required('Date of birth is required').nullable(),
+  dob: Yup.date()
+    .required('Date of birth is required')
+    .min(
+      new Date(new Date().getFullYear() - 100, 0, 1),
+      "Your age can't be more than 100 "
+    )
+    .max(
+      new Date(new Date().getFullYear() - 18, 0, 1),
+      "Your age can't not be less than 18 "
+    ),
   location: Yup.string().required('Location is required'),
 });
 
@@ -107,202 +122,192 @@ const Register: React.FC = () => {
 
   return (
     <div
-      className="bg-foreground-50 min-h-[500px] w-full rounded-xl border-1 p-4 dark:border-0  sm:w-[700px] sm:px-7 sm:py-5"
-      data-aos="flip-up"
+      className={
+        'flex min-h-screen w-screen items-center justify-center bg-foreground-200 p-2 sm:p-4 lg:p-8'
+      }
     >
-      <div className={'flex items-center justify-between'}>
-        <NextLink href="/">
-          <Button
-            color={'danger'}
-            radius={'full'}
-            variant={'bordered'}
-            className={'border-0'}
-            size={'sm'}
-            isIconOnly={true}
-          >
-            <Cancel size={28} />
-          </Button>
-        </NextLink>
-        <ThemeSwitch />
-      </div>
-      <div>
-        <div className={'my-2 flex items-center gap-1'}>
-          <Logo size={46} />
-          <h2 className=" bg-gradient-to-r  from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold leading-9 tracking-tight text-transparent">
-            Deal KH
-          </h2>
-        </div>
-        <div>
-          <h1 className=" text-3xl  font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-200">
-            Create your account
-          </h1>
-        </div>
-        <p className="mt-3 text-sm leading-6 text-gray-500 dark:text-gray-400">
-          Already become our member?{' '}
-          <NextLink
-            href="/login"
-            className="font-semibold text-primary-500 hover:text-blue-600"
-          >
-            Login here!
+      <div
+        className="flex w-full max-w-xl flex-col gap-4 rounded-large bg-background/60 px-8 pb-10 pt-6  backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+        data-aos="flip-up"
+      >
+        <div className={'flex items-center justify-between'}>
+          <NextLink href="/">
+            <Button
+              color={'danger'}
+              radius={'full'}
+              variant={'bordered'}
+              className={'border-0'}
+              size={'sm'}
+              isIconOnly={true}
+            >
+              <Cancel size={28} />
+            </Button>
           </NextLink>
-        </p>
-      </div>
-
-      <div className="mt-5">
+          <ThemeSwitch />
+        </div>
         <div>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
-          >
-            {() => (
-              <Form action="#" method="POST" className="space-y-2">
-                <div className="grid grid-cols-2 gap-2">
-                  <div className="mt-3">
-                    <CustomInput
-                      label="First Name"
-                      name="firstName"
-                      type="text"
-                      placeholder="Enter your first name"
-                    />
-                  </div>
-                  <div className="mt-3">
-                    <CustomInput
-                      label="Last Name"
-                      name="lastName"
-                      type="text"
-                      placeholder="Enter your last name"
-                    />
-                  </div>
-                  <div className="mt-3">
-                    <CustomInput
-                      label="Username"
-                      name="username"
-                      type="text"
-                      placeholder="Enter your username"
-                    />
-                  </div>
-                  <div className="mt-3">
-                    <CustomInput
-                      label="Email"
-                      name="email"
-                      type="email"
-                      placeholder="Enter your email address"
-                    />
-                  </div>
-                  <div className={'mt-3'}>
-                    <CustomPasswordInput
-                      label="Password"
-                      name="password"
-                      placeholder="Enter your password"
-                    />
-                  </div>
-                  <div className={'mt-3'}>
-                    <CustomPasswordInput
-                      label="Confirm Password"
-                      name="confirmedPassword"
-                      placeholder="Confirm your password"
-                    />{' '}
-                  </div>
-                  <div className={'mt-3'}>
-                    <CustomSelect
-                      label="Gender"
-                      name="gender"
-                      options={[
-                        { value: 'male', label: 'Male' },
-                        { value: 'female', label: 'Female' },
-                      ]}
-                      placeholder="Select gender"
-                    />
-                  </div>
-                  <div className={'mt-3'}>
-                    <CustomInput
-                      label="Phone Number"
-                      name="phoneNumber"
-                      type="text"
-                      placeholder="Enter your phone number"
-                    />
-                  </div>
-                  <div className={'mt-3'}>
-                    <CustomDatePicker name="dob" />
-                  </div>
-                  <div className={'mt-3'}>
-                    <CustomInput
-                      label="Location"
-                      name="location"
-                      type="text"
-                      placeholder="Enter your location"
-                    />
-                  </div>
-                </div>
-
-                <div className=" flex items-center justify-between">
-                  <div className="my-3 flex items-center">
-                    <Field
-                      type="checkbox"
-                      id="acceptPolicy"
-                      component={CustomCheckbox}
-                    />
-                    <label htmlFor="acceptPolicy" className={'text-foreground'}>
-                      I agree with the term & condition
-                    </label>
-                  </div>
-                </div>
-                <div>
-                  <Button
-                    color={'warning'}
-                    className={
-                      ' w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-lg  text-gray-50 '
-                    }
-                    type="submit"
-                    variant={'solid'}
-                  >
-                    Sign up
-                  </Button>
-                </div>
-              </Form>
-            )}
-          </Formik>
+          <div className={' flex items-center gap-1'}>
+            <Logo size={46} />
+            <h2 className=" bg-gradient-to-r  from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold leading-9 tracking-tight text-transparent">
+              Deal KH
+            </h2>
+          </div>
+          <div>
+            <h1 className=" text-3xl  font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-200">
+              Create your account
+            </h1>
+          </div>
+          <p className=" text-sm leading-6 text-gray-500 dark:text-gray-400">
+            Already become our member?{' '}
+            <NextLink
+              href="/login"
+              className="font-semibold text-primary-500 hover:text-blue-600"
+            >
+              Login here!
+            </NextLink>
+          </p>
         </div>
 
-        <div className="mt-2">
-          <div className="relative">
-            <div
-              className="absolute inset-0 flex items-center"
-              aria-hidden="true"
-            >
-              <div className="w-full border-0 border-t border-foreground" />
-            </div>
-            <div className="relative flex justify-center text-sm font-medium leading-6">
-              <span className="text-foreground-900  bg-foreground-50 px-3 ">
-                Or
-              </span>
-            </div>
-          </div>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={onSubmit}
+        >
+          {() => (
+            <Form action="#" method="POST" className="space-y-2">
+              <div className="grid grid-cols-2 gap-2">
+                <div className="mt-3">
+                  <CustomInput
+                    label="First Name"
+                    name="firstName"
+                    type="text"
+                    placeholder="Enter your first name"
+                  />
+                </div>
+                <div className="mt-3">
+                  <CustomInput
+                    label="Last Name"
+                    name="lastName"
+                    type="text"
+                    placeholder="Enter your last name"
+                  />
+                </div>
+                <div className="mt-3">
+                  <CustomInput
+                    label="Username"
+                    name="username"
+                    type="text"
+                    placeholder="Enter your username"
+                  />
+                </div>
+                <div className="mt-3">
+                  <CustomInput
+                    label="Email"
+                    name="email"
+                    type="email"
+                    placeholder="Enter your email address"
+                  />
+                </div>
+                <div className={'mt-3'}>
+                  <CustomPasswordInput
+                    label="Password"
+                    name="password"
+                    placeholder="Enter your password"
+                  />
+                </div>
+                <div className={'mt-3'}>
+                  <CustomPasswordInput
+                    label="Confirm Password"
+                    name="confirmedPassword"
+                    placeholder="Confirm your password"
+                  />{' '}
+                </div>
+                <div className={'mt-3'}>
+                  <CustomSelect
+                    label="Gender"
+                    name="gender"
+                    options={[
+                      { value: 'male', label: 'Male' },
+                      { value: 'female', label: 'Female' },
+                    ]}
+                    placeholder="Select gender"
+                  />
+                </div>
+                <div className={'mt-3'}>
+                  <CustomInput
+                    label="Phone Number"
+                    name="phoneNumber"
+                    type="text"
+                    placeholder="Enter your phone number"
+                  />
+                </div>
+                <div className={'mt-3'}>
+                  <CustomDatePicker name="dob" />
+                </div>
+                <div className={'mt-3'}>
+                  <CustomInput
+                    label="Location"
+                    name="location"
+                    type="text"
+                    placeholder="Enter your location"
+                  />
+                </div>
+              </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-4">
-            <NextLink
-              href="#"
-              className="bg-foreground-100 text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
-              onClick={() => signIn('google')}
-            >
-              <Google />
-              <span className="text-foreground-800 text-sm font-semibold leading-6">
-                Google
-              </span>
-            </NextLink>
+              <div className=" flex items-center justify-between">
+                <div className="my-3 flex items-center">
+                  <Field
+                    type="checkbox"
+                    id="acceptPolicy"
+                    component={CustomCheckbox}
+                  />
+                  <label htmlFor="acceptPolicy" className={'text-foreground'}>
+                    I agree with the term & condition
+                  </label>
+                </div>
+              </div>
+              <div>
+                <Button
+                  color={'warning'}
+                  className={
+                    ' w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-lg  text-gray-50 '
+                  }
+                  type="submit"
+                  variant={'solid'}
+                >
+                  Sign up
+                </Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
 
-            <NextLink
-              href="#"
-              className="bg-foreground-100 text-foregroundfocus-visible:outline flex w-full items-center justify-center gap-3 rounded-md border-1 border-gray-300 px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#1D9BF0]"
-              onClick={() => signIn('facebook')}
-            >
-              <Facebook size={24} className={'text-primary-500'} />
-              <span className="text-foreground-800 text-sm font-semibold leading-6">
-                Facebook
-              </span>
-            </NextLink>
-          </div>
+        <div className="flex items-center gap-4 py-3">
+          <Divider className="flex-1" />
+          <p className="shrink-0 text-tiny text-default-500">OR</p>
+          <Divider className="flex-1" />
+        </div>
+
+        <div className=" grid grid-cols-1 gap-3">
+          <Button
+            className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"
+            onClick={() => signIn('google')}
+            startContent={<Google className={'text-gray-50'} />}
+          >
+            <span className="text-sm font-semibold leading-6 text-foreground-800">
+              Google
+            </span>
+          </Button>
+
+          <Button
+            className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"
+            startContent={<FacebookWithColorIcon />}
+            onClick={() => signIn('facebook')}
+          >
+            <span className="text-sm font-semibold leading-6 text-foreground-800">
+              Facebook
+            </span>
+          </Button>
         </div>
       </div>
       <ToastContainer />

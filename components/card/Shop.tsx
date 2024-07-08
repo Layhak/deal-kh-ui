@@ -1,20 +1,20 @@
 import { CartProductType } from '@/libs/difinition';
 import { useGetProductsQuery } from '@/redux/service/product';
-import { Card, CardBody, Image, Link } from '@nextui-org/react';
+import { Avatar, Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { FaShopLock } from 'react-icons/fa6';
+import { bgGreen } from 'next/dist/lib/picocolors';
 
 export default function ShopCardComponent() {
   const router = useRouter();
-  const { data, isLoading, error } = useGetProductsQuery({
+  const { data, error } = useGetProductsQuery({
     page: 1,
-    size: 3,
-    field: '',
-    fieldName: '',
+    size: 6,
   });
-  console.log('data', data);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+  // console.log('data', data);
+  // console.log('error', error);
+  // console.log('isLoading', isLoading);
 
   return (
     <div>
@@ -28,11 +28,14 @@ export default function ShopCardComponent() {
           >
             <CardBody>
               <a href="#">
-                <h5 className="text-foreground-800 mb-2 h-[52px] text-xl font-semibold tracking-tight dark:text-white">
-                  {product.shop.length > 50
-                    ? `${product.shop.substring(0, 20)}...`
-                    : product.shop || 'Shop Name'}
-                </h5>
+                <div className="flex">
+                  <FaShopLock size={24} color="rgb(200, 150, 50)" />
+                  <h5 className="h-[52px] px-2 text-xl font-semibold tracking-tight text-foreground-800 dark:text-white">
+                    {product.shop.length > 50
+                      ? `${product.shop.substring(0, 20)}...`
+                      : product.shop || 'Shop Name'}
+                  </h5>
+                </div>
               </a>
               <Link href="#">
                 <Image
@@ -45,7 +48,7 @@ export default function ShopCardComponent() {
                 />
               </Link>
               <div className="mb-2 mt-2.5 flex items-center"></div>
-              <div className="text-foreground-600 mb-12 h-[30px]">
+              <div className="mb-12 h-[30px] text-foreground-600">
                 <p>
                   {product.description.length > 115
                     ? `${product.description.substring(0, 115)}...`
@@ -55,21 +58,23 @@ export default function ShopCardComponent() {
               <div className="my-1 flex flex-col gap-1">
                 <p className=" text-foreground-600">
                   Category :{' '}
-                  <span className="text-foreground-900 font-medium">
+                  <span className="font-medium text-foreground-900">
                     {product.category || 'Product Category'}
                   </span>
                 </p>
-                <p className="text-foreground-600 text-sm">
+                <p className="text-sm text-foreground-600">
                   Open :{' '}
-                  <span className="text-foreground-900 text-sm font-medium">
+                  <span className="text-sm font-medium text-foreground-900">
                     09:00 AM - 08:00 PM
                   </span>
                 </p>
               </div>
               <div className="flex items-center justify-between pt-4">
                 <div className="flex items-center justify-start">
-                  <span className="text-foreground-900 pt-2  text-sm dark:text-white">
-                    Available Now.
+                  <span className="pt-2 text-sm  text-foreground-900 dark:text-white">
+                    <p className="text-base font-semibold text-blue-700">
+                      Available Now.
+                    </p>
                     <p>Get Notified.</p>
                   </span>
                 </div>

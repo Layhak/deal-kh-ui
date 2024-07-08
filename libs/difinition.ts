@@ -50,6 +50,10 @@ export type Image = {
   url: string;
 };
 
+interface ImageResponse {
+  url: string;
+}
+
 export type CartProductType = {
   seller: string;
   name: string;
@@ -60,7 +64,12 @@ export type CartProductType = {
   description: string;
   images: Image[];
   shop: string;
+  shopSlug: string;
+  location: string;
+  openAt: string;
+  closeAt: string;
   discountValue: number;
+  isPercentage: boolean;
   discountType: string;
   expiredAt: string;
   category: string;
@@ -68,7 +77,49 @@ export type CartProductType = {
   updatedAt: string;
   createdBy: string;
   updatedBy: string;
+  quantity?: number | 0;
+  address?: string;
 };
+
+export type ShopResponse = {
+  name: string;
+  slug: string;
+  address: string;
+  description: string;
+  phoneNumber: string;
+  email: string;
+  isDeleted: boolean;
+  isDisabled: boolean;
+  openAt: string;
+  closeAt: string;
+  shopType: string;
+  images: ImageResponse[];
+  owners: string[];
+  location: string;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+};
+
+export type Payload = {
+  list: CartProductType[];
+  pagination: Pagination;
+};
+
+export type ShopPayload = {
+  list: ShopResponse[];
+  pagination: Pagination;
+};
+
+export type ShopsResponse = {
+  payload: ShopPayload;
+};
+
+export interface Coordinates {
+  lat: number;
+  lng: number;
+}
 
 export type Pagination = {
   pageSize: number;
@@ -79,11 +130,6 @@ export type Pagination = {
   first: boolean;
   last: boolean;
   empty: boolean;
-};
-
-export type Payload = {
-  list: CartProductType[];
-  pagination: Pagination;
 };
 
 export type ApiResponse = {

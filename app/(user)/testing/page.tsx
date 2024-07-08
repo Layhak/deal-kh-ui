@@ -1,21 +1,9 @@
-"use client"
-import GoogleMapComponent from '@/components/search/GoogleMapComponent';
-import { useGetShopsQuery } from '@/redux/service/shop';
+import React from 'react'
 
-const Testing = () => {
-
-  const { data, isLoading, error } = useGetShopsQuery({
-    page: 1,
-    size: 10,
-    field: '',
-    fieldName: '',
-  });
-
+export default function page() {
   return (
     <div>
-      <GoogleMapComponent apiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY!}/>
+      
     </div>
-  );
-};
-
-export default Testing;
+  )
+}

@@ -1,8 +1,19 @@
-import { RootState } from '@/redux/store';
+// redux/feature/auth/authSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RootState } from '@/redux/store';
 
-const initialState = {
-  token: null as string | null,
+interface AuthState {
+  token: string | null;
+  logoutSuccess: boolean;
+  registerSuccess: boolean;
+  loginSuccess: boolean;
+}
+
+const initialState: AuthState = {
+  token: null,
+  logoutSuccess: false,
+  registerSuccess: false,
+  loginSuccess: false,
 };
 
 const authSlice = createSlice({
@@ -15,9 +26,27 @@ const authSlice = createSlice({
     removeAccessToken(state) {
       state.token = null;
     },
+    setLogoutSuccess(state, action: PayloadAction<boolean>) {
+      state.logoutSuccess = action.payload;
+    },
+    setRegisterSuccess(state, action: PayloadAction<boolean>) {
+      state.registerSuccess = action.payload;
+    },
+    setLoginSuccess(state, action: PayloadAction<boolean>) {
+      state.loginSuccess = action.payload;
+    },
   },
 });
 
-export const { setAccessToken, removeAccessToken } = authSlice.actions;
+export const {
+  setAccessToken,
+  removeAccessToken,
+  setLogoutSuccess,
+  setRegisterSuccess,
+  setLoginSuccess,
+} = authSlice.actions;
+export const selectLoginSuccess = (state: RootState) => state.auth.loginSuccess;
+export const selectLogoutSuccess = (state: RootState) =>
+  state.auth.logoutSuccess;
+export const selectAccessToken = (state: RootState) => state.auth.token;
 export default authSlice.reducer;
-export const selectToken = (state: RootState) => state.auth.token;

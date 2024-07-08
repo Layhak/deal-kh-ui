@@ -136,7 +136,7 @@ export default function ReviewProductDetailComponent({
 
   const reviewsToShow = combinedFeedback.slice(
     0,
-    showAllReviews ? combinedFeedback.length : 3
+    showAllReviews ? combinedFeedback.length : 5
   );
 
   return (
@@ -175,12 +175,12 @@ export default function ReviewProductDetailComponent({
             </div>
           </section>
           <div className={'col-span-2'}>
-            <ScrollShadow size={10} className="h-[550px] w-full ">
+            <ScrollShadow size={10} className="h-[750px] w-full ">
               {reviewsToShow.map((review, index) => (
                 <FeedbackCard key={index} review={review} />
               ))}
             </ScrollShadow>
-            {(combinedFeedback.length ?? 0) > 3 && (
+            {(combinedFeedback.length ?? 0) > 5 && (
               <div className="mt-4 flex justify-center">
                 <Button
                   onClick={toggleShowAllReviews}

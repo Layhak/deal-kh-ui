@@ -57,6 +57,7 @@ interface ImageResponse {
 export type CartProductType = {
   seller: string;
   name: string;
+  ratingCount: number;
   slug: string;
   price: number;
   discountPrice: number;

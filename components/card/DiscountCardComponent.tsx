@@ -71,7 +71,7 @@ export default function DiscountCardComponent() {
                       }
                     })}
                     <span className="ml-1 text-[13px] font-medium text-foreground-600">
-                      ({product.ratingAvg}) Reviews
+                      ({product?.ratingCount}) Reviews
                     </span>
                   </div>
                 </div>

@@ -12,7 +12,6 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import '@/styles/swiper.css';
 import { Autoplay, EffectFade, Navigation, Pagination } from 'swiper/modules';
-import ReviewProductDetailComponent from '@/components/review/ReviewProductDetailComponent';
 import {
   useGetProductRatingsByProductSlugQuery,
   useGetProductFeedbackQuery,
@@ -175,7 +174,6 @@ export default function CardDetailComponent({
           </div>
         </div>
       </div>
-      <ReviewProductDetailComponent productSlug={id} />
     </div>
   );
 }

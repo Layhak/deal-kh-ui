@@ -8,12 +8,12 @@ type CardShopProps = {
   shop: ShopFake;
 };
 
-const ShopNearbyComponent: React.FC<CardShopProps> = ({ shop }) => {
+const ShopNearbyComponentTesting: React.FC<CardShopProps> = ({ shop }) => {
 
   const router = useRouter();
 
   const handleCardClick = () => {
-    router.push(`/shop/${shop.slug}`);
+    router.push(`/testing/${shop.slug}`);
   };
 
   return (
@@ -88,4 +88,4 @@ const ShopNearbyComponent: React.FC<CardShopProps> = ({ shop }) => {
   );
 };
 
-export default ShopNearbyComponent;
+export default ShopNearbyComponentTesting;

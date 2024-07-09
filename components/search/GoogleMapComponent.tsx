@@ -3,15 +3,15 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   GoogleMap,
-  InfoWindow,
-  Marker,
   useJsApiLoader,
+  Marker,
+  InfoWindow,
 } from '@react-google-maps/api';
-
+import shopFakes, { ShopFake } from '@/types/shopFake';
 import { Card, CardBody, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { useGetShopsQuery } from '@/redux/service/shop';
-import { ShopDetail } from '@/types/shopDetail';
+import { ShopDetail } from '@/types/shopDtail';
 
 type GoogleMapProps = {
   apiKey: string;
@@ -32,6 +32,8 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
   const { data, isLoading, error } = useGetShopsQuery({
     page: 1,
     size: 10,
+    field: '',
+    fieldName: '',
   });
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -118,8 +120,9 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
     minZoom: 10,
     zoom: 14,
   };
+
   return isLoaded ? (
-    <div className="flex h-screen w-full flex-row">
+    <div className="flex h-screen flex-row">
       {/* Card Shop Seciton */}
       <div className="w-[70%] overflow-y-auto pr-4 scrollbar-hide">
         {nearbyShops.length > 0 ? (
@@ -168,9 +171,9 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
                     <p className="text-sm text-foreground-600">
                       Open :{' '}
                       <span className="text-sm font-medium text-foreground-900">
-                        {shop.openAt.slice(0, 5)}
-                        {'  to  '}
-                        {shop.closeAt.slice(0, 5)}
+                        {shop.openAt.slice(0,5)}
+                        {"  to  "}
+                        {shop.closeAt.slice(0,5)}
                       </span>
                     </p>
                   </div>
@@ -211,6 +214,7 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
           <Marker position={center} />
           {nearbyShops.map((shop, index) => {
             const [shopLat, shopLng] = shop.location.split(',').map(parseFloat);
+
             return (
               <Marker
                 key={index}

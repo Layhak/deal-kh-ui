@@ -85,7 +85,7 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
           input: 'text-sm',
         }}
         labelPlacement="outside"
-        placeholder={searchValue || 'Search Deal-KH'}
+        placeholder={searchValue || 'Search Product'}
         endContent={
           searchValue ? (
             <CloseIcon

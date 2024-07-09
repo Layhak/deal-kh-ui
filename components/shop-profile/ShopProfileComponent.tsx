@@ -4,10 +4,10 @@ import { HiOutlinePhone } from 'react-icons/hi';
 import { LuClock10 } from 'react-icons/lu';
 import { BiCategory } from 'react-icons/bi';
 import { Image } from '@nextui-org/react';
-import { ShopDetail } from '@/types/shopDetail';
+import { ShopFake } from '@/types/shopFake';
 
 type Props = {
-  shopProfile: ShopDetail;
+  shopProfile: ShopFake;
 };
 export default function ShopProfileComponent({ shopProfile }: Props) {
   if (!shopProfile) {
@@ -21,7 +21,8 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
         <div
           className="relative flex h-40 w-full justify-start rounded-lg bg-gray-800 lg:h-96"
           style={{
-            backgroundImage: `url(${shopProfile.cover})`,
+            backgroundImage:
+              `url(${shopProfile.cover})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -75,9 +76,7 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
               <LuClock10 />
             </div>
             <p className="text-[16px] text-gray-600 dark:text-gray-300">
-              {shopProfile.openAt.slice(0, 5)}
-              {'  to  '}
-              {shopProfile.closeAt.slice(0, 5)}
+              {shopProfile.openAt}
             </p>
           </div>
           {/* mail */}

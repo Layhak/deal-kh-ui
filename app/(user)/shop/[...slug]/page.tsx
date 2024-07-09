@@ -2,7 +2,7 @@
 import ShopProfileComponent from '@/components/shop-profile/ShopProfileComponent';
 import { useGetShopsQuery } from '@/redux/service/shop';
 import React from 'react';
-import { ShopDetail } from '@/types/shopDetail';
+import { ShopDetail } from '@/types/shopDtail';
 
 type Props = {
   params: {

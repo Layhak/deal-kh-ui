@@ -2,7 +2,7 @@
 import { Card, CardBody, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { ShopDetail } from '@/types/shopDetail';
+import { ShopDetail } from '@/types/shopDtail';
 
 type CardShopProps = {
   shop: ShopDetail;

@@ -126,7 +126,7 @@ export default function WishListDropDownComponent() {
                             ],
                           },
                         }}
-                        onChange={(value) => setWishlistPercentage(value)}
+                        onChange={(value: any) => setWishlistPercentage(value)}
                       />
                     </div>
 
@@ -166,7 +166,6 @@ export default function WishListDropDownComponent() {
           </div>
         </div>
       )}
-      
     </div>
   );
 }

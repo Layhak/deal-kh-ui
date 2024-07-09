@@ -5,14 +5,10 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { BiCategoryAlt } from 'react-icons/bi';
-import { CartIcon, CloseIcon, HeartIcon, SearchIcon } from '@/components/icons';
-import { Input, dropdown } from '@nextui-org/react';
-import { Product } from '@/types/product';
-import { ProductResponse, ProductType } from '@/libs/difinition';
+import { CloseIcon, SearchIcon } from '@/components/icons';
+import { Input } from '@nextui-org/react';
 import { ProductSearch, productSearchList } from '@/types/productSearch';
 import { useRouter } from 'next/navigation';
-import { useGetProductsQuery } from '@/redux/service/product';
 
 type ProductDropDown = {
   products: ProductSearch[];
@@ -26,6 +22,14 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
 
   const router = useRouter();
 
+  const handleSearchChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    const newSearchValue = event.target.value;
+    setSearchValue(newSearchValue);
+    setProductDropdown(newSearchValue.length > 0);
+  };
+
   const handleSubmit = () => {
     // Navigate to the search results page and pass the filtered products
     router.push(`/searching-product?searchValue=${searchValue}`);
@@ -36,6 +40,12 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
     setSearchValue('');
     setProductDropdown(false);
     setClickCount(0);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
   };
 
   // for drop-down menu of product
@@ -74,6 +84,7 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
         }}
         labelPlacement="outside"
         placeholder={searchValue || 'Search Product'}
+        onChange={handleSearchChange}
         endContent={
           searchValue ? (
             <CloseIcon
@@ -91,6 +102,7 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
         type="search"
         value={searchValue}
         onClick={handleInputClick}
+        onKeyPress={handleKeyPress}
       />
       {productDropdown && (
         <div className="relative">

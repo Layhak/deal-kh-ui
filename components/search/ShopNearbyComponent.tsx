@@ -1,11 +1,12 @@
 // CardShop.tsx
+import { ShopDetail } from '@/types/shopDtail';
 import { ShopFake } from '@/types/shopFake';
 import { Card, CardBody, Link, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
 type CardShopProps = {
-  shop: ShopFake;
+  shop: ShopDetail;
 };
 
 const ShopNearbyComponent: React.FC<CardShopProps> = ({ shop }) => {

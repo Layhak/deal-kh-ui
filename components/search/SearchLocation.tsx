@@ -14,13 +14,13 @@ const SearchLocation: React.FC = () => {
 
   const router = useRouter();
 
-  // const handleSearchChange = (event: {
-  //   target: { value: SetStateAction<string> };
-  // }) => {
-  //   const newSearchValue = event.target.value;
-  //   setSearchValue(newSearchValue);
-  //   setProductDropdown(newSearchValue.length > 0);
-  // };
+  const handleSearchChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    const newSearchValue = event.target.value;
+    setSearchValue(newSearchValue);
+    setProductDropdown(newSearchValue.length > 0);
+  };
 
   const handleSubmitSearch = () => {
     router.push(`/searching-shop-name?searchValue=${searchValue}`);
@@ -44,6 +44,12 @@ const SearchLocation: React.FC = () => {
     setProductDropdown(clickCount % 2 === 0);
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSubmitSearch();
+    }
+  };
+
   return (
     <div
       className="relative"
@@ -57,6 +63,7 @@ const SearchLocation: React.FC = () => {
         }}
         labelPlacement="outside"
         placeholder={searchValue || 'Search Shop'}
+        onChange={handleSearchChange}
         endContent={
           searchValue ? (
             <CloseIcon
@@ -73,6 +80,7 @@ const SearchLocation: React.FC = () => {
         type="search"
         value={searchValue}
         onClick={handleInputClick}
+        onKeyPress={handleKeyPress}
       />
       {productDropdown && (
         <div className="relative">

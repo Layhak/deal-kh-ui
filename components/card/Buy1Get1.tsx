@@ -98,8 +98,8 @@ const Buy1Get1Component = ({category,discountType}:any) => {
                     ) : (
                       <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
                     )} 
-                  </div> 
-                </div> {isOpen && (<WishListDropDownComponent/>)}
+                  </div> {isOpen && (<WishListDropDownComponent/>)}
+                </div> 
               </div>
               <div className=" h-[30px] pt-3">
                 <p className="text-[14px] font-medium text-foreground-600 ">

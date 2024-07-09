@@ -3,7 +3,6 @@
 import { useGetShopsQuery } from '@/redux/service/shop';
 import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ShopDetailFake } from '@/types/shopDetailFake';
 import ShopNearbyComponent from '@/components/search/ShopNearbyComponent';
 import Loading from '../loading';
 import { ShopDetail } from '@/types/shopDtail';
@@ -18,7 +17,7 @@ const ShopsPage = () => {
     size: 10
   });
 
-  const filteredProducts = data?.payload.list.filter((product: ShopDetailFake) => {
+  const filteredProducts = data?.payload.list.filter((product: ShopDetail) => {
     const productName = product.name.toLowerCase();
     return productName.includes(searchValue.toLowerCase());
   });

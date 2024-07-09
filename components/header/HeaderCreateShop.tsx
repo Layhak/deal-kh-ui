@@ -1,11 +1,7 @@
 "use client"
 import React, { useState } from 'react';
-import { RiDiscountPercentLine } from 'react-icons/ri';
-import { FaGripLinesVertical } from 'react-icons/fa';
-import { MdOutlineDiscount } from 'react-icons/md';
 import { Button } from "@nextui-org/react";
-import FormCreateShop from './FormCreateShop'; // Ensure correct import path
-import CreateShopModal from './FormCreateShop';
+import CreateShopModal from '@/components/header/FormCreateShop';
 
 export default function HeaderCreateShop() {
   const [isOpen, setIsOpen] = useState(false);

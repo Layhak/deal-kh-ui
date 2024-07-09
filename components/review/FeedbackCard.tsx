@@ -75,9 +75,7 @@ const FeedbackCard: React.FC<FeedbackItemProps> = ({
               <div className="inline-flex items-center justify-center gap-2 rounded-small outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-offset-2 data-[focus-visible=true]:outline-focus">
                 <Image
                   src={review?.profile || '/images/members/votey.jpg'}
-                  width={30}
-                  height={30}
-                  className="flex object-cover opacity-0 transition-opacity !duration-500 data-[loaded=true]:opacity-100"
+                  className="h-12 w-12 rounded-full bg-foreground-900 object-contain"
                   alt={review.username}
                   data-loaded="true"
                 />

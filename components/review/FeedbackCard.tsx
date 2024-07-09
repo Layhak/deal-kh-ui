@@ -9,7 +9,8 @@ import {
 } from '@nextui-org/react';
 import { StarIcon } from '@/components/review/StarIcon';
 import DeleteFeedbackModal from './DeleteFeedbackModal';
-import { DeleteIcon, EditIcon, MoreIcon } from '@/components/icons';
+import { DeleteIcon, MoreIcon } from '@/components/icons';
+import UpdateFeedbackModal from '@/components/review/UpdateFeedbackModal';
 
 interface FeedbackItemProps {
   review: {
@@ -21,6 +22,7 @@ interface FeedbackItemProps {
     createdAt: string;
     images: { url: string }[];
   };
+  productSlug: string;
   currentUser: string;
   refetchFeedback: () => void;
 }
@@ -29,15 +31,23 @@ const FeedbackCard: React.FC<FeedbackItemProps> = ({
   review,
   currentUser,
   refetchFeedback,
+  productSlug,
 }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedFeedbackId, setSelectedFeedbackId] = useState<string | null>(
     null
   );
 
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+
   const handleDeleteClick = (uuid: string) => {
     setSelectedFeedbackId(uuid);
     setIsDeleteModalOpen(true);
+  };
+
+  const handleEditClick = (uuid: string) => {
+    setSelectedFeedbackId(uuid);
+    setIsUpdateModalOpen(true);
   };
 
   const renderStars = (rating: number) => {
@@ -92,7 +102,9 @@ const FeedbackCard: React.FC<FeedbackItemProps> = ({
                       </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Example with disabled actions">
-                      <DropdownItem key="edit" startContent={<EditIcon />}>
+                      <DropdownItem
+                        onClick={() => handleEditClick(review.uuid)}
+                      >
                         Edit
                       </DropdownItem>
                       <DropdownItem
@@ -126,12 +138,21 @@ const FeedbackCard: React.FC<FeedbackItemProps> = ({
         </div>
       </div>
       {selectedFeedbackId && (
-        <DeleteFeedbackModal
-          isOpen={isDeleteModalOpen}
-          onClose={() => setIsDeleteModalOpen(false)}
-          feedbackId={selectedFeedbackId}
-          refetchFeedback={refetchFeedback}
-        />
+        <>
+          <DeleteFeedbackModal
+            isOpen={isDeleteModalOpen}
+            onClose={() => setIsDeleteModalOpen(false)}
+            feedbackId={selectedFeedbackId}
+            refetchFeedback={refetchFeedback}
+          />
+          <UpdateFeedbackModal
+            isOpen={isUpdateModalOpen}
+            onClose={() => setIsUpdateModalOpen(false)}
+            feedbackId={selectedFeedbackId}
+            refetchFeedback={refetchFeedback}
+            productSlug={productSlug}
+          />
+        </>
       )}
     </div>
   );

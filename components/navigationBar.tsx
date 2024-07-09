@@ -23,8 +23,6 @@ import { CartIcon, HeartIcon } from '@/components/icons';
 import CategoryButton from './categoryButton';
 import {
   removeAccessToken,
-  selectLoginSuccess,
-  setLoginSuccess,
   setLogoutSuccess,
 } from '@/redux/feature/auth/authSlice';
 import { usePathname, useRouter } from 'next/navigation';
@@ -67,7 +65,7 @@ export const NavigationBar = () => {
       dispatch(setLogoutSuccess(true));
       toast.success('Logout successfully.', {
         position: 'top-right',
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -76,10 +74,11 @@ export const NavigationBar = () => {
         theme: theme,
       });
       setIsLoggedIn(false);
+      router.push('/');
     } catch (error) {
       toast.error('Failed to logout.', {
         position: 'top-right',
-        autoClose: 5000,
+        autoClose: 2000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -96,7 +95,7 @@ export const NavigationBar = () => {
 
   useEffect(() => {
     const unique = products.filter(
-      (product: { slug: any; }, index: any, self: any[]) =>
+      (product: { slug: any }, index: any, self: any[]) =>
         index === self.findIndex((t) => t.slug === product.slug)
     );
     setUniqueProducts(unique);
@@ -110,7 +109,7 @@ export const NavigationBar = () => {
 
   useEffect(() => {
     const uniqueWishlist = wishlistProducts.filter(
-      (product: { slug: any; }, index: any, self: any[]) =>
+      (product: { slug: any }, index: any, self: any[]) =>
         index === self.findIndex((t) => t.slug === product.slug)
     );
     setUniqueWishlistProducts(uniqueWishlist);
@@ -190,19 +189,39 @@ export const NavigationBar = () => {
           <ThemeSwitch />
         </NavbarItem>
         <NavbarItem className="sm:flex">
-          <NextLink className={'relative'}  href={isLoggedIn ? '/wishlist' : '/login'}>
-          <Badge  color="danger"
-  className={'bg-gradient-to-r from-pink-500 to-yellow-500'} content={uniqueWishlistProducts.length} isInvisible={uniqueWishlistProducts.length <= 0} variant="solid" shape="circle" size="sm" >
-          <HeartIcon className="fill-current" size={30} />
-          </Badge>
+          <NextLink
+            className={'relative'}
+            href={isLoggedIn ? '/wishlist' : '/login'}
+          >
+            <Badge
+              color="danger"
+              className={'bg-gradient-to-r from-pink-500 to-yellow-500'}
+              content={uniqueWishlistProducts.length}
+              isInvisible={uniqueWishlistProducts.length <= 0}
+              variant="solid"
+              shape="circle"
+              size="sm"
+            >
+              <HeartIcon className="fill-current" size={30} />
+            </Badge>
           </NextLink>
         </NavbarItem>
         <NavbarItem className="sm:flex">
-          <NextLink  href={isLoggedIn ? '/cart' : '/login'} className={'relative'}>
-          <Badge  color="danger"
-  className={'bg-gradient-to-r from-pink-500 to-yellow-500'} content={uniqueProducts.length} isInvisible={uniqueProducts.length <= 0} variant="solid" shape="circle" size="sm" >
-          <CartIcon className="fill-current" size={30} />
-          </Badge>
+          <NextLink
+            href={isLoggedIn ? '/cart' : '/login'}
+            className={'relative'}
+          >
+            <Badge
+              color="danger"
+              className={'bg-gradient-to-r from-pink-500 to-yellow-500'}
+              content={uniqueProducts.length}
+              isInvisible={uniqueProducts.length <= 0}
+              variant="solid"
+              shape="circle"
+              size="sm"
+            >
+              <CartIcon className="fill-current" size={30} />
+            </Badge>
           </NextLink>
         </NavbarItem>
 

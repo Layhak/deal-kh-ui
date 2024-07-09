@@ -61,7 +61,10 @@ export default function MyShop() {
           password: 'invalid email or password',
         });
       } else {
-        toast.error('An error occurred. Please try again later.', { theme });
+        toast.error('An error occurred. Please try again later.', {
+          autoClose: 2000,
+          theme: theme,
+        });
       }
     }
   };

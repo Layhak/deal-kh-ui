@@ -1,4 +1,3 @@
-// ratingAndFeedbackApi.js
 import { ecommerceApi } from '@/redux/api';
 import {
   CreateFeedbackRequest,
@@ -48,10 +47,21 @@ export const ratingAndFeedbackApi = ecommerceApi.injectEndpoints({
         method: 'DELETE',
       }),
     }),
+    updateProductFeedback: builder.mutation<
+      { message: string; status: number },
+      { uuid: string; description: string; images: { url: string }[] }
+    >({
+      query: ({ uuid, description, images }) => ({
+        url: `/product-feedbacks/${uuid}`,
+        method: 'PATCH',
+        body: { description, images },
+      }),
+    }),
   }),
 });
 
 export const {
+  useUpdateProductFeedbackMutation,
   useGetProductRatingsByProductSlugQuery,
   useGetProductFeedbackQuery,
   useCreateProductFeedbackMutation,

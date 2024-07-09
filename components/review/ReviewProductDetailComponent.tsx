@@ -32,6 +32,7 @@ export default function ReviewProductDetailComponent({
     CombinedFeedbackItem[]
   >([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [hasRated, setHasRated] = useState(false);
 
   const { data: currentUserProfile, isLoading: profileLoading } =
@@ -183,6 +184,7 @@ export default function ReviewProductDetailComponent({
                   review={review}
                   currentUser={currentUserProfile?.payload?.username}
                   refetchFeedback={refetchFeedback}
+                  productSlug={productSlug}
                 />
               ))}
             </ScrollShadow>

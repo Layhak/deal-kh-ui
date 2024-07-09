@@ -1,27 +1,22 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
-  Divider,
-  Input,
   Modal,
   ModalBody,
   ModalContent,
   ModalHeader,
-  Tooltip,
   type ModalProps,
-  Textarea,
+  Tooltip,
 } from '@nextui-org/react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import RatingDisplay from '@/components/review/RatingDisplay';
 import RatingSlider from '@/components/review/RatingSlider';
 import {
-  useLazyGetProductFeedbackQuery,
-  useGetProductFeedbackQuery,
   useCreateProductRatingMutation,
+  useGetProductFeedbackQuery,
 } from '@/redux/service/ratingAndFeedback';
-import { FeedbackItem } from '@/types/ratings';
 import { useTheme } from 'next-themes';
 
 interface ProductModalProps extends Omit<ModalProps, 'children'> {
@@ -65,12 +60,18 @@ const ModalRating = React.forwardRef<HTMLDivElement, ProductModalProps>(
           ratingValue: rating,
           productSlug,
         }).unwrap();
-        toast.success('Rating submitted successfully!', { theme });
+        toast.success('Rating submitted successfully!', {
+          autoClose: 2000,
+          theme: theme,
+        });
         onNewRating();
         onClose?.();
       } catch (error: any) {
         if (error.data?.error?.code === 'AUTH_ERROR') {
-          toast.error('Invalid token. Please log in again.', { theme });
+          toast.error('Invalid token. Please log in again.', {
+            autoClose: 2000,
+            theme: theme,
+          });
           onClose?.();
         } else {
           toast.info(

@@ -30,11 +30,17 @@ const DeleteFeedbackModal: React.FC<DeleteFeedbackModalProps> = ({
   const handleDelete = async () => {
     try {
       await deleteFeedback({ feedbackId }).unwrap();
-      toast.success('Successfully deleted your feedback', { theme });
+      toast.success('Successfully deleted your feedback', {
+        autoClose: 2000,
+        theme: theme,
+      });
       refetchFeedback();
       onClose();
     } catch (error) {
-      toast.error('Failed to delete feedback', { theme });
+      toast.error('Failed to delete feedback', {
+        autoClose: 2000,
+        theme: theme,
+      });
     }
   };
 

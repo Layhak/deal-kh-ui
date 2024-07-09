@@ -5,6 +5,7 @@ import { FaGripLinesVertical } from 'react-icons/fa';
 import { MdOutlineDiscount } from 'react-icons/md';
 import { Button } from "@nextui-org/react";
 import FormCreateShop from './FormCreateShop'; // Ensure correct import path
+import CreateShopModal from './FormCreateShop';
 
 export default function HeaderCreateShop() {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,6 +16,11 @@ export default function HeaderCreateShop() {
 
   const handleCloseModal = () => {
     setIsOpen(false);
+  };
+
+  const refetch = () => {
+    // Implement your refetch logic here
+    console.log('Refetching data...');
   };
 
   return (
@@ -43,7 +49,7 @@ export default function HeaderCreateShop() {
           </div>
         </div>
       </div>
-      <FormCreateShop isOpen={isOpen} onClose={handleCloseModal} /> {/* Ensure props are passed correctly */}
+      <CreateShopModal isOpen={isOpen} onClose={handleCloseModal} refetch={refetch} /> 
     </div>
   );
 }

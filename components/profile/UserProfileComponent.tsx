@@ -1,280 +1,157 @@
-// 'use client';
-
-// import { NextPage } from 'next';
-// import Image from 'next/image';
-// import NextLink from 'next/link';
-// import { Avatar, Button } from '@nextui-org/react';
-// import { useSession } from 'next-auth/react';
-// import MapComponent, { fetchShops } from '../Maps/MapComponent';
-// import { Facebook, InstagramIcon } from '@/components/icons';
-
-// type ProfileProps = {
-//   // Define any props here if needed
-// };
-
-// const UserProfileComponent: NextPage<ProfileProps> = async () => {
-//   const { data: session, status } = useSession();
-//   const shops = await fetchShops();
-
-//   if (!session) {
-//     return (
-//       <div className="min-h-[68vh] w-full rounded-md bg-white px-4 py-4 dark:bg-black">
-//         <div className="flex flex-col items-center gap-4 p-4 md:flex-row md:items-start">
-//           <Avatar
-//             isBordered
-//             src="/images/members/votey.jpg"
-//             color="warning"
-//             className="mb-2 h-8  w-8"
-//           />
-//           <div className="text-center text-black dark:text-white md:text-left">
-//             <h1 className="text-xl font-bold md:text-2xl">Hom Pheakakvotey</h1>
-//             <p className="text-gray-600">User</p>
-//           </div>
-//         </div>
-//         <hr className="border-gray-600 dark:border-gray-700" />
-//         <div className="flex flex-col p-4 text-black dark:text-white md:flex-row">
-//           <div className="mb-4 flex-1 md:mb-0">
-//             <p className="text-lg font-semibold">Profile Information</p>
-//             <div className="py-4">
-//               <p className="font-semibold">Email Address</p>
-//               <p>pheakakvotey@gmail.com</p>
-//             </div>
-//             <div className="py-4">
-//               <p className="font-semibold">Phone Number</p>
-//               <p>096xxxxxx</p>
-//             </div>
-//             <div className="py-4">
-//               <p className="font-semibold">Date of Birth</p>
-//               <p>31-02-2002</p>
-//             </div>
-//           </div>
-//           <div className="flex-1">
-//             <p className="text-lg font-semibold">Social Media</p>
-//             <div className="flex gap-2 py-2">
-//               <Image
-//                 src="/images/icon/icon-facebook-logo.svg"
-//                 alt="Facebook Logo"
-//                 width={24}
-//                 height={24}
-//               />
-//               <Image
-//                 src="/images/icon/icon-instagram-logo.svg"
-//                 alt="Instagram Logo"
-//                 width={24}
-//                 height={24}
-//               />
-//             </div>
-//             <div className="py-4">
-//               <p className="font-semibold">Address</p>
-//               {/* <MapUser location={{ lat: 11.578891258922914, lng: 104.90175630917895 }} width="500px" height="300px" apiKey="AIzaSyBeZtJHgPb_uA_3Fsr9xtAgf31nhAc4LNI" /> */}
-
-//               {/* <MapComponent shops={shops} /> */}
-//               <MapComponent shops={[]} />
-
-//               {/* 11.578891258922914, 104.90175630917895 */}
-//             </div>
-//             <div className="flex justify-end">
-//               <NextLink href="/profile/update-profile">
-//                 <Button className="w-[70px] bg-warning text-white hover:opacity-70">
-//                   Edit
-//                 </Button>
-//               </NextLink>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   }
-
-//   return (
-//     <div className="min-h-[68vh] w-full rounded-md bg-white px-4 py-4 dark:bg-black">
-//       <div className="flex flex-col items-center gap-4 p-4 md:flex-row md:items-start">
-//         <Avatar
-//           isBordered
-//           src={session?.user?.image as string}
-//           color="warning"
-//           className="mb-2 h-8  w-8"
-//         />
-//         <div className="text-center text-black dark:text-white md:text-left">
-//           <h1 className="text-xl font-bold md:text-2xl">
-//             {session?.user?.name}
-//           </h1>
-//           <p className="text-gray-600">User</p>
-//         </div>
-//       </div>
-//       <hr className="border-gray-600 dark:border-gray-700" />
-//       <div className="flex flex-col p-4 text-black dark:text-white md:flex-row">
-//         {/* column-1 */}
-//         <div className="mb-4 flex-1 md:mb-0">
-//           <p className="text-lg font-semibold">Profile Information</p>
-//           <div className="py-4">
-//             <p className="font-semibold">Email Address</p>
-//             <p>{session?.user?.email}</p>
-//           </div>
-//           <div className="py-4">
-//             <p className="font-semibold">Phone Number</p>
-//             <p>096xxxxxx</p>
-//           </div>
-//           <div className="py-4">
-//             <p className="font-semibold">Date of Birth</p>
-//             <p>31-02-2002</p>
-//           </div>
-//         </div>
-//         {/* column-2 */}
-//         <div className="flex-1">
-//           <p className="text-lg font-semibold">Social Media</p>
-//           <div className="flex gap-2 py-2">
-//             <Facebook />
-//             <InstagramIcon />
-//           </div>
-//           <div className="py-4">
-//             <p className="font-semibold">Address</p>
-//             {/* <MapUser location={{ lat: 11.578891258922914, lng: 104.90175630917895 }} width="500px" height="300px" apiKey="AIzaSyBeZtJHgPb_uA_3Fsr9xtAgf31nhAc4LNI" /> */}
-
-//             <MapComponent shops={[]} />
-
-//             {/* 11.578891258922914, 104.90175630917895 */}
-//           </div>
-//         </div>
-//       </div>
-//       <div className="flex flex-col p-4 text-black dark:text-white md:flex-row">
-//         <div className="flex flex-1 gap-4">
-//           <NextLink href="/profile/update-profile">
-//             <button className="rounded-lg border-1 border-warning bg-warning px-8 py-2 text-white transition-all ease-in-out hover:bg-white hover:text-warning">
-//               Edit
-//             </button>
-//           </NextLink>
-//           <NextLink href="#">
-//             <button className="rounded-lg border-1 border-warning bg-warning px-8 py-2 text-white transition-all ease-in-out hover:bg-white hover:text-warning dark:bg-black dark:text-white">
-//               Preview
-//             </button>
-//           </NextLink>
-//         </div>
-//         <div className="flex flex-1 justify-end">
-//           <NextLink href="#">
-//             <button className="rounded-lg border-1 border-warning bg-white px-8 py-2 text-warning transition-all ease-in-out hover:bg-warning hover:text-white dark:bg-black dark:text-white">
-//               Delete
-//             </button>
-//           </NextLink>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default UserProfileComponent;
-
-
-
-
-
 "use client"
-import { useEffect, useState } from 'react';
-import { Link, Button } from '@nextui-org/react';
-import { NextPage } from 'next';
+import { BsCamera } from 'react-icons/bs';
+import { useGetProfileQuery, useUploadProfileImageMutation, useUploadCoverImageMutation } from "@/redux/service/user";
 import Image from 'next/image';
-import { useGetProfileQuery } from '@/redux/service/user';
-import { LuCamera } from "react-icons/lu";
+import { Button, Link } from '@nextui-org/react';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+import { useState, useEffect } from 'react';
+import { FaFacebookSquare, FaTelegram, FaInstagram } from 'react-icons/fa';
+import { useUploadSingleImageMutation } from '@/redux/service/image';
+
 
 type ProfileProps = {
-    
+    params: {
+        slug: string;
+    }    
 };
 
-const UserProfileComponent: NextPage<ProfileProps> = () => {
-    const [profileImage, setProfileImage] = useState('/images/user/votey.jpg');
-    const [sellerData, setSellerData] = useState<any>(null);
-
+export default function UserProfileComponent({ params }: ProfileProps) {
+    const { data,refetch } = useGetProfileQuery();
+    const user = data?.payload;
+    console.log("user",user);
+  
+    const [profileImage, setProfileImage] = useState(user?.profile || '/images/user/votey_profile.jpg');
+    const [coverImage, setCoverImage] = useState('/images/user/votey_cover.jpg');
+  
+  
+    const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+    const openUpdateModal = () => setUpdateModalOpen(true);
+    const closeUpdateModal = () => setUpdateModalOpen(false);
+  
     useEffect(() => {
-        const fetchSellerData = async () => {
-            try {
-                const response = await fetch('{{base-url}}/users');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch seller data');
-                }
-                const data = await response.json();
-                setSellerData(data);
-            } catch (error) {
-                console.error('Error fetching seller data:', error);
-            }
-        };
-
-        fetchSellerData();
-    }, []);
-
-    const {
-      data: userProfile,
-      isLoading: isLoadingUserProfile,
-      error,
-    } = useGetProfileQuery();
-
-
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setSelectedImage(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleUpdateProfile = () => {
-    // Implement your logic for uploading the selected image
-    if (selectedImage) {
-      console.log('Uploading image:', selectedImage);
-      // Reset state after upload
-      setSelectedImage(null);
-      setPreview(null);
-    }
-  };
+      if (user?.profile) {
+        setProfileImage(user.profile);
+      }
+    }, [user]);
+    useEffect(() => {
+      if (user?.covers && user.covers.length > 0) {
+        const latestCover = user.covers[user.covers.length - 1].url;
+        setCoverImage(latestCover);
+      }
+    }, [user]);
+  console.log("user profile",user?.profile);
+  console.log("user Profile2",profileImage);
+  console.log("user cover",user?.covers);
+  
+    const [uploadSingleImage] = useUploadSingleImageMutation();
+    const [uploadShopProfile] = useUploadProfileImageMutation();
+    const [uploadShopCover] = useUploadCoverImageMutation();
+  
+    const handleProfileImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files && event.target.files[0]) {
+        const file = event.target.files[0];
+        console.log('Uploading profile image:', file);
+  
+        try {
+          const response = await uploadSingleImage(file).unwrap();
+          console.log('uploadSingleImage response:', response);
+          const imageUrl = response.payload.fullUrl; // Use fullUrl property from payload
+          await uploadShopProfile({ profile: imageUrl });
+          console.log('Profile image uploaded successfully:', imageUrl);
+          setProfileImage(imageUrl);
+        } catch (error) {
+          console.error('Error uploading profile image:', error);
+        }
+      }
+    };
+  
+  
+  
+    const handleCoverImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files && event.target.files[0]) {
+        const file = event.target.files[0];
+        console.log('Uploading cover image:', file);
+  
+        try {
+          const response = await uploadSingleImage(file).unwrap();
+          console.log('uploadSingleImage response:', response);
+          const imageUrl = response.payload.fullUrl; // Use fullUrl property from payload
+          await uploadShopCover({ cover: imageUrl }); // Adjusted to match the request body structure
+          console.log('Cover image uploaded successfully:', imageUrl);
+          setCoverImage(imageUrl);
+  
+          // Refetch the user data
+          await refetch();
+  
+        } catch (error) {
+          console.error('Error uploading cover image:', error);
+        }
+      }
+    };
+    const mapContainerStyle = {
+      height: "400px",
+      width: "100%",
+      borderRadius: "8px",
+      overflow: "hidden"
+    };
+  
+    const center = user
+      ? {
+        lat: parseFloat(user.location.split(',')[0]),
+        lng: parseFloat(user.location.split(',')[1])
+      }
+      : { lat: 0, lng: 0 };
+     
 
     return (
         <div className="">
-            <div className=" bg-white dark:bg-zinc-900 p-8 rounded-lg w-full h-[280px] lg:h-96">
-                <div className="flex w-full flex-col items-center lg:flex-row">
-                    <div
-                        className="relative flex h-44 w-full justify-start rounded-lg bg-gray-800 lg:h-64"
-                        style={{
-                            backgroundImage:
-                                'url(https://i.pinimg.com/originals/e1/c4/69/e1c46950a62d9df60fa3f1d60eb90e3a.jpg)',
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                        }}
-                    >
-                        <div className="absolute -bottom-5 left-8 flex translate-y-1/2 transform flex-col items-start justify-start lg:bottom-0 lg:flex-row">
-                        <label htmlFor="profileImage" className="cursor-pointer">
-                            <Image
-                              src={preview ?? '/images/user/votey.jpg'}
-                              alt="Profile Picture"
-                              width={130}
-                              height={130}
-                              className="rounded-full border-4 border-white"
-                            />
-                            <input
-                              id="profileImage"
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={handleImageChange}
-                            />
-                          </label>
-                          {preview && (
-                            <div className="absolute inset-0 flex items-center justify-center">
-                              <LuCamera className="h-8 w-8 lg:h-12 lg:w-12 text-white cursor-pointer" onClick={handleUpdateProfile} />
-                            </div>
-                          )}
-
-                            <h1 className="self-center dark:text-gray-50 text-start text-lg font-semibold mt-3 lg:ml-4 lg:mt-16 lg:text-xl">
-                            {userProfile?.payload?.firstName +
-                            ' ' +
-                            userProfile?.payload?.lastName ?? 'John Doe'}
-                            </h1>
+            <div className="bg-white dark:bg-zinc-900 p-8 rounded-lg w-full h-[370px]">
+                <div className="relative h-72 flex w-full flex-col items-center lg:flex-row">
+                    <img
+                    src={coverImage}
+                    alt="Cover Image"
+                    className="rounded-lg w-full h-full object-cover"
+                    />
+                    <label htmlFor="coverInput" className="absolute top-4 right-4 cursor-pointer bg-warning p-2 rounded-full">
+                    <BsCamera className="text-white" size={20} />
+                    <input
+                        id="coverInput"
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleCoverImageChange}
+                    />
+                    </label>
+                </div>
+                <div className="relative mt-4">
+                    <div className="absolute top-0 bottom-24 left-10 flex items-center">
+                    <div className="relative flex-shrink-0">
+                        <label htmlFor="profileInput" className="cursor-pointer relative">
+                        <img
+                            src={profileImage}
+                            alt="Profile Image"
+                            className="rounded-full w-32 h-32 object-cover"
+                        />
+                        <div className="absolute bottom-0 right-0 bg-warning p-2 rounded-full">
+                            <BsCamera className="text-white" size={20} />
                         </div>
+                        </label>
+                        <input
+                        id="profileInput"
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleProfileImageChange}
+                        />
+                    </div>
+                    <div className="ml-4 mr-3">
+                        <h2 className="text-xl font-medium pt-10 text-gray-900 dark:text-gray-100">
+                          {user?.firstName +
+                            ' ' +
+                          user?.lastName ?? 'John Doe'}
+                        </h2>
+                        <p className="font-semibold">{user?.username}</p>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -285,25 +162,25 @@ const UserProfileComponent: NextPage<ProfileProps> = () => {
                     <div className="flex-1 mb-4 md:mb-0">
                         <div className="py-4">
                             <p className="font-semibold text-lg">Email</p>
-                            <p className="text-md mt-2">{userProfile?.payload?.email}</p> {/* Replace with actual email from fetched data */}
+                            <p className="text-md mt-2">{user?.email}</p> {/* Replace with actual email from fetched data */}
                         </div>
                         <div className="py-4">
                             <p className="font-semibold text-lg">Phone Number</p>
-                            <p className="mt-2 text-md">{userProfile?.payload?.phonenumber}</p> {/* Replace with actual phone number from fetched data */}
+                            <p className="mt-2 text-md">{user?.phoneNumber}</p> {/* Replace with actual phone number from fetched data */}
                         </div>
                         <div className="py-4">
                             <p className="font-semibold text-lg">Date of Birth</p>
-                            <p className="mt-2 text-md">{userProfile?.payload?.dob ?? '1999-11-22'}</p> {/* Replace with actual date of birth from fetched data */}
+                            <p className="mt-2 text-md">{user?.dob }</p> {/* Replace with actual date of birth from fetched data */}
                         </div>
                     </div>
                     <div className="flex-1">
                         <div className="py-4">
                             <p className="font-semibold text-lg">Gender</p>
-                            <p className="mt-2 text-md">{userProfile?.payload?.gender}</p> {/* Replace with actual gender from fetched data */}
+                            <p className="mt-2 text-md">{user?.gender}</p> {/* Replace with actual gender from fetched data */}
                         </div>
                         <div className="py-4">
                             <p className="font-semibold text-lg">Location</p>
-                            <p className="mt-2 text-md">{userProfile?.payload?.location}</p> {/* Replace with actual location from fetched data */}
+                            <p className="mt-2 text-md">{user?.location}</p> {/* Replace with actual location from fetched data */}
                         </div>
                         <p className="text-lg font-semibold mb-1">Social Media</p>
                         <div className="flex gap-2 py-2">
@@ -345,6 +222,6 @@ const UserProfileComponent: NextPage<ProfileProps> = () => {
     );
 };
 
-export default UserProfileComponent;
+
 
 

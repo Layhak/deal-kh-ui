@@ -355,7 +355,7 @@ export const NavigationBar = () => {
                   <p className="font-semibold">Signed in as</p>
                   <p className="font-semibold">{userProfile.payload?.email}</p>
                 </DropdownItem>
-                <DropdownItem key="logout" color="danger" className="text-danger" >
+                <DropdownItem key="profile" color="danger"  className="text-danger hover:text-white" >
                   <Link href="/profile"> 
                     <p className="text-red-500 hover:text-white">Profile</p>
                   </Link>

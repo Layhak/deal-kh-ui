@@ -1,42 +1,63 @@
-// // Define a service using a base URL and expected endpoints
-// import { ecommerceApi } from '@/redux/api';
-
-// export const userApi = ecommerceApi.injectEndpoints({
-//   // The name of the slice of state that will be managed by this api
-//   endpoints: (builder) => ({
-//     // get all products
-//     getProfile: builder.query<any, void>({
-//       query: () => `users/me`,
-//     }),
-//   }),
-
-  
-// });
-// // Export hooks for usage in components, which are
-// export const { useGetProfileQuery } = userApi;
-
-
-
-// Define a service using a base URL and expected endpoints
 import { ecommerceApi } from '@/redux/api';
+import { UserUpdateRequest } from '@/types/profile';
 
 export const userApi = ecommerceApi.injectEndpoints({
-  // The name of the slice of state that will be managed by this api
   endpoints: (builder) => ({
-    // Fetch user profile
+    // Get the current user's profile
     getProfile: builder.query<any, void>({
-      query: () => `users/me`, // Adjust the endpoint based on your API
+      query: () => `users/me`,
     }),
-    // Update user profile if needed
-    updateProfile: builder.mutation<void, Partial<FormValues>>({
-      query: (data) => ({
-        url: `users/me`,
+
+    // Update prifle details
+    updateUserByUsername: builder.mutation<any, { userUpdateRequest: UserUpdateRequest }>({
+      query: ({  userUpdateRequest }) => ({
+        url: `users`,
         method: 'PUT',
-        body: data,
+        body: userUpdateRequest,
+      }),
+    }),
+
+
+    // Upload a new profile image
+    uploadProfileImage: builder.mutation<any, { profile: string }>({
+      query: (profileData) => ({
+        url: 'users/profile',
+        method: 'POST',
+        body: profileData,
+      }),
+    }),
+
+    // Delete the current profile image
+    deleteProfileImage: builder.mutation<any, void>({
+      query: () => ({
+        url: 'users/profile',
+        method: 'DELETE',
+      }),
+    }),
+    // Upload a new cover image
+    uploadCoverImage: builder.mutation<any, { cover: string }>({
+      query: (coverData) => ({
+        url: 'users/cover',
+        method: 'POST',
+        body: coverData,
+      }),
+    }),
+    // Delete the current cover image
+    deleteCoverImage: builder.mutation<any, void>({
+      query: () => ({
+        url: 'users/cover',
+        method: 'DELETE',
       }),
     }),
   }),
 });
 
 // Export hooks for usage in components
-export const { useGetProfileQuery, useUpdateProfileMutation } = userApi;
+export const {
+  useGetProfileQuery,
+  useUpdateUserByUsernameMutation,
+  useUploadProfileImageMutation,
+  useDeleteProfileImageMutation,
+  useUploadCoverImageMutation,
+  useDeleteCoverImageMutation,
+} = userApi;

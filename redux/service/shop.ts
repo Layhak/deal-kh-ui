@@ -68,6 +68,14 @@ export const shopApi = ecommerceApi.injectEndpoints({
           method: 'DELETE',
         }),
       }),
+      uploadShopImage: builder.mutation<any, FormData>({
+        query: (formData) => ({
+          url: 'images/single',
+          method: 'POST',
+          body: formData,
+        }),
+      }),
+  
       
   }),
 });
@@ -86,4 +94,5 @@ export const {
     useDisableShopBySlugMutation,
     useRemoveOwnerFromShopBySlugMutation,
     useDeleteShopBySlugMutation,
+    useUploadShopImageMutation
 } = shopApi;

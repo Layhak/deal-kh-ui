@@ -7,14 +7,18 @@ interface CustomSelectProps {
   name: string;
   options: { value: string; label: string }[];
   placeholder?: string;
+  onChange?: (value: any) => void;
+  value?: any;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
-  label,
-  name,
-  options,
-  placeholder,
-}) => {
+                                                     label,
+                                                     name,
+                                                     options,
+                                                     onChange,
+                                                     placeholder,
+
+                                                   }) => {
   const [field, meta, helpers] = useField(name);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -32,6 +36,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
         setIsOpen(false);
       }}
       label={label}
+      onChange={onChange}
       size={'md'}
       variant={'bordered'}
       isInvalid={meta.touched && !!meta.error}

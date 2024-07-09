@@ -51,7 +51,7 @@ export default function Deal() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent />
+        <DiscountCardComponent currentPage={0} />
         {/* Buy1 Get1 Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -218,7 +218,7 @@ export default function Deal() {
             />
           </div>
         </div>
-        <DiscountCardComponent />
+        <DiscountCardComponent currentPage={0} />
         {/* Clearance Sale Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">

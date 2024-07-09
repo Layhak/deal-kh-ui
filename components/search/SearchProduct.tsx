@@ -1,72 +1,54 @@
-import React, { SetStateAction, useEffect, useRef, useState } from 'react';
-import { CloseIcon, SearchIcon } from '@/components/icons';
-import { Input } from '@nextui-org/react';
-import { ProductSearch } from '@/types/productSearch';
+import React, {
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import { BiCategoryAlt } from 'react-icons/bi';
+import { CartIcon, CloseIcon, HeartIcon, SearchIcon } from '@/components/icons';
+import { Input, dropdown } from '@nextui-org/react';
+import { Product } from '@/types/product';
+import { ProductResponse, ProductType } from '@/libs/difinition';
+import { ProductSearch, productSearchList } from '@/types/productSearch';
 import { useRouter } from 'next/navigation';
+import { useGetProductsQuery } from '@/redux/service/product';
 
 type ProductDropDown = {
   products: ProductSearch[];
 };
 
 const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
+  // for product search bar
   const [searchValue, setSearchValue] = useState('');
   const [productDropdown, setProductDropdown] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const [clickCount, setClickCount] = useState(0);
 
   const router = useRouter();
 
   const handleSubmit = () => {
+    // Navigate to the search results page and pass the filtered products
     router.push(`/searching-product?searchValue=${searchValue}`);
-  };
-
-  const handleSearchChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    const newSearchValue = event.target.value;
-    setSearchValue(newSearchValue);
-    setProductDropdown(newSearchValue.length > 0);
+    setProductDropdown(false);
   };
 
   const handleClearSearch = () => {
     setSearchValue('');
     setProductDropdown(false);
+    setClickCount(0);
   };
 
-  const handleInputFocus = () => {
-    if (searchValue.length > 0) {
-      setProductDropdown(true);
-    }
-  };
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      dropdownRef.current &&
-      !dropdownRef.current.contains(event.target as Node) &&
-      inputRef.current &&
-      !inputRef.current.contains(event.target as Node)
-    ) {
-      setProductDropdown(false);
-    }
-  };
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      setProductDropdown(false);
-      handleSubmit();
-    }
-  };
+  // for drop-down menu of product
+  const [searchQuery, setSearchQuery] = useState('');
+  const half = Math.ceil(productSearchList.length);
+  const productList = productSearchList
+    .filter((product) =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+    .slice(0, half);
 
   const handleOnSelectProduct = (item: string) => {
     setSearchValue(item);
-    setProductDropdown(false);
     console.log('This is the value that I have Clicked: ', item);
   };
 
@@ -74,11 +56,17 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
     product.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
+  const handleInputClick = () => {
+    setClickCount((prevCount) => prevCount + 1);
+    setProductDropdown(clickCount % 2 === 0);
+  };
+
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div
+      className="relative"
+    >
       <Input
         aria-label="Product Search"
-        ref={inputRef}
         classNames={{
           inputWrapper:
             'bg-default-100 rounded-none rounded-l-xl w-[200px] mt-1',
@@ -98,37 +86,37 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
               className="pointer-events-none flex-shrink-0 text-base text-default-400"
             />
           )
+
         }
         type="search"
         value={searchValue}
-        onChange={handleSearchChange}
-        onFocus={handleInputFocus}
-        onKeyDown={handleKeyDown}
-        autoComplete="off"
+        onClick={handleInputClick}
       />
       {productDropdown && (
-        <div className="absolute left-0 top-[2px] mt-1 w-[200px] origin-top-left grid-cols-2 gap-4 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div
-            className="py-1"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="options-menu"
-          >
-            {filteredProducts.length > 0 && (
-              <h1 className="text-gray py-2 text-center text-warning">
-                Product
-              </h1>
-            )}
-            {filteredProducts.map((product, index) => (
-              <a
-                key={index}
-                className="block px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white"
-                role="menuitem"
-                onClick={() => handleOnSelectProduct(product.name)}
-              >
-                {product.name}
-              </a>
-            ))}
+        <div className="relative">
+          <div className="absolute left-0 top-[2px] mt-1 w-[200px] origin-top-left grid-cols-2 gap-4 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none group-hover:grid">
+            <div
+              className="py-1"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="options-menu"
+            >
+              {filteredProducts.length > 0 && (
+                <h1 className="text-gray py-2 text-center text-warning">
+                  Product
+                </h1>
+              )}
+              {filteredProducts.map((product, index) => (
+                <a
+                  key={index}
+                  className="block px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white group-hover:grid"
+                  role="menuitem"
+                  onClick={() => handleOnSelectProduct(product.name)}
+                >
+                  {product.name}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       )}

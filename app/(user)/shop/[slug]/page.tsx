@@ -16,9 +16,7 @@ const ShopProfile = ({ params }: Props) => {
 
   const { data, isLoading, error } = useGetShopsQuery({
     page: 1,
-    size: 10,
-    field: '',
-    fieldName: '',
+    size: 10
   });
 
   const shopProfiles = data?.payload?.list.find(

@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import Loading from '../loading';
 import Error from '../error';
 
-const TestingPage: React.FC = () => {
+const SearchingProduct: React.FC = () => {
 
   const router = useRouter();
 
@@ -18,8 +18,8 @@ const TestingPage: React.FC = () => {
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 10,
-    field: '',
-    fieldName: '',
+    category: '',
+    discountType: ''
   });
 
   const filteredProducts = data?.payload.list.filter((product: ProductType) => {
@@ -54,7 +54,7 @@ const TestingPage: React.FC = () => {
                 <Image
                   className="h-[193px] w-[284px] object-cover"
                   src={
-                    product.profile ||
+                    product.images[0].url ||
                     'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
                   }
                   alt={product.name}
@@ -139,4 +139,4 @@ const TestingPage: React.FC = () => {
   );
 };
 
-export default TestingPage;
+export default SearchingProduct;

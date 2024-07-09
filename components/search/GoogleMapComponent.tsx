@@ -5,9 +5,8 @@ import {
   GoogleMap,
   useJsApiLoader,
   Marker,
-  InfoWindow,
-} from '@react-google-maps/api';
-import shopFakes, { ShopFake } from '@/types/shopFake';
+  InfoWindow,} from '@react-google-maps/api';
+
 import { Card, CardBody, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { useGetShopsQuery } from '@/redux/service/shop';
@@ -32,8 +31,6 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
   const { data, isLoading, error } = useGetShopsQuery({
     page: 1,
     size: 10,
-    field: '',
-    fieldName: '',
   });
 
   const [map, setMap] = useState<google.maps.Map | null>(null);
@@ -85,7 +82,7 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
       const filteredShops = data.payload.list.filter((shop: ShopDetail) => {
         const [shopLat, shopLng] = shop.location.split(',').map(parseFloat);
         const distance = calculateDistance(lat, lng, shopLat, shopLng);
-        return distance <= 60; //0.5;
+        return distance <= 0.5; // 0.5 is 500m square nearby;
       });
 
       setNearbyShops(filteredShops);
@@ -122,7 +119,7 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
   };
 
   return isLoaded ? (
-    <div className="flex h-screen flex-row">
+    <div className="flex h-screen w-full flex-row">
       {/* Card Shop Seciton */}
       <div className="w-[70%] overflow-y-auto pr-4 scrollbar-hide">
         {nearbyShops.length > 0 ? (

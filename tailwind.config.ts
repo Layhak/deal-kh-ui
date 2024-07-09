@@ -42,7 +42,7 @@ const config: Config = {
               foreground: '#fef2f2',
               DEFAULT: '#ef4444',
             },
-            background: 'rgb(249, 250, 251)',
+            background: '#f3f4f6',
           },
         },
         dark: {

@@ -22,39 +22,20 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
   // for product search bar
   const [searchValue, setSearchValue] = useState('');
   const [productDropdown, setProductDropdown] = useState(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [clickCount, setClickCount] = useState(0);
 
   const router = useRouter();
 
   const handleSubmit = () => {
     // Navigate to the search results page and pass the filtered products
     router.push(`/searching-product?searchValue=${searchValue}`);
-  };
-
-  const handleSearchChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    const newSearchValue = event.target.value;
-    setSearchValue(newSearchValue);
-    setProductDropdown(newSearchValue.length > 0);
+    setProductDropdown(false);
   };
 
   const handleClearSearch = () => {
     setSearchValue('');
-  };
-
-  const handleInputClick = () => {
-    setProductDropdown(true);
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      setProductDropdown(false)
-      handleSubmit();
-    }
+    setProductDropdown(false);
+    setClickCount(0);
   };
 
   // for drop-down menu of product
@@ -75,11 +56,14 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
     product.name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
+  const handleInputClick = () => {
+    setClickCount((prevCount) => prevCount + 1);
+    setProductDropdown(clickCount % 2 === 0);
+  };
+
   return (
     <div
       className="relative"
-      onMouseEnter={() => setProductDropdown(true)}
-      onMouseLeave={() => setProductDropdown(false)}
     >
       <Input
         aria-label="Product Search"
@@ -106,10 +90,7 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
         }
         type="search"
         value={searchValue}
-        onChange={handleSearchChange}
         onClick={handleInputClick}
-        onKeyDown={handleKeyDown}
-        autoComplete="off"
       />
       {productDropdown && (
         <div className="relative">

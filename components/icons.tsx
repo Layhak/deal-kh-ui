@@ -728,7 +728,9 @@ export const SunFilledIcon = ({
   ></div>
 );
 
-export const HeartFilledIcon = ({ width, height, ...props }: IconSvgProps) => (
+export const HeartFilledIcon = ({ 
+  width, height, ...props 
+}: IconSvgProps) => (
   <svg
     width="30"
     height="30"

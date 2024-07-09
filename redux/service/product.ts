@@ -16,27 +16,12 @@ export const productApi = ecommerceApi.injectEndpoints({
     // get all products
     getProducts: builder.query<
       any,
-      { page?: number; size?: number; filters?: { [key: string]: any } }
+      { page: number; size: number; discountType: string; category: any }
     >({
-      query: ({ page, size, filters }) => {
-        // Base URL
-        let queryString = `products?page=${page}&size=${size}`;
-
-        // Append each filter to the query string
-        if (filters) {
-          queryString +=
-            '&' +
-            Object.entries(filters)
-              .map(
-                ([key, value]) =>
-                  `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
-              )
-              .join('&');
-        }
-
-        return queryString;
-      },
+      query: ({ page, size, discountType, category }) =>
+        `products?page=${page}&size=${size}&category=${category}&discountType=${discountType}`,
     }),
+
 
     getAllProducts: builder.query<any, void>({
       query: () => `products`,

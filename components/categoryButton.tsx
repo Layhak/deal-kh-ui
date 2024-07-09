@@ -29,7 +29,7 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({ categories }) => {
           {firstColumn.map((category, index) => (
             <Link
               key={index}
-              href={`/category/${encodeURIComponent(category.toLowerCase())}`}
+              href={`/${encodeURIComponent(category.toLowerCase())}`}
               passHref
               className="block px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white"
               role="menuitem"
@@ -48,7 +48,7 @@ const CategoryButton: React.FC<CategoryButtonProps> = ({ categories }) => {
           {secondColumn.map((category, index) => (
             <Link
               key={index}
-              href={`/category/${encodeURIComponent(category.toLowerCase())}`}
+              href={`/${encodeURIComponent(category.toLowerCase())}`}
               passHref
               className="block px-4 py-2 text-sm text-gray-700 transition-all duration-300 ease-in-out hover:bg-warning hover:text-white"
               role="menuitem"

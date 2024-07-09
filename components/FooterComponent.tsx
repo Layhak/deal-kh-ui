@@ -67,7 +67,7 @@ const navigation = [
 function FooterComponent() {
   return (
     <footer
-      className="text-foregroundground-800 bg-foreground-50
+      className="text-foregroundground-800 
      mt-10 flex flex-col justify-center"
     >
       <div className="mx-auto space-y-8 py-4 lg:space-y-16 lg:py-16">
@@ -226,7 +226,7 @@ function FooterComponent() {
         </div>
       </div>
       <hr />
-      <div className="lg: border-foreground-100 mx-8 flex flex-col justify-start lg:flex-row lg:justify-between">
+      <div className="lg:border-foreground-100 mx-8 flex flex-col justify-start lg:flex-row lg:justify-between">
         <Link
           href="#"
           className="text-foreground-500 text-base transition hover:opacity-75"

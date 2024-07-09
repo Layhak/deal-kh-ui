@@ -7,10 +7,10 @@ export const shopApi = ecommerceApi.injectEndpoints({
     // get all products
     getShops: builder.query<
       any,
-      { page: number; size: number; field: string; fieldName: any }
+      { page: number; size: number }
     >({
-      query: ({ page, size, field, fieldName }) =>
-        `shops?page=${page}&size=${size}&${field}=${fieldName}`,
+      query: ({ page, size }) =>
+        `shops?page=${page}&size=${size}`,
     }),
 
     getAllShops: builder.query<any, void>({

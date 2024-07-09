@@ -50,7 +50,7 @@ export type Image = {
   url: string;
 };
 
-interface ImageResponse {
+export type ImageResponse = {
   url: string;
 }
 
@@ -78,7 +78,12 @@ export type CartProductType = {
   createdBy: string;
   updatedBy: string;
   quantity?: number | 0;
-  address?: string;
+  address: string;
+  openAt: string;
+  closeAt: string;
+  shopSlug: string;
+  location: string;
+  isPercentage: boolean;
 };
 
 export type ShopResponse = {

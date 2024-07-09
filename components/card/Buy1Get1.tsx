@@ -1,41 +1,74 @@
 'use client';
 
-import { Card, CardBody, Image, Link } from '@nextui-org/react';
-import React from 'react';
-import { FaRegHeart } from 'react-icons/fa';
-import { useRouter } from 'next/navigation';
+import { Card, CardBody, Link, Image } from '@nextui-org/react';
+import React, { useState, useEffect } from 'react';
+import { FaRegHeart, FaHeart } from 'react-icons/fa';
+
 import { useGetProductsQuery } from '@/redux/service/product';
 import { CartProductType } from '@/libs/difinition';
-import { addToWishList } from '@/redux/feature/wishList/wishListSlice';
-import { useAppDispatch } from '@/redux/hook';
+import { addToWishList, removeFromWishList } from '@/redux/feature/wishList/wishListSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
+import WishListDropDownComponent from '../WishListDropDownComponent';
 
-export default function Buy1Get1Component({category} : any) {
-  const router = useRouter();
+const Buy1Get1Component = ({category,discountType}:any) => {
   const dispatch = useAppDispatch();
-  const { data, error } = useGetProductsQuery({
+  const wishlistProducts = useAppSelector(selectWishlistProducts);
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const { data } = useGetProductsQuery({
     page: 1,
     size: 6,
-    category :"",
-    discountType: ""
+    category:category,
+    discountType:discountType
   });
-  // console.log('data', data);
-  // console.log('error', error);
-  // console.log('isLoading', isLoading);
+
+  // Initialize the heart state for each product
+  const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
+
+  // Load heart state from local storage on mount
+  useEffect(() => {
+    const savedHeartStates = localStorage.getItem('heartStates');
+    if (savedHeartStates) {
+      setHeartStates(JSON.parse(savedHeartStates));
+    }
+  }, []);
+
+  const handleHeartClick = (product: CartProductType) => {
+    setHeartStates((prevHeartStates) => {
+      const isAddedToWishlist = !prevHeartStates[product.slug];
+      const updatedHeartStates = {
+        ...prevHeartStates,
+        [product.slug]: isAddedToWishlist, // Toggle the heart state
+      };
+
+      if (isAddedToWishlist) {
+        dispatch(addToWishList(product));
+      } else {
+        dispatch(removeFromWishList(product.slug));
+      }
+
+      localStorage.setItem('heartStates', JSON.stringify(updatedHeartStates));
+      setIsOpen(true);
+      return updatedHeartStates;
+    });
+   
+  };
 
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-[25px]">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`/products`)}
             key={product.slug}
             isPressable
             className="relative mb-2 h-[330px] w-[250px] flex-none rounded-xl  bg-foreground-50 shadow-none  dark:border-foreground-700"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
-              <Link href="#">
+              <Link href={`products/${product.slug}`}>
                 <Image
-                  onClick={() => router.push(`/${product.slug}`)}
+                isZoomed
                   className="h-[160px] w-[224px] object-cover"
                   src={
                     product.images[0].url ||
@@ -55,41 +88,18 @@ export default function Buy1Get1Component({category} : any) {
                       : product.name || 'Product Name'}
                   </h5>
                 </Link>
-
                 <div
-                  className="right-4 mt-3"
-                  onClick={() =>
-                    dispatch(
-                      addToWishList({
-                        slug: product.slug,
-                        seller: product.seller,
-                        name: product.name,
-                        price: product.price,
-                        discountPrice: product.discountPrice,
-                        ratingAvg: product.ratingAvg,
-                        description: product.description,
-                        images: product.images,
-                        shop: product.shop,
-                        shopSlug: product.shopSlug,
-                        location: product.location,
-                        openAt: product.openAt,
-                        closeAt: product.closeAt,
-                        discountValue: product.discountValue,
-                        isPercentage: product.isPercentage,
-                        discountType: product.discountType,
-                        expiredAt: product.expiredAt,
-                        category: product.category,
-                        createdAt: product.createdAt,
-                        updatedAt: product.updatedAt,
-                        createdBy: product.createdBy,
-                        updatedBy: product.updatedBy,
-                        address: product.address,
-                      })
-                    )
-                  }
-                >
-                  <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                </div>
+                  className="right-4 mt-3 cursor-pointer"
+                  onClick={() => handleHeartClick(product)}
+                > 
+                  <div key={product.slug}>
+                    {heartStates[product.slug] ? (
+                      <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    ) : (
+                      <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    )} 
+                  </div> 
+                </div> {isOpen && (<WishListDropDownComponent/>)}
               </div>
               <div className=" h-[30px] pt-3">
                 <p className="text-[14px] font-medium text-foreground-600 ">
@@ -117,16 +127,9 @@ export default function Buy1Get1Component({category} : any) {
         ))}
       </div>
 
-      {/* Pagination */}
-      {/*<div className="flex justify-center mt-4">*/}
-      {/*  <Pagination*/}
-      {/*    currentPage={page}*/}
-      {/*    pageSize={pageSize}*/}
-      {/*    totalItems={data?.count || 0}*/}
-      {/*    onPageChange={handlePageChange}*/}
-      {/*    onPageSizeChange={handlePageSizeChange}*/}
-      {/*  />*/}
-      {/*</div>*/}
+      
     </div>
   );
-}
+};
+
+export default Buy1Get1Component;

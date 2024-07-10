@@ -1,3 +1,4 @@
+// SummaryRatingCard.jsx
 'use client';
 import React from 'react';
 import { Button, cn, Progress } from '@nextui-org/react';
@@ -10,7 +11,7 @@ export type SummaryRatingCardProps = React.HTMLAttributes<HTMLDivElement> & {
   totalRatingCount: number;
   averageRating: number;
   onWriteReview?: () => void;
-  hasRated: boolean; // Add hasRated prop
+  hasRated: boolean;
 };
 
 const SummaryRatingCard = React.forwardRef<
@@ -39,7 +40,7 @@ const SummaryRatingCard = React.forwardRef<
     >
       <div className="flex items-center gap-2">
         <span className="text-large font-semibold">
-          {averageRating.toFixed(1)}
+          {isNaN(averageRating) ? 0 : averageRating.toFixed(1)}
         </span>
         <span className="text-default-500">
           • (Based on {totalRatingCount} reviews)
@@ -47,7 +48,8 @@ const SummaryRatingCard = React.forwardRef<
       </div>
       <div className="flex flex-col gap-2">
         {ratings.map(({ rating, count }, index) => {
-          const percentage = (count / totalRatingCount) * 100;
+          const percentage =
+            totalRatingCount > 0 ? (count / totalRatingCount) * 100 : 0;
 
           return (
             <div key={index} className="flex items-center gap-1">

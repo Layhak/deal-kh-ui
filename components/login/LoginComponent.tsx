@@ -5,29 +5,18 @@ import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import Aos from 'aos';
-import { Button, Checkbox, Divider, Spacer } from '@nextui-org/react';
+import { Button, Checkbox, Spacer } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLoginUserMutation } from '@/redux/service/auth';
 import CustomInput from '@/components/customInput/customInput';
 import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
-import {
-  setAccessToken,
-  setLoginSuccess,
-} from '@/redux/feature/auth/authSlice';
-import { useDispatch } from 'react-redux';
-import {
-  Cancel,
-  FacebookWithColorIcon,
-  Google,
-  Logo,
-} from '@/components/icons';
-import { signIn } from 'next-auth/react';
+import { setLoginSuccess } from '@/redux/feature/auth/authSlice';
+import { Cancel, Logo } from '@/components/icons';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { useAppDispatch } from '@/redux/hook';
-import { store } from 'next/dist/build/output/store';
 
 type FormValues = {
   email: string;
@@ -72,7 +61,10 @@ export default function MyShop() {
           password: 'invalid email or password',
         });
       } else {
-        toast.error('An error occurred. Please try again later.', { theme });
+        toast.error('An error occurred. Please try again later.', {
+          autoClose: 2000,
+          theme: theme,
+        });
       }
     }
   };
@@ -176,36 +168,38 @@ export default function MyShop() {
               </Form>
             )}
           </Formik>
-          <Spacer y={3} />
-          <div className="flex items-center gap-4 py-2">
-            <Divider className="flex-1" />
-            <p className="shrink-0 text-tiny text-default-500">OR</p>
-            <Divider className="flex-1" />
-          </div>
-          <div className="mt-3 grid grid-cols-1 gap-3">
-            <Button
-              className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"
-              onClick={() => signIn('google')}
-              startContent={<Google className={'text-gray-50'} />}
-            >
-              <span className="text-sm font-semibold leading-6 text-foreground-800">
-                Google
-              </span>
-            </Button>
+          {/*  <Spacer y={3} />*/}
+          {/*  <div className="flex items-center gap-4 py-2">*/}
+          {/*    <Divider className="flex-1" />*/}
+          {/*    <p className="shrink-0 text-tiny text-default-500">OR</p>*/}
+          {/*    <Divider className="flex-1" />*/}
+          {/*  </div>*/}
+          {/*  <div className="mt-3 grid grid-cols-1 gap-3">*/}
+          {/*    <Button*/}
+          {/*      className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"*/}
+          {/*      onClick={() => signIn('google')}*/}
+          {/*      startContent={<Google className={'text-gray-50'} />}*/}
+          {/*    >*/}
+          {/*      <span className="text-sm font-semibold leading-6 text-foreground-800">*/}
+          {/*        Google*/}
+          {/*      </span>*/}
+          {/*    </Button>*/}
 
-            <Button
-              className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"
-              startContent={<FacebookWithColorIcon />}
-              onClick={() => signIn('facebook')}
-            >
-              <span className="text-sm font-semibold leading-6 text-foreground-800">
-                Facebook
-              </span>
-            </Button>
-          </div>
+          {/*    <Button*/}
+          {/*      className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"*/}
+          {/*      startContent={<FacebookWithColorIcon />}*/}
+          {/*      onClick={() => signIn('facebook')}*/}
+          {/*    >*/}
+          {/*      <span className="text-sm font-semibold leading-6 text-foreground-800">*/}
+          {/*        Facebook*/}
+          {/*      </span>*/}
+          {/*    </Button>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
+          {/*</div>*/}
+          {/*<ToastContainer />*/}
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { ShopResponse } from '@/libs/difinition';
-import { useGetAllShopsQuery } from '@/redux/service/shop';
+import { useGetShopsQuery } from '@/redux/service/shop';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { BsShop } from "react-icons/bs";
@@ -7,7 +7,7 @@ import React from 'react';
 
 export default function ShopCardComponent() {
   const router = useRouter();
-  const { data, isLoading, error } = useGetAllShopsQuery({
+  const { data, isLoading, error } = useGetShopsQuery({
     page: 1,
     size: 3,
   });

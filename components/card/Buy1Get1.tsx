@@ -9,10 +9,14 @@ import { CartProductType } from '@/libs/difinition';
 import { addToWishList, removeFromWishList } from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
+import WishListDropDownComponent from '../WishListDropDownComponent';
 
 const Buy1Get1Component = ({category,discountType}:any) => {
   const dispatch = useAppDispatch();
   const wishlistProducts = useAppSelector(selectWishlistProducts);
+
+  const [isOpen, setIsOpen] = useState(false);
+
   const { data } = useGetProductsQuery({
     page: 1,
     size: 6,
@@ -46,8 +50,10 @@ const Buy1Get1Component = ({category,discountType}:any) => {
       }
 
       localStorage.setItem('heartStates', JSON.stringify(updatedHeartStates));
+      setIsOpen(true);
       return updatedHeartStates;
     });
+   
   };
 
   return (
@@ -85,15 +91,15 @@ const Buy1Get1Component = ({category,discountType}:any) => {
                 <div
                   className="right-4 mt-3 cursor-pointer"
                   onClick={() => handleHeartClick(product)}
-                >
+                > 
                   <div key={product.slug}>
                     {heartStates[product.slug] ? (
                       <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
                     ) : (
                       <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    )}
-                  </div>
-                </div>
+                    )} 
+                  </div> 
+                </div> {isOpen && (<WishListDropDownComponent/>)}
               </div>
               <div className=" h-[30px] pt-3">
                 <p className="text-[14px] font-medium text-foreground-600 ">
@@ -120,6 +126,8 @@ const Buy1Get1Component = ({category,discountType}:any) => {
           </Card>
         ))}
       </div>
+
+      
     </div>
   );
 };

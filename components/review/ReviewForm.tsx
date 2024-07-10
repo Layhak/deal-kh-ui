@@ -1,33 +1,33 @@
-import React, { useState } from 'react';
-import { useFormik, FormikProvider, FieldArray } from 'formik';
+import React, { useEffect, useState } from 'react';
+import { ErrorMessage, FieldArray, FormikProvider, useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Button, Tooltip, Image, Badge } from '@nextui-org/react';
-import { toast, ToastContainer } from 'react-toastify';
+import { Badge, Button, Image, Tooltip } from '@nextui-org/react';
+import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import 'react-toastify/dist/ReactToastify.css';
 
-import PromptInput from '@/components/card/review/PromptInput';
+import PromptInput from '@/components/review/PromptInput';
 import { useUploadImagesMutation } from '@/redux/service/image';
-import {
-  useCreateProductFeedbackMutation,
-  useLazyGetProductFeedbackQuery,
-} from '@/redux/service/ratingAndFeedback';
+import { useCreateProductFeedbackMutation } from '@/redux/service/ratingAndFeedback';
 import { Cancel, PhotoIcon, ShareIcon } from '@/components/icons';
+import { useGetProfileQuery } from '@/redux/service/user';
+import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux';
 
-interface ReviewFormProps {
+type ReviewFormProps = {
   productSlug: string;
-  onNewRating: () => void; // Add onNewRating prop
-}
+  onNewRating: () => void;
+};
 
-interface FormValues {
+type FormValues = {
   description: string;
   productSlug: string;
   images: { file: File | null }[];
-}
+};
 
-interface UploadedImage {
+type UploadedImage = {
   url: string;
-}
+};
 
 const fileValidation = Yup.mixed<any>()
   .nullable()
@@ -41,7 +41,10 @@ const fileValidation = Yup.mixed<any>()
   });
 
 const validationSchema = Yup.object().shape({
-  description: Yup.string().required('Description is required').max(2000),
+  description: Yup.string()
+    .required('Description is required')
+    .max(2000)
+    .trim('Please enter a valid description'),
   productSlug: Yup.string().required('Product slug is required'),
   images: Yup.array().of(
     Yup.object().shape({
@@ -56,9 +59,25 @@ export default function ReviewForm({
 }: ReviewFormProps) {
   const [uploadImages] = useUploadImagesMutation();
   const [createFeedback] = useCreateProductFeedbackMutation();
-  const [triggerGetProductFeedback] = useLazyGetProductFeedbackQuery();
   const [imageFiles, setImageFiles] = useState<File[]>([]);
   const { theme } = useTheme();
+  const {
+    data: userData,
+    isLoading: isLoadingUserData,
+    refetch: refetchUserProfile,
+  } = useGetProfileQuery();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (userData) {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
+  }, [userData]);
+
   const initialValues: FormValues = {
     description: '',
     productSlug,
@@ -90,12 +109,18 @@ export default function ReviewForm({
         };
 
         await createFeedback(feedbackData).unwrap();
-        toast.success('Feedback submitted successfully.', { theme });
+        toast.success('Feedback submitted successfully.', {
+          autoClose: 2000,
+          theme: theme,
+        });
         resetForm();
         onNewRating(); // Call onNewRating to refetch data
       } catch (error) {
         console.error('Error uploading images or submitting feedback:', error);
-        toast.error('Failed to submit feedback.', { theme });
+        toast.error('Failed to submit feedback.', {
+          autoClose: 2000,
+          theme: theme,
+        });
       }
     },
   });
@@ -128,10 +153,10 @@ export default function ReviewForm({
   return (
     <FormikProvider value={formik}>
       <form
-        className="flex w-full flex-col items-start rounded-medium bg-default-100 transition-colors hover:bg-default-200/70"
+        className="flex w-full flex-col items-start rounded-medium bg-foreground-50 transition-colors hover:bg-foreground-100/70"
         onSubmit={handleSubmit}
       >
-        <div className="group flex gap-2 px-4 pt-4">
+        <div className="group flex gap-2 ps-4 pt-4">
           <FieldArray name="images">
             {({ remove }) =>
               values.images.map((imageObj, index) => (
@@ -175,7 +200,7 @@ export default function ReviewForm({
           endContent={
             <div className="absolute right-0 flex h-full flex-col items-end justify-between gap-2">
               <Tooltip showArrow content="Share">
-                <Button isIconOnly radius="full" size="sm" variant="light">
+                <Button isIconOnly radius="full" size="sm" variant="solid">
                   <ShareIcon size={20} />
                 </Button>
               </Tooltip>
@@ -183,19 +208,49 @@ export default function ReviewForm({
                 <p className="py-1 text-tiny text-default-400">
                   {values.description.length}/2000
                 </p>
-                <Tooltip showArrow content="Send message">
+                {isLoadingUserData ? (
                   <Button
-                    color={!values.description ? 'default' : 'primary'}
-                    isDisabled={!values.description}
+                    color="default"
                     radius="lg"
                     size="sm"
                     variant="solid"
-                    type="submit"
-                    isLoading={isSubmitting}
+                    isDisabled
                   >
-                    send message
+                    Loading...
                   </Button>
-                </Tooltip>
+                ) : isAuthenticated ? (
+                  <Tooltip showArrow content="Send message">
+                    <Button
+                      color={!values.description ? 'default' : 'primary'}
+                      isDisabled={!values.description}
+                      radius="lg"
+                      size="sm"
+                      variant="solid"
+                      type="submit"
+                      className={
+                        'bg-gradient-to-r from-pink-500 to-yellow-500 text-gray-50'
+                      }
+                      isLoading={isSubmitting}
+                    >
+                      send message
+                    </Button>
+                  </Tooltip>
+                ) : (
+                  <Tooltip showArrow content="Please sign in to send a message">
+                    <Button
+                      onClick={() => router.push('/login')}
+                      color="default"
+                      radius="lg"
+                      size="sm"
+                      variant="solid"
+                      className={
+                        'bg-gradient-to-r from-pink-500 to-yellow-500 text-gray-50'
+                      }
+                    >
+                      Sign in to send
+                    </Button>
+                  </Tooltip>
+                )}
               </div>
             </div>
           }
@@ -203,14 +258,8 @@ export default function ReviewForm({
           radius="lg"
           startContent={
             <Tooltip showArrow content="Add Image">
-              <Button
-                isIconOnly
-                as="label"
-                radius="full"
-                size="sm"
-                variant="light"
-              >
-                <PhotoIcon size={20} />
+              <Button isIconOnly as="label" radius="full" variant="light">
+                <PhotoIcon size={28} />
                 <input
                   type="file"
                   accept="image/*"
@@ -222,11 +271,15 @@ export default function ReviewForm({
             </Tooltip>
           }
           value={values.description}
-          variant="flat"
+          variant={'flat'}
           onValueChange={(val) => setFieldValue('description', val)}
         />
       </form>
-      <ToastContainer />
+      <ErrorMessage
+        name={'description'}
+        component={'div'}
+        className={'text-red-500'}
+      />
     </FormikProvider>
   );
 }

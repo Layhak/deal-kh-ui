@@ -1,17 +1,17 @@
-'use client';
-import { Button, Image, Link, ScrollShadow } from '@nextui-org/react';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { Button, Link, ScrollShadow } from '@nextui-org/react';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
-import SummaryRatingCard from '@/components/card/review/SummaryRatingCard';
-import { RatingResponse, FeedbackItem } from '@/types/ratings';
+import SummaryRatingCard from '@/components/review/SummaryRatingCard';
+import { FeedbackItem, RatingResponse } from '@/types/ratings';
 import {
   useGetProductFeedbackQuery,
-  useGetAllProductRatingsQuery,
+  useGetProductRatingsByProductSlugQuery,
 } from '@/redux/service/ratingAndFeedback';
-import ModalRating from '@/components/card/review/ModalRating';
-import ReviewForm from '@/components/card/review/ReviewForm';
+import ModalRating from '@/components/review/ModalRating';
+import ReviewForm from '@/components/review/ReviewForm';
 import Loading from '@/app/(user)/loading';
-import FeedbackCard from '@/components/card/review/FeedbackCard'; // Import FeedbackCard
+import FeedbackCard from '@/components/review/FeedbackCard';
+import { useGetProfileQuery } from '@/redux/service/user';
 
 interface CombinedFeedbackItem extends FeedbackItem {
   ratingValue: number;
@@ -27,14 +27,16 @@ export default function ReviewProductDetailComponent({
 }: ReviewProductDetailComponentProps) {
   const [showAllReviews, setShowAllReviews] = useState(false);
   const [averageRating, setAverageRating] = useState(0);
-  const [ratingCounts, setRatingCounts] = useState<number[]>([
-    0, 0, 0, 0, 0, 0,
-  ]);
+  const [ratingCounts, setRatingCounts] = useState<number[]>(Array(11).fill(0));
   const [combinedFeedback, setCombinedFeedback] = useState<
     CombinedFeedbackItem[]
   >([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [hasRated, setHasRated] = useState(false); // Track if the user has rated
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [hasRated, setHasRated] = useState(false);
+
+  const { data: currentUserProfile, isLoading: profileLoading } =
+    useGetProfileQuery();
 
   const toggleModal = () => {
     if (!hasRated) {
@@ -50,7 +52,7 @@ export default function ReviewProductDetailComponent({
     error: ratingError,
     isLoading: ratingLoading,
     refetch: refetchRatings,
-  } = useGetAllProductRatingsQuery();
+  } = useGetProductRatingsByProductSlugQuery({ productSlug });
 
   const {
     data: feedbackData,
@@ -71,14 +73,13 @@ export default function ReviewProductDetailComponent({
   }, [ratingsData, feedbackData]);
 
   useEffect(() => {
-    if (ratingsData) {
-      const currentUser = 'currentUser'; // Replace with actual logic to get the current user
+    if (ratingsData && currentUserProfile) {
       const userHasRated = ratingsData.some(
-        (rating) => rating.username === currentUser
+        (rating) => rating.username === currentUserProfile?.payload?.username
       );
       setHasRated(userHasRated);
     }
-  }, [ratingsData]);
+  }, [ratingsData, currentUserProfile]);
 
   const combineData = (
     ratings: RatingResponse[],
@@ -101,13 +102,19 @@ export default function ReviewProductDetailComponent({
   };
 
   const calculateRatings = (ratings: RatingResponse[]) => {
+    if (ratings.length === 0) {
+      setAverageRating(0);
+      setRatingCounts(Array(11).fill(0));
+      return;
+    }
+
     let totalRating = 0;
-    let ratingCount = [0, 0, 0, 0, 0, 0];
+    let ratingCount = Array(11).fill(0);
 
     ratings.forEach((rating) => {
       totalRating += rating.ratingValue;
-      const roundedStar = Math.round(rating.ratingValue);
-      ratingCount[roundedStar]++;
+      const halfStarIndex = Math.round(rating.ratingValue * 2);
+      ratingCount[halfStarIndex]++;
     });
 
     setAverageRating(totalRating / ratings.length);
@@ -119,7 +126,7 @@ export default function ReviewProductDetailComponent({
     refetchFeedback();
   };
 
-  if (ratingLoading || feedbackLoading) return <Loading />;
+  if (ratingLoading || feedbackLoading || profileLoading) return <Loading />;
   if (ratingError || feedbackError)
     return (
       <div className="flex h-screen items-center justify-center">
@@ -131,7 +138,7 @@ export default function ReviewProductDetailComponent({
 
   const reviewsToShow = combinedFeedback.slice(
     0,
-    showAllReviews ? combinedFeedback.length : 3
+    showAllReviews ? combinedFeedback.length : 5
   );
 
   return (
@@ -142,20 +149,26 @@ export default function ReviewProductDetailComponent({
             Product <span className="text-[#eb7d52]">Rating</span>
           </p>
         </div>
-        <div className={'mb-5 pe-3 ps-8'}>
+        <div className={'mb-5 px-1 lg:pe-1 lg:ps-8'}>
           <ReviewForm productSlug={productSlug} onNewRating={handleNewRating} />
         </div>
         <div className={'grid grid-cols-1 lg:grid-cols-3 '}>
           <section className="mx-auto w-full max-w-md lg:px-8">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
               <SummaryRatingCard
-                averageRating={averageRating}
+                averageRating={isNaN(averageRating) ? 0 : averageRating}
                 ratings={[
-                  { rating: 5, count: ratingCounts[5] },
-                  { rating: 4, count: ratingCounts[4] },
-                  { rating: 3, count: ratingCounts[3] },
-                  { rating: 2, count: ratingCounts[2] },
-                  { rating: 1, count: ratingCounts[1] },
+                  { rating: 5, count: ratingCounts[10] },
+                  { rating: 4.5, count: ratingCounts[9] },
+                  { rating: 4, count: ratingCounts[8] },
+                  { rating: 3.5, count: ratingCounts[7] },
+                  { rating: 3, count: ratingCounts[6] },
+                  { rating: 2.5, count: ratingCounts[5] },
+                  { rating: 2, count: ratingCounts[4] },
+                  { rating: 1.5, count: ratingCounts[3] },
+                  { rating: 1, count: ratingCounts[2] },
+                  { rating: 0.5, count: ratingCounts[1] },
+                  { rating: 0, count: ratingCounts[0] },
                 ]}
                 totalRatingCount={ratingsData ? ratingsData.length : 0}
                 onWriteReview={toggleModal}
@@ -164,12 +177,18 @@ export default function ReviewProductDetailComponent({
             </div>
           </section>
           <div className={'col-span-2'}>
-            <ScrollShadow size={10} className="h-[550px] w-full ">
+            <ScrollShadow size={10} className="h-[750px] w-full ">
               {reviewsToShow.map((review, index) => (
-                <FeedbackCard key={index} review={review} />
+                <FeedbackCard
+                  key={index}
+                  review={review}
+                  currentUser={currentUserProfile?.payload?.username}
+                  refetchFeedback={refetchFeedback}
+                  productSlug={productSlug}
+                />
               ))}
             </ScrollShadow>
-            {(combinedFeedback.length ?? 0) > 3 && (
+            {(combinedFeedback.length ?? 0) > 5 && (
               <div className="mt-4 flex justify-center">
                 <Button
                   onClick={toggleShowAllReviews}

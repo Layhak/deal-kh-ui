@@ -1,6 +1,7 @@
 // CardShop.tsx
 import { ShopFake } from '@/types/shopFake';
 import { Card, CardBody, Link, Image } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 type CardShopProps = {
@@ -8,12 +9,19 @@ type CardShopProps = {
 };
 
 const ShopNearbyComponent: React.FC<CardShopProps> = ({ shop }) => {
+
+  const router = useRouter();
+
+  const handleCardClick = () => {
+    router.push(`/shop/${shop.slug}`);
+  };
+
   return (
     <div>
       <Card
-        // key={product.slug}
+        key={shop.slug}
         isPressable
-        onPress={() => console.log('item pressed')}
+        onPress={handleCardClick}
         className="my-8 w-full shadow-none"
       >
         <CardBody className="flex flex-row ">
@@ -22,7 +30,7 @@ const ShopNearbyComponent: React.FC<CardShopProps> = ({ shop }) => {
           <Image
                 className="h-64 w-screen object-cover"
                 src={
-                  shop.imageUrl ||
+                  shop.profile ||
                   'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
                 }
                 alt={shop.name}
@@ -48,13 +56,13 @@ const ShopNearbyComponent: React.FC<CardShopProps> = ({ shop }) => {
                 <p className=" text-foreground-600">
                   Category :{' '}
                   <span className="text-foreground-900 font-medium">
-                    {shop.category || 'Product Category'}
+                    {shop.shopType || 'Product Category'}
                   </span>
                 </p>
                 <p className="text-foreground-600 text-sm">
                   Open :{' '}
                   <span className="text-foreground-900 text-sm font-medium">
-                    {shop.open}
+                    {shop.openAt}
                   </span>
                 </p>
               </div>

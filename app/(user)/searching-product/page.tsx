@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import Loading from '../loading';
 import Error from '../error';
 
-const TestingPage: React.FC = () => {
+const SearchingProduct: React.FC = () => {
 
   const router = useRouter();
 
@@ -18,8 +18,8 @@ const TestingPage: React.FC = () => {
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 10,
-    field: '',
-    fieldName: '',
+    category: '',
+    discountType: ''
   });
 
   const filteredProducts = data?.payload.list.filter((product: ProductType) => {
@@ -139,4 +139,4 @@ const TestingPage: React.FC = () => {
   );
 };
 
-export default TestingPage;
+export default SearchingProduct;

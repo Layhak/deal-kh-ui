@@ -8,9 +8,9 @@ import { CategoryType } from '@/types/category';
 
 export default function Category() {
   const { data, isLoading, error } = useGetCategoryQuery();
-  console.log('data car=t', data?.payload[0]);
-  console.log('error', error);
-  console.log('isLoading', isLoading);
+  // console.log('data car=t', data?.payload[0]);
+  // console.log('error', error);
+  // console.log('isLoading', isLoading);
 
   return (
     <Marquee pauseOnHover>

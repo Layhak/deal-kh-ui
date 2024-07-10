@@ -52,11 +52,12 @@ export type Image = {
 
 export type ImageResponse = {
   url: string;
-}
+};
 
 export type CartProductType = {
   seller: string;
   name: string;
+  ratingCount: number;
   slug: string;
   price: number;
   discountPrice: number;
@@ -80,7 +81,6 @@ export type CartProductType = {
   quantity?: number | 0;
   address?: string;
 };
-
 
 export type ShopResponse = {
   profile: string;

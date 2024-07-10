@@ -9,57 +9,44 @@ const SearchLocation: React.FC = () => {
   const [submitForm] = useSubmitFormMutation();
   const [searchValue, setSearchValue] = useState('');
   const [productDropdown, setProductDropdown] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
 
-  const handleSearchChange = (event: {
-    target: { value: SetStateAction<string> };
-  }) => {
-    const newSearchValue = event.target.value;
-    setSearchValue(newSearchValue);
-    setProductDropdown(newSearchValue.length > 0);
-  };
+  // const handleSearchChange = (event: {
+  //   target: { value: SetStateAction<string> };
+  // }) => {
+  //   const newSearchValue = event.target.value;
+  //   setSearchValue(newSearchValue);
+  //   setProductDropdown(newSearchValue.length > 0);
+  // };
 
   const handleSubmitSearch = () => {
     router.push(`/searching-shop-name?searchValue=${searchValue}`);
+    setProductDropdown(false);
   };
 
   const handleSubmitSearchNearby = () => {
     router.push(`/searching-nearby`);
+    setProductDropdown(false);
+    setClickCount(0);
   };
 
   const handleClearSearch = () => {
     setSearchValue('');
+    setProductDropdown(false);
+    setClickCount(0);
   };
 
   const handleInputClick = () => {
-    setProductDropdown(true);
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      setProductDropdown(false);
-      handleSubmitSearch();
-    }
-  };
-
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectItem, setSelectItem] = useState('');
-
-  const handleOnSelectProduct = (item: string) => {
-    setSearchValue(item);
-    console.log("This is the value that I have Clicked: ", item);
+    setClickCount((prevCount) => prevCount + 1);
+    setProductDropdown(clickCount % 2 === 0);
   };
 
   return (
     <div
       className="relative"
-      onMouseEnter={() => setProductDropdown(true)}
-      onMouseLeave={() => setProductDropdown(false)}
     >
       <Input
         aria-label="Location Search"
@@ -69,7 +56,7 @@ const SearchLocation: React.FC = () => {
           input: 'text-sm',
         }}
         labelPlacement="outside"
-        placeholder={searchValue || 'Search Deal-KH'}
+        placeholder={searchValue || 'Search Shop'}
         endContent={
           searchValue ? (
             <CloseIcon
@@ -85,10 +72,7 @@ const SearchLocation: React.FC = () => {
         }
         type="search"
         value={searchValue}
-        onChange={handleSearchChange}
         onClick={handleInputClick}
-        onKeyDown={handleKeyDown}
-        autoComplete="off"
       />
       {productDropdown && (
         <div className="relative">

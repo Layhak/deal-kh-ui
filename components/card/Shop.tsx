@@ -5,11 +5,11 @@ import { useRouter } from 'next/navigation';
 import { BsShop } from "react-icons/bs";
 import React from 'react';
 
-export default function ShopCardComponent() {
+export default function ShopCardComponent({page,size}:any) {
   const router = useRouter();
   const { data, isLoading, error } = useGetShopsQuery({
-    page: 1,
-    size: 3,
+    page: page,
+    size: size,
   });
 
   return (
@@ -19,7 +19,6 @@ export default function ShopCardComponent() {
           <Card
             key={shop.slug}
             isPressable
-            onPress={() => console.log('item pressed')}
             className="w-[387px] p-2  shadow-none"
           >
             <CardBody>
@@ -69,12 +68,11 @@ export default function ShopCardComponent() {
                     <p>Get Notified.</p>
                   </span>
                 </div>
-                <a
-                  href="#"
-                  className="h-[37px] w-[130px] rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 pt-2 text-center text-[14px] text-white "
-                >
+                <Link href={`/shop/${shop.slug}`}>
+               <button className="h-[37px] w-[130px] rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center text-[14px] text-white ">
                   Check Us Out
-                </a>
+               </button>
+                </Link>
               </div>
             </CardBody>
           </Card>

@@ -1,18 +1,16 @@
-"use client";
-
+'use client'
 import React from 'react'
 import { Link, Image } from '@nextui-org/react';
-import DiscountCardComponent from '@/components/card/DiscountCardComponent';
+import NormalProductComponent from '../card/NormalProduct';
 
-
-export default function Event() {
+export default function NoDiscount() {
   return (
     <main>
         {/* Banner */}
         <div className="">
           <Image
-            src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-            className="h-[320px] w-[1300px] object-cover" alt='Event'
+            src="https://img.freepik.com/free-vector/realistic-rose-cosmetic-tubes-round-podium-pink-background-with-hearts-sparkles-cosmetic-products-promotion-advertising-mockup-blank-package-makeup-skincare-body-beauty-platform_88138-1397.jpg?t=st=1720584831~exp=1720588431~hmac=067f7cc31044bc051752599a87293ed446b1f5877366c3170c65e03d0f3f9e96&w=1060"
+            className="h-[320px] w-[1300px] object-cover" alt='Flash Sale'
           ></Image>
         </div>
         {/* Food */}
@@ -49,13 +47,13 @@ export default function Event() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent category={"food"} discountType={"event"}/>
+        <NormalProductComponent category={"food"} discountType={"no discount"}/>
         {/* Drink */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
           <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
-             Drink
+              Drink
             </p>
           </div>
           {/* Right section */}
@@ -84,7 +82,7 @@ export default function Event() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent category={"drink"} discountType={"event"}/>
+        <NormalProductComponent category={"drink"} discountType={"no discount"}/>
         {/* Clothes */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -119,13 +117,13 @@ export default function Event() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent category={"clothes"} discountType={"event"}/>
+        <NormalProductComponent category={"clothes"} discountType={"no discount"}/>
         {/* Accessories */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
           <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
-             Accessories
+              Accessories
             </p>
           </div>
           {/* Right section */}
@@ -154,13 +152,13 @@ export default function Event() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent category={"accessories"} discountType={"event"}/>
+        <NormalProductComponent category={"accessories"} discountType={"no discount"}/>
         {/* Skin Care */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
           <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
-              Skin <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Care</span>
+             Skin <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Care</span>
             </p>
           </div>
           {/* Right section */}
@@ -189,7 +187,7 @@ export default function Event() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent category={"skin-care"} discountType={"event"}/>
+        <NormalProductComponent category={"skin-care"} discountType={"no discount"}/>
         {/* Electronic */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
@@ -224,7 +222,7 @@ export default function Event() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent category={"electronic"} discountType={"event"}/>
+        <NormalProductComponent category={"electronic"} discountType={"no discount"}/>
     </main>
   )
 }

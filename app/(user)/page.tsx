@@ -16,6 +16,7 @@ import CardCouponComponent from '@/components/card/coupon-detail/CardCouponCompo
 
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
+import FilterComponent from '@/components/Filter';
 
 export default function HomePage() {
   useEffect(() => {
@@ -32,7 +33,8 @@ export default function HomePage() {
   }, [theme]);
   return (
     <>
-      <main>
+      <div>
+        <FilterComponent />
         <HeroSlideComponent />
         {/* Top Sale Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
@@ -44,7 +46,7 @@ export default function HomePage() {
           <Link href="/discount">
             <div className="flex items-center  pt-2">
               <p
-                className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal
+                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
               "
               >
                 See More
@@ -68,7 +70,10 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent category={"food"} discountType={"discount off"}/>
+        <DiscountCardComponent
+          category={'food'}
+          discountType={'discount off'}
+        />
         {/* Clearance Sale Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -78,7 +83,7 @@ export default function HomePage() {
           </div>
           <Link href="/flash-sale">
             <div className="flex items-center pt-2">
-              <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
+              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
               </p>
               <svg
@@ -100,7 +105,10 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <ClearanceCardComponent category={"clothes"} discountType={"clearance sales"}/>
+        <ClearanceCardComponent
+          category={'clothes'}
+          discountType={'clearance sales'}
+        />
         <div>
           <Image
             src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
@@ -117,7 +125,7 @@ export default function HomePage() {
           </div>
           <Link href="/buy-more-get-more">
             <div className="flex items-center  pt-2">
-              <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
+              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
               </p>
               <svg
@@ -150,7 +158,10 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="w-[800px]">
-            <Buy1Get1Component category={"drink"} discountType={"buy more get more"}/>
+            <Buy1Get1Component
+              category={'drink'}
+              discountType={'buy more get more'}
+            />
           </div>
         </div>
         {/* Service Section */}
@@ -162,7 +173,7 @@ export default function HomePage() {
           </div>
           <Link href="/service">
             <div className="flex items-center  pt-2">
-              <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
+              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
               </p>
               <svg
@@ -184,7 +195,10 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <ServiceCardComponent category={"accessories"} discountType={"no discount"}/>
+        <ServiceCardComponent
+          category={'accessories'}
+          discountType={'no discount'}
+        />
         {/* Coupon Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -194,7 +208,7 @@ export default function HomePage() {
           </div>
           <Link href="/coupons">
             <div className="flex items-center  pt-2">
-              <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
+              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
               </p>
               <svg
@@ -219,7 +233,10 @@ export default function HomePage() {
         <div>
           <CardCouponComponent displayCount={2} />
         </div>
-        <DiscountCardComponent category={"clothes"} discountType={"shop coupons"}/>
+        <DiscountCardComponent
+          category={'clothes'}
+          discountType={'shop coupons'}
+        />
         {/* Event Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -229,7 +246,7 @@ export default function HomePage() {
           </div>
           <Link href="/event">
             <div className="flex items-center  pt-2">
-              <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
+              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
               </p>
               <svg
@@ -261,14 +278,14 @@ export default function HomePage() {
         {/* Feature Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="text-foreground-700 relative w-fit text-[20px]  font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Feature <span className="text-[#eb7d52]">Products</span>
             </p>
           </div>
           {/* Right section */}
           <Link href="/products">
             <div className="flex items-center  pt-2">
-              <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
+              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
               </p>
               <svg
@@ -290,18 +307,21 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <NormalProductComponent category={"electronic"} discountType={"no discount"}/>
+        <NormalProductComponent
+          category={'electronic'}
+          discountType={'no discount'}
+        />
         {/* Category */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="text-foreground-700 relative w-fit text-[20px]  font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Category
             </p>
           </div>
           {/* Right section */}
           <Link href="/all-product">
             <div className="flex items-center  pt-2">
-              <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
+              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
               </p>
               <svg
@@ -323,19 +343,19 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <Category /> 
-         {/* Shop Section */}
-         <div className="my-8 flex h-[50px] items-center justify-between">
+        <Category />
+        {/* Shop Section */}
+        <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="text-foreground-700 relative w-fit text-[20px]  font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
+            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
               Popular <span className="text-[#eb7d52]">Shop</span>
             </p>
           </div>
           {/* Right section */}
           <Link href="#">
             <div className="flex items-center pt-2">
-              <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
+              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
               </p>
               <svg
@@ -358,7 +378,7 @@ export default function HomePage() {
           </Link>
         </div>
         <ShopCardComponent />
-      </main>
+      </div>
     </>
   );
 }

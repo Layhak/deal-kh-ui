@@ -64,7 +64,7 @@ export default function Food() {
           </div>
           {/* Right section */}
         </div>
-        <DiscountCardComponent category={"food"} discountType={"discount off"}/>
+        <DiscountCardComponent category={"food"} discountType={"shop coupons"}/>
         {/* Event */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}

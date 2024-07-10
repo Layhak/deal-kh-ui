@@ -4,7 +4,6 @@ import { Metadata } from 'next';
 import Products from '@/components/pages/AllProduct';
 import Buy1Get1Component from '@/components/pages/Buy1Get1';
 import Cloth from '@/components/pages/Cloth';
-import Coupon from '@/components/pages/Coupon';
 import Deal from '@/components/pages/Deal';
 import Discount from '@/components/pages/DiscountOff';
 import Drink from '@/components/pages/Drink';

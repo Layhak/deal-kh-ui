@@ -148,16 +148,17 @@ export const NavigationBar = () => {
           <NextLink href="/" className="h-12 w-12">
             <Image src="/logo.png" alt="logo" className="h-12 w-12" />
           </NextLink>
-          <NavbarItem className="hidden sm:flex ">
+          {/* <NavbarItem className="hidden sm:flex ">
             <CategoryButton categories={categories} />
-          </NavbarItem>
-        </NavbarBrand>
-      </NavbarContent>
-      <NavbarContent>
-        <div className="flex gap-4">
+          </NavbarItem> */}
+          <NavbarContent>
+        <div className="flex gap-4 ml-2">
           <NavbarItem className="hidden md:flex">{searchInput}</NavbarItem>
         </div>
       </NavbarContent>
+        </NavbarBrand>
+      </NavbarContent>
+      
       <NavbarContent justify={'start'} className={'hidden gap-4 px-16 sm:flex'}>
         {siteConfig.navItems.map((item) => (
           <NavbarItem key={item.href} isActive={item.href === pathname}>

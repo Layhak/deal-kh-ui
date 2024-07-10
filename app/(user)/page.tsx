@@ -5,6 +5,7 @@ import 'aos/dist/aos.css';
 import { useEffect } from 'react';
 import Category from '@/components/card/Category';
 import NormalProductComponent from '@/components/card/NormalProduct';
+import ShopCardComponent from '@/components/card/Shop';
 import DiscountCardComponent from '@/components/card/DiscountCardComponent';
 import ServiceCardComponent from '@/components/card/Service';
 import Buy1Get1Component from '@/components/card/Buy1Get1';
@@ -15,6 +16,7 @@ import CardCouponComponent from '@/components/card/coupon-detail/CardCouponCompo
 
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
+import FilterComponent from '@/components/Filter';
 
 export default function HomePage() {
   useEffect(() => {
@@ -31,13 +33,14 @@ export default function HomePage() {
   }, [theme]);
   return (
     <>
-      <main>
+      <div>
+        <FilterComponent />
         <HeroSlideComponent />
         {/* Top Sale Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]  lg:text-[26px]">
-              Top <span className="text-[#eb7d52]">Sales</span>
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Top <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Sales</span>
             </p>
           </div>
           <Link href="/discount">
@@ -74,8 +77,8 @@ export default function HomePage() {
         {/* Clearance Sale Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
-              Clearance <span className="text-[#eb7d52]">Sales</span>
+            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Clearance <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Sales</span>
             </p>
           </div>
           <Link href="/flash-sale">
@@ -116,8 +119,8 @@ export default function HomePage() {
         {/* Buy1 Get1 Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
-              Buy More <span className="text-[#eb7d52]">Get More</span>
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Buy More <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Get More</span>
             </p>
           </div>
           <Link href="/buy-more-get-more">
@@ -164,8 +167,8 @@ export default function HomePage() {
         {/* Service Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
-              Service
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+             Service
             </p>
           </div>
           <Link href="/service">
@@ -199,8 +202,8 @@ export default function HomePage() {
         {/* Coupon Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
-              Shop <span className="text-[#eb7d52]">Coupons</span>
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Shop <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Coupon</span>
             </p>
           </div>
           <Link href="/coupons">
@@ -237,8 +240,8 @@ export default function HomePage() {
         {/* Event Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
-              Event
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Event 
             </p>
           </div>
           <Link href="/event">
@@ -275,12 +278,12 @@ export default function HomePage() {
         {/* Feature Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
-              Feature <span className="text-[#eb7d52]">Products</span>
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Feature <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Products</span>
             </p>
           </div>
           {/* Right section */}
-          <Link href="/products">
+          <Link href="/no-discount">
             <div className="flex items-center  pt-2">
               <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
@@ -311,12 +314,12 @@ export default function HomePage() {
         {/* Category */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
-              Category
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Category 
             </p>
           </div>
           {/* Right section */}
-          <Link href="/all-product">
+          <Link href="/products">
             <div className="flex items-center  pt-2">
               <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
@@ -345,12 +348,12 @@ export default function HomePage() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308] lg:text-[26px]">
-              Popular <span className="text-[#eb7d52]">Shop</span>
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Popular <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Shop</span>
             </p>
           </div>
           {/* Right section */}
-          <Link href="#">
+          <Link href="/shop">
             <div className="flex items-center pt-2">
               <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
@@ -374,8 +377,8 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        {/*<ShopCardComponent />*/}
-      </main>
+        <ShopCardComponent page={'1'} size={'3'} />
+      </div>
     </>
   );
 }

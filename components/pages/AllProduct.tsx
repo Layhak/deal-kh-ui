@@ -22,8 +22,8 @@ export default function Products() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Food 
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Food
             </p>
           </div>
           {/* Right section */}
@@ -57,8 +57,8 @@ export default function Products() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Drink 
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Drink
             </p>
           </div>
           {/* Right section */}
@@ -92,12 +92,12 @@ export default function Products() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
               Clothes
             </p>
           </div>
           {/* Right section */}
-          <Link href="/cloth">
+          <Link href="/clothes">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More
@@ -122,7 +122,7 @@ export default function Products() {
             </div>
           </Link>
         </div>
-        <NormalProductComponent  category={"clothes"} discountType={"no discount"}/>
+        <BuyMoreGetMoreComponent category={"clothes"} discountType={"buy more get more"}/>
         <div className="coupon-container flex justify-between py-10">
           <div className="coupon">
             <Image
@@ -141,8 +141,8 @@ export default function Products() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text- after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Accessories 
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Accessories
             </p>
           </div>
           {/* Right section */}
@@ -176,8 +176,8 @@ export default function Products() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Skin <span className="text-[#eb7d52]">Care</span>
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Skin <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Care</span>
             </p>
           </div>
           {/* Right section */}
@@ -211,7 +211,7 @@ export default function Products() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
               Electronic
             </p>
           </div>
@@ -241,12 +241,12 @@ export default function Products() {
             </div>
           </Link>
         </div>
-        <BuyMoreGetMoreComponent category={"electronic"} discountType={"buy more get more"}/>
+        <NormalProductComponent category={"electronic"} discountType={"no discount"}/>
         {/* Banner */}
         <div className="">
           <Image
             src="https://st.bigc-cs.com/cdn-cgi/image/format=webp,quality=90/public/media/banner/202406/d41354ce-0766-42a4-8405-20e96c24afa3.jpg"
-            className="h-[320px] w-[1300px] object-cover mt-8" alt='buymoregetmore banner'
+            className="h-[320px] w-[1300px] object-cover mt-8" alt='producr banner'
           ></Image>
         </div>
     </main>

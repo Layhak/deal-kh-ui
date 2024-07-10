@@ -78,8 +78,8 @@ export default function BuyMoreGetMoreComponent({category,discountType}:any) {
               </span>
               <div className="flex flex-wrap justify-between">
                   <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
-                    {product.name.length > 30
-                      ? `${product.name.substring(0, 26)}...`
+                    {product.name.length > 28
+                      ? `${product.name.substring(0, 20)}...`
                       : product.name}
                   </h5>
                   <div

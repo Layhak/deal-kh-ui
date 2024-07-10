@@ -21,7 +21,7 @@ export default function ClearanceCardComponent({
     category: category,
     discountType: discountType,
   });
-
+console.log("sdfjhasdfjk",data)
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-[35px]">
@@ -132,10 +132,10 @@ export default function ClearanceCardComponent({
                         createdBy: product.createdBy,
                         updatedBy: product.updatedBy,
                         address: product.address,
-                        openAt: '',
-                        closeAt: '',
-                        shopSlug: '',
-                        location: '',
+                        openAt: product.openAt,
+                        closeAt: product.closeAt,
+                        shopSlug: product.shopSlug,
+                        location: product.location,
                         ratingCount: product.ratingCount,
                         isPercentage: false,
                       })

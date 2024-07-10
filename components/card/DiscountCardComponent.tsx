@@ -17,7 +17,7 @@ export default function DiscountCardComponent({ category, discountType }: any) {
   return (
     <main>
       {/* for the card section*/}
-      <div className="flex flex-wrap justify-between gap-[25px]">
+      <div className="flex flex-wrap justify-center gap-[25px]">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
             onClick={() => router.push(`products/${product.slug}`)}

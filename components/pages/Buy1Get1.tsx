@@ -18,9 +18,9 @@ export default function Buy1Get1Component() {
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-700 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Food
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Food
+            </p>
         </div>
         {/* Right section */}
         <Link href="/food">
@@ -52,9 +52,9 @@ export default function Buy1Get1Component() {
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-700 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Drink
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Drink
+            </p>
         </div>
         {/* Right section */}
         <Link href="/drink">
@@ -87,12 +87,12 @@ export default function Buy1Get1Component() {
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-700 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Clothes
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Clothes
+            </p>
         </div>
         {/* Right section */}
-        <Link href="/cloth">
+        <Link href="/clothes">
           <div className="flex items-center  pt-1">
             <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
               See More
@@ -118,48 +118,13 @@ export default function Buy1Get1Component() {
         </Link>
       </div>
       <BuyMoreGetMoreComponent category={"clothes"} discountType={"buy more get more"}/>
-      {/* Shoes */}
-      <div className="my-8 flex h-[50px] items-center justify-between">
-        {/* Left section */}
-        <div className="flex-1">
-          <p className="text-foreground-700 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Shoes
-          </p>
-        </div>
-        {/* Right section */}
-        <Link href="/shoe">
-          <div className="flex items-center  pt-1">
-            <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
-              See More
-            </p>
-            {/* Icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              color="black"
-              viewBox="0 0 48 48"
-            >
-              <path
-                fill="none"
-                stroke="#545c6a"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="4"
-                d="M42 24H6m24-12l12 12l-12 12"
-              />
-            </svg>
-          </div>
-        </Link>
-      </div>
-      <BuyMoreGetMoreComponent category={"shoes"} discountType={"buy more get more"}/>
       {/* Accessories */}
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-700 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Accessories
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+             Accessories
+            </p>
         </div>
         {/* Right section */}
         <Link href="/accessory">
@@ -192,9 +157,9 @@ export default function Buy1Get1Component() {
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-700 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Skin <span className="text-[#eb7d52]">Care</span>
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Skin <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Care</span>
+            </p>
         </div>
         {/* Right section */}
         <Link href="/skincare">
@@ -227,9 +192,9 @@ export default function Buy1Get1Component() {
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-700 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Electronic
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Electronic
+            </p>
         </div>
         {/* Right section */}
         <Link href="/electronic">

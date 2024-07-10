@@ -25,7 +25,8 @@ export default function CartComponent() {
   const products = useAppSelector(selectProducts);
   const totalPrice = useAppSelector(selectTotalPrice);
   const dispatch = useAppDispatch();
-console.log("product",products)
+  console.log('product', products);
+
   // Display number of product that only unique select
   const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
 
@@ -50,6 +51,12 @@ console.log("product",products)
 
   const handleRemoveFromCart = (product: CartProductType) => {
     dispatch(removeFromCart(product.slug));
+  };
+
+  const handleGetDirections = (location: string) => {
+    const [lat, lng] = location.split(',');
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+    window.open(url, '_blank');
   };
 
   const renderCell = (product: CartProductType, columnKey: string) => {
@@ -79,7 +86,16 @@ console.log("product",products)
       case 'shop':
         return <div>{product.shop}</div>;
       case 'location':
-        return <div>{product.location}</div>;
+        return (
+          <div className="flex items-center">
+            <Button
+              onClick={() => handleGetDirections(product.location)}
+              className="ml-2"
+            >
+              Get Directions
+            </Button>
+          </div>
+        );
       case 'price':
         return <div>${product.price}</div>;
       case 'discount price':
@@ -87,22 +103,17 @@ console.log("product",products)
       case 'quantity':
         return (
           <div className="flex items-center">
-            {/* increase button */}
             <div className="flex ">
               <div className="flex h-8 w-8 items-center justify-center rounded-l-lg border">
-                <LuPlus
-                  onClick={() => dispatch(incrementQuantity(product.slug))}
-                />
+                <LuPlus onClick={() => handleIncrementQuantity(product)} />
               </div>
 
               <div className="flex h-8  w-8 items-center justify-center border">
                 <span>{product.quantity}</span>
               </div>
 
-              <div className=" flex h-8  w-8 items-center justify-center rounded-r-lg border">
-                <LuMinus
-                  onClick={() => dispatch(decrementQuantity(product.slug))}
-                />
+              <div className="flex h-8  w-8 items-center justify-center rounded-r-lg border">
+                <LuMinus onClick={() => handleDecrementQuantity(product)} />
               </div>
             </div>
           </div>
@@ -114,7 +125,7 @@ console.log("product",products)
           <div className="flex justify-center">
             <Button
               isIconOnly
-              onClick={() => dispatch(removeFromCart(product.slug))}
+              onClick={() => handleRemoveFromCart(product)}
               className="rounded-xl bg-red-500 p-2 text-white"
             >
               <LuTrash />
@@ -137,8 +148,7 @@ console.log("product",products)
             height={200}
           />
           <p className="mt-4 text-2xl font-semibold ">Your cart is empty!</p>
-          {/* eslint-disable-next-line react/no-unescaped-entities */}
-          <p>Look like you haven't make any choice yet...</p>
+          <p>Look like you haven't made any choice yet...</p>
         </div>
       )}
       {products.length !== 0 && (

@@ -33,7 +33,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
       placeholder={placeholder}
       classNames={{
         inputWrapper:
-          'border-transparent bg-default-50/80 dark:bg-default-50/20 group-data-[focus=true]:border-primary data-[hover=true]:border-foreground/20',
+          'border-transparent bg-default-50/80 dark:bg-default-50/20 group-data-[focus=true]:border-primary border-foreground/20',
       }}
       isClearable={true}
       onClear={() => handleClear()}

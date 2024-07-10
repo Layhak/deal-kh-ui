@@ -18,9 +18,12 @@ export default function Category() {
         {data?.payload.map((category: CategoryType) => (
           // eslint-disable-next-line react/jsx-key
           <Image
-            src={category.icon}
+            src={
+              category?.icon ||
+              'https://i.pinimg.com/564x/2a/4d/c3/2a4dc3ce036e764e3f291de19a71d1b1.jpg'
+            }
             alt="Category image"
-            className="ms-5 h-[240px] w-[240px] rounded-full object-contain"
+            className="ms-5 h-[240px] w-[240px] rounded-full bg-foreground object-cover"
           />
         ))}
       </div>

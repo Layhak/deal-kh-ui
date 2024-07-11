@@ -21,13 +21,13 @@ export default function ClearanceCardComponent({
     category: category,
     discountType: discountType,
   });
-console.log("sdfjhasdfjk",data)
+  console.log('sdfjhasdfjk', data);
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-[35px]">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`products/${product.slug}`)}
+            onClick={() => router.push(`/products/${product.slug}`)}
             key={product.slug}
             className="w-[387px] shadow-none"
           >

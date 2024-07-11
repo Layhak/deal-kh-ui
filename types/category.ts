@@ -1,4 +1,4 @@
-export type CategoryType = {
+export type Category = {
   name: string;
   slug: string;
   icon: string;
@@ -8,8 +8,8 @@ export type CategoryType = {
   updatedAt: string;
 };
 
-export type ApiResponse = {
-  payload: CategoryType[];
+export type CategoryResponse = {
+  payload: Category[];
   message: string;
   status: number;
 };

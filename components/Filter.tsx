@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import { Chip, Navbar, NavbarContent, ScrollShadow } from '@nextui-org/react';
 import { useGetCategoryQuery } from '@/redux/service/category';
-import { CategoryType } from '@/types/category';
 import NextLink from 'next/link';
+import { Category } from '@/types/category';
 
 export default function Filter() {
   const { data, isLoading, error } = useGetCategoryQuery();
@@ -45,11 +45,8 @@ export default function Filter() {
         className="h-[30px] w-full space-x-5"
       >
         <NavbarContent className="flex items-center gap-1">
-          {data?.payload.map((category: CategoryType) => (
-            <NextLink
-              key={category.slug}
-              href={`/${category.name.toLowerCase()}`}
-            >
+          {data?.payload.map((category: Category) => (
+            <NextLink key={category.slug} href={`/category/${category.slug}`}>
               <Chip
                 classNames={{
                   base: 'bg-gradient-to-r from-pink-500 to-yellow-500 cursor-pointer',

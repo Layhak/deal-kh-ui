@@ -46,7 +46,7 @@ function AboutPageComponent() {
         {/* right section image */}
         <div className="p-4 md:w-1/2">
           <Image
-            src="/images/about-first.png"
+            src="/images/online.svg"
             alt="About us"
             width={800}
             height={900}

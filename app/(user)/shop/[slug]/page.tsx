@@ -1,9 +1,8 @@
-"use client"
+'use client';
 import ShopProfileComponent from '@/components/shop-profile/ShopProfileComponent';
-import { useGetShopsQuery } from '@/redux/service/shop';
-import { ShopDetail } from '@/types/shopDtail';
-import shopFakes, { ShopFake } from '@/types/shopFake';
 import React from 'react';
+import { useGetShopBySlugQuery } from '@/redux/service/shop';
+import Loading from '@/app/(user)/loading';
 
 type Props = {
   params: {
@@ -12,24 +11,21 @@ type Props = {
 };
 
 const ShopProfile = ({ params }: Props) => {
-  const { slug } = params;
+  const slug = params.slug;
+  console.log('slug', slug);
+  const { data, isLoading, error } = useGetShopBySlugQuery(slug);
+  console.log('data', data);
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  const { data, isLoading, error } = useGetShopsQuery({
-    page: 1,
-    size: 10
-  });
-
-  const shopProfiles = data?.payload?.list.find(
-    (shopProfile: ShopDetail) => shopProfile.slug === slug
-  );
-
-  if (!shopProfiles) {
+  if (!error && !data) {
     return <p>Shop Not Founded</p>;
   }
 
   return (
     <div>
-      <ShopProfileComponent shopProfile={shopProfiles} />
+      <ShopProfileComponent shopProfile={data.payload} />
     </div>
   );
 };

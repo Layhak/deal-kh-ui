@@ -1,4 +1,3 @@
-import { Inter } from 'next/font/google';
 import '@/styles/globals.css';
 import { Providers } from '@/app/providers';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
@@ -13,8 +12,9 @@ import { NavigationBar } from '@/components/navigationBar';
 import StoreProvider from '@/app/StoreProvider';
 import { ToastContainer } from 'react-toastify';
 import { fileImgUrl } from '@/libs/ImageUrl';
-
-const inter = Inter({ subsets: ['latin'] });
+import HeaderCreateShop from '@/components/header/HeaderCreateShop';
+import { inter, kantumruyPro } from '@/utils/fonts';
+import FilterComponent from '@/components/Filter';
 
 export const metadata: Metadata = {
   title: 'Best Deals, Coupons & Promotions in Cambodia - DealKH',
@@ -61,7 +61,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={inter.className}>
+    <html lang={'en'} suppressHydrationWarning>
       <head>
         <meta name="author" content="DealKH" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -95,10 +95,12 @@ export default function RootLayout({
         <title>DealKH</title>
       </head>
       <SessionWrapper>
-        <body>
+        <body className={`${kantumruyPro.variable} ${inter.variable} `}>
           <StoreProvider>
             <Providers>
+              <HeaderCreateShop />
               <NavigationBar />
+              <FilterComponent />
               <main className="container mx-auto min-h-screen max-w-7xl px-0 lg:px-6">
                 <ErrorBoundary errorComponent={error}>
                   <Suspense fallback={<Loading />}>

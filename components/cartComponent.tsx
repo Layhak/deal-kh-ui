@@ -148,7 +148,7 @@ export default function CartComponent() {
             height={200}
           />
           <p className="mt-4 text-2xl font-semibold ">Your cart is empty!</p>
-          <p>Look like you haven&apos;t made any choice yet...</p>
+          <p>Look like you {"haven'"}t made any choice yet...</p>
         </div>
       )}
       {products.length !== 0 && (

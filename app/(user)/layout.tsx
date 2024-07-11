@@ -17,7 +17,7 @@ import { inter, kantumruyPro } from '@/utils/fonts';
 import FilterComponent from '@/components/Filter';
 
 export const metadata: Metadata = {
-  title: 'Best Deals, Coupons & Promotions in Cambodia - DealKH',
+  title: 'Home Page',
   description:
     'Find the best deals, coupons, and promotions from shops in Cambodia. Save big on your shopping with exclusive offers and discounts at DealKH.',
   keywords:
@@ -62,38 +62,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={'en'} suppressHydrationWarning>
-      <head>
-        <meta name="author" content="DealKH" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="robots" content="index, follow" />
-
-        {/* Facebook Meta Tags */}
-        <meta property="og:app_id" content="YOUR_FACEBOOK_APP_ID" />
-        <meta
-          property="og:title"
-          content="Best Deals, Coupons & Promotions in Cambodia - DealKH"
-        />
-        <meta
-          property="og:description"
-          content="Discover the latest deals, coupons, and promotions from shops in Cambodia at DealKH. Save on your shopping with our curated list of discounts and offers."
-        />
-        <meta property="og:image" content={fileImgUrl('icon.png')} />
-        <meta property="og:url" content="https://www.dealkh.istad.co/" />
-        <meta property="og:site_name" content="DealKH" />
-
-        {/* Instagram Meta Tags */}
-        <meta
-          property="insta:title"
-          content="Best Deals, Coupons & Promotions in Cambodia - DealKH"
-        />
-        <meta
-          property="insta:description"
-          content="Discover the latest deals, coupons, and promotions from shops in Cambodia at DealKH. Save on your shopping with our curated list of discounts and offers."
-        />
-        <meta property="insta:image" content={fileImgUrl('forhome.png')} />
-        <meta property="insta:url" content="https://www.dealkh.istad.co/" />
-        <title>DealKH</title>
-      </head>
+      <head></head>
       <SessionWrapper>
         <body className={`${kantumruyPro.variable} ${inter.variable} `}>
           <StoreProvider>

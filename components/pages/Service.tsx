@@ -18,7 +18,6 @@ export default function Service() {
         <div className='my-10'>
         <ServiceCardComponent/>
         </div>
-        <ServiceCardComponent/>
     </main>
   )
 }

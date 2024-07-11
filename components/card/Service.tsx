@@ -1,5 +1,5 @@
 'use client';
-import { Card, Image, Link } from '@nextui-org/react';
+import { Card, CardBody, CardHeader, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { ScrapedProduct } from '@/types/productScrape';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
@@ -12,15 +12,44 @@ export default function ServiceCardComponent() {
 
   const { data } = useGetProductScrapeQuery({
     page: 1,
-    size: 4
+    size: 4,
   });
 
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-[38px] ">
+      <div className="flex flex-wrap justify-center gap-7 ">
         {data?.payload.list.map((product: ScrapedProduct) => (
-          <Card key={product.name} className="w-[595px]  shadow-none">
-            <div className="flex p-2">
+          <Card key={product.name} className="py-4 shadow-none h-[340px] w-[285px] ">
+              <CardHeader className="pb-0 pt-2 px-4 flex-col items-start  h-[130px]">
+              <h4 className="font-bold text-large text-foreground-800">{product.name.length > 60
+                      ? `${product.name.substring(0, 60)}...`
+                      : product.name || 'Product Name'}</h4>
+        <div className='flex items-center justify-between mt-2'>
+
+        <p className="bg-gradient-to-r from-pink-500 from-20% to-yellow-500 to-100% bg-clip-text text-2xl font-bold text-transparent">${product.price}</p>
+
+        <Link  href={product.url} target='_blank'>
+        <p className='text-blue-800 text-base mt-2 font-medium'>Check Out</p>
+        </Link>
+  
+        </div>
+      </CardHeader>
+      <CardBody className="overflow-visible py-2">
+      <Link href={product.url} target="_blank">
+        <Image
+          alt="Card Service"
+          isZoomed
+          className="object-cover rounded-xl h-[160px] w-[284px] mt-2"
+          src={
+            product.image ||
+            'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
+          }
+          width={270}
+        />
+         </Link>
+      </CardBody>
+
+            {/* <div className="flex p-2">
               <Link href={product.url} target="_blank">
                 <Image
                   className="h-[193px] w-[250px] object-cover"
@@ -60,7 +89,7 @@ export default function ServiceCardComponent() {
                 </Link>
                 </div>
               </div>
-            </div>
+            </div> */}
           </Card>
         ))}
       </div>

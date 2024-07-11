@@ -7,6 +7,7 @@ interface CustomSelectProps {
   name: string;
   options: { value: string; label: string }[];
   placeholder?: string;
+  onChange?: (value: any) => void;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -14,6 +15,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   name,
   options,
   placeholder,
+  onChange,
 }) => {
   const [field, meta, helpers] = useField(name);
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +26,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 
   return (
     <Select
+      onChange={onChange}
       // label={label}
       // placeholder={placeholder}
       selectedKeys={[field.value]}

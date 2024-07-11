@@ -148,6 +148,7 @@ export default function CartComponent() {
             height={200}
           />
           <p className="mt-4 text-2xl font-semibold ">Your cart is empty!</p>
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
           <p>Look like you haven't made any choice yet...</p>
         </div>
       )}

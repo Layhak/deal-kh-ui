@@ -81,14 +81,13 @@ export default function CardDetailComponent({
           pagination={{
             dynamicBullets: true,
           }}
-          navigation={true}
           slidesPerView={1}
           modules={[Pagination, Autoplay, EffectFade, Navigation]}
           className="h-full w-full md:w-[80%] "
           loop={true}
           effect={'fade'}
           autoplay={{
-            delay: 5000,
+            delay: 2500,
             disableOnInteraction: false,
           }}
         >

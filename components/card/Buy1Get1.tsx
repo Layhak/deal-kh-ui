@@ -77,7 +77,7 @@ const Buy1Get1Component = ({category,discountType}:any) => {
                   alt={product.name}
                 />
               </Link>
-              <span className="absolute right-4 top-3 z-20 h-[54px] w-[54px] rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 pt-2 text-center text-[14px] font-medium text-white">
+              <span className="absolute right-4 top-3 z-10 h-[54px] w-[54px] rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 pt-2 text-center text-[14px] font-medium text-white">
                 BUY 1 GET 1
               </span>
               <div className="flex flex-wrap justify-between">
@@ -105,7 +105,7 @@ const Buy1Get1Component = ({category,discountType}:any) => {
                 <p className="text-[14px] font-medium text-foreground-600 ">
                   Shop :{' '}
                   <Link href="">
-                    <span className="text-info-800 text-[14px] font-medium">
+                    <span className="text-blue-800 text-[14px] font-medium">
                       {product.shop.length > 20
                         ? `${product.shop.substring(0, 20)}...`
                         : product.shop || 'Shop Name'}

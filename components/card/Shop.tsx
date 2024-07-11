@@ -8,7 +8,7 @@ import React from 'react';
 export default function ShopCardComponent({page,size}:any) {
   const router = useRouter();
   const { data, isLoading, error } = useGetShopsQuery({
-    page: page,
+    page: page, 
     size: size,
   });
 

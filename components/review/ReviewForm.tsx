@@ -5,7 +5,6 @@ import { Badge, Button, Image, Tooltip } from '@nextui-org/react';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import 'react-toastify/dist/ReactToastify.css';
-
 import PromptInput from '@/components/review/PromptInput';
 import { useUploadImagesMutation } from '@/redux/service/image';
 import { useCreateProductFeedbackMutation } from '@/redux/service/ratingAndFeedback';
@@ -17,6 +16,7 @@ import { useDispatch } from 'react-redux';
 type ReviewFormProps = {
   productSlug: string;
   onNewRating: () => void;
+  hasRated: boolean; // Add hasRated prop
 };
 
 type FormValues = {
@@ -56,6 +56,7 @@ const validationSchema = Yup.object().shape({
 export default function ReviewForm({
   productSlug,
   onNewRating,
+  hasRated,
 }: ReviewFormProps) {
   const [uploadImages] = useUploadImagesMutation();
   const [createFeedback] = useCreateProductFeedbackMutation();
@@ -87,8 +88,16 @@ export default function ReviewForm({
   const formik = useFormik<FormValues>({
     initialValues,
     validationSchema,
-    onSubmit: async (values, { resetForm }) => {
+    onSubmit: async (values, { resetForm, setErrors }) => {
       try {
+        if (!hasRated) {
+          toast.error('You must rate the product before giving feedback.', {
+            autoClose: 2000,
+            theme: theme,
+          });
+          return;
+        }
+
         let uploadedUrls: UploadedImage[] = [];
 
         if (imageFiles.length > 0) {
@@ -115,12 +124,15 @@ export default function ReviewForm({
         });
         resetForm();
         onNewRating(); // Call onNewRating to refetch data
-      } catch (error) {
-        console.error('Error uploading images or submitting feedback:', error);
-        toast.error('Failed to submit feedback.', {
-          autoClose: 2000,
-          theme: theme,
-        });
+      } catch (error: any) {
+        if (error.status === 400 && error.data.error.description) {
+          setErrors({ description: error.data.error.description });
+        } else {
+          toast.error('Failed to submit feedback.', {
+            autoClose: 2000,
+            theme: theme,
+          });
+        }
       }
     },
   });
@@ -153,7 +165,7 @@ export default function ReviewForm({
   return (
     <FormikProvider value={formik}>
       <form
-        className="flex w-full flex-col items-start rounded-medium bg-foreground-50 transition-colors hover:bg-foreground-100/70"
+        className="flex w-full flex-col items-start rounded-medium border-1 border-foreground-900/20 bg-foreground-50 transition-colors hover:bg-foreground-100/70"
         onSubmit={handleSubmit}
       >
         <div className="group flex gap-2 ps-4 pt-4">

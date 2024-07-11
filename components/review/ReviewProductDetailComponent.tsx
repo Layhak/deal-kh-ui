@@ -32,7 +32,6 @@ export default function ReviewProductDetailComponent({
     CombinedFeedbackItem[]
   >([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [hasRated, setHasRated] = useState(false);
 
   const { data: currentUserProfile, isLoading: profileLoading } =
@@ -150,7 +149,11 @@ export default function ReviewProductDetailComponent({
           </p>
         </div>
         <div className={'mb-5 px-1 lg:pe-1 lg:ps-8'}>
-          <ReviewForm productSlug={productSlug} onNewRating={handleNewRating} />
+          <ReviewForm
+            productSlug={productSlug}
+            onNewRating={handleNewRating}
+            hasRated={hasRated}
+          />
         </div>
         <div className={'grid grid-cols-1 lg:grid-cols-3 '}>
           <section className="mx-auto w-full max-w-md lg:px-8">
@@ -168,7 +171,6 @@ export default function ReviewProductDetailComponent({
                   { rating: 1.5, count: ratingCounts[3] },
                   { rating: 1, count: ratingCounts[2] },
                   { rating: 0.5, count: ratingCounts[1] },
-                  { rating: 0, count: ratingCounts[0] },
                 ]}
                 totalRatingCount={ratingsData ? ratingsData.length : 0}
                 onWriteReview={toggleModal}

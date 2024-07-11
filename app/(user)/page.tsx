@@ -13,7 +13,6 @@ import ClearanceCardComponent from '@/components/card/ClearanceCard';
 import HeroSlideComponent from '@/components/slider/HeroSlide';
 import 'react-toastify/dist/ReactToastify.css';
 import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
-
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 
@@ -24,8 +23,15 @@ export default function HomePage() {
   const { theme } = useTheme(); // Get the current theme
   useEffect(() => {
     if (localStorage.getItem('token') === 'log in') {
-      toast.success('Login successful!', {
-        theme,
+      toast.success('Logout successfully.', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
         onClose: () => localStorage.removeItem('token'), // Remove token when the toast closes
       });
     }

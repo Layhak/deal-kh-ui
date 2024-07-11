@@ -34,7 +34,7 @@ export default function Filter() {
     <Navbar
       position="sticky"
       maxWidth={'xl'}
-      className={`top-16 z-30 transition-all duration-300 ${
+      className={`top-16 z-30 transition-all duration-700 ${
         showNavbar ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
       }`}
     >

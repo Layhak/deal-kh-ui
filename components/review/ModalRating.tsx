@@ -38,7 +38,7 @@ const ModalRating = React.forwardRef<HTMLDivElement, ProductModalProps>(
     },
     ref
   ) => {
-    const [rating, setRating] = useState(0);
+    const [rating, setRating] = useState(0.5);
     const { theme } = useTheme();
     const [createRating] = useCreateProductRatingMutation();
     const { data: feedbackData } = useGetProductFeedbackQuery({ productSlug });
@@ -49,7 +49,7 @@ const ModalRating = React.forwardRef<HTMLDivElement, ProductModalProps>(
 
     useEffect(() => {
       if (!isOpen) {
-        setRating(0);
+        setRating(0.5);
       }
     }, [isOpen]);
 

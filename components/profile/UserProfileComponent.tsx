@@ -58,10 +58,8 @@ export default function UserProfileComponent() {
 
       try {
         const response = await uploadSingleImage(file).unwrap();
-        console.log('uploadSingleImage response:', response);
         const imageUrl = response.payload.fullUrl; // Use fullUrl property from payload
         await uploadShopProfile({ profile: imageUrl });
-        console.log('Profile image uploaded successfully:', imageUrl);
         setProfileImage(imageUrl);
       } catch (error) {
         console.error('Error uploading profile image:', error);
@@ -74,14 +72,11 @@ export default function UserProfileComponent() {
   ) => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
-      console.log('Uploading cover image:', file);
 
       try {
         const response = await uploadSingleImage(file).unwrap();
-        console.log('uploadSingleImage response:', response);
         const imageUrl = response.payload.fullUrl; // Use fullUrl property from payload
         await uploadShopCover({ cover: imageUrl }); // Adjusted to match the request body structure
-        console.log('Cover image uploaded successfully:', imageUrl);
         setCoverImage(imageUrl);
 
         // Refetch the user data
@@ -95,15 +90,16 @@ export default function UserProfileComponent() {
   return (
     <div className="">
       <div className="h-[390px] w-full rounded-lg bg-foreground-50 p-8">
-        <div className="relative flex h-72 w-full flex-col items-center lg:flex-row">
+        <div className="relative flex h-72 w-full flex-col items-center rounded-md lg:flex-row">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={coverImage}
             alt="Cover Image"
-            className="h-full w-full object-cover"
+            className="h-full w-full rounded-xl object-cover"
           />
           <label
             htmlFor="coverInput"
-            className="absolute right-4 top-4 cursor-pointer rounded-full bg-warning p-2"
+            className="absolute right-4 top-4 cursor-pointer rounded-full bg-gradient-to-r from-pink-500 to-yellow-500 p-2"
           >
             <BsCamera className="text-white" size={20} />
             <input
@@ -124,7 +120,7 @@ export default function UserProfileComponent() {
                   alt="Profile Image"
                   className="h-32 w-32 rounded-full object-cover"
                 />
-                <div className="absolute bottom-0 right-0 z-10 rounded-full bg-warning p-2">
+                <div className="absolute bottom-0 right-0 z-10 rounded-full bg-gradient-to-r from-pink-500 to-yellow-500 p-2">
                   <BsCamera className="text-white" size={20} />
                 </div>
               </label>

@@ -7,7 +7,6 @@ import {
   useGetProductFeedbackQuery,
   useGetProductRatingsByProductSlugQuery,
 } from '@/redux/service/ratingAndFeedback';
-import ModalRating from '@/components/review/ModalRating';
 import ReviewForm from '@/components/review/ReviewForm';
 import Loading from '@/app/(user)/loading';
 import FeedbackCard from '@/components/review/FeedbackCard';
@@ -173,7 +172,6 @@ export default function ReviewProductDetailComponent({
                   { rating: 0.5, count: ratingCounts[1] },
                 ]}
                 totalRatingCount={ratingsData ? ratingsData.length : 0}
-                onWriteReview={toggleModal}
                 hasRated={hasRated}
               />
             </div>
@@ -238,14 +236,6 @@ export default function ReviewProductDetailComponent({
           </Link>
         </div>
       </div>
-      <ModalRating
-        isOpen={isModalOpen}
-        onClose={toggleModal}
-        onOpenChange={toggleModal}
-        productSlug={productSlug}
-        onNewRating={handleNewRating}
-        hasRated={hasRated}
-      />
     </>
   );
 }

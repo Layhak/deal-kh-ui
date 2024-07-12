@@ -8,7 +8,6 @@ export type SummaryRatingCardProps = React.HTMLAttributes<HTMLDivElement> & {
   }[];
   totalRatingCount: number;
   averageRating: number;
-  onWriteReview?: () => void;
   hasRated: boolean;
 };
 
@@ -17,30 +16,10 @@ const SummaryRatingCard = React.forwardRef<
   SummaryRatingCardProps
 >(
   (
-    {
-      className,
-      ratings,
-      totalRatingCount,
-      averageRating,
-      onWriteReview,
-      hasRated,
-      ...props
-    },
+    { className, ratings, totalRatingCount, averageRating, hasRated, ...props },
     ref
   ) => {
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
-    const handleWriteReviewClick = () => {
-      if (hasRated) {
-        setErrorMessage('You have already rated this product.');
-        setTimeout(() => {
-          setErrorMessage(null);
-        }, 2000); // Show error message for 5 seconds
-      } else if (onWriteReview) {
-        setErrorMessage(null); // Clear any existing error message
-        onWriteReview();
-      }
-    };
 
     return (
       <div>
@@ -82,23 +61,7 @@ const SummaryRatingCard = React.forwardRef<
               );
             })}
           </div>
-          <div className="mt-4 flex w-full flex-col gap-4">
-            <Button
-              fullWidth
-              radius="full"
-              variant="bordered"
-              onClick={handleWriteReviewClick}
-            >
-              Write a review
-            </Button>
-            <p className="px-2 text-small text-default-500">
-              Share your experience with this product
-            </p>
-          </div>
         </div>
-        {errorMessage && (
-          <div className="mt-2 px-2 text-red-500">{errorMessage}</div>
-        )}
       </div>
     );
   }

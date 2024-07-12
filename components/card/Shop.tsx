@@ -12,7 +12,7 @@ export default function ShopCardComponent({ page, size }: any) {
     size: size,
   });
 
-  console.log('data', data);
+  // console.log('data', data);
 
   return (
     <div>

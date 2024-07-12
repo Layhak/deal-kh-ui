@@ -25,7 +25,7 @@ export default function CartComponent() {
   const products = useAppSelector(selectProducts);
   const totalPrice = useAppSelector(selectTotalPrice);
   const dispatch = useAppDispatch();
-  console.log('product', products);
+  // console.log('product', products);
 
   // Display number of product that only unique select
   const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);

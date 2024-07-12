@@ -24,7 +24,7 @@ const SearchingProduct: React.FC = () => {
     return productName.includes(searchValue.toLowerCase());
   });
 
-  console.log('Here is Search Value: ', searchValue);
+  // console.log('Here is Search Value: ', searchValue);
 
   return (
     <div>

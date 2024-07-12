@@ -1,4 +1,4 @@
-"use client"
+'use client';
 import React, { useState } from 'react';
 import { HiOutlineX } from 'react-icons/hi';
 import PropTypes from 'prop-types';
@@ -9,7 +9,10 @@ interface VerifyCodeModalProps {
   onClose: () => void;
 }
 
-const VerifyCodeModal: React.FC<VerifyCodeModalProps> = ({ isOpen, onClose }) => {
+const VerifyCodeModal: React.FC<VerifyCodeModalProps> = ({
+  isOpen,
+  onClose,
+}) => {
   const [email, setEmail] = useState('');
   const [verificationCodeSent, setVerificationCodeSent] = useState(false);
   const [verificationCode, setVerificationCode] = useState('');
@@ -33,9 +36,11 @@ const VerifyCodeModal: React.FC<VerifyCodeModalProps> = ({ isOpen, onClose }) =>
     }
   };
 
-  const handleSubmitVerificationCode = async (values: { verificationCode: string }) => {
+  const handleSubmitVerificationCode = async (values: {
+    verificationCode: string;
+  }) => {
     // Handle verification code submission logic
-    console.log('Verification code submitted:', values.verificationCode);
+    // console.log('Verification code submitted:', values.verificationCode);
     // Add your logic to handle the verification code here
   };
 
@@ -59,39 +64,51 @@ const VerifyCodeModal: React.FC<VerifyCodeModalProps> = ({ isOpen, onClose }) =>
   if (!isOpen) return null;
 
   return (
-    <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-lg w-full max-w-md p-8">
-      <div className="flex justify-between items-center mb-4">
-        <div className="text-lg font-bold text-transparent bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text">
-          DealKH
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg dark:bg-zinc-800">
+        <div className="mb-4 flex items-center justify-between">
+          <div className="bg-gradient-to-r from-pink-500 to-orange-500 bg-clip-text text-lg font-bold text-transparent">
+            DealKH
+          </div>
+          <div className="cursor-pointer" onClick={onClose}>
+            <HiOutlineX
+              size={30}
+              className="rounded-full p-2 hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-700"
+            />
+          </div>
         </div>
-        <div className="cursor-pointer" onClick={onClose}>
-          <HiOutlineX
-            size={30}
-            className="p-2 hover:bg-zinc-100 dark:text-white dark:hover:bg-zinc-700 rounded-full"
-          />
-        </div>
-      </div>
-        <h2 className="text-2xl font-bold text-slate-800 dark:text-gray-50 mb-6">Email Verification</h2>
+        <h2 className="mb-6 text-2xl font-bold text-slate-800 dark:text-gray-50">
+          Email Verification
+        </h2>
         {verificationCodeSent ? (
           <div>
-            <p className="mb-4 dark:text-gray-50">Verification code sent to <span className="font-semibold">{email}</span>.</p>
-            <p className="mb-4 dark:text-gray-50">Check your email and enter the code below:</p>
-            <Formik initialValues={{ verificationCode: '' }} onSubmit={handleSubmitVerificationCode}>
+            <p className="mb-4 dark:text-gray-50">
+              Verification code sent to{' '}
+              <span className="font-semibold">{email}</span>.
+            </p>
+            <p className="mb-4 dark:text-gray-50">
+              Check your email and enter the code below:
+            </p>
+            <Formik
+              initialValues={{ verificationCode: '' }}
+              onSubmit={handleSubmitVerificationCode}
+            >
               <Form>
-                <div className="mb-6 relative dark:text-gray-50">
+                <div className="relative mb-6 dark:text-gray-50">
                   <Field
                     type="text"
                     id="verificationCode"
                     name="verificationCode"
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setVerificationCode(e.target.value)}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                      setVerificationCode(e.target.value)
+                    }
                     placeholder="Enter verification code"
-                    className="w-full border px-3 py-2 text-black dark:text-gray-50 border-stone-200 rounded-md focus:outline-none hover:border-warning-500"
+                    className="w-full rounded-md border border-stone-200 px-3 py-2 text-black hover:border-warning-500 focus:outline-none dark:text-gray-50"
                   />
                 </div>
                 <button
                   type="submit"
-                  className="w-full p-2 bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-lg"
+                  className="w-full rounded-lg bg-gradient-to-r from-pink-500 to-orange-500 p-2 text-white"
                 >
                   Verify Code
                 </button>
@@ -101,7 +118,7 @@ const VerifyCodeModal: React.FC<VerifyCodeModalProps> = ({ isOpen, onClose }) =>
         ) : (
           <Formik initialValues={{ email: '' }} onSubmit={handleSubmitEmail}>
             <Form>
-              <div className="mb-6 relative">
+              <div className="relative mb-6">
                 <Field
                   type="email"
                   id="email"
@@ -109,13 +126,13 @@ const VerifyCodeModal: React.FC<VerifyCodeModalProps> = ({ isOpen, onClose }) =>
                   value={email}
                   onChange={handleEmailChange}
                   placeholder="Enter email"
-                  className="w-full border px-3 py-2 text-black dark:text-gray-50 bg-transparent border-gray-400 rounded-md focus:outline-none hover:border-warning-500"
+                  className="w-full rounded-md border border-gray-400 bg-transparent px-3 py-2 text-black hover:border-warning-500 focus:outline-none dark:text-gray-50"
                 />
               </div>
-              {error && <p className="text-red-500 mb-4">{error}</p>}
+              {error && <p className="mb-4 text-red-500">{error}</p>}
               <button
                 type="submit"
-                className="w-full p-2 bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-lg"
+                className="w-full rounded-lg bg-gradient-to-r from-pink-500 to-orange-500 p-2 text-white"
               >
                 Send the verification code
               </button>

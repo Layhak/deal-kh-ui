@@ -90,7 +90,7 @@ const Register: React.FC = () => {
       };
 
       const response = await registerUser(formattedValues).unwrap();
-      console.log('Register successful!', response);
+      // console.log('Register successful!', response);
       router.push('/');
       // Handle successful register (e.g., redirect)
     } catch (error) {

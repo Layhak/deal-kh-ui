@@ -54,7 +54,7 @@ async function fetchProductBySlug(slug: string) {
     return null;
   }
   const data = await response.json();
-  console.log('data in product detail', data);
+  // console.log('data in product detail', data);
   return data.payload;
 }
 

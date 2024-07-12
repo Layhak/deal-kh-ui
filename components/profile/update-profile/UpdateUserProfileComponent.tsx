@@ -63,7 +63,7 @@ const UpdateProfileComponent: React.FC<UpdateProfileComponentProps> = ({
       const response = await updateProfile({
         userUpdateRequest: formattedValues,
       }).unwrap();
-      console.log('Update successful!', response);
+      // console.log('Update successful!', response);
       toast.success('Profile updated successfully!');
       closeModal();
       refetchProfile();

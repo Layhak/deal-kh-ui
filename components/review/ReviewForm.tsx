@@ -141,8 +141,8 @@ export default function ReviewForm({
         productSlug,
       };
 
-      console.log('Rating Data:', ratingData);
-      console.log('Feedback Data:', feedbackData);
+      // console.log('Rating Data:', ratingData);
+      // console.log('Feedback Data:', feedbackData);
 
       await createRating(ratingData).unwrap();
 

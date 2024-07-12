@@ -49,7 +49,7 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
 
   const handleOnSelectProduct = (item: string) => {
     setSearchValue(item);
-    console.log('This is the value that I have Clicked: ', item);
+    // console.log('This is the value that I have Clicked: ', item);
   };
 
   const filteredProducts = products.filter((product) =>
@@ -62,9 +62,7 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
   };
 
   return (
-    <div
-      className="relative"
-    >
+    <div className="relative">
       <Input
         aria-label="Product Search"
         classNames={{
@@ -86,7 +84,6 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
               className="pointer-events-none flex-shrink-0 text-base text-default-400"
             />
           )
-
         }
         type="search"
         value={searchValue}

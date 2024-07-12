@@ -16,7 +16,7 @@ export default function HeaderCreateShop() {
 
   const refetch = () => {
     // Implement your refetch logic here
-    console.log('Refetching data...');
+    // console.log('Refetching data...');
   };
 
   return (

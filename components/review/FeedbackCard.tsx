@@ -9,7 +9,7 @@ import {
 } from '@nextui-org/react';
 import { StarIcon } from '@/components/review/StarIcon';
 import DeleteFeedbackModal from './DeleteFeedbackModal';
-import { DeleteIcon, MoreIcon } from '@/components/icons';
+import { DeleteIcon, EditIcon, MoreIcon } from '@/components/icons';
 import UpdateFeedbackModal from '@/components/review/UpdateFeedbackModal';
 
 interface FeedbackItemProps {
@@ -25,6 +25,7 @@ interface FeedbackItemProps {
   productSlug: string;
   currentUser: string;
   refetchFeedback: () => void;
+  refetchRatings: () => void;
 }
 
 const FeedbackCard: React.FC<FeedbackItemProps> = ({
@@ -32,6 +33,7 @@ const FeedbackCard: React.FC<FeedbackItemProps> = ({
   currentUser,
   refetchFeedback,
   productSlug,
+  refetchRatings,
 }) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedFeedbackId, setSelectedFeedbackId] = useState<string | null>(
@@ -101,6 +103,7 @@ const FeedbackCard: React.FC<FeedbackItemProps> = ({
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Example with disabled actions">
                       <DropdownItem
+                        startContent={<EditIcon />}
                         onClick={() => handleEditClick(review.uuid)}
                       >
                         Edit
@@ -141,13 +144,14 @@ const FeedbackCard: React.FC<FeedbackItemProps> = ({
             isOpen={isDeleteModalOpen}
             onClose={() => setIsDeleteModalOpen(false)}
             feedbackId={selectedFeedbackId}
+            refetchRatings={refetchRatings}
             refetchFeedback={refetchFeedback}
+            productSlug={productSlug}
           />
           <UpdateFeedbackModal
             isOpen={isUpdateModalOpen}
             onClose={() => setIsUpdateModalOpen(false)}
             feedbackId={selectedFeedbackId}
-            refetchFeedback={refetchFeedback}
             productSlug={productSlug}
           />
         </>

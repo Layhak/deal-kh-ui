@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
   Badge,
   Button,
@@ -14,26 +14,29 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from 'next-themes';
-
 import {
   useGetProductFeedbackQuery,
   useUpdateProductFeedbackMutation,
+  useUpdateProductRatingMutation,
+  useGetProductRatingsByProductSlugQuery,
 } from '@/redux/service/ratingAndFeedback';
 import { useUploadImagesMutation } from '@/redux/service/image';
 import { Cancel, PhotoIcon } from '@/components/icons';
 import PromptInput from '@/components/review/PromptInput';
+import RatingSlider from '@/components/review/RatingSlider';
+import RatingDisplay from '@/components/review/RatingDisplay';
 
 interface UpdateFeedbackModalProps {
   isOpen: boolean;
   onClose: () => void;
   feedbackId: string;
-  refetchFeedback: () => void;
   productSlug: string;
 }
 
 interface FormValues {
   description: string;
   images: { file: File | null; url: string }[];
+  rating: number;
 }
 
 const fileValidation = Yup.mixed<any>()
@@ -57,25 +60,31 @@ const validationSchema = Yup.object().shape({
       file: fileValidation,
     })
   ),
+  rating: Yup.number().required('Rating is required').min(0).max(5),
 });
 
 export default function UpdateFeedbackModal({
   isOpen,
   onClose,
   feedbackId,
-  refetchFeedback,
   productSlug,
 }: UpdateFeedbackModalProps) {
   const [uploadImages] = useUploadImagesMutation();
   const [updateFeedback] = useUpdateProductFeedbackMutation();
-  const { data: feedbackData } = useGetProductFeedbackQuery({ productSlug });
+  const [updateRating] = useUpdateProductRatingMutation();
+  const { data: feedbackData, refetch: refetchFeedbackData } =
+    useGetProductFeedbackQuery({ productSlug });
+  const { data: ratingData, refetch: refetchRatingData } =
+    useGetProductRatingsByProductSlugQuery({ productSlug });
   const { theme } = useTheme();
   const [oldImages, setOldImages] = useState<string[]>([]);
   const [newImages, setNewImages] = useState<{ file: File; url: string }[]>([]);
+  const [rating, setRating] = useState(0);
 
   const initialValues: FormValues = {
     description: '',
     images: [],
+    rating: 0,
   };
 
   const formik = useFormik<FormValues>({
@@ -102,19 +111,27 @@ export default function UpdateFeedbackModal({
           ...uploadedUrls,
         ];
 
-        const feedbackData = {
+        const feedbackUpdateData = {
           uuid: feedbackId,
           description: values.description,
           images: allImages,
         };
 
-        await updateFeedback(feedbackData).unwrap();
-        toast.success('Feedback updated successfully.', {
+        const ratingUpdateData = {
+          ratingValue: values.rating,
+          productSlug,
+        };
+
+        await updateFeedback(feedbackUpdateData).unwrap();
+        await updateRating(ratingUpdateData).unwrap();
+
+        toast.success('Feedback and rating updated successfully.', {
           autoClose: 2000,
           theme: theme,
         });
         resetForm();
-        refetchFeedback();
+        refetchFeedbackData();
+        refetchRatingData();
         onClose();
         setNewImages([]);
       } catch (error) {
@@ -139,7 +156,7 @@ export default function UpdateFeedbackModal({
   } = formik;
 
   useEffect(() => {
-    if (feedbackData && feedbackData.payload) {
+    if (isOpen && feedbackData && feedbackData.payload) {
       const feedback = feedbackData.payload.find(
         (item) => item.uuid === feedbackId
       );
@@ -148,15 +165,22 @@ export default function UpdateFeedbackModal({
           file: null,
           url: image.url,
         }));
+
+        const userRating =
+          ratingData?.find((rating) => rating.username === feedback.username)
+            ?.ratingValue || 0;
+
         setValues({
           description: feedback.description,
           images: initialImages,
+          rating: userRating,
         });
         setOldImages(feedback.images.map((image) => image.url));
         setNewImages([]);
+        setRating(userRating);
       }
     }
-  }, [feedbackData, feedbackId, setValues]);
+  }, [isOpen, feedbackData, feedbackId, ratingData, setValues]);
 
   const onRemoveImage = (index: number) => {
     const updatedImages = [...values.images];
@@ -185,6 +209,14 @@ export default function UpdateFeedbackModal({
     }
   };
 
+  const handleSliderChange = useCallback(
+    (value: number | number[]) => {
+      setRating(Array.isArray(value) ? value[0] : value);
+      setFieldValue('rating', Array.isArray(value) ? value[0] : value);
+    },
+    [setFieldValue]
+  );
+
   const handleModalClose = () => {
     // Reset form to initial state when modal is closed
     if (feedbackData && feedbackData.payload) {
@@ -196,17 +228,25 @@ export default function UpdateFeedbackModal({
           file: null,
           url: image.url,
         }));
+
+        const userRating =
+          ratingData?.find((rating) => rating.username === feedback.username)
+            ?.ratingValue || 0;
+
         setValues({
           description: feedback.description,
           images: initialImages,
+          rating: userRating,
         });
         setOldImages(feedback.images.map((image) => image.url));
         setNewImages([]);
+        setRating(userRating);
       }
     }
     toast.clearWaitingQueue();
     onClose();
   };
+
   return (
     <FormikProvider value={formik}>
       <Modal
@@ -287,6 +327,14 @@ export default function UpdateFeedbackModal({
                 variant={'flat'}
                 onValueChange={(val) => setFieldValue('description', val)}
               />
+              <RatingSlider
+                rating={rating}
+                onRatingChange={handleSliderChange}
+              />
+              <div className="mt-4">
+                <RatingDisplay rating={rating} size={24} />
+                <p className="mt-2">{rating} stars</p>
+              </div>
               <Tooltip showArrow content="Send message">
                 <Button
                   color={!values.description ? 'default' : 'primary'}

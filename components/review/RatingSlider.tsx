@@ -14,7 +14,7 @@ const RatingSlider = ({ rating, onRatingChange }: RatingSliderProps) => {
         step={0.5}
         maxValue={5}
         minValue={0.5}
-        defaultValue={0.5}
+        value={rating}
         onChange={onRatingChange}
         showSteps={true}
         showTooltip={true}
@@ -42,7 +42,6 @@ const RatingSlider = ({ rating, onRatingChange }: RatingSliderProps) => {
           placement: 'bottom',
           classNames: {
             base: [
-              // arrow color
               'before:bg-gradient-to-r before:from-warning-400 before:to-pink-500',
             ],
             content: [

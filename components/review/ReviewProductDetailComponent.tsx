@@ -184,6 +184,7 @@ export default function ReviewProductDetailComponent({
                   review={review}
                   currentUser={currentUserProfile?.payload?.username}
                   refetchFeedback={refetchFeedback}
+                  refetchRatings={refetchRatings}
                   productSlug={productSlug}
                 />
               ))}

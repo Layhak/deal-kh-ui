@@ -14,8 +14,8 @@ export default function WishListDropDownComponent() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log('Wishlist Percentage:', wishlistPercentage);
-    console.log('Wishlist Description:', wishlistDescription);
+    // console.log('Wishlist Percentage:', wishlistPercentage);
+    // console.log('Wishlist Description:', wishlistDescription);
     setWishlistPercentage(0);
     setWishlistDescription('');
     togglePopUp();

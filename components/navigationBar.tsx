@@ -64,6 +64,16 @@ export const NavigationBar = () => {
       dispatch(removeAccessToken());
       dispatch(setLogoutSuccess(true));
       setIsLoggedIn(false);
+      toast.success('Logout successfully.', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
       router.push('/');
     } catch (error) {
       toast.error('Failed to logout.', {

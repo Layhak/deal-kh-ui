@@ -31,11 +31,11 @@ export const metadata: Metadata = {
       'Discover the latest deals, coupons, and promotions from shops in Cambodia at DealKH. Save on your shopping with our curated list of discounts and offers.',
     images: [
       {
-        url: fileImgUrl('logo.png'),
+        url: fileImgUrl('3ef8a1e1-0b19-463d-ac76-655868c26418.png'),
         alt: 'DealKH Logo Ecommerce Website',
       },
       {
-        url: fileImgUrl('forhome.png'),
+        url: fileImgUrl('3ef8a1e1-0b19-463d-ac76-655868c26418.png'),
         alt: 'Exclusive Shopping Deals in Cambodia',
       },
     ],

@@ -4,12 +4,13 @@ import { Chip, Navbar, NavbarContent, ScrollShadow } from '@nextui-org/react';
 import { useGetCategoryQuery } from '@/redux/service/category';
 import NextLink from 'next/link';
 import { Category } from '@/types/category';
+import { usePathname } from 'next/navigation';
 
 export default function Filter() {
   const { data, isLoading, error } = useGetCategoryQuery();
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-
+  const pathname = usePathname();
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -29,14 +30,16 @@ export default function Filter() {
       window.removeEventListener('scroll', handleScroll);
     };
   }, [lastScrollY]);
-
+  const pathnameLists = ['/about', '/policy', '/wishlist', '/cart'];
   return (
     <Navbar
       position="sticky"
       maxWidth={'xl'}
-      className={`top-16 z-30 transition-all duration-700 ${
+      className={`  top-16 z-30 transition-all duration-700 ${
         showNavbar ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
-      }`}
+      }
+      ${pathnameLists.includes(pathname) ? 'hidden' : ''}
+      `}
     >
       <ScrollShadow
         size={100}

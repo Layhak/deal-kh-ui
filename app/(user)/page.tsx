@@ -23,7 +23,7 @@ export default function HomePage() {
   const { theme } = useTheme(); // Get the current theme
   useEffect(() => {
     if (localStorage.getItem('token') === 'log in') {
-      toast.success('Logout successfully.', {
+      toast.success('Login successfully.', {
         position: 'top-right',
         autoClose: 2000,
         hideProgressBar: false,
@@ -32,8 +32,8 @@ export default function HomePage() {
         draggable: true,
         progress: undefined,
         theme: theme,
-        onClose: () => localStorage.removeItem('token'), // Remove token when the toast closes
       });
+      localStorage.removeItem('token');
     }
   }, [theme]);
   return (

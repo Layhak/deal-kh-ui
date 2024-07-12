@@ -39,7 +39,10 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
       <div className="my-8 flex h-[50px] items-center justify-between">
         <div className="flex-1">
           <p className="relative w-fit text-[26px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Top <span className="text-[#eb7d52]">Sales</span>
+            Top{' '}
+            <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+              Sales
+            </span>
           </p>
         </div>
       </div>
@@ -47,7 +50,10 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
       <div className="my-8 flex h-[50px] items-center justify-between">
         <div className="flex-1">
           <p className="relative w-fit text-[26px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Clearance <span className="text-[#eb7d52]">Sales</span>
+            Clearance{' '}
+            <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+              Sales
+            </span>
           </p>
         </div>
       </div>
@@ -55,7 +61,10 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
       <div className="my-8 flex h-[50px] items-center justify-between">
         <div className="flex-1">
           <p className="relative w-fit text-[26px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Buy More <span className="text-[#eb7d52]">Get More</span>
+            Buy More{' '}
+            <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+              Get More
+            </span>
           </p>
         </div>
       </div>
@@ -66,7 +75,10 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
       <div className="my-8 flex h-[50px] items-center justify-between">
         <div className="flex-1">
           <p className="relative w-fit text-[26px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Shop <span className="text-[#eb7d52]">Coupon</span>
+            Shop{' '}
+            <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+              Coupon
+            </span>
           </p>
         </div>
       </div>
@@ -78,7 +90,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
           </p>
         </div>
       </div>
-      <NormalProductComponent category={slug} discountType="no discount" />
+      <NormalProductComponent category={slug} discountType="event" />
     </main>
   );
 };

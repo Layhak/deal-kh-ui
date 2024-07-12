@@ -1,11 +1,5 @@
-'use client';
 import React from 'react';
-import { useGetProductBySlugQuery } from '@/redux/service/product';
-import Loading from '@/app/(user)/loading';
-import CardDetailComponent from '@/components/card/CardDetailComponent';
-import NotFoundPage from '@/app/(user)/not-found';
-import ReviewProductDetailComponent from '@/components/review/ReviewProductDetailComponent';
-import DiscountCardComponent from '@/components/card/DiscountCardComponent';
+import ProductDetail from '@/components/product/ProductDetail';
 
 type ProductPageProps = {
   params: {
@@ -13,44 +7,61 @@ type ProductPageProps = {
   };
 };
 
+export async function generateMetadata({ params }: ProductPageProps) {
+  const { slug } = params;
+
+  // Assuming fetchProductBySlug is a function that fetches the product data based on the slug
+  const product = await fetchProductBySlug(slug);
+
+  if (!product) {
+    return {
+      title: 'Product Not Found',
+      description: 'The requested product does not exist.',
+    };
+  }
+
+  return {
+    title: product.name,
+    description: product.description,
+    openGraph: {
+      type: 'article',
+      title: product.name,
+      description: product.description,
+      images: [
+        {
+          url: product.images[0]?.url,
+          width: 800,
+          height: 600,
+          alt: product.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: product.name,
+      description: product.description,
+      images: [product.images[0]?.url],
+    },
+  };
+}
+
+async function fetchProductBySlug(slug: string) {
+  // Replace this with your actual data fetching logic
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_DEALKH_API_URL}products/${slug}`
+  );
+  if (!response.ok) {
+    return null;
+  }
+  const data = await response.json();
+  console.log('data in product detail', data);
+  return data.payload;
+}
+
 const ProductPage = ({ params }: ProductPageProps) => {
   const { slug } = params;
-  const {
-    data: product,
-    error,
-    isLoading,
-  }: any = useGetProductBySlugQuery(slug);
-  // console.log(error);
-  // console.log(isLoading);
-  if (isLoading) return <Loading />;
-  if (error) {
-    return <NotFoundPage />;
-  }
-  // console.log('product', product.payload.discountType);
-  return (
-    <>
-      <CardDetailComponent
-        id={product.payload.slug}
-        name={product.payload.name}
-        category={product.payload.category}
-        description={product.payload.description}
-        images={product.payload.images}
-        shopName={product.payload.shop}
-        discountType={product.payload.discountType}
-        originalPrice={product.payload.price}
-        discountPrice={product.payload.discountPrice}
-        open={product.payload.createdAt}
-        promotionDate={product.payload.createdAt}
-        expiryDate={product.payload.expiredAt}
-      />
-      <ReviewProductDetailComponent productSlug={product.payload.slug} />
-      {product.payload.discountType === 'Top Sales' ? (
-        <DiscountCardComponent />
-      ) : (
-        <h1>No Related Product</h1>
-      )}
-    </>
-  );
+
+  return <ProductDetail slug={slug} />;
 };
 
 export default ProductPage;

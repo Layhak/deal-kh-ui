@@ -13,7 +13,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useLoginUserMutation } from '@/redux/service/auth';
 import CustomInput from '@/components/customInput/customInput';
 import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
-import { setLoginSuccess } from '@/redux/feature/auth/authSlice';
 import { Cancel, Logo } from '@/components/icons';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { useAppDispatch } from '@/redux/hook';
@@ -51,7 +50,6 @@ export default function MyShop() {
     try {
       await loginUser(values).unwrap();
       localStorage.setItem('token', 'log in');
-      dispatch(setLoginSuccess(true));
       router.push('/');
     } catch (error: any) {
       console.error('Login error:', error);

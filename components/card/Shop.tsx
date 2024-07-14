@@ -1,27 +1,39 @@
-import { ShopResponse } from '@/libs/difinition';
-import { useGetAllShopsQuery } from '@/redux/service/shop';
+import { useGetApprovedShopsQuery } from '@/redux/service/shop';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { BsShop } from 'react-icons/bs';
-import React from 'react';
+import React, { useState } from 'react';
+import Pagination from '@/components/pagination/Pagination';
+import { ShopResponse } from '@/libs/difinition';
 
-export default function ShopCardComponent({ page, size }: any) {
+type ShopCardComponentProps = {
+  initialPage: number;
+  size: number;
+};
+
+export default function ShopCardComponent({
+  initialPage,
+  size,
+}: ShopCardComponentProps) {
+  const [page, setPage] = useState(initialPage);
   const router = useRouter();
-  const { data, isLoading, error } = useGetAllShopsQuery({
-    page: page,
-    size: size,
-  });
+  const { data, isLoading, error } = useGetApprovedShopsQuery({ page, size });
 
-  // console.log('data', data);
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading data</div>;
 
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-[35px]">
+      <div className="grid min-h-[920px] grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {data?.payload.list.map((shop: ShopResponse) => (
           <Card
             key={shop.slug}
             isPressable
-            className="w-[387px] p-2  shadow-none"
+            className=" h-[450px] w-full object-cover shadow-none"
           >
             <CardBody>
               <Link href="#">
@@ -34,22 +46,22 @@ export default function ShopCardComponent({ page, size }: any) {
                   alt={shop.name}
                 />
               </Link>
-              <div className="mt-4  flex">
+              <div className="mt-2 flex">
                 <BsShop className="h-[35px] w-[35px] text-[#eb7d52]" />
                 <h5 className="ml-2 mt-2 h-[52px] text-2xl font-semibold tracking-tight text-foreground-800 dark:text-white">
-                  {shop.name.length > 50
-                    ? `${shop.name.substring(0, 20)}...`
+                  {shop.name.length > 25
+                    ? `${shop.name.substring(0, 25)}...`
                     : shop.name || 'Shop Name'}
                 </h5>
               </div>
-              <div className="mb-12 h-[30px] text-foreground-600">
+              <div className="my-1 text-foreground-600">
                 <p>
-                  {shop.description.length > 115
-                    ? `${shop.description.substring(0, 115)}...`
+                  {shop.description.length > 25
+                    ? `${shop.description.substring(0, 25)}...`
                     : shop.description || 'Shop Description'}
                 </p>
               </div>
-              <div className="my-1 flex flex-col gap-1">
+              <div className="flex flex-col gap-1">
                 <p className=" text-foreground-600">
                   Category :{' '}
                   <span className="font-medium text-foreground-900">
@@ -79,6 +91,13 @@ export default function ShopCardComponent({ page, size }: any) {
             </CardBody>
           </Card>
         ))}
+      </div>
+      <div className="mt-8 flex justify-center">
+        <Pagination
+          total={data?.payload.pagination.totalPages || 1}
+          page={page}
+          onChange={handlePageChange}
+        />
       </div>
     </div>
   );

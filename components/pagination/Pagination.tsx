@@ -78,6 +78,7 @@ const Pagination = ({ total, page, onChange }: PaginationProps) => {
 
   return (
     <NextUIPagination
+      loop
       disableCursorAnimation
       showControls
       total={total}

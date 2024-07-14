@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select, SelectItem } from '@nextui-org/react';
+import { cn, Select, SelectItem } from '@nextui-org/react';
 import { useField } from 'formik';
 
 interface CustomSelectProps {
@@ -36,12 +36,16 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       }}
       label={label}
       size={'md'}
-      variant={'bordered'}
+      variant="bordered"
       isInvalid={meta.touched && !!meta.error}
       errorMessage={meta.touched && meta.error ? meta.error : ''}
       color={meta.touched && meta.error ? 'danger' : 'default'}
       isOpen={isOpen}
       labelPlacement={'outside'}
+      placeholder={placeholder}
+      classNames={{
+        popoverContent: 'text-foreground border-foreground/20',
+      }}
       onClick={handleToggle}
     >
       {options.map((option) => (

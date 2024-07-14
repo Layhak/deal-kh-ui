@@ -1,5 +1,9 @@
 import { CartProductType } from '@/libs/difinition';
-import { addToWishList, removeFromWishList, selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
+import {
+  addToWishList,
+  removeFromWishList,
+  selectWishlistProducts,
+} from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
@@ -9,7 +13,10 @@ import React, { useState, useEffect } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import Marquee from 'react-fast-marquee';
 
-export default function BuyMoreGetMoreComponent({category,discountType}:any) {
+export default function BuyMoreGetMoreComponent({
+  category,
+  discountType,
+}: any) {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const wishlistProducts = useAppSelector(selectWishlistProducts);
@@ -17,8 +24,10 @@ export default function BuyMoreGetMoreComponent({category,discountType}:any) {
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 8,
-    category:category,
-    discountType:discountType
+    filters: {
+      categorySlug: category,
+      discountType: discountType,
+    },
   });
   // Initialize the heart state for each product
   const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
@@ -77,12 +86,12 @@ export default function BuyMoreGetMoreComponent({category,discountType}:any) {
                 BUY 1 GET 1
               </span>
               <div className="flex flex-wrap justify-between">
-                  <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
-                    {product.name.length > 28
-                      ? `${product.name.substring(0, 20)}...`
-                      : product.name}
-                  </h5>
-                  <div
+                <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
+                  {product.name.length > 28
+                    ? `${product.name.substring(0, 20)}...`
+                    : product.name}
+                </h5>
+                <div
                   className="right-4 mt-3 cursor-pointer"
                   onClick={() => handleHeartClick(product)}
                 >
@@ -93,7 +102,7 @@ export default function BuyMoreGetMoreComponent({category,discountType}:any) {
                       <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
                     )}
                   </div>
-                  </div>
+                </div>
               </div>
               <div className=" h-[30px] pt-3">
                 <p className="text-[14px] font-medium text-foreground-600 ">

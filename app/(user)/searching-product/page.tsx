@@ -17,8 +17,10 @@ const SearchingProduct: React.FC = () => {
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 10,
-    category: '',
-    discountType: '',
+    filters: {
+      categorySlug: '',
+      discountType: '',
+    },
   });
 
   const filteredProducts = data?.payload.list.filter((product: ProductType) => {

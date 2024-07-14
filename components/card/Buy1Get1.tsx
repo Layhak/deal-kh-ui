@@ -23,8 +23,10 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
   const { data } = useGetProductsQuery({
     page: 1,
     size: 6,
-    category: category,
-    discountType: discountType,
+    filters: {
+      categorySlug: category,
+      discountType: discountType,
+    },
   });
 
   // Initialize the heart state for each product

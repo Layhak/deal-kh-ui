@@ -10,8 +10,10 @@ export default function DiscountCardComponent({ category, discountType }: any) {
   const { data, error } = useGetProductsQuery({
     page: 1,
     size: 8,
-    category: category,
-    discountType: discountType,
+    filters: {
+      categorySlug: category,
+      discountType: discountType,
+    },
   });
 
   return (

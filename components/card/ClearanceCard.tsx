@@ -18,8 +18,10 @@ export default function ClearanceCardComponent({
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 3,
-    category: category,
-    discountType: discountType,
+    filters: {
+      categorySlug: category,
+      discountType: discountType,
+    },
   });
   return (
     <div>

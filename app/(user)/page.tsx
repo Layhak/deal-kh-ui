@@ -399,7 +399,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <ShopCardComponent page={'1'} size={'3'} />
+        <ShopCardComponent initialPage={1} size={3} />
       </div>
     </>
   );

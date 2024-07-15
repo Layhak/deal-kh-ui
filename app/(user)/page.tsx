@@ -34,6 +34,18 @@ export default function HomePage() {
         theme: theme,
       });
       localStorage.removeItem('token');
+    } else if (localStorage.getItem('token') === 'verified') {
+      toast.success('Email verified successfully!', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      localStorage.removeItem('token');
     }
   }, [theme]);
   return (

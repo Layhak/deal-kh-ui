@@ -18,18 +18,16 @@ export default function Buy1Get1Component() {
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-800 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Food
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Food
+            </p>
         </div>
         {/* Right section */}
         <Link href="/food">
           <div className="flex items-center  pt-1">
-            <p className="text-foreground-800 mr-2 pb-1 text-[17px] font-normal">
+            <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
               See More
             </p>
-            {/* Icon */}
-            docker ps -a | grep idata
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -49,19 +47,19 @@ export default function Buy1Get1Component() {
           </div>
         </Link>
       </div>
-      <BuyMoreGetMoreComponent />
+      <BuyMoreGetMoreComponent category={"food"} discountType={"buy more get more"}/>
       {/* Drink */}
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-800 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Drink
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Drink
+            </p>
         </div>
         {/* Right section */}
         <Link href="/drink">
           <div className="flex items-center  pt-1">
-            <p className="text-foreground-800 mr-2 pb-1 text-[17px] font-normal">
+            <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
               See More
             </p>
             {/* Icon */}
@@ -84,19 +82,19 @@ export default function Buy1Get1Component() {
           </div>
         </Link>
       </div>
-      <BuyMoreGetMoreComponent />
+      <BuyMoreGetMoreComponent category={"drink"} discountType={"buy more get more"}/>
       {/* Clothes */}
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-800 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Clothes
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Clothes
+            </p>
         </div>
         {/* Right section */}
-        <Link href="/cloth">
+        <Link href="/clothes">
           <div className="flex items-center  pt-1">
-            <p className="text-foreground-800 mr-2 pb-1 text-[17px] font-normal">
+            <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
               See More
             </p>
             {/* Icon */}
@@ -119,19 +117,19 @@ export default function Buy1Get1Component() {
           </div>
         </Link>
       </div>
-      <BuyMoreGetMoreComponent />
+      <BuyMoreGetMoreComponent category={"clothes"} discountType={"buy more get more"}/>
       {/* Accessories */}
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-800 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Accessories
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+             Accessories
+            </p>
         </div>
         {/* Right section */}
         <Link href="/accessory">
           <div className="flex items-center  pt-1">
-            <p className="text-foreground-800 mr-2 pb-1 text-[17px] font-normal">
+            <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
               See More
             </p>
             {/* Icon */}
@@ -154,19 +152,19 @@ export default function Buy1Get1Component() {
           </div>
         </Link>
       </div>
-      <BuyMoreGetMoreComponent />
+      <BuyMoreGetMoreComponent category={"accessories"} discountType={"buy more get more"}/>
       {/* Skin Care */}
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-800 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Skin <span className="text-[#eb7d52]">Care</span>
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Skin <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Care</span>
+            </p>
         </div>
         {/* Right section */}
         <Link href="/skincare">
           <div className="flex items-center  pt-1">
-            <p className="text-foreground-800 mr-2 pb-1 text-[17px] font-normal">
+            <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
               See More
             </p>
             {/* Icon */}
@@ -189,19 +187,19 @@ export default function Buy1Get1Component() {
           </div>
         </Link>
       </div>
-      <BuyMoreGetMoreComponent />
+      <BuyMoreGetMoreComponent category={"skin-care"} discountType={"buy more get more"} />
       {/* Electronic */}
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}
         <div className="flex-1">
-          <p className="text-foreground-800 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Electronic
-          </p>
+        <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Electronic
+            </p>
         </div>
         {/* Right section */}
         <Link href="/electronic">
           <div className="flex items-center  pt-1">
-            <p className="text-foreground-800 mr-2 pb-1 text-[17px] font-normal">
+            <p className="text-foreground-700 mr-2 pb-1 text-[17px] font-normal">
               See More
             </p>
             {/* Icon */}
@@ -224,7 +222,7 @@ export default function Buy1Get1Component() {
           </div>
         </Link>
       </div>
-      <BuyMoreGetMoreComponent />
+      <BuyMoreGetMoreComponent category={"electronic"} discountType={"buy more get more"} />
     </main>
   );
 }

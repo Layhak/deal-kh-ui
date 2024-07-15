@@ -4,24 +4,18 @@ import React, { useEffect } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
-import 'aos/dist/aos.css';
 import Aos from 'aos';
-import { Button, Checkbox, Divider, Spacer } from '@nextui-org/react';
-import { signIn } from 'next-auth/react';
-import {
-  Cancel,
-  FacebookWithColorIcon,
-  Google,
-  Logo,
-} from '@/components/icons';
-import { ThemeSwitch } from '@/components/ThemeSwitch';
+import { Button, Checkbox, Spacer } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import { toast, ToastContainer } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLoginUserMutation } from '@/redux/service/auth';
 import CustomInput from '@/components/customInput/customInput';
 import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
+import { Cancel, Logo } from '@/components/icons';
+import { ThemeSwitch } from '@/components/ThemeSwitch';
+import { useAppDispatch } from '@/redux/hook';
 
 type FormValues = {
   email: string;
@@ -39,16 +33,15 @@ const validationSchema = Yup.object().shape({
     .required('Email is required'),
   password: Yup.string()
     .required('Password is required')
-    .min(6, 'Password must be at least 6 characters')
+    .min(8, 'Password must be at least 8 characters')
     .max(255, 'Password must be less than 255 characters'),
 });
-
-const BaseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
 
 export default function MyShop() {
   const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
   const router = useRouter();
   const { theme } = useTheme();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = async (
     values: FormValues,
@@ -56,17 +49,7 @@ export default function MyShop() {
   ) => {
     try {
       await loginUser(values).unwrap();
-      // const res = await fetch(`http://localhost:3000/api/login`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Content-Type': 'application/json',
-      //   },
-      //   body: JSON.stringify(values),
-      // });
-      // if (res.ok) {
-      //   const data = await res.json();
-      //   console.log('After Login data: ', data);
-      // }
+      localStorage.setItem('token', 'log in');
       router.push('/');
     } catch (error: any) {
       console.error('Login error:', error);
@@ -76,7 +59,10 @@ export default function MyShop() {
           password: 'invalid email or password',
         });
       } else {
-        toast.error('An error occurred. Please try again later.', { theme });
+        toast.error('An error occurred. Please try again later.', {
+          autoClose: 2000,
+          theme: theme,
+        });
       }
     }
   };
@@ -86,16 +72,12 @@ export default function MyShop() {
   }, []);
 
   return (
-    <div
-      className={
-        'flex h-screen w-screen items-center justify-center bg-foreground-200 p-2 sm:p-4 lg:p-8'
-      }
-    >
+    <div className="flex h-screen w-screen items-center justify-center bg-foreground-200 p-2 sm:p-4 lg:p-8">
       <div
-        className="flex w-full max-w-md flex-col gap-4 rounded-large bg-background/60 px-8 pb-10 pt-6  backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+        className="flex w-full max-w-md flex-col gap-4 rounded-large bg-background/60 px-8 pb-10 pt-6 backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
         data-aos="flip-up"
       >
-        <div className={'flex items-center justify-between'}>
+        <div className="flex items-center justify-between">
           <NextLink href="/">
             <Button
               color={'danger'}
@@ -111,9 +93,9 @@ export default function MyShop() {
           <ThemeSwitch />
         </div>
         <div>
-          <div className={' flex items-center gap-1'}>
+          <div className=" flex items-center gap-1">
             <Logo size={56} />
-            <h2 className=" bg-gradient-to-r  from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold leading-9 tracking-tight text-transparent">
+            <h2 className=" bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold leading-9 tracking-tight text-transparent">
               Deal KH
             </h2>
           </div>
@@ -139,7 +121,7 @@ export default function MyShop() {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {() => (
+            {(errors) => (
               <Form action="#" method="POST" className="space-y-5">
                 <CustomInput
                   label={'Email'}
@@ -174,9 +156,7 @@ export default function MyShop() {
                 <div>
                   <Button
                     color={'warning'}
-                    className={
-                      ' w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-lg  text-gray-50 '
-                    }
+                    className="w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-lg  text-gray-50"
                     type="submit"
                     variant={'solid'}
                   >
@@ -186,36 +166,38 @@ export default function MyShop() {
               </Form>
             )}
           </Formik>
-          <Spacer y={3} />
-          <div className="flex items-center gap-4 py-2">
-            <Divider className="flex-1" />
-            <p className="shrink-0 text-tiny text-default-500">OR</p>
-            <Divider className="flex-1" />
-          </div>
-          <div className="mt-3 grid grid-cols-1 gap-3">
-            <Button
-              className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"
-              onClick={() => signIn('google')}
-              startContent={<Google className={'text-gray-50'} />}
-            >
-              <span className="text-sm font-semibold leading-6 text-foreground-800">
-                Google
-              </span>
-            </Button>
+          {/*  <Spacer y={3} />*/}
+          {/*  <div className="flex items-center gap-4 py-2">*/}
+          {/*    <Divider className="flex-1" />*/}
+          {/*    <p className="shrink-0 text-tiny text-default-500">OR</p>*/}
+          {/*    <Divider className="flex-1" />*/}
+          {/*  </div>*/}
+          {/*  <div className="mt-3 grid grid-cols-1 gap-3">*/}
+          {/*    <Button*/}
+          {/*      className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"*/}
+          {/*      onClick={() => signIn('google')}*/}
+          {/*      startContent={<Google className={'text-gray-50'} />}*/}
+          {/*    >*/}
+          {/*      <span className="text-sm font-semibold leading-6 text-foreground-800">*/}
+          {/*        Google*/}
+          {/*      </span>*/}
+          {/*    </Button>*/}
 
-            <Button
-              className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"
-              startContent={<FacebookWithColorIcon />}
-              onClick={() => signIn('facebook')}
-            >
-              <span className="text-sm font-semibold leading-6 text-foreground-800">
-                Facebook
-              </span>
-            </Button>
-          </div>
+          {/*    <Button*/}
+          {/*      className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"*/}
+          {/*      startContent={<FacebookWithColorIcon />}*/}
+          {/*      onClick={() => signIn('facebook')}*/}
+          {/*    >*/}
+          {/*      <span className="text-sm font-semibold leading-6 text-foreground-800">*/}
+          {/*        Facebook*/}
+          {/*      </span>*/}
+          {/*    </Button>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
+          {/*</div>*/}
+          {/*<ToastContainer />*/}
         </div>
       </div>
-      <ToastContainer />
     </div>
   );
 }

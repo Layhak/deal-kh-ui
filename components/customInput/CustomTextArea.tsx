@@ -10,11 +10,11 @@ interface CustomTextAreaProps {
 }
 
 const CustomTextArea: React.FC<CustomTextAreaProps> = ({
-                                                         label,
-                                                         name,
-                                                         placeholder,
-                                                         isDisabled,
-                                                       }) => {
+  label,
+  name,
+  placeholder,
+  isDisabled,
+}) => {
   const [field, meta] = useField(name);
 
   return (

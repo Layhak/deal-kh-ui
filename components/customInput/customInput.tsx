@@ -31,10 +31,6 @@ const CustomInput: React.FC<CustomInputProps> = ({
       errorMessage={meta.touched && meta.error ? meta.error : ''}
       color={meta.touched && meta.error ? 'danger' : 'default'}
       placeholder={placeholder}
-      classNames={{
-        inputWrapper:
-          'border-transparent bg-default-50/80 dark:bg-default-50/20 group-data-[focus=true]:border-primary data-[hover=true]:border-foreground/20',
-      }}
       isClearable={true}
       onClear={() => handleClear()}
     />

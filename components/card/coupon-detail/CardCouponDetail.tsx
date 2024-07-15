@@ -2,7 +2,7 @@ import { Image } from '@nextui-org/react';
 import React from 'react';
 
 type CouponData = {
-  id: number;
+  slug: number;
   images: string;
   name: string;
   duration: string;
@@ -20,7 +20,7 @@ const CardCouponDetail: React.FC<Props> = ({ coupon }) => {
     <div className="flex items-center justify-center h-screen">
       <div className="overflow-hidden rounded bg-white p-8">
         <div className="grid grid-cols-1 content-center gap-8 lg:grid-cols-2">
-          {/* Product Image */}
+          {/* Product Image */}  
           <div className="rounded-lg">
             <Image
               src={coupon.images}

@@ -1,27 +1,63 @@
 import { CartProductType } from '@/libs/difinition';
-import { addToWishList } from '@/redux/feature/wishList/wishListSlice';
-import { useAppDispatch } from '@/redux/hook';
+import {
+  addToWishList,
+  removeFromWishList,
+  selectWishlistProducts,
+} from '@/redux/feature/wishList/wishListSlice';
+import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 
-import React from 'react';
-import { FaRegHeart } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import Marquee from 'react-fast-marquee';
 
-export default function BuyMoreGetMoreComponent() {
+export default function BuyMoreGetMoreComponent({
+  category,
+  discountType,
+}: any) {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const wishlistProducts = useAppSelector(selectWishlistProducts);
 
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 8,
-    field: '',
-    fieldName: '',
+    filters: {
+      categorySlug: category,
+      discountType: discountType,
+    },
   });
-  // console.log('data', data);
-  // console.log('error', error);
-  // console.log('isLoading', isLoading);
+  // Initialize the heart state for each product
+  const [heartStates, setHeartStates] = useState<Record<string, boolean>>({});
+
+  // Load heart state from local storage on mount
+  useEffect(() => {
+    const savedHeartStates = localStorage.getItem('heartStates');
+    if (savedHeartStates) {
+      setHeartStates(JSON.parse(savedHeartStates));
+    }
+  }, []);
+
+  const handleHeartClick = (product: CartProductType) => {
+    setHeartStates((prevHeartStates) => {
+      const isAddedToWishlist = !prevHeartStates[product.slug];
+      const updatedHeartStates = {
+        ...prevHeartStates,
+        [product.slug]: isAddedToWishlist, // Toggle the heart state
+      };
+
+      if (isAddedToWishlist) {
+        dispatch(addToWishList(product));
+      } else {
+        dispatch(removeFromWishList(product.slug));
+      }
+
+      localStorage.setItem('heartStates', JSON.stringify(updatedHeartStates));
+      return updatedHeartStates;
+    });
+  };
 
   return (
     <div>
@@ -31,7 +67,6 @@ export default function BuyMoreGetMoreComponent() {
             onClick={() => router.push(`/${product.slug}`)}
             key={product.slug}
             isPressable
-            onPress={() => console.log('item pressed')}
             className="relative mb-2 h-[330px] w-[285px] flex-none rounded-xl border-1 border-foreground-200  bg-foreground-100 shadow-none dark:border-foreground-700  dark:bg-foreground-800"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
@@ -39,8 +74,9 @@ export default function BuyMoreGetMoreComponent() {
                 <Image
                   onClick={() => router.push(`/${product.slug}`)}
                   className="h-[160px] w-[284px] object-cover"
+                  isZoomed
                   src={
-                    product.images[0]?.url ||
+                    product.images[0].url ||
                     'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
                   }
                   alt={product.name}
@@ -50,33 +86,23 @@ export default function BuyMoreGetMoreComponent() {
                 BUY 1 GET 1
               </span>
               <div className="flex flex-wrap justify-between">
-                  <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
-                    {product.name.length > 30
-                      ? `${product.name.substring(0, 26)}...`
-                      : product.name}
-                  </h5>
-                <div className="right-4 mt-3" onClick={() => dispatch(addToWishList({
-                    slug: product.slug,
-                    seller: product.seller,
-                    name: product.name,
-                    price: product.price,
-                    discountPrice: product.discountPrice,
-                    ratingAvg: product.ratingAvg,
-                    description: product.description,
-                    images: product.images,
-                    shop: product.shop,
-                    discountValue: product.discountValue,
-                    discountType: product.discountType,
-                    expiredAt: product.expiredAt,
-                    category: product.category,
-                    createdAt: product.createdAt,
-                    updatedAt: product.updatedAt,
-                    createdBy: product.createdBy,
-                    updatedBy: product.updatedBy,
-                    address: product.address,
-                  }))}>
-                 <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                 </div>
+                <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
+                  {product.name.length > 28
+                    ? `${product.name.substring(0, 20)}...`
+                    : product.name}
+                </h5>
+                <div
+                  className="right-4 mt-3 cursor-pointer"
+                  onClick={() => handleHeartClick(product)}
+                >
+                  <div key={product.slug}>
+                    {heartStates[product.slug] ? (
+                      <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    ) : (
+                      <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
+                    )}
+                  </div>
+                </div>
               </div>
               <div className=" h-[30px] pt-3">
                 <p className="text-[14px] font-medium text-foreground-600 ">

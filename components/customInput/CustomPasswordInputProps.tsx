@@ -33,10 +33,6 @@ const CustomPasswordInput: React.FC<CustomPasswordInputProps> = ({
         labelPlacement={'outside'}
         size={'md'}
         variant={'bordered'}
-        classNames={{
-          inputWrapper:
-            'border-transparent bg-default-50/80 dark:bg-default-50/20 group-data-[focus=true]:border-primary data-[hover=true]:border-foreground/20',
-        }}
         isInvalid={meta.touched && !!meta.error}
         errorMessage={meta.touched && meta.error ? meta.error : ''}
         color={meta.touched && meta.error ? 'danger' : 'default'}

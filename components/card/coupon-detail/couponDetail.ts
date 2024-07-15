@@ -1,7 +1,7 @@
 // couponDetail.ts
 
 export type CouponDetail = {
-  id: number;
+  slug: number;
   images: string;
   name: string;
   duration: string;
@@ -12,7 +12,7 @@ export type CouponDetail = {
 
 export const couponDetail: CouponDetail[] = [
   {
-    id: 1,
+    slug: 1,
     images:
       'https://as1.ftcdn.net/v2/jpg/02/91/67/60/1000_F_291676069_ZBjqhpjsPBprZlfjmbOTt4zebYG5gGq5.jpg',
     name: 'New Year Gift 2024',
@@ -25,7 +25,7 @@ export const couponDetail: CouponDetail[] = [
     type: 'Special Discount Offer for Summer',
   },
   {
-    id: 2,
+    slug: 2,
     images:
       'https://as1.ftcdn.net/v2/jpg/02/91/67/62/1000_F_291676248_IuE3mdvCI2vKNRw1tsBqRVvmMvFAE8hN.jpg',
 
@@ -39,7 +39,7 @@ export const couponDetail: CouponDetail[] = [
     type: 'Get a Free Item with Every Purchase',
   },
   {
-    id: 3,
+    slug: 3,
     images:
       'https://as2.ftcdn.net/v2/jpg/02/91/67/83/1000_F_291678347_ldV3Fs2UXsVMe1fpkoTcluIjNh65z6ya.jpg',
 
@@ -53,7 +53,7 @@ export const couponDetail: CouponDetail[] = [
     type: 'Exclusive BOGO Offer on Selected Items',
   },
   {
-    id: 4,
+    slug: 4,
     images:
       'https://as1.ftcdn.net/v2/jpg/03/05/13/86/1000_F_305138615_3S2eG484NTtMRupLZB4odKxboyBqhVbb.jpg',
 
@@ -67,7 +67,7 @@ export const couponDetail: CouponDetail[] = [
     type: 'Special Promotion for Fall Season',
   },
   {
-    id: 5,
+    slug: 5,
     images:
       'https://as2.ftcdn.net/v2/jpg/02/91/67/61/1000_F_291676143_GtsMEfoFeRQADmmeLg7MSiOxYE1ET9hZ.jpg',
 
@@ -81,7 +81,7 @@ export const couponDetail: CouponDetail[] = [
     type: 'Exclusive Discount for our Loyal Customers',
   },
   {
-    id: 6,
+    slug: 6,
     images:
       'https://as2.ftcdn.net/v2/jpg/02/91/67/65/1000_F_291676535_WzMlxsrQh8Ww7V04HvR5owHArtWcZkuv.jpg',
 
@@ -95,7 +95,7 @@ export const couponDetail: CouponDetail[] = [
     type: 'Special Holiday Season Discount',
   },
   {
-    id: 7,
+    slug: 7,
     images:
       'https://as2.ftcdn.net/v2/jpg/02/91/67/59/1000_F_291675907_a42y1cNQP2VRH2t5nNoVZsmkshVrHwVh.jpg',
 
@@ -109,7 +109,7 @@ export const couponDetail: CouponDetail[] = [
     type: "Special New Year's Promotion",
   },
   {
-    id: 8,
+    slug: 8,
     images:
       'https://as1.ftcdn.net/v2/jpg/02/91/67/60/1000_F_291676097_ycnF7xaUPfzSMWp6X8v94EOvWgtI9Szx.jpg',
 

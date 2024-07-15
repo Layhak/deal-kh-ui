@@ -49,18 +49,18 @@ export default function CategoryCardComponent() {
                 radius="lg"
                 width="100%"
                 alt={item.title}
-                className="lg:h-[300px] h-[150px] w-full object-cover rounded-b-none"
+                className="lg:h-[300px] h-[150px] w-full object-cover"
                 src={item.img}
               />
             </CardBody>
-            <CardFooter className="justify-center text-[16px] font-semibold text-foreground-700 dark:text-white">
+            <CardFooter className="justify-center text-[16px] font-semibold text-gray-700 dark:text-white">
               <b>{item.title}</b>
             </CardFooter>
           </Card>
         ))}
       </div>
       {/* All Product */}
-      <p className="my-12 text-center text-lg font-semibold text-foreground-700 dark:text-gray-300 lg:text-3xl">
+      <p className="my-12 text-center text-lg font-semibold text-gray-700 dark:text-gray-300 lg:text-3xl">
         All Products
       </p>
     </div>

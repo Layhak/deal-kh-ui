@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { CartProductType } from '@/libs/difinition';
 import {
   Image,
+  Link,
   Table,
   TableBody,
   TableCell,
@@ -20,6 +21,7 @@ import {
 } from '@nextui-org/react';
 import { LuMinus, LuPlus, LuTrash } from 'react-icons/lu';
 import { Button } from '@nextui-org/button';
+import { GrLocation } from 'react-icons/gr';
 
 export default function CartComponent() {
   const products = useAppSelector(selectProducts);
@@ -78,28 +80,25 @@ export default function CartComponent() {
       case 'name':
         return (
           <div>
-            {product.name.length > 30
+            {product.name.length > 40
               ? `${product.name.substring(0, 26)}...`
               : product.name || 'Product Name'}
           </div>
         );
       case 'shop':
-        return <div>{product.shop}</div>;
+        return  <Link href={`/shop/${product.shop}`}>
+        <div>{product.shop}</div>
+      </Link>
       case 'location':
         return (
-          <div className="flex items-center">
-            <Button
-              onClick={() => handleGetDirections(product.location)}
-              className="ml-2"
-            >
-              Get Directions
-            </Button>
+          <div className="flex items-center" onClick={() => handleGetDirections(product.location)}>
+            <GrLocation className='className="h-[25px] w-[25px] text-[#eb7d52]"'/>
           </div>
         );
       case 'price':
-        return <div>${product.price}</div>;
+        return <div>${product.price.toFixed(2)}</div>;
       case 'discount price':
-        return <div>${product.discountPrice}</div>;
+        return <div>${product.discountPrice.toFixed(2)}</div>;
       case 'quantity':
         return (
           <div className="flex items-center">
@@ -107,11 +106,10 @@ export default function CartComponent() {
               <div className="flex h-8 w-8 items-center justify-center rounded-l-lg border">
                 <LuPlus onClick={() => handleIncrementQuantity(product)} />
               </div>
-
               <div className="flex h-8  w-8 items-center justify-center border">
                 <span>{product.quantity}</span>
               </div>
-
+ 
               <div className="flex h-8  w-8 items-center justify-center rounded-r-lg border">
                 <LuMinus onClick={() => handleDecrementQuantity(product)} />
               </div>
@@ -119,7 +117,7 @@ export default function CartComponent() {
           </div>
         );
       case 'total':
-        return <div>${product.discountPrice * (product.quantity || 1)}</div>;
+        return <div>${(product.discountPrice * (product.quantity || 1)).toFixed(2)}</div>;
       case 'delete':
         return (
           <div className="flex justify-center">
@@ -148,7 +146,7 @@ export default function CartComponent() {
             height={200}
           />
           <p className="mt-4 text-2xl font-semibold ">Your cart is empty!</p>
-          <p>Look like you haven't made any choice yet...</p>
+          <p>Look like you haven&apos;t made any choice yet...</p>
         </div>
       )}
       {products.length !== 0 && (
@@ -159,44 +157,46 @@ export default function CartComponent() {
                 Your <span className="text-[#eb7d52]">Cart</span>
               </p>
             </div>
-
-            <Table aria-label="Cart" className="mt-8">
-              <TableHeader
-                columns={[
-                  { uid: 'image', name: 'Image' },
-                  { uid: 'name', name: 'Name' },
-                  { uid: 'shop', name: 'Shop Name' },
-                  { uid: 'location', name: 'Location' },
-                  { uid: 'price', name: 'Price' },
-                  { uid: 'discount price', name: 'Discount Price' },
-                  { uid: 'quantity', name: 'Quantity' },
-                  { uid: 'total', name: 'Total' },
-                  { uid: 'delete', name: 'Delete' },
-                ]}
-              >
-                {(column) => (
-                  <TableColumn
-                    key={column.uid}
-                    align={column.uid === 'actions' ? 'center' : 'start'}
-                  >
-                    {column.name}
-                  </TableColumn>
-                )}
-              </TableHeader>
-              <TableBody items={uniqueProducts}>
-                {(product) => (
-                  <TableRow key={product.slug}>
-                    {(columnKey: any) => (
-                      <TableCell>{renderCell(product, columnKey)}</TableCell>
-                    )}
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
+            <Table
+  aria-label="Cart"
+  className="mt-8"
+>
+  <TableHeader
+    columns={[
+      { uid: 'image', name: 'Image' },
+      { uid: 'name', name: 'Name' },
+      { uid: 'shop', name: 'Shop Name' },
+      { uid: 'location', name: 'Location' },
+      { uid: 'price', name: 'Price' },
+      { uid: 'discount price', name: 'Discount Price' },
+      { uid: 'quantity', name: 'Quantity' },
+      { uid: 'total', name: 'Total' },
+      { uid: 'delete', name: 'Delete' },
+    ]}
+  >
+    {(column) => (
+      <TableColumn
+        key={column.uid}
+        align={column.uid === 'actions' ? 'center' : 'start'}
+      >
+        {column.name}
+      </TableColumn>
+    )}
+  </TableHeader>
+  <TableBody items={uniqueProducts}>
+    {(product) => (
+      <TableRow key={product.slug}>
+        {(columnKey: any) => (
+          <TableCell>{renderCell(product, columnKey)}</TableCell>
+        )}
+      </TableRow>
+    )}
+  </TableBody>
+</Table>
           </div>
           <div className="mt-4 flex justify-end">
             <div>
-              <div>Total Price: ${totalPrice}</div>
+              <div>Total Price: ${(totalPrice.toFixed(2))}</div>
             </div>
           </div>
         </div>

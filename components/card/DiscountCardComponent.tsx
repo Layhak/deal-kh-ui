@@ -10,23 +10,25 @@ export default function DiscountCardComponent({ category, discountType }: any) {
   const { data, error } = useGetProductsQuery({
     page: 1,
     size: 8,
-    category: category,
-    discountType: discountType,
+    filters: {
+      categorySlug: category,
+      discountType: discountType,
+    },
   });
 
   return (
     <main>
       {/* for the card section*/}
-      <div className="flex flex-wrap justify-center gap-[25px]">
+      <div className="flex flex-wrap justify-center gap-7">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`products/${product.slug}`)}
+            onClick={() => router.push(`/products/${product.slug}`)}
             key={product.slug}
             isPressable
             className=" relative mb-2 h-[386px] w-[284px] flex-none  rounded-xl  text-gray-50 shadow-none"
           >
             <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
-              <Link href={`products/${product.slug}`}>
+              <Link href={`/products/${product.slug}`}>
                 <Image
                   className="h-[193px] w-[284px] object-cover"
                   isZoomed
@@ -77,7 +79,7 @@ export default function DiscountCardComponent({ category, discountType }: any) {
                   </div>
                 </div>
               </div>
-              <Link href={`products/${product.slug}`}>
+              <Link href={`/products/${product.slug}`}>
                 <h5 className="mt-1 h-[45px] text-[18px] font-semibold tracking-tight text-foreground-800">
                   {product.name.length > 60
                     ? `${product.name.substring(0, 45)}...`

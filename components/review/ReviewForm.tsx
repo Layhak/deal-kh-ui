@@ -1,22 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { ErrorMessage, FieldArray, FormikProvider, useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Badge, Button, Image, Tooltip } from '@nextui-org/react';
+import {
+  Badge,
+  Button,
+  Image,
+  Tooltip,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalHeader,
+} from '@nextui-org/react';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import 'react-toastify/dist/ReactToastify.css';
-
 import PromptInput from '@/components/review/PromptInput';
 import { useUploadImagesMutation } from '@/redux/service/image';
-import { useCreateProductFeedbackMutation } from '@/redux/service/ratingAndFeedback';
+import {
+  useCreateProductFeedbackMutation,
+  useCreateProductRatingMutation,
+  useGetProductFeedbackQuery,
+} from '@/redux/service/ratingAndFeedback';
 import { Cancel, PhotoIcon, ShareIcon } from '@/components/icons';
 import { useGetProfileQuery } from '@/redux/service/user';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import RatingSlider from '@/components/review/RatingSlider';
+import RatingDisplay from '@/components/review/RatingDisplay';
 
 type ReviewFormProps = {
   productSlug: string;
   onNewRating: () => void;
+  hasRated: boolean;
 };
 
 type FormValues = {
@@ -56,27 +70,34 @@ const validationSchema = Yup.object().shape({
 export default function ReviewForm({
   productSlug,
   onNewRating,
+  hasRated,
 }: ReviewFormProps) {
   const [uploadImages] = useUploadImagesMutation();
   const [createFeedback] = useCreateProductFeedbackMutation();
+  const [createRating] = useCreateProductRatingMutation();
+  const { data: feedbackData } = useGetProductFeedbackQuery({ productSlug });
   const [imageFiles, setImageFiles] = useState<File[]>([]);
+  const [hasFeedback, setHasFeedback] = useState(false);
   const { theme } = useTheme();
-  const {
-    data: userData,
-    isLoading: isLoadingUserData,
-    refetch: refetchUserProfile,
-  } = useGetProfileQuery();
+  const { data: userData, isLoading: isLoadingUserData } = useGetProfileQuery();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [rating, setRating] = useState(0.5);
   const router = useRouter();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (userData) {
       setIsAuthenticated(true);
+      if (feedbackData && Array.isArray(feedbackData.payload)) {
+        const userFeedback = feedbackData.payload.find(
+          (feedback: any) => feedback.username === userData.payload.username
+        );
+        setHasFeedback(!!userFeedback);
+      }
     } else {
       setIsAuthenticated(false);
     }
-  }, [userData]);
+  }, [userData, feedbackData]);
 
   const initialValues: FormValues = {
     description: '',
@@ -87,45 +108,70 @@ export default function ReviewForm({
   const formik = useFormik<FormValues>({
     initialValues,
     validationSchema,
-    onSubmit: async (values, { resetForm }) => {
-      try {
-        let uploadedUrls: UploadedImage[] = [];
+    onSubmit: (values) => {
+      openModal();
+    },
+  });
 
-        if (imageFiles.length > 0) {
-          const formData = new FormData();
-          imageFiles.forEach((file) => {
-            formData.append('files', file);
-          });
-          const imageResponse = await uploadImages(formData).unwrap();
-          uploadedUrls = imageResponse.payload.map((file: any) => ({
-            url: file.fullUrl,
-          }));
-        }
+  const handleCombinedSubmit = async () => {
+    const { values, resetForm, setErrors } = formik;
 
-        const feedbackData = {
-          description: values.description,
-          productSlug: values.productSlug,
-          images: uploadedUrls,
-        };
+    try {
+      let uploadedUrls: UploadedImage[] = [];
 
-        await createFeedback(feedbackData).unwrap();
-        toast.success('Feedback submitted successfully.', {
-          autoClose: 2000,
-          theme: theme,
+      if (imageFiles.length > 0) {
+        const formData = new FormData();
+        imageFiles.forEach((file) => {
+          formData.append('files', file);
         });
-        resetForm();
-        onNewRating(); // Call onNewRating to refetch data
-      } catch (error) {
-        console.error('Error uploading images or submitting feedback:', error);
-        toast.error('Failed to submit feedback.', {
+        const imageResponse = await uploadImages(formData).unwrap();
+        uploadedUrls = imageResponse.payload.map((file: any) => ({
+          url: file.fullUrl,
+        }));
+      }
+
+      const feedbackData = {
+        description: values.description,
+        productSlug: values.productSlug,
+        images: uploadedUrls,
+      };
+
+      const ratingData = {
+        ratingValue: rating,
+        productSlug,
+      };
+
+      // console.log('Rating Data:', ratingData);
+      // console.log('Feedback Data:', feedbackData);
+
+      await createRating(ratingData).unwrap();
+
+      await createFeedback(feedbackData).unwrap();
+
+      toast.success('Feedback and rating submitted successfully.', {
+        autoClose: 2000,
+        theme: theme,
+      });
+      resetForm();
+      setIsModalOpen(false);
+      onNewRating(); // Call onNewRating to refetch data
+    } catch (error: any) {
+      console.error('Error:', error);
+      if (error.status === 400) {
+        console.error('Error data:', error.data);
+      }
+      if (error.status === 400 && error.data?.error?.description) {
+        setErrors({ description: error.data.error.description });
+      } else {
+        toast.error('Failed to submit feedback or rating.', {
           autoClose: 2000,
           theme: theme,
         });
       }
-    },
-  });
+    }
+  };
 
-  const { values, handleSubmit, setFieldValue, isSubmitting } = formik;
+  const { values, setFieldValue, isSubmitting } = formik;
 
   const onRemoveImage = (index: number) => {
     setImageFiles((prev) => prev.filter((_, i) => i !== index));
@@ -150,11 +196,21 @@ export default function ReviewForm({
     }
   };
 
+  const handleSliderChange = (value: number | number[]) => {
+    setRating(Array.isArray(value) ? value[0] : value);
+  };
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <FormikProvider value={formik}>
       <form
         className="flex w-full flex-col items-start rounded-medium bg-foreground-50 transition-colors hover:bg-foreground-100/70"
-        onSubmit={handleSubmit}
+        onSubmit={(e) => {
+          e.preventDefault();
+          formik.handleSubmit(e);
+        }}
       >
         <div className="group flex gap-2 ps-4 pt-4">
           <FieldArray name="images">
@@ -221,16 +277,20 @@ export default function ReviewForm({
                 ) : isAuthenticated ? (
                   <Tooltip showArrow content="Send message">
                     <Button
-                      color={!values.description ? 'default' : 'primary'}
-                      isDisabled={!values.description}
+                      color={
+                        !values.description || hasFeedback
+                          ? 'default'
+                          : 'primary'
+                      }
+                      isDisabled={!values.description || hasFeedback}
                       radius="lg"
                       size="sm"
                       variant="solid"
-                      type="submit"
                       className={
                         'bg-gradient-to-r from-pink-500 to-yellow-500 text-gray-50'
                       }
                       isLoading={isSubmitting}
+                      onPress={openModal}
                     >
                       send message
                     </Button>
@@ -280,6 +340,45 @@ export default function ReviewForm({
         component={'div'}
         className={'text-red-500'}
       />
+
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <ModalContent>
+          <ModalHeader className="flex-col pt-8">
+            <h1 className="text-large font-semibold">Rate this product</h1>
+            <p className="text-small font-normal text-default-400">
+              Share your experience with this product
+            </p>
+          </ModalHeader>
+          <ModalBody className="pb-8">
+            <form
+              className="flex flex-col gap-6"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                await handleCombinedSubmit();
+              }}
+            >
+              <div>
+                <RatingSlider
+                  rating={rating}
+                  onRatingChange={handleSliderChange}
+                />
+                <div className="mt-4">
+                  <RatingDisplay rating={rating} size={24} />
+                  <p className="mt-2">{rating} stars</p>
+                </div>
+              </div>
+              <Button
+                color="primary"
+                type="submit"
+                className={'bg-gradient-to-r from-pink-500 to-warning-400 '}
+                isDisabled={hasFeedback}
+              >
+                Submit
+              </Button>
+            </form>
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </FormikProvider>
   );
 }

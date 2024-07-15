@@ -15,8 +15,10 @@ const SearchingProduct: React.FC = () => {
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 10,
-    category: '',
-    discountType: '',
+    filters: {
+      categorySlug: '',
+      discountType: '',
+    },
   });
 
   const filteredProducts = data?.payload.list.filter((product: ProductType) => {
@@ -24,7 +26,7 @@ const SearchingProduct: React.FC = () => {
     return productName.includes(searchValue.toLowerCase());
   });
 
-  console.log('Here is Search Value: ', searchValue);
+  // console.log('Here is Search Value: ', searchValue);
 
   return (
     <div>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Select, SelectItem } from '@nextui-org/react';
+import { cn, Select, SelectItem } from '@nextui-org/react';
 import { useField } from 'formik';
 
 interface CustomSelectProps {
@@ -7,6 +7,7 @@ interface CustomSelectProps {
   name: string;
   options: { value: string; label: string }[];
   placeholder?: string;
+  onChange?: (value: any) => void;
 }
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
@@ -14,6 +15,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
   name,
   options,
   placeholder,
+  onChange,
 }) => {
   const [field, meta, helpers] = useField(name);
   const [isOpen, setIsOpen] = useState(false);
@@ -24,6 +26,7 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 
   return (
     <Select
+      onChange={onChange}
       // label={label}
       // placeholder={placeholder}
       selectedKeys={[field.value]}
@@ -33,12 +36,16 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
       }}
       label={label}
       size={'md'}
-      variant={'bordered'}
+      variant="bordered"
       isInvalid={meta.touched && !!meta.error}
       errorMessage={meta.touched && meta.error ? meta.error : ''}
       color={meta.touched && meta.error ? 'danger' : 'default'}
       isOpen={isOpen}
       labelPlacement={'outside'}
+      placeholder={placeholder}
+      classNames={{
+        popoverContent: 'text-foreground border-foreground/20',
+      }}
       onClick={handleToggle}
     >
       {options.map((option) => (

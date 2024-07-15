@@ -25,7 +25,7 @@ export default function CartComponent() {
   const products = useAppSelector(selectProducts);
   const totalPrice = useAppSelector(selectTotalPrice);
   const dispatch = useAppDispatch();
-  console.log('product', products);
+  // console.log('product', products);
 
   // Display number of product that only unique select
   const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
@@ -148,7 +148,7 @@ export default function CartComponent() {
             height={200}
           />
           <p className="mt-4 text-2xl font-semibold ">Your cart is empty!</p>
-          <p>Look like you haven't made any choice yet...</p>
+          <p>Look like you {"haven'"}t made any choice yet...</p>
         </div>
       )}
       {products.length !== 0 && (

@@ -1,12 +1,11 @@
-"use client";
+'use client';
 
-import React from 'react'
-import { Link, Image } from '@nextui-org/react';
+import React from 'react';
+import { Image } from '@nextui-org/react';
 import DiscountCardComponent from '@/components/card/DiscountCardComponent';
 import ClearanceCardComponent from '@/components/card/ClearanceCard';
 import BuyMoreGetMoreComponent from '@/components/card/BuyMoreGetMore';
 import NormalProductComponent from '@/components/card/NormalProduct';
-
 
 export default function Drink() {
   return (
@@ -77,5 +76,5 @@ export default function Drink() {
         </div>
         <NormalProductComponent category={"drink"} discountType={"event"}/>
     </main>
-  )
+  );
 }

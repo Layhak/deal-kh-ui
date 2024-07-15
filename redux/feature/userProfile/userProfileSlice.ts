@@ -53,7 +53,7 @@ export const fetchUserProfile = createAsyncThunk(
   async (_, { getState }) => {
     const state = getState() as RootState;
     const token = state.auth.token;
-    console.log('Token:', token); // Log the token to ensure it's being retrieved
+    // console.log('Token:', token); // Log the token to ensure it's being retrieved
 
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_DEALKH_API_URL}users/me`,
@@ -69,7 +69,7 @@ export const fetchUserProfile = createAsyncThunk(
     }
 
     const data = await response.json();
-    console.log('data from userProfileSlice', data);
+    // console.log('data from userProfileSlice', data);
     return data;
   }
 );

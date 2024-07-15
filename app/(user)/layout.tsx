@@ -5,7 +5,7 @@ import { Suspense } from 'react';
 import Loading from '@/app/(user)/loading';
 import error from '@/app/(user)/error';
 import 'react-toastify/dist/ReactToastify.css';
-import FooterComponent from '@/components/footerComponent';
+import FooterComponent from '@/components/FooterComponent';
 import SessionWrapper from '../SessionProvider';
 import { Metadata } from 'next';
 import { NavigationBar } from '@/components/navigationBar';
@@ -17,7 +17,7 @@ import { inter, kantumruyPro } from '@/utils/fonts';
 import FilterComponent from '@/components/Filter';
 
 export const metadata: Metadata = {
-  title: 'Best Deals, Coupons & Promotions in Cambodia - DealKH',
+  title: 'Home Page',
   description:
     'Find the best deals, coupons, and promotions from shops in Cambodia. Save big on your shopping with exclusive offers and discounts at DealKH.',
   keywords:
@@ -31,11 +31,11 @@ export const metadata: Metadata = {
       'Discover the latest deals, coupons, and promotions from shops in Cambodia at DealKH. Save on your shopping with our curated list of discounts and offers.',
     images: [
       {
-        url: fileImgUrl('logo.png'),
+        url: fileImgUrl('3ef8a1e1-0b19-463d-ac76-655868c26418.png'),
         alt: 'DealKH Logo Ecommerce Website',
       },
       {
-        url: fileImgUrl('forhome.png'),
+        url: fileImgUrl('3ef8a1e1-0b19-463d-ac76-655868c26418.png'),
         alt: 'Exclusive Shopping Deals in Cambodia',
       },
     ],
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
       'Find the best deals, coupons, and promotions from shops in Cambodia. Save big on your shopping with exclusive offers and discounts at DealKH.',
     images: [
       {
-        url: fileImgUrl('logo.png'),
+        url: fileImgUrl('3ef8a1e1-0b19-463d-ac76-655868c26418.png'),
         alt: 'DealKH Logo Ecommerce Website',
       },
     ],
@@ -62,38 +62,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang={'en'} suppressHydrationWarning>
-      <head>
-        <meta name="author" content="DealKH" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="robots" content="index, follow" />
-
-        {/* Facebook Meta Tags */}
-        <meta property="og:app_id" content="YOUR_FACEBOOK_APP_ID" />
-        <meta
-          property="og:title"
-          content="Best Deals, Coupons & Promotions in Cambodia - DealKH"
-        />
-        <meta
-          property="og:description"
-          content="Discover the latest deals, coupons, and promotions from shops in Cambodia at DealKH. Save on your shopping with our curated list of discounts and offers."
-        />
-        <meta property="og:image" content={fileImgUrl('icon.png')} />
-        <meta property="og:url" content="https://www.dealkh.istad.co/" />
-        <meta property="og:site_name" content="DealKH" />
-
-        {/* Instagram Meta Tags */}
-        <meta
-          property="insta:title"
-          content="Best Deals, Coupons & Promotions in Cambodia - DealKH"
-        />
-        <meta
-          property="insta:description"
-          content="Discover the latest deals, coupons, and promotions from shops in Cambodia at DealKH. Save on your shopping with our curated list of discounts and offers."
-        />
-        <meta property="insta:image" content={fileImgUrl('forhome.png')} />
-        <meta property="insta:url" content="https://www.dealkh.istad.co/" />
-        <title>DealKH</title>
-      </head>
+      <head></head>
       <SessionWrapper>
         <body className={`${kantumruyPro.variable} ${inter.variable} `}>
           <StoreProvider>
@@ -101,12 +70,10 @@ export default function RootLayout({
               <HeaderCreateShop />
               <NavigationBar />
               <FilterComponent />
+              <ToastContainer />
               <main className="container mx-auto min-h-screen max-w-7xl px-0 lg:px-6">
                 <ErrorBoundary errorComponent={error}>
-                  <Suspense fallback={<Loading />}>
-                    <ToastContainer />
-                    {children}
-                  </Suspense>
+                  <Suspense fallback={<Loading />}>{children}</Suspense>
                 </ErrorBoundary>
               </main>
               <FooterComponent />

@@ -12,9 +12,9 @@ type Props = {
 
 const ShopProfile = ({ params }: Props) => {
   const slug = params.slug;
-  console.log('slug', slug);
+  // console.log('slug', slug);
   const { data, isLoading, error } = useGetShopBySlugQuery(slug);
-  console.log('data', data);
+  // console.log('data', data);
   if (isLoading) {
     return <Loading />;
   }

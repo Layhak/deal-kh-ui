@@ -37,6 +37,7 @@ import { selectProducts } from '@/redux/feature/cart/cartSlice';
 import { CartProductType } from '@/libs/difinition';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { BiUserCircle } from 'react-icons/bi';
 
 export const NavigationBar = () => {
   const pathname = usePathname();
@@ -62,6 +63,7 @@ export const NavigationBar = () => {
       await logoutUser({}).unwrap();
       dispatch(removeAccessToken());
       dispatch(setLogoutSuccess(true));
+      setIsLoggedIn(false);
       toast.success('Logout successfully.', {
         position: 'top-right',
         autoClose: 2000,
@@ -72,7 +74,6 @@ export const NavigationBar = () => {
         progress: undefined,
         theme: theme,
       });
-      setIsLoggedIn(false);
       router.push('/');
     } catch (error) {
       toast.error('Failed to logout.', {
@@ -207,7 +208,7 @@ export const NavigationBar = () => {
 
           <NavbarItem>
             {isLoggedIn ? (
-              <Dropdown placement="bottom-end" shadow="md">
+              <Dropdown size={'lg'} placement="bottom-start" shadow="md">
                 <DropdownTrigger>
                   <Avatar
                     as="button"
@@ -222,11 +223,25 @@ export const NavigationBar = () => {
                   />
                 </DropdownTrigger>
                 <DropdownMenu aria-label="Profile Actions" variant="shadow">
-                  <DropdownItem key="profile" className="h-14 gap-2" isDisabled>
+                  <DropdownItem
+                    key="profile"
+                    className="h-14 w-full gap-2"
+                    isDisabled
+                  >
                     <p className="font-semibold">Signed in as</p>
                     <p className="font-semibold">
                       {userProfile?.payload?.email}
                     </p>
+                  </DropdownItem>
+                  <DropdownItem
+                    href={'/profile'}
+                    key="profile"
+                    className=" w-full gap-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <BiUserCircle size={24} />
+                      <p className="font-semibold">Profile</p>
+                    </div>
                   </DropdownItem>
                   <DropdownItem
                     key="logout"

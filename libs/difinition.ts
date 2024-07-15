@@ -56,6 +56,7 @@ export type ImageResponse = {
 
 export type CartProductType = {
   seller: string;
+  images: Image[];
   name: string;
   ratingCount: number;
   slug: string;
@@ -63,7 +64,6 @@ export type CartProductType = {
   discountPrice: number;
   ratingAvg: number;
   description: string;
-  images: Image[];
   shop: string;
   shopSlug: string;
   location: string;
@@ -79,7 +79,6 @@ export type CartProductType = {
   createdBy: string;
   updatedBy: string;
   quantity?: number | 0;
-  address?: string;
 };
 
 export type ShopResponse = {

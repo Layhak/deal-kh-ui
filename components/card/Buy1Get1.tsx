@@ -1,17 +1,20 @@
 'use client';
 
-import { Card, CardBody, Link, Image } from '@nextui-org/react';
-import React, { useState, useEffect } from 'react';
-import { FaRegHeart, FaHeart } from 'react-icons/fa';
+import { Card, CardBody, Image, Link } from '@nextui-org/react';
+import React, { useEffect, useState } from 'react';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 import { useGetProductsQuery } from '@/redux/service/product';
 import { CartProductType } from '@/libs/difinition';
-import { addToWishList, removeFromWishList } from '@/redux/feature/wishList/wishListSlice';
+import {
+  addToWishList,
+  removeFromWishList,
+  selectWishlistProducts,
+} from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
-import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import WishListDropDownComponent from '../WishListDropDownComponent';
 
-const Buy1Get1Component = ({category,discountType}:any) => {
+const Buy1Get1Component = ({ category, discountType }: any) => {
   const dispatch = useAppDispatch();
   const wishlistProducts = useAppSelector(selectWishlistProducts);
 
@@ -20,8 +23,10 @@ const Buy1Get1Component = ({category,discountType}:any) => {
   const { data } = useGetProductsQuery({
     page: 1,
     size: 6,
-    category:category,
-    discountType:discountType
+    filters: {
+      categorySlug: category,
+      discountType: discountType,
+    },
   });
 
   // Initialize the heart state for each product
@@ -53,7 +58,6 @@ const Buy1Get1Component = ({category,discountType}:any) => {
       setIsOpen(true);
       return updatedHeartStates;
     });
-   
   };
 
   return (
@@ -66,9 +70,9 @@ const Buy1Get1Component = ({category,discountType}:any) => {
             className="relative mb-2 h-[330px] w-[250px] flex-none rounded-xl  bg-foreground-50 shadow-none  dark:border-foreground-700"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
-              <Link href={`products/${product.slug}`}>
+              <Link href={`/products/${product.slug}`}>
                 <Image
-                isZoomed
+                  isZoomed
                   className="h-[160px] w-[224px] object-cover"
                   src={
                     product.images[0].url ||
@@ -91,15 +95,16 @@ const Buy1Get1Component = ({category,discountType}:any) => {
                 <div
                   className="right-4 mt-3 cursor-pointer"
                   onClick={() => handleHeartClick(product)}
-                > 
+                >
                   <div key={product.slug}>
                     {heartStates[product.slug] ? (
                       <FaHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
                     ) : (
                       <FaRegHeart className="h-[25px] w-[25px] text-[#eb7d52]" />
-                    )} 
-                  </div> 
-                </div> {isOpen && (<WishListDropDownComponent/>)}
+                    )}
+                  </div>
+                </div>
+                {isOpen && <WishListDropDownComponent />}
               </div>
               <div className=" h-[30px] pt-3">
                 <p className="text-[14px] font-medium text-foreground-600 ">
@@ -126,8 +131,6 @@ const Buy1Get1Component = ({category,discountType}:any) => {
           </Card>
         ))}
       </div>
-
-      
     </div>
   );
 };

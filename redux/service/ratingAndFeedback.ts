@@ -41,9 +41,25 @@ export const ratingAndFeedbackApi = ecommerceApi.injectEndpoints({
         body: ratingData,
       }),
     }),
+    updateProductRating: builder.mutation<
+      { message: string; status: number },
+      { ratingValue: number; productSlug: string }
+    >({
+      query: ({ ratingValue, productSlug }) => ({
+        url: `/product-ratings/${productSlug}`,
+        method: 'PUT',
+        body: { ratingValue },
+      }),
+    }),
     deleteProductFeedback: builder.mutation({
       query: ({ feedbackId }) => ({
         url: `/product-feedbacks/${feedbackId}`,
+        method: 'DELETE',
+      }),
+    }),
+    deleteProductRating: builder.mutation({
+      query: ({ productSlug }) => ({
+        url: `/product-ratings/${productSlug}`,
         method: 'DELETE',
       }),
     }),
@@ -62,9 +78,11 @@ export const ratingAndFeedbackApi = ecommerceApi.injectEndpoints({
 
 export const {
   useUpdateProductFeedbackMutation,
+  useUpdateProductRatingMutation,
   useGetProductRatingsByProductSlugQuery,
   useGetProductFeedbackQuery,
   useCreateProductFeedbackMutation,
+  useDeleteProductRatingMutation,
   useLazyGetProductFeedbackQuery,
   useCreateProductRatingMutation,
   useDeleteProductFeedbackMutation,

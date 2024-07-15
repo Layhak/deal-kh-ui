@@ -7,11 +7,12 @@ import {
   useGetProductFeedbackQuery,
   useGetProductRatingsByProductSlugQuery,
 } from '@/redux/service/ratingAndFeedback';
-import ModalRating from '@/components/review/ModalRating';
 import ReviewForm from '@/components/review/ReviewForm';
 import Loading from '@/app/(user)/loading';
 import FeedbackCard from '@/components/review/FeedbackCard';
 import { useGetProfileQuery } from '@/redux/service/user';
+import DiscountCardComponent from '../card/DiscountCardComponent';
+import Category from '../card/Category';
 
 interface CombinedFeedbackItem extends FeedbackItem {
   ratingValue: number;
@@ -32,7 +33,6 @@ export default function ReviewProductDetailComponent({
     CombinedFeedbackItem[]
   >([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [hasRated, setHasRated] = useState(false);
 
   const { data: currentUserProfile, isLoading: profileLoading } =
@@ -143,17 +143,24 @@ export default function ReviewProductDetailComponent({
 
   return (
     <>
-      <div className="mb-6 p-4">
-        <div className="mb-8 ">
-          <p className="text-fourground-800 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-            Product <span className="text-[#eb7d52]">Rating</span>
-          </p>
+      <div className="mb-6 py-4">
+        <div className="mb-8">
+        <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
+              Product{' '}
+              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                Rating
+              </span>
+            </p>
         </div>
-        <div className={'mb-5 px-1 lg:pe-1 lg:ps-8'}>
-          <ReviewForm productSlug={productSlug} onNewRating={handleNewRating} />
+        <div className={'mb-5'}>
+          <ReviewForm
+            productSlug={productSlug}
+            onNewRating={handleNewRating}
+            hasRated={hasRated}
+          />
         </div>
-        <div className={'grid grid-cols-1 lg:grid-cols-3 '}>
-          <section className="mx-auto w-full max-w-md lg:px-8">
+        <div className={'grid grid-cols-1 lg:grid-cols-3 gap-5'}>
+          <section className="mx-auto w-full max-w-md ">
             <div className="flex flex-col gap-2">
               <SummaryRatingCard
                 averageRating={isNaN(averageRating) ? 0 : averageRating}
@@ -168,22 +175,21 @@ export default function ReviewProductDetailComponent({
                   { rating: 1.5, count: ratingCounts[3] },
                   { rating: 1, count: ratingCounts[2] },
                   { rating: 0.5, count: ratingCounts[1] },
-                  { rating: 0, count: ratingCounts[0] },
                 ]}
                 totalRatingCount={ratingsData ? ratingsData.length : 0}
-                onWriteReview={toggleModal}
                 hasRated={hasRated}
               />
             </div>
           </section>
           <div className={'col-span-2'}>
-            <ScrollShadow size={10} className="h-[750px] w-full ">
+            <ScrollShadow size={10} className="w-full ">
               {reviewsToShow.map((review, index) => (
                 <FeedbackCard
                   key={index}
                   review={review}
                   currentUser={currentUserProfile?.payload?.username}
                   refetchFeedback={refetchFeedback}
+                  refetchRatings={refetchRatings}
                   productSlug={productSlug}
                 />
               ))}
@@ -207,43 +213,18 @@ export default function ReviewProductDetailComponent({
         </div>
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="text-fourground-800 relative w-fit text-[26px] font-bold after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Related <span className="text-[#eb7d52]">Product</span>
+          <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
+              Related{' '}
+              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                Products
+              </span>
             </p>
           </div>
-          <Link href="/buymoregetmore">
-            <div className="flex items-center pt-1">
-              <p className="text-fourground-800 mr-2 pb-1 text-[17px] font-normal">
-                See More
-              </p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                color="black"
-                viewBox="0 0 48 48"
-              >
-                <path
-                  fill="none"
-                  stroke="#545c6a"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="4"
-                  d="M42 24H6m24-12l12 12-12 12"
-                />
-              </svg>
-            </div>
-          </Link>
+        
         </div>
+        <DiscountCardComponent category={'food'}
+          discountType={'discount off'}/>
       </div>
-      <ModalRating
-        isOpen={isModalOpen}
-        onClose={toggleModal}
-        onOpenChange={toggleModal}
-        productSlug={productSlug}
-        onNewRating={handleNewRating}
-        hasRated={hasRated}
-      />
     </>
   );
 }

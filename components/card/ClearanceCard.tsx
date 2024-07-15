@@ -6,7 +6,7 @@ import { useAppDispatch } from '@/redux/hook';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Button, Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useState } from 'react';
 import { StarIcon } from '../review/StarIcon';
 
 export default function ClearanceCardComponent({
@@ -15,20 +15,22 @@ export default function ClearanceCardComponent({
 }: any) {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [totalReviews, setTotalReviews] = useState(0);
 
   const { data, isLoading, error } = useGetProductsQuery({
     page: 1,
     size: 3,
-    category: category,
-    discountType: discountType,
+    filters: {
+      categorySlug: category,
+      discountType: discountType,
+    },
   });
-console.log("sdfjhasdfjk",data)
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-[35px]">
         {data?.payload.list.map((product: CartProductType) => (
           <Card
-            onClick={() => router.push(`products/${product.slug}`)}
+            onClick={() => router.push(`/products/${product.slug}`)}
             key={product.slug}
             className="w-[387px] shadow-none"
           >
@@ -74,7 +76,7 @@ console.log("sdfjhasdfjk",data)
                     })}
                 </div>
                 <span className="ml-2 text-[16px] font-medium text-foreground-600">
-                  ({Math.round(product.ratingAvg * 10) / 10}) Reviews
+                  ({totalReviews}) Reviews
                 </span>
               </div>
               <Link href="#">
@@ -132,7 +134,6 @@ console.log("sdfjhasdfjk",data)
                         updatedAt: product.updatedAt,
                         createdBy: product.createdBy,
                         updatedBy: product.updatedBy,
-                        address: product.address,
                         openAt: product.openAt,
                         closeAt: product.closeAt,
                         shopSlug: product.shopSlug,

@@ -24,10 +24,17 @@ export default function HomePage() {
   const { theme } = useTheme(); // Get the current theme
   useEffect(() => {
     if (localStorage.getItem('token') === 'log in') {
-      toast.success('Login successful!', {
-        theme,
-        onClose: () => localStorage.removeItem('token'), // Remove token when the toast closes
+      toast.success('Login successfully.', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
       });
+      localStorage.removeItem('token');
     }
   }, [theme]);
 
@@ -401,7 +408,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <ShopCardComponent page={'1'} size={'3'} />
+        <ShopCardComponent initialPage={1} size={3} />
       </div>
 
     </>

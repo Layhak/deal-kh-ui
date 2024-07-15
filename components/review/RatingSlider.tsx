@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Slider } from '@nextui-org/react';
-import RatingDisplay from './RatingDisplay';
+
 interface RatingSliderProps {
   rating: number;
   onRatingChange: (value: number | number[]) => void;
 }
+
 const RatingSlider = ({ rating, onRatingChange }: RatingSliderProps) => {
   return (
     <div className="flex max-w-md flex-col items-center">
@@ -12,8 +13,8 @@ const RatingSlider = ({ rating, onRatingChange }: RatingSliderProps) => {
         label="Rating"
         step={0.5}
         maxValue={5}
-        minValue={0}
-        defaultValue={0}
+        minValue={0.5}
+        value={rating}
         onChange={onRatingChange}
         showSteps={true}
         showTooltip={true}
@@ -41,7 +42,6 @@ const RatingSlider = ({ rating, onRatingChange }: RatingSliderProps) => {
           placement: 'bottom',
           classNames: {
             base: [
-              // arrow color
               'before:bg-gradient-to-r before:from-warning-400 before:to-pink-500',
             ],
             content: [

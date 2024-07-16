@@ -70,7 +70,7 @@ const FeedbackCard: React.FC<FeedbackItemProps> = ({
 
   return (
     <div className="mb-4 flex flex-col gap-4">
-      <div className="rounded-medium bg-content1 p-5 shadow-small">
+      <div className="rounded-medium bg-content1 p-5">
         <div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">

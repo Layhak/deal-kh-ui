@@ -1,16 +1,28 @@
 export type ProductDetail = {
-  id: string;
-  name: string;
-  category: string;
-  description: string;
-  open: string;
+  slug: string;
   images: {
     url: string;
   }[];
-  shopName: string;
-  discountType: string;
-  originalPrice: number;
+  seller: string;
+  name: string;
+  ratingCount: number;
+  price: number;
   discountPrice: number;
-  expiryDate: string;
-  promotionDate: string;
+  ratingAvg: number;
+  description: string;
+  shop: string;
+  shopSlug: string;
+  location: string;
+  openAt: string;
+  closeAt: string;
+  discountValue: number;
+  isPercentage: boolean;
+  discountType: string;
+  expiredAt: string;
+  category: string;
+  createdAt: string;
+  updatedAt: string;
+  createdBy: string;
+  updatedBy: string;
+  quantity?: number | 0;
 };

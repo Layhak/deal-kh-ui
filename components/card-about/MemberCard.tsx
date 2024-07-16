@@ -15,18 +15,16 @@ export default function MemberCard() {
   const [members, setMembers] = useState<Members[]>(MemberList);
 
   return (
-    <Marquee pauseOnHover={true} speed={50} className={'my-8 flex space-x-10'}>
+    <Marquee pauseOnHover={true} speed={50} className={'mt-8 flex space-x-10'}>
       <div className="flex space-x-10">
         {members.map((item, index) => (
           <div
             key={index}
-            className="relative w-[250px] max-w-sm  items-center  overflow-hidden rounded-3xl   px-5 py-10 dark:border-warning-200"
+            className="relative w-[250px] max-w-sm  items-center  overflow-hidden rounded-3xl   px-5 pt-10 dark:border-warning-200"
           >
             <div className="relative flex items-center justify-center">
               <span className="absolute inset-[0%] animate-[spin_3s_linear_infinite] rounded-full bg-[conic-gradient(from_90deg_at_50%_50%,#EC4899_0%,#EAB308_50%,#EC4899_100%)]  blur-sm"></span>
               <Image
-                isBlurred
-                isZoomed
                 radius={'full'}
                 src={item.img}
                 alt={item.name}

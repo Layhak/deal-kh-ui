@@ -1,6 +1,6 @@
 import React, { SetStateAction, useRef, useState } from 'react';
 import { CloseIcon, SearchIcon } from '@/components/icons';
-import { CiLocationOn } from "react-icons/ci";
+import { CiLocationOn } from 'react-icons/ci';
 import { Input } from '@nextui-org/react';
 import { useSubmitFormMutation } from '@/redux/api';
 import { useRouter } from 'next/navigation';
@@ -10,7 +10,6 @@ const SearchLocation: React.FC = () => {
   const [searchValue, setSearchValue] = useState('');
   const [productDropdown, setProductDropdown] = useState(false);
   const [clickCount, setClickCount] = useState(0);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   const router = useRouter();
 
@@ -51,9 +50,7 @@ const SearchLocation: React.FC = () => {
   };
 
   return (
-    <div
-      className="relative"
-    >
+    <div className="relative">
       <Input
         aria-label="Location Search"
         classNames={{
@@ -95,15 +92,15 @@ const SearchLocation: React.FC = () => {
                 Locations
               </h1>
               <a
-                  className="block px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white items-center justify-between"
-                  role="menuitem"
-                  onClick={() => handleSubmitSearchNearby()}
-                >
-                  <div className="flex items-center gap-2">
-                    <CiLocationOn  size={24} color='gray-700'/>
-                    <span>Search nearby</span>
-                  </div>
-                </a>
+                className="block items-center justify-between px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white"
+                role="menuitem"
+                onClick={() => handleSubmitSearchNearby()}
+              >
+                <div className="flex items-center gap-2 hover:cursor-pointer">
+                  <CiLocationOn size={24} className="text-gray-700" />
+                  <span>Search nearby</span>
+                </div>
+              </a>
             </div>
           </div>
         </div>

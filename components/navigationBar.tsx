@@ -40,6 +40,7 @@ import { selectProducts } from '@/redux/feature/cart/cartSlice';
 import { CartProductType } from '@/libs/difinition';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import { useGetCategoryQuery } from '@/redux/service/category';
 
 export const NavigationBar = () => {
   const pathname = usePathname();
@@ -136,7 +137,7 @@ export const NavigationBar = () => {
 
   const searchInput = (
     <>
-      <SearchProduct products={productSearchList} />
+      <SearchProduct/>
       <SearchLocation />
     </>
   );

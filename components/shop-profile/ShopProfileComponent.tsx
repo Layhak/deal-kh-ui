@@ -4,7 +4,6 @@ import { HiOutlinePhone } from 'react-icons/hi';
 import { LuClock10 } from 'react-icons/lu';
 import { BiCategory } from 'react-icons/bi';
 import { Image } from '@nextui-org/react';
-import { ShopFake } from '@/types/shopFake';
 import { ShopDetail } from '@/types/shopDtail';
 
 type Props = {
@@ -18,7 +17,7 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
   return (
     <div>
       {/* profile cover section */}
-      <div className="mt-4 flex w-full flex-col items-center lg:flex-row">
+      <div className=" flex w-full flex-col items-center lg:flex-row">
         <div
           className="relative flex h-40 w-full justify-start rounded-lg bg-gray-800 lg:h-96"
           style={{
@@ -28,11 +27,11 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
             backgroundPosition: 'center',
           }}
         >
-          <div className="absolute -bottom-5 left-8 flex translate-y-1/2 transform flex-col items-start justify-start lg:bottom-0 lg:flex-row">
+          <div className="absolute -bottom-5 left-4 flex translate-y-1/2 transform flex-col items-start justify-start lg:bottom-0 lg:flex-row">
             <Image
               src={shopProfile.profile}
               alt="Profile Picture"
-              className="h-24 w-24 rounded-full border-4 border-white lg:h-40 lg:w-40"
+              className="h-24 w-24 bg-white rounded-full border-4 border-white lg:h-40 lg:w-40"
             />
             <h1 className="self-center text-start text-lg font-semibold lg:ml-4 lg:mt-16 lg:text-2xl">
               {shopProfile.name}
@@ -42,7 +41,7 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
       </div>
 
       {/* page details section */}
-      <div className="mt-[74px] flex flex-col lg:mt-28 lg:flex-row">
+      <div className="mt-[74px] flex flex-col lg:mt-28 lg:flex-row lg:mx-0 md:mx-0 mx-4">
         {/* description section */}
         <div className="mt-9 w-full lg:mt-0">
           <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 lg:text-2xl">
@@ -99,9 +98,7 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
       </div>
 
       {/* category */}
-      <p className="my-12 text-center text-lg font-semibold text-gray-700 dark:text-gray-300 lg:text-3xl">
-        Category
-      </p>
+      
     </div>
   );
 }

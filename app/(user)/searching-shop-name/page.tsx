@@ -2,13 +2,12 @@
 
 import { useGetShopsQuery } from '@/redux/service/shop';
 import React from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import ShopNearbyComponent from '@/components/search/ShopNearbyComponent';
 import Loading from '../loading';
 import { ShopDetail } from '@/types/shopDtail';
 
 const ShopsPage = () => {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const searchValue = searchParams.get('searchValue') || '';
 
@@ -33,7 +32,6 @@ const ShopsPage = () => {
   return (
     <div>
       {filteredProducts?.map((shop: ShopDetail) => (
-        // eslint-disable-next-line react/jsx-key
         <ShopNearbyComponent shop={shop} />
       ))}
     </div>

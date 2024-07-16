@@ -1,20 +1,14 @@
 import React, {
   SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
   useState,
 } from 'react';
 import { CloseIcon, SearchIcon } from '@/components/icons';
 import { Input } from '@nextui-org/react';
-import { ProductSearch, productSearchList } from '@/types/productSearch';
+import { productSearchList } from '@/types/productSearch';
 import { useRouter } from 'next/navigation';
+import { useGetCategoryQuery } from '@/redux/service/category';
 
-type ProductDropDown = {
-  products: ProductSearch[];
-};
-
-const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
+export default function SearchProduct () { 
   // for product search bar
   const [searchValue, setSearchValue] = useState('');
   const [productDropdown, setProductDropdown] = useState(false);
@@ -22,6 +16,17 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
 
   const router = useRouter();
 
+  const getCategory: string[] = [
+    'T-Shirt',
+    'Pizza',
+    'iPhone',
+    'Soda',
+    'Jeans',
+    'Burger',
+    'Samsung Galaxy',
+    'Coffee',
+  ];
+  
   const handleSearchChange = (event: {
     target: { value: SetStateAction<string> };
   }) => {
@@ -62,8 +67,8 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
     console.log('This is the value that I have Clicked: ', item);
   };
 
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchValue.toLowerCase())
+  const filteredProducts = getCategory.filter((category: string) =>
+    category.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   const handleInputClick = () => {
@@ -118,14 +123,14 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
                   Product
                 </h1>
               )}
-              {filteredProducts.map((product, index) => (
+              {filteredProducts.map((category: string, index: any) => (
                 <a
                   key={index}
-                  className="block px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white group-hover:grid"
+                  className="hover:cursor-pointer block px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white group-hover:grid"
                   role="menuitem"
-                  onClick={() => handleOnSelectProduct(product.name)}
+                  onClick={() => handleOnSelectProduct(category)}
                 >
-                  {product.name}
+                  {category}
                 </a>
               ))}
             </div>
@@ -135,5 +140,3 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
     </div>
   );
 };
-
-export default SearchProduct;

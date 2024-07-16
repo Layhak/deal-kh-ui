@@ -64,12 +64,7 @@ export type CartProductType = {
   description: string;
   images: Image[];
   shop: string;
-  shopSlug: string;
-  location: string;
-  openAt: string;
-  closeAt: string;
   discountValue: number;
-  isPercentage: boolean;
   discountType: string;
   expiredAt: string;
   category: string;
@@ -174,6 +169,17 @@ export type ModalTypeWithId = {
 export interface Profile {
   email: string;
   name: string;
+}
+
+// for wishlist response
+export type WishListResponse = {
+  uuid: string;
+  productSlug: string;
+  profile: string;
+  productName: string;
+  username: string;
+  discountPercentage: string;
+  description: string;
 }
 
 export const BASE_URL = 'https://store.istad.co';

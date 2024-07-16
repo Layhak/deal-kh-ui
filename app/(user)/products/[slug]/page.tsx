@@ -30,7 +30,7 @@ const ProductPage = ({ params }: ProductPageProps) => {
   return (
     <>
       <CardDetailComponent
-        id={product.payload.slug}
+        slug={product.payload.slug}
         name={product.payload.name}
         category={product.payload.category}
         description={product.payload.description}

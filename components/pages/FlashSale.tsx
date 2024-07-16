@@ -17,8 +17,8 @@ export default function FlashSale() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700  after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Food 
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Food
             </p>
           </div>
           {/* Right section */}
@@ -52,8 +52,8 @@ export default function FlashSale() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700  after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Drink 
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Drink
             </p>
           </div>
           {/* Right section */}
@@ -87,7 +87,7 @@ export default function FlashSale() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700  after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
               Clothes
             </p>
           </div>
@@ -122,8 +122,8 @@ export default function FlashSale() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700  after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Accessories 
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+              Accessories
             </p>
           </div>
           {/* Right section */}
@@ -157,8 +157,8 @@ export default function FlashSale() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700  after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Skin <span className="text-[#eb7d52]">Care</span>
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
+             Skin <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">Care</span>
             </p>
           </div>
           {/* Right section */}
@@ -187,17 +187,17 @@ export default function FlashSale() {
             </div>
           </Link>
         </div>
-        <ClearanceCardComponent category={"skin care"} discountType={"clearance sales"}/>
+        <ClearanceCardComponent category={"skin-care"} discountType={"clearance sales"}/>
         {/* Electronic */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700  after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
+          <p className="relative w-fit text-[20px] font-bold  text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r from-pink-500 to-yellow-500 lg:text-[26px]">
               Electronic
             </p>
           </div>
           {/* Right section */}
-          <Link href="/elctronic">
+          <Link href="/electronic">
             <div className="flex items-center  pt-1">
               <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More

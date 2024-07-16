@@ -1,8 +1,8 @@
 'use client';
 
-import { Card, CardBody, Link, Image } from '@nextui-org/react';
-import React, { useState, useEffect } from 'react';
-import { FaRegHeart, FaHeart } from 'react-icons/fa';
+import { Card, CardBody, Image, Link } from '@nextui-org/react';
+import React, { useEffect, useState } from 'react';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 import { productApi, useGetProductsQuery } from '@/redux/service/product';
 import { CartProductType, WishListResponse } from '@/libs/difinition';
@@ -58,8 +58,10 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
   const { data } = useGetProductsQuery({
     page: 1,
     size: 6,
-    category: category,
-    discountType: discountType,
+    filters: {
+      categorySlug: category,
+      discountType: discountType,
+    },
   });
 
   // Initialize the heart state for each product

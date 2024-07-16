@@ -1,8 +1,7 @@
-// redux/service/authApi.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
-  setAccessToken,
   removeAccessToken,
+  setAccessToken,
   setLoginSuccess,
 } from '@/redux/feature/auth/authSlice';
 
@@ -30,7 +29,6 @@ export const authApi = createApi({
       async onQueryStarted(arg, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
-          localStorage.setItem('token', 'log in');
           dispatch(setAccessToken(data.accessToken));
           dispatch(setLoginSuccess(true));
         } catch (error) {

@@ -21,8 +21,7 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
         <div
           className="relative flex h-40 w-full justify-start rounded-lg bg-gray-800 lg:h-96"
           style={{
-            backgroundImage:
-              `url(${shopProfile.cover})`,
+            backgroundImage: `url(${shopProfile.cover})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -76,9 +75,9 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
               <LuClock10 />
             </div>
             <p className="text-[16px] text-gray-600 dark:text-gray-300">
-              {shopProfile.openAt.slice(0,5)}
-              {"  to  "}
-              {shopProfile.closeAt.slice(0,5)}
+              {shopProfile.openAt.slice(0, 5)}
+              {'  to  '}
+              {shopProfile.closeAt.slice(0, 5)}
             </p>
           </div>
           {/* mail */}

@@ -1,4 +1,5 @@
 import { ecommerceApi } from '@/redux/api';
+
 export const categoryApi = ecommerceApi.injectEndpoints({
   // The name of the slice of state that will be managed by this api
   endpoints: (builder) => ({
@@ -6,7 +7,10 @@ export const categoryApi = ecommerceApi.injectEndpoints({
     getCategory: builder.query<any, void>({
       query: () => `categories`,
     }),
+    getCategoryBySlug: builder.query<any, string>({
+      query: (slug) => `categories/${slug}`,
+    }),
   }),
 });
 // Export hooks for usage in components, which are
-export const { useGetCategoryQuery } = categoryApi;
+export const { useGetCategoryQuery, useGetCategoryBySlugQuery } = categoryApi;

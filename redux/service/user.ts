@@ -1,4 +1,5 @@
 import { ecommerceApi } from '@/redux/api';
+import { UserUpdateRequest } from '@/types/profile';
 
 export const userApi = ecommerceApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -6,6 +7,17 @@ export const userApi = ecommerceApi.injectEndpoints({
     getProfile: builder.query<any, void>({
       query: () => `users/me`,
     }),
+
+    // Update prifle details
+    updateUserByUsername: builder.mutation<any, { userUpdateRequest: UserUpdateRequest }>({
+      query: ({  userUpdateRequest }) => ({
+        url: `users`,
+        method: 'PUT',
+        body: userUpdateRequest,
+      }),
+    }),
+
+
     // Upload a new profile image
     uploadProfileImage: builder.mutation<any, { profile: string }>({
       query: (profileData) => ({
@@ -14,6 +26,7 @@ export const userApi = ecommerceApi.injectEndpoints({
         body: profileData,
       }),
     }),
+
     // Delete the current profile image
     deleteProfileImage: builder.mutation<any, void>({
       query: () => ({
@@ -42,6 +55,7 @@ export const userApi = ecommerceApi.injectEndpoints({
 // Export hooks for usage in components
 export const {
   useGetProfileQuery,
+  useUpdateUserByUsernameMutation,
   useUploadProfileImageMutation,
   useDeleteProfileImageMutation,
   useUploadCoverImageMutation,

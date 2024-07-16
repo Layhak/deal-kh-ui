@@ -7,6 +7,8 @@ interface CustomInputProps {
   name: string;
   type: string;
   placeholder?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  value?: string;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -14,11 +16,21 @@ const CustomInput: React.FC<CustomInputProps> = ({
   name,
   type,
   placeholder,
+  onChange,
+  value,
 }) => {
   const [field, meta, helpers] = useField(name);
   const handleClear = () => {
     helpers.setValue('');
   };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    field.onChange(e); // Call Formik's onChange
+    if (onChange) {
+      onChange(e); // Call the custom onChange if provided
+    }
+  };
+
   return (
     <Input
       {...field}
@@ -31,12 +43,10 @@ const CustomInput: React.FC<CustomInputProps> = ({
       errorMessage={meta.touched && meta.error ? meta.error : ''}
       color={meta.touched && meta.error ? 'danger' : 'default'}
       placeholder={placeholder}
-      classNames={{
-        inputWrapper:
-          'border-transparent bg-default-50/80 dark:bg-default-50/20 group-data-[focus=true]:border-primary data-[hover=true]:border-foreground/20',
-      }}
       isClearable={true}
-      onClear={() => handleClear()}
+      onClear={handleClear}
+      onChange={handleChange} // Use the custom handleChange
+      value={value} // Pass the value prop to Input
     />
   );
 };

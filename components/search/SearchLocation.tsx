@@ -22,12 +22,12 @@ const SearchLocation: React.FC = () => {
   };
 
   const handleSubmitSearch = () => {
-    router.push(`/searching-shop-name?searchValue=${searchValue}`);
+    router.push(`/search-shop-name?searchValue=${searchValue}`);
     setProductDropdown(false);
   };
 
   const handleSubmitSearchNearby = () => {
-    router.push(`/searching-nearby`);
+    router.push(`/search-nearby`);
     setProductDropdown(false);
     setClickCount(0);
   };

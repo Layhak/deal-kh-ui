@@ -1,16 +1,19 @@
 import { ecommerceApi } from '@/redux/api';
 import {
-  RatingResponse,
-  FeedbackResponse,
   CreateFeedbackRequest,
-  CreateRatingRequest, // Add this line
+  CreateRatingRequest,
+  FeedbackResponse,
+  RatingResponse,
 } from '@/types/ratings';
 
 export const ratingAndFeedbackApi = ecommerceApi.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
-    getAllProductRatings: builder.query<RatingResponse[], void>({
-      query: () => `/product-ratings`,
+    getProductRatingsByProductSlug: builder.query<
+      RatingResponse[],
+      { productSlug: string }
+    >({
+      query: ({ productSlug }) => `/product-ratings/${productSlug}`,
     }),
     getProductFeedback: builder.query<
       FeedbackResponse,
@@ -38,13 +41,49 @@ export const ratingAndFeedbackApi = ecommerceApi.injectEndpoints({
         body: ratingData,
       }),
     }),
+    updateProductRating: builder.mutation<
+      { message: string; status: number },
+      { ratingValue: number; productSlug: string }
+    >({
+      query: ({ ratingValue, productSlug }) => ({
+        url: `/product-ratings/${productSlug}`,
+        method: 'PUT',
+        body: { ratingValue },
+      }),
+    }),
+    deleteProductFeedback: builder.mutation({
+      query: ({ feedbackId }) => ({
+        url: `/product-feedbacks/${feedbackId}`,
+        method: 'DELETE',
+      }),
+    }),
+    deleteProductRating: builder.mutation({
+      query: ({ productSlug }) => ({
+        url: `/product-ratings/${productSlug}`,
+        method: 'DELETE',
+      }),
+    }),
+    updateProductFeedback: builder.mutation<
+      { message: string; status: number },
+      { uuid: string; description: string; images: { url: string }[] }
+    >({
+      query: ({ uuid, description, images }) => ({
+        url: `/product-feedbacks/${uuid}`,
+        method: 'PATCH',
+        body: { description, images },
+      }),
+    }),
   }),
 });
 
 export const {
-  useGetAllProductRatingsQuery,
+  useUpdateProductFeedbackMutation,
+  useUpdateProductRatingMutation,
+  useGetProductRatingsByProductSlugQuery,
   useGetProductFeedbackQuery,
   useCreateProductFeedbackMutation,
+  useDeleteProductRatingMutation,
   useLazyGetProductFeedbackQuery,
-  useCreateProductRatingMutation, // Add this line
+  useCreateProductRatingMutation,
+  useDeleteProductFeedbackMutation,
 } = ratingAndFeedbackApi;

@@ -3,15 +3,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   GoogleMap,
-  useJsApiLoader,
-  Marker,
   InfoWindow,
+  Marker,
+  useJsApiLoader,
 } from '@react-google-maps/api';
 
 import { Button, Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import { useGetShopsQuery } from '@/redux/service/shop';
-import { ShopDetail } from '@/types/shopDtail';
+import { useGetAllShopsQuery } from '@/redux/service/shop';
 import Loading from '@/app/(user)/loading';
 
 type GoogleMapProps = {
@@ -26,11 +25,11 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
 
   const router = useRouter();
 
-  const handleCardClick = (shop: ShopDetail) => {
+  const handleCardClick = (shop: any) => {
     router.push(`/shop/${shop.slug}`);
   };
 
-  const { data, isLoading, error } = useGetShopsQuery({
+  const { data, isLoading, error } = useGetAllShopsQuery({
     page: 1,
     size: 10,
   });
@@ -42,8 +41,8 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
   });
   const [latitude, setLatitude] = useState<number>(0);
   const [longitude, setLongitude] = useState<number>(0);
-  const [nearbyShops, setNearbyShops] = useState<ShopDetail[]>([]);
-  const [selectedShop, setSelectedShop] = useState<ShopDetail | null>(null);
+  const [nearbyShops, setNearbyShops] = useState<any[]>([]);
+  const [selectedShop, setSelectedShop] = useState<any | null>(null);
 
   const onLoad = useCallback(
     (map: google.maps.Map) => {
@@ -81,7 +80,7 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
 
   const findNearbyShops = (lat: number, lng: number) => {
     if (data?.payload?.list) {
-      const filteredShops = data.payload.list.filter((shop: ShopDetail) => {
+      const filteredShops = data.payload.list.filter((shop: any) => {
         const [shopLat, shopLng] = shop.location.split(',').map(parseFloat);
         const distance = calculateDistance(lat, lng, shopLat, shopLng);
         return distance <= 0.5; // 0.5 is 500m square nearby;
@@ -203,6 +202,9 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
                     <p className="text-sm text-foreground-600">
                       Open :{' '}
                       <span className="text-sm font-medium text-foreground-900">
+                        {shop.openAt.slice(0, 5)}
+                        {'  to  '}
+                        {shop.closeAt.slice(0, 5)}
                         {shop.openAt.slice(0, 5)}
                         {'  to  '}
                         {shop.closeAt.slice(0, 5)}

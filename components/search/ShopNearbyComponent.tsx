@@ -3,13 +3,13 @@ import { ShopDetail } from '@/types/shopDtail';
 import { Card, CardBody, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
+import { ShopResponse } from '@/libs/difinition';
 
 type CardShopProps = {
-  shop: ShopDetail;
+  shop: ShopResponse;
 };
 
 const ShopNearbyComponent: React.FC<CardShopProps> = ({ shop }) => {
-
   const router = useRouter();
 
   const handleCardClick = () => {
@@ -53,19 +53,19 @@ const ShopNearbyComponent: React.FC<CardShopProps> = ({ shop }) => {
             </p>
 
             <div className="my-2 flex flex-col gap-1">
-                <p className=" text-foreground-600">
-                  Category :{' '}
-                  <span className="text-foreground-900 font-medium">
-                    {shop.shopType || 'Product Category'}
-                  </span>
-                </p>
-                <p className="text-foreground-600 text-sm">
-                  Open :{' '}
-                  <span className="text-foreground-900 text-sm font-medium">
-                    {shop.openAt}
-                  </span>
-                </p>
-              </div>
+              <p className=" text-foreground-600">
+                Category :{' '}
+                <span className="font-medium text-foreground-900">
+                  {shop.shopType || 'Product Category'}
+                </span>
+              </p>
+              <p className="text-sm text-foreground-600">
+                Open :{' '}
+                <span className="text-sm font-medium text-foreground-900">
+                  {shop.openAt}
+                </span>
+              </p>
+            </div>
 
             <div className="flex items-center justify-between">
               <div className="flex items-center justify-start">

@@ -37,7 +37,7 @@ export default function SearchProduct () {
 
   const handleSubmit = () => {
     // Navigate to the search results page and pass the filtered products
-    router.push(`/searching-product?searchValue=${searchValue}`);
+    router.push(`/search-product?searchValue=${searchValue}`);
     setProductDropdown(false);
   };
 
@@ -64,7 +64,7 @@ export default function SearchProduct () {
 
   const handleOnSelectProduct = (item: string) => {
     setSearchValue(item);
-    console.log('This is the value that I have Clicked: ', item);
+    // console.log('This is the value that I have Clicked: ', item);
   };
 
   const filteredProducts = getCategory.filter((category: string) =>
@@ -77,9 +77,7 @@ export default function SearchProduct () {
   };
 
   return (
-    <div
-      className="relative"
-    >
+    <div className="relative">
       <Input
         aria-label="Product Search"
         classNames={{
@@ -102,7 +100,6 @@ export default function SearchProduct () {
               className="pointer-events-none flex-shrink-0 text-base text-default-400"
             />
           )
-
         }
         type="search"
         value={searchValue}

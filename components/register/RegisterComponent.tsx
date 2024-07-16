@@ -4,15 +4,9 @@ import React from 'react';
 import { Field, Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
-import { Button, Divider } from '@nextui-org/react';
+import { Button } from '@nextui-org/react';
 import { signIn } from 'next-auth/react';
-import {
-  Cancel,
-  FacebookWithColorIcon,
-  Google,
-  Logo,
-} from '@/components/icons';
-import { ToastContainer } from 'react-toastify';
+import { Cancel, Logo } from '@/components/icons';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { useRegisterUserMutation } from '@/redux/service/auth';
 import CustomSelect from '@/components/customInput/CustomSelect';
@@ -22,7 +16,6 @@ import CustomDatePicker from '@/components/customInput/customDatePicker';
 import CustomCheckbox from '@/components/customInput/CustomCheckbox';
 import CustomInput from '@/components/customInput/customInput';
 import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
-// import { format } from 'node:util';
 
 interface RegisterFormValues {
   firstName: string;
@@ -35,6 +28,7 @@ interface RegisterFormValues {
   phoneNumber: string;
   dob: string;
   location: string;
+  acceptPolicy: boolean;
 }
 
 const initialValues: RegisterFormValues = {
@@ -48,6 +42,7 @@ const initialValues: RegisterFormValues = {
   phoneNumber: '',
   dob: '',
   location: '',
+  acceptPolicy: false,
 };
 
 const validationSchema = Yup.object().shape({
@@ -76,6 +71,9 @@ const validationSchema = Yup.object().shape({
       "Your age can't not be less than 18 "
     ),
   location: Yup.string().required('Location is required'),
+  acceptPolicy: Yup.boolean()
+    .oneOf([true], 'You must accept the terms and conditions')
+    .required('You must accept the terms and conditions'),
 });
 
 const Register: React.FC = () => {
@@ -95,7 +93,7 @@ const Register: React.FC = () => {
       };
 
       const response = await registerUser(formattedValues).unwrap();
-      console.log('Register successful!', response);
+      // console.log('Register successful!', response);
       router.push('/');
       // Handle successful register (e.g., redirect)
     } catch (error) {
@@ -106,18 +104,18 @@ const Register: React.FC = () => {
     }
   };
 
-  // handle redirect to home page
   const handleLoginGoogle = async () => {
     await signIn('google', {
       redirect: false, // Prevent automatic redirection
       callbackUrl: '/', // Redirect to home page after successful authentication
     });
   };
+
   const handleLoginFacebook = async () => {
-    await signIn('facebook', {
-      redirect: false, // Prevent automatic redirection
-      callbackUrl: '/', // Redirect to home page after successful authentication
-    });
+    // await signIn('facebook', {
+    //   redirect: false, // Prevent automatic redirection
+    //   callbackUrl: '/', // Redirect to home page after successful authentication
+    // });
   };
 
   return (
@@ -127,7 +125,7 @@ const Register: React.FC = () => {
       }
     >
       <div
-        className="flex w-full max-w-xl flex-col gap-4 rounded-large bg-background/60 px-8 pb-10 pt-6  backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+        className="flex w-full max-w-xl flex-col gap-4 rounded-large bg-default-50 px-8 pb-10 pt-6  backdrop-blur-md backdrop-saturate-150 dark:bg-default-100"
         data-aos="flip-up"
       >
         <div className={'flex items-center justify-between'}>
@@ -173,7 +171,7 @@ const Register: React.FC = () => {
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {() => (
+          {({ errors, touched }) => (
             <Form action="#" method="POST" className="space-y-2">
               <div className="grid grid-cols-2 gap-2">
                 <div className="mt-3">
@@ -256,14 +254,7 @@ const Register: React.FC = () => {
 
               <div className=" flex items-center justify-between">
                 <div className="my-3 flex items-center">
-                  <Field
-                    type="checkbox"
-                    id="acceptPolicy"
-                    component={CustomCheckbox}
-                  />
-                  <label htmlFor="acceptPolicy" className={'text-foreground'}>
-                    I agree with the term & condition
-                  </label>
+                  <CustomCheckbox name={'acceptPolicy'} />
                 </div>
               </div>
               <div>
@@ -281,36 +272,7 @@ const Register: React.FC = () => {
             </Form>
           )}
         </Formik>
-
-        <div className="flex items-center gap-4 py-3">
-          <Divider className="flex-1" />
-          <p className="shrink-0 text-tiny text-default-500">OR</p>
-          <Divider className="flex-1" />
-        </div>
-
-        <div className=" grid grid-cols-1 gap-3">
-          <Button
-            className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"
-            onClick={() => signIn('google')}
-            startContent={<Google className={'text-gray-50'} />}
-          >
-            <span className="text-sm font-semibold leading-6 text-foreground-800">
-              Google
-            </span>
-          </Button>
-
-          <Button
-            className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"
-            startContent={<FacebookWithColorIcon />}
-            onClick={() => signIn('facebook')}
-          >
-            <span className="text-sm font-semibold leading-6 text-foreground-800">
-              Facebook
-            </span>
-          </Button>
-        </div>
       </div>
-      <ToastContainer />
     </div>
   );
 };

@@ -16,6 +16,11 @@ export const siteConfig = {
       tooltip: 'Go to Discount Page',
     },
     {
+      label: 'Shop',
+      href: '/shop',
+      tooltip: 'Go to Shop Page',
+    },
+    {
       label: 'About',
       href: '/about',
       tooltip: 'Go to About Page',
@@ -26,11 +31,4 @@ export const siteConfig = {
       tooltip: 'Go to Policy Page',
     },
   ],
-  links: {
-    github: 'https://github.com/nextui-org/nextui',
-    twitter: 'https://twitter.com/getnextui',
-    docs: 'https://nextui.org',
-    discord: 'https://discord.gg/9b6yyZKmH4',
-    sponsor: 'https://patreon.com/jrgarciadev',
-  },
 };

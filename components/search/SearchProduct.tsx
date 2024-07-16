@@ -1,24 +1,14 @@
 import React, {
   SetStateAction,
-  useCallback,
-  useEffect,
-  useRef,
   useState,
 } from 'react';
-import { BiCategoryAlt } from 'react-icons/bi';
-import { CartIcon, CloseIcon, HeartIcon, SearchIcon } from '@/components/icons';
-import { Input, dropdown } from '@nextui-org/react';
-import { Product } from '@/types/product';
-import { ProductResponse, ProductType } from '@/libs/difinition';
-import { ProductSearch, productSearchList } from '@/types/productSearch';
+import { CloseIcon, SearchIcon } from '@/components/icons';
+import { Input } from '@nextui-org/react';
+import { productSearchList } from '@/types/productSearch';
 import { useRouter } from 'next/navigation';
-import { useGetProductsQuery } from '@/redux/service/product';
+import { useGetCategoryQuery } from '@/redux/service/category';
 
-type ProductDropDown = {
-  products: ProductSearch[];
-};
-
-const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
+export default function SearchProduct () { 
   // for product search bar
   const [searchValue, setSearchValue] = useState('');
   const [productDropdown, setProductDropdown] = useState(false);
@@ -26,9 +16,28 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
 
   const router = useRouter();
 
+  const getCategory: string[] = [
+    'T-Shirt',
+    'Pizza',
+    'iPhone',
+    'Soda',
+    'Jeans',
+    'Burger',
+    'Samsung Galaxy',
+    'Coffee',
+  ];
+  
+  const handleSearchChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
+    const newSearchValue = event.target.value;
+    setSearchValue(newSearchValue);
+    setProductDropdown(newSearchValue.length > 0);
+  };
+
   const handleSubmit = () => {
     // Navigate to the search results page and pass the filtered products
-    router.push(`/searching-product?searchValue=${searchValue}`);
+    router.push(`/search-product?searchValue=${searchValue}`);
     setProductDropdown(false);
   };
 
@@ -36,6 +45,12 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
     setSearchValue('');
     setProductDropdown(false);
     setClickCount(0);
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
   };
 
   // for drop-down menu of product
@@ -52,8 +67,8 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
     // console.log('This is the value that I have Clicked: ', item);
   };
 
-  const filteredProducts = products.filter((product) =>
-    product.name.toLowerCase().includes(searchValue.toLowerCase())
+  const filteredProducts = getCategory.filter((category: string) =>
+    category.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   const handleInputClick = () => {
@@ -72,6 +87,7 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
         }}
         labelPlacement="outside"
         placeholder={searchValue || 'Search Product'}
+        onChange={handleSearchChange}
         endContent={
           searchValue ? (
             <CloseIcon
@@ -88,6 +104,7 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
         type="search"
         value={searchValue}
         onClick={handleInputClick}
+        onKeyPress={handleKeyPress}
       />
       {productDropdown && (
         <div className="relative">
@@ -103,14 +120,14 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
                   Product
                 </h1>
               )}
-              {filteredProducts.map((product, index) => (
+              {filteredProducts.map((category: string, index: any) => (
                 <a
                   key={index}
-                  className="block px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white group-hover:grid"
+                  className="hover:cursor-pointer block px-4 py-2 text-sm text-gray-700 transition-all ease-in-out hover:bg-warning hover:text-white group-hover:grid"
                   role="menuitem"
-                  onClick={() => handleOnSelectProduct(product.name)}
+                  onClick={() => handleOnSelectProduct(category)}
                 >
-                  {product.name}
+                  {category}
                 </a>
               ))}
             </div>
@@ -120,5 +137,3 @@ const SearchProduct: React.FC<ProductDropDown> = ({ products }) => {
     </div>
   );
 };
-
-export default SearchProduct;

@@ -1,32 +1,25 @@
 'use client';
 
+import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { CartProductType, ProductType } from '@/libs/difinition';
-import { useGetProductsQuery } from '@/redux/service/product';
-import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import Loading from '../loading';
+import { useGetAllProductsQuery } from '@/redux/service/product';
+import { CartProductType } from '@/libs/difinition';
+import { Card, CardBody, Image, Link } from '@nextui-org/react';
 
-const SearchingProduct: React.FC = () => {
+const SearchProductName = () => {
   const router = useRouter();
-
   const searchParams = useSearchParams();
   const searchValue = searchParams.get('searchValue') || '';
 
-  const { data, isLoading, error } = useGetProductsQuery({
-    page: 1,
-    size: 10,
-    filters: {
-      categorySlug: '',
-      discountType: '',
-    },
-  });
+  const { data, isLoading, error } = useGetAllProductsQuery();
 
-  const filteredProducts = data?.payload.list.filter((product: ProductType) => {
-    const productName = product.name.toLowerCase();
-    return productName.includes(searchValue.toLowerCase());
-  });
-
-  // console.log('Here is Search Value: ', searchValue);
+  const filteredProducts = data?.payload?.list.filter(
+    (product: CartProductType) => {
+      const productName = product.name.toLowerCase();
+      return productName.includes(searchValue.toLowerCase());
+    }
+  );
 
   return (
     <div>
@@ -37,10 +30,10 @@ const SearchingProduct: React.FC = () => {
       ) : data?.payload.list.length === 0 ? (
         <div>No products found</div>
       ) : (
-        <div className="my-8 flex flex-wrap justify-start gap-[25px]">
+        <div className="my-8 flex flex-wrap lg:justify-between md:justify-between gap-[25px] justify-center">
           {filteredProducts.map((product: CartProductType) => (
             <Card
-              onClick={() => router.push(`/${product.slug}`)}
+              onClick={() => router.push(`/products/${product.slug}`)}
               key={product.slug}
               isPressable
               className=" relative mb-2 h-[386px] w-[284px] flex-none rounded-xl  shadow-none dark:border-foreground-700 dark:bg-foreground-800"
@@ -138,4 +131,4 @@ const SearchingProduct: React.FC = () => {
   );
 };
 
-export default SearchingProduct;
+export default SearchProductName;

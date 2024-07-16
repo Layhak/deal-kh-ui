@@ -117,7 +117,7 @@ export const NavigationBar = () => {
 
   const searchInput = (
     <>
-      <SearchProduct products={productSearchList} />
+      <SearchProduct/>
       <SearchLocation />
     </>
   );

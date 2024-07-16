@@ -1,4 +1,5 @@
 // CardShop.tsx
+import { ShopDetail } from '@/types/shopDtail';
 import { Card, CardBody, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -16,28 +17,28 @@ const ShopNearbyComponent: React.FC<CardShopProps> = ({ shop }) => {
   };
 
   return (
-    <div>
+    <div className='mx-2 lg:mx-0'>
       <Card
         key={shop.slug}
         isPressable
         onPress={handleCardClick}
         className="my-8 w-full shadow-none"
       >
-        <CardBody className="flex flex-row ">
+        <CardBody className="flex sm:flex-row flex-col">
           {/* image section */}
-          <div className="h-64 w-1/3 rounded-2xl">
-            <Image
-              className="h-64 w-screen object-cover"
-              src={
-                shop.profile ||
-                'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
-              }
-              alt={shop.name}
-            />
+          <div className="h-64 lg:w-1/3 w-full rounded-2xl">
+          <Image
+                className="h-64 w-screen object-cover"
+                src={
+                  shop.profile ||
+                  'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
+                }
+                alt={shop.name}
+              />
           </div>
 
           {/* context section */}
-          <div className="my-auto ml-8 w-2/3 text-foreground-600">
+          <div className="mt-4 lg:my-auto lg:ml-8 lg:w-2/3 w-full text-foreground-600">
             <a href="#">
               <h5 className="mb-2 text-xl font-semibold tracking-tight text-foreground-800 dark:text-white">
                 {shop.name.length > 50

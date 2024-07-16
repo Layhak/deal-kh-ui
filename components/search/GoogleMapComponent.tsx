@@ -84,7 +84,7 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = ({ apiKey }) => {
       const filteredShops = data.payload.list.filter((shop: ShopDetail) => {
         const [shopLat, shopLng] = shop.location.split(',').map(parseFloat);
         const distance = calculateDistance(lat, lng, shopLat, shopLng);
-        return distance <= 500; // 0.5 is 500m square nearby;
+        return distance <= 0.5; // 0.5 is 500m square nearby;
       });
 
       setNearbyShops(filteredShops);

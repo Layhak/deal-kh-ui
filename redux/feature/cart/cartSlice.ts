@@ -17,7 +17,7 @@ const loadStateFromLocalStorage = () => {
 	  console.error('Could not load state from localStorage', e);
 	  return {
 		products: [] as CartProductType[],
-		totalPrice: 0,
+		totalPrice: 0,  
 	  };
 	}
   };

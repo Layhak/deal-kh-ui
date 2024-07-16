@@ -23,11 +23,10 @@ export default function MentorCard() {
             <span className="absolute inset-[-0.35%] animate-[spin_3s_linear_infinite] rounded-full bg-[conic-gradient(from_90deg_at_50%_50%,#EC4899_0%,#EAB308_50%,#EC4899_100%)] p-[1px] blur-sm"></span>
             <div className="relative rounded-full bg-background p-1">
               <Image
-                isBlurred
                 radius={'full'}
                 src={item.img}
                 alt={item.name}
-                className="h-[210px] w-[210px] "
+                className="h-[210px] w-[210px]"
               />
             </div>
           </div>

@@ -19,7 +19,7 @@ import {
 import Loading from '@/app/(user)/loading';
 import { StarIcon } from '@/components/review/StarIcon';
 import { addToCart } from '@/redux/feature/cart/cartSlice';
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 
 export default function CardDetailComponent({
   slug,
@@ -44,7 +44,7 @@ export default function CardDetailComponent({
   createdBy,
   shopSlug,
   ratingCount,
-}: CartProductType) {
+}: Product) {
   const router = useRouter();
   const [averageRating, setAverageRating] = useState(0);
   const [totalReviews, setTotalReviews] = useState(0);

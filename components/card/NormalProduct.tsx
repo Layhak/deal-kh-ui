@@ -1,6 +1,6 @@
 'use client';
 
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
@@ -46,7 +46,7 @@ export default function NormalProductComponent({
   }, []);
 
   // toggle the state for a product when the heart icon is clicked.
-  const handleHeartClick = (product: CartProductType) => {
+  const handleHeartClick = (product: Product) => {
     setHeartStates((prevHeartStates) => {
       const isAddedToWishlist = !prevHeartStates[product.slug];
       const updatedHeartStates = {
@@ -64,7 +64,7 @@ export default function NormalProductComponent({
     });
   };
   // toggle the state for a product when the cart icon is clicked.
-  const handleCartClick = (product: CartProductType) => {
+  const handleCartClick = (product: Product) => {
     setCartStates((prevCartStates) => {
       const isAddedToCart = !prevCartStates[product.slug];
       const updatedCartStates = {
@@ -86,7 +86,7 @@ export default function NormalProductComponent({
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-[25px]">
-        {data?.payload.list.map((product: CartProductType) => (
+        {data?.payload.list.map((product: Product) => (
           <Card
             key={product.slug}
             className="relative mb-2 h-[395px] w-[284px] flex-none rounded-xl  bg-foreground-50  shadow-none  dark:border-foreground-700"

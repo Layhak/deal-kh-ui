@@ -4,7 +4,7 @@ import React from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Loading from '../loading';
 import { useGetAllProductsQuery } from '@/redux/service/product';
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 
 const SearchProductName = () => {
@@ -14,12 +14,10 @@ const SearchProductName = () => {
 
   const { data, isLoading, error } = useGetAllProductsQuery();
 
-  const filteredProducts = data?.payload?.list.filter(
-    (product: CartProductType) => {
-      const productName = product.name.toLowerCase();
-      return productName.includes(searchValue.toLowerCase());
-    }
-  );
+  const filteredProducts = data?.payload?.list.filter((product: Product) => {
+    const productName = product.name.toLowerCase();
+    return productName.includes(searchValue.toLowerCase());
+  });
 
   return (
     <div>
@@ -30,8 +28,8 @@ const SearchProductName = () => {
       ) : data?.payload.list.length === 0 ? (
         <div>No products found</div>
       ) : (
-        <div className="my-8 flex flex-wrap lg:justify-between md:justify-between gap-[25px] justify-center">
-          {filteredProducts.map((product: CartProductType) => (
+        <div className="my-8 flex flex-wrap justify-center gap-[25px] md:justify-between lg:justify-between">
+          {filteredProducts.map((product: Product) => (
             <Card
               onClick={() => router.push(`/products/${product.slug}`)}
               key={product.slug}

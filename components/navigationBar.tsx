@@ -34,7 +34,7 @@ import SearchProduct from './search/SearchProduct';
 import SearchLocation from './search/SearchLocation';
 import { productSearchList } from '@/types/productSearch';
 import { selectProducts } from '@/redux/feature/cart/cartSlice';
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { BiUserCircle } from 'react-icons/bi';
@@ -91,7 +91,7 @@ export const NavigationBar = () => {
   };
 
   const products = useAppSelector(selectProducts);
-  const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
+  const [uniqueProducts, setUniqueProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const unique = products.filter(
@@ -104,7 +104,7 @@ export const NavigationBar = () => {
   // For Wishlist
   const wishlistProducts = useAppSelector(selectWishlistProducts);
   const [uniqueWishlistProducts, setUniqueWishlistProducts] = useState<
-    CartProductType[]
+    Product[]
   >([]);
 
   useEffect(() => {
@@ -117,7 +117,7 @@ export const NavigationBar = () => {
 
   const searchInput = (
     <>
-      <SearchProduct/>
+      <SearchProduct />
       <SearchLocation />
     </>
   );
@@ -125,19 +125,20 @@ export const NavigationBar = () => {
   return (
     <>
       <Navbar position="sticky" maxWidth={'xl'}>
-        <NavbarContent>
-          <NavbarBrand>
-            <NextLink href="/" className="h-12 w-12">
+        <NavbarContent justify={'start'} className={'flex gap-4'}>
+          <NavbarItem>
+            <NextLink href="/" className="flex h-12 w-12 items-center">
               <Image src="/logo.png" alt="logo" className="h-12 w-12" />
             </NextLink>
-          </NavbarBrand>
-          <NavbarContent className="ml-2 flex gap-4">
-            <NavbarItem className="hidden sm:flex">{searchInput}</NavbarItem>
-          </NavbarContent>
+          </NavbarItem>
+          <NavbarItem className="hidden sm:flex">
+            <SearchProduct />
+            <SearchLocation />
+          </NavbarItem>
         </NavbarContent>
         <NavbarContent
-          justify={'start'}
-          className={'hidden gap-4 px-16 lg:flex'}
+          justify={'center'}
+          className={'hidden gap-4 pe-16 lg:flex'}
         >
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} isActive={item.href === pathname}>

@@ -1,4 +1,4 @@
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 import {
   addToWishList,
   removeFromWishList,
@@ -40,7 +40,7 @@ export default function BuyMoreGetMoreComponent({
     }
   }, []);
 
-  const handleHeartClick = (product: CartProductType) => {
+  const handleHeartClick = (product: Product) => {
     setHeartStates((prevHeartStates) => {
       const isAddedToWishlist = !prevHeartStates[product.slug];
       const updatedHeartStates = {
@@ -62,7 +62,7 @@ export default function BuyMoreGetMoreComponent({
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-7">
-        {data?.payload.list.map((product: CartProductType) => (
+        {data?.payload.list.map((product: Product) => (
           <Card
             onClick={() => router.push(`/${product.slug}`)}
             key={product.slug}
@@ -86,12 +86,12 @@ export default function BuyMoreGetMoreComponent({
                 BUY 1 GET 1
               </span>
               <div className="flex flex-wrap justify-between">
-                  <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-foreground-800 dark:text-white">
-                    {product.name.length > 28
-                      ? `${product.name.substring(0, 20)}...`
-                      : product.name}
-                  </h5>
-                  <div
+                <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-foreground-800 dark:text-white">
+                  {product.name.length > 28
+                    ? `${product.name.substring(0, 20)}...`
+                    : product.name}
+                </h5>
+                <div
                   className="right-4 mt-3 cursor-pointer"
                   onClick={() => handleHeartClick(product)}
                 >

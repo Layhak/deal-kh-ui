@@ -2,7 +2,7 @@
 
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { useEffect, useState } from 'react';
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 import {
   Image,
   Table,
@@ -29,7 +29,7 @@ export default function WishListComponent() {
   const dispatch = useAppDispatch();
 
   // Display number of product that only unique select
-  const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
+  const [uniqueProducts, setUniqueProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     // Filter unique products based on their IDs
@@ -42,19 +42,19 @@ export default function WishListComponent() {
     setUniqueProducts(unique);
   }, [products]);
 
-  const handleIncrementQuantity = (product: CartProductType) => {
+  const handleIncrementQuantity = (product: Product) => {
     dispatch(incrementQuantity(product.slug));
   };
 
-  const handleDecrementQuantity = (product: CartProductType) => {
+  const handleDecrementQuantity = (product: Product) => {
     dispatch(decrementQuantity(product.slug));
   };
 
-  const handleRemoveFromWishList = (product: CartProductType) => {
+  const handleRemoveFromWishList = (product: Product) => {
     dispatch(removeFromWishList(product.slug));
   };
 
-  const renderCell = (product: CartProductType, columnKey: string) => {
+  const renderCell = (product: Product, columnKey: string) => {
     switch (columnKey) {
       case 'image':
         return (

@@ -99,6 +99,7 @@ export default function HomePage() {
         <DiscountCardComponent
           category={'food'}
           discountType={'discount off'}
+          name={'food'}
         />
 
         {/* Clearance Sale Section */}

@@ -8,7 +8,7 @@ import {
   selectTotalPrice,
 } from '@/redux/feature/cart/cartSlice';
 import { useEffect, useState } from 'react';
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 import {
   Image,
   Table,
@@ -28,7 +28,7 @@ export default function CartComponent() {
   // console.log('product', products);
 
   // Display number of product that only unique select
-  const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
+  const [uniqueProducts, setUniqueProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     // Filter unique products based on their IDs
@@ -41,15 +41,15 @@ export default function CartComponent() {
     setUniqueProducts(unique);
   }, [products]);
 
-  const handleIncrementQuantity = (product: CartProductType) => {
+  const handleIncrementQuantity = (product: Product) => {
     dispatch(incrementQuantity(product.slug));
   };
 
-  const handleDecrementQuantity = (product: CartProductType) => {
+  const handleDecrementQuantity = (product: Product) => {
     dispatch(decrementQuantity(product.slug));
   };
 
-  const handleRemoveFromCart = (product: CartProductType) => {
+  const handleRemoveFromCart = (product: Product) => {
     dispatch(removeFromCart(product.slug));
   };
 
@@ -59,7 +59,7 @@ export default function CartComponent() {
     window.open(url, '_blank');
   };
 
-  const renderCell = (product: CartProductType, columnKey: string) => {
+  const renderCell = (product: Product, columnKey: string) => {
     switch (columnKey) {
       case 'image':
         return (

@@ -1,6 +1,6 @@
 'use client';
 
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 import { addToCart } from '@/redux/feature/cart/cartSlice';
 import { useAppDispatch } from '@/redux/hook';
 import { useGetProductsQuery } from '@/redux/service/product';
@@ -28,7 +28,7 @@ export default function ClearanceCardComponent({
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-[35px]">
-        {data?.payload.list.map((product: CartProductType) => (
+        {data?.payload.list.map((product: Product) => (
           <Card
             onClick={() => router.push(`/products/${product.slug}`)}
             key={product.slug}

@@ -54,7 +54,7 @@ export type ImageResponse = {
   url: string;
 };
 
-export type CartProductType = {
+export type Product = {
   isPercentage: boolean;
   seller: string;
   images: Image[];
@@ -104,7 +104,7 @@ export type ShopResponse = {
 };
 
 export type Payload = {
-  list: CartProductType[];
+  list: Product[];
   pagination: Pagination;
 };
 
@@ -142,7 +142,7 @@ export type ApiResponse = {
 // types/productScrape.ts
 
 export type ProductResponse = {
-  list: CartProductType[];
+  list: Product[];
   pagination: {
     pageSize: number;
     pageNumber: number;

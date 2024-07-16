@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
 
 import { productApi, useGetProductsQuery } from '@/redux/service/product';
-import { CartProductType, WishListResponse } from '@/libs/difinition';
+import { Product, WishListResponse } from '@/libs/difinition';
 import {
   addToWishList,
   removeFromWishList,
@@ -26,9 +26,7 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
 
   // for pop up whishlist
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [currentProduct, setCurrentProduct] = useState<CartProductType | null>(
-    null
-  );
+  const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const [isDeleted, setIsDeleted] = useState(false);
   const router = useRouter();
 
@@ -80,7 +78,7 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
     }
   }, []);
 
-  const handleAddToWishlist = (product: CartProductType) => {
+  const handleAddToWishlist = (product: Product) => {
     // if (!isLoggedIn) {
     //   router.push('/login');
     //   return;
@@ -90,7 +88,7 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
     console.log('Login successfully');
   };
 
-  const handleRemoveFromWishlist = (product: CartProductType) => {
+  const handleRemoveFromWishlist = (product: Product) => {
     setHeartStates((prevHeartStates) => {
       const updatedHeartStates = {
         ...prevHeartStates,
@@ -149,7 +147,7 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-[25px]">
-        {data?.payload.list.map((product: CartProductType) => (
+        {data?.payload.list.map((product: Product) => (
           <div key={product.slug}>
             <Card
               isPressable

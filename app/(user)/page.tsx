@@ -2,7 +2,7 @@
 import { Image, Link } from '@nextui-org/react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Category from '@/components/card/Category';
 import NormalProductComponent from '@/components/card/NormalProduct';
 import ShopCardComponent from '@/components/card/Shop';
@@ -16,8 +16,13 @@ import CardCouponComponent from '@/components/card/coupon-detail/CardCouponCompo
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import FilterComponent from '@/components/Filter';
+import { useGetProductScrapeQuery } from '@/redux/service/productScrape';
 
 export default function HomePage() {
+  const [page, setPage] = useState(1);
+  const size = 4;
+
+  const { data } = useGetProductScrapeQuery({ page, size });
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);
@@ -226,8 +231,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <ServiceCardComponent/>
-
+        {data && <ServiceCardComponent data={data} />}
         {/* Coupon Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -422,7 +426,6 @@ export default function HomePage() {
         </div>
         <ShopCardComponent initialPage={1} size={3} />
       </div>
-
     </>
   );
 }

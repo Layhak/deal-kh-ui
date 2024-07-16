@@ -11,10 +11,18 @@ import { Button } from '@nextui-org/button';
 type PaginationProps = {
   total: number;
   page: number;
+  size: number;
   onChange: (page: number) => void;
+  onSizeChange: (size: number) => void;
 };
 
-const Pagination = ({ total, page, onChange }: PaginationProps) => {
+const Pagination = ({
+  total,
+  page,
+  size,
+  onChange,
+  onSizeChange,
+}: PaginationProps) => {
   const GradientPagination = ({
     ref,
     key,

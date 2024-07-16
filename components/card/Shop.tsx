@@ -16,11 +16,19 @@ export default function ShopCardComponent({
   size,
 }: ShopCardComponentProps) {
   const [page, setPage] = useState(initialPage);
+  const [sice, setSize] = useState(size);
   const router = useRouter();
-  const { data, isLoading, error } = useGetApprovedShopsQuery({ page, size });
+  const { data, isLoading, error } = useGetApprovedShopsQuery({
+    page,
+    size: sice,
+  });
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
+  };
+
+  const handleSizeChange = (newSize: number) => {
+    setSize(newSize);
   };
 
   if (isLoading) return <div>Loading...</div>;
@@ -94,9 +102,13 @@ export default function ShopCardComponent({
       </div>
       <div className="mt-8 flex justify-center">
         <Pagination
-          total={data?.payload.pagination.totalPages || 1}
+          total={Math.ceil(
+            (data?.payload.pagination.totalElements || 0) / size
+          )}
           page={page}
+          size={size}
           onChange={handlePageChange}
+          onSizeChange={handleSizeChange}
         />
       </div>
     </div>

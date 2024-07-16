@@ -20,8 +20,9 @@ import {
 } from '@nextui-org/react';
 import { LuMinus, LuPlus, LuTrash } from 'react-icons/lu';
 import { Button } from '@nextui-org/button';
+import { GrMapLocation } from "react-icons/gr";
 
-export default function CartComponent() {
+export default function CartComponentTesting() {
   const products = useAppSelector(selectProducts);
   const totalPrice = useAppSelector(selectTotalPrice);
   const dispatch = useAppDispatch();
@@ -64,15 +65,16 @@ export default function CartComponent() {
       case 'image':
         return (
           <div className="flex items-center">
-            <Image
-              src={
-                product.images?.[0]?.url ||
-                'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
-              }
-              width={50}
-              height={50}
-              alt={product.name}
-            />
+            <div className="h-12 w-12">
+              <Image
+                src={
+                  product.images?.[0]?.url ||
+                  'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
+                }
+                className="h-12 w-12 object-cover"
+                alt={product.name}
+              />
+            </div>
           </div>
         );
       case 'name':
@@ -87,13 +89,15 @@ export default function CartComponent() {
         return <div>{product.shop}</div>;
       case 'location':
         return (
-          <div className="flex items-center">
-            <Button
+          <div className="flex">
+            <GrMapLocation className='text-[#eb7d52] pr-2 text-3xl'/>
+
+            <div
               onClick={() => handleGetDirections(product.location)}
-              className="ml-2"
+              className="ml-2 my-auto cursor-pointer"
             >
-              Get Directions
-            </Button>
+            {product.address}
+            </div>
           </div>
         );
       case 'price':
@@ -126,7 +130,7 @@ export default function CartComponent() {
             <Button
               isIconOnly
               onClick={() => handleRemoveFromCart(product)}
-              className="rounded-xl bg-red-500 p-2 text-white"
+              className="rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-2 text-white"
             >
               <LuTrash />
             </Button>
@@ -179,7 +183,9 @@ export default function CartComponent() {
                     key={column.uid}
                     align={column.uid === 'actions' ? 'center' : 'start'}
                   >
-                    {column.name}
+                    <span className="text-sm text-[#eb7d52]">
+                      {column.name}
+                    </span>
                   </TableColumn>
                 )}
               </TableHeader>
@@ -196,7 +202,7 @@ export default function CartComponent() {
           </div>
           <div className="mt-4 flex justify-end">
             <div>
-              <div>Total Price: ${totalPrice}</div>
+              {/* <div>Total Price: ${totalPrice}</div> */}
             </div>
           </div>
         </div>

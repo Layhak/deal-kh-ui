@@ -75,6 +75,7 @@ export type CartProductType = {
   updatedBy: string;
   quantity?: number | 0;
   address?: string;
+  location: string;
 };
 
 export type ShopResponse = {

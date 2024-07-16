@@ -8,6 +8,8 @@ import {
 import { Slider } from '@nextui-org/react';
 import React, { useEffect, useState } from 'react';
 import { FiX } from 'react-icons/fi';
+import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDisclosure} from "@nextui-org/react";
+
 
 type WishlistComponentProps = {
   productSlug: string;

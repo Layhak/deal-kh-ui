@@ -19,6 +19,7 @@ import {
 import Loading from '@/app/(user)/loading';
 import { StarIcon } from '@/components/review/StarIcon';
 import { addToCart } from '@/redux/feature/cart/cartSlice';
+import { CartProductType } from '@/libs/difinition';
 
 export default function CardDetailComponent({
   slug,
@@ -33,7 +34,7 @@ export default function CardDetailComponent({
   openAt,
   createdAt,
   expiredAt,
-  location,
+  address,
   closeAt,
   seller,
   ratingAvg,
@@ -42,8 +43,8 @@ export default function CardDetailComponent({
   updatedBy,
   createdBy,
   shopSlug,
-  ratingCount
-}: ProductDetail) {
+  ratingCount,
+}: CartProductType) {
   const router = useRouter();
   const [averageRating, setAverageRating] = useState(0);
   const [totalReviews, setTotalReviews] = useState(0);
@@ -90,7 +91,7 @@ export default function CardDetailComponent({
 
   return (
     <div className="container w-full lg:py-8">
-      <div className="grid grid-cols-1 lg:grid-cols-2 content-center gap-8">
+      <div className="grid grid-cols-1 content-center gap-8 lg:grid-cols-2">
         {/* Product Image */}
         <Swiper
           pagination={{
@@ -114,14 +115,14 @@ export default function CardDetailComponent({
                   src={image.url}
                   alt={name}
                   radius={'lg'}
-                  className="w-[600px] h-[500px] object-cover"
+                  className="h-[500px] w-[600px] object-cover"
                 />
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
         {/* Product Details */}
-        <div className="md:flex md:flex-col md:gap-4 w-full lg:w-[80%] mx-auto">
+        <div className="mx-auto w-full md:flex md:flex-col md:gap-4 lg:w-[80%]">
           {/* Star section */}
           <div className="flex items-center">
             {[...Array(5)].map((_, index) => {
@@ -141,17 +142,17 @@ export default function CardDetailComponent({
           </div>
           {/* Product information */}
           <div>
-            <h1 className="text-foreground-800 text-2xl font-semibold dark:text-white md:text-3xl md:font-semibold">
+            <h1 className="text-2xl font-semibold text-foreground-800 dark:text-white md:text-3xl md:font-semibold">
               {name}
             </h1>
-            <p className="text-foreground-600 mt-3 text-lg h-[150px]">
-            {description.length > 300
-                        ? `${description.substring(0, 300)}...`
-                        : description || 'Description'}
+            <p className="mt-3 h-[150px] text-lg text-foreground-600">
+              {description.length > 300
+                ? `${description.substring(0, 300)}...`
+                : description || 'Description'}
             </p>
             {/* Price */}
             <div className="mt-4 flex text-foreground-500 md:flex-row">
-              <p className="text-xl font-bold text-foreground-500 line-through dark:text-white mt-2">
+              <p className="mt-2 text-xl font-bold text-foreground-500 line-through dark:text-white">
                 ${price}
               </p>
               <p className="ml-3 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
@@ -160,60 +161,57 @@ export default function CardDetailComponent({
             </div>
             {/* Shop and other details */}
             <div className="mt-4 space-y-2">
-            <p className="font-medium text-foreground-600 text-base">
-                Expired Date : {' '}
-                <span className="font-semibold text-red-500">
-                  {expiredAt}
-                </span>
+              <p className="text-base font-medium text-foreground-600">
+                Expired Date :{' '}
+                <span className="font-semibold text-red-500">{expiredAt}</span>
               </p>
-              <p className="font-medium text-foreground-600 text-base">
-                Shop : <span className="font-semibold text-blue-800">{shop}</span>
+              <p className="text-base font-medium text-foreground-600">
+                Shop :{' '}
+                <span className="font-semibold text-blue-800">{shop}</span>
               </p>
-              <p className="font-medium text-foreground-600 text-base">
+              <p className="text-base font-medium text-foreground-600">
                 Open : {openAt.slice(0, 5)} AM - {closeAt.slice(0, 5)} PM
               </p>
-              <p className="font-medium text-foreground-600 text-base">
-                Location : {' '}
-                <span className="font-semibold">{location}</span>
+              <p className="text-base font-medium text-foreground-600">
+                Location : <span className="font-semibold">{address}</span>
               </p>
-              
             </div>
           </div>
           {/* Buttons */}
           <div className="mt-4 grid grid-cols-1 gap-8 md:grid-cols-2">
             <Button
-            onClick={() =>
-              dispatch(
-                addToCart({
-                  slug: slug,
-                  seller: seller,
-                  name: name,
-                  price: price,
-                  discountPrice: discountPrice,
-                  ratingAvg: ratingAvg,
-                  description: description,
-                  images: images,
-                  shop: shop,
-                  discountValue: discountValue,
-                  discountType: discountType,
-                  expiredAt: expiredAt,
-                  category: category,
-                  createdAt: createdAt,
-                  updatedAt: updatedAt,
-                  createdBy: createdBy,
-                  updatedBy: updatedBy,
-                  openAt: openAt,
-                  closeAt: closeAt,
-                  shopSlug: shopSlug,
-                  location: location,
-                  ratingCount: ratingCount,
-                  isPercentage: false,
-                })
-              )
-            }
+              onClick={() =>
+                dispatch(
+                  addToCart({
+                    slug: slug,
+                    seller: seller,
+                    name: name,
+                    price: price,
+                    discountPrice: discountPrice,
+                    ratingAvg: ratingAvg,
+                    description: description,
+                    images: images,
+                    shop: shop,
+                    discountValue: discountValue,
+                    discountType: discountType,
+                    expiredAt: expiredAt,
+                    category: category,
+                    createdAt: createdAt,
+                    updatedAt: updatedAt,
+                    createdBy: createdBy,
+                    updatedBy: updatedBy,
+                    openAt: openAt,
+                    closeAt: closeAt,
+                    shopSlug: shopSlug,
+                    address: address,
+                    ratingCount: ratingCount,
+                    isPercentage: false,
+                  })
+                )
+              }
               variant={'solid'}
               radius={'lg'}
-              className="cursor-pointer border-2 border-warning-500 text-base font-medium text-foreground-600 bg-foreground-50  hover:bg-foreground-100"
+              className="cursor-pointer border-2 border-warning-500 bg-foreground-50 text-base font-medium text-foreground-600  hover:bg-foreground-100"
             >
               Add to Cart
             </Button>

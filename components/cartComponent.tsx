@@ -89,7 +89,7 @@ export default function CartComponent() {
         return (
           <div className="flex items-center">
             <Button
-              onClick={() => handleGetDirections(product.location)}
+              onClick={() => handleGetDirections(product.address)}
               className="ml-2"
             >
               Get Directions

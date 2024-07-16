@@ -13,7 +13,10 @@ import {
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import WishListDropDownComponent from '../WishListPopUpComponent';
-import { useDeleteWishListMutation, useGetAllWishListQuery } from '@/redux/service/wishList';
+import {
+  useDeleteWishListMutation,
+  useGetAllWishListQuery,
+} from '@/redux/service/wishList';
 import { useRouter } from 'next/navigation';
 
 const Buy1Get1Component = ({ category, discountType }: any) => {
@@ -23,7 +26,9 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
 
   // for pop up whishlist
   const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [currentProduct, setCurrentProduct] = useState<CartProductType | null>(null);
+  const [currentProduct, setCurrentProduct] = useState<CartProductType | null>(
+    null
+  );
   const [isDeleted, setIsDeleted] = useState(false);
   const router = useRouter();
 
@@ -40,7 +45,7 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
       ...prevHeartStates,
       [currentProduct?.slug!]: true,
     }));
-  
+
     dispatch(addToWishList(currentProduct!));
     localStorage.setItem('heartStates', JSON.stringify(heartStates));
 
@@ -91,14 +96,14 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
         ...prevHeartStates,
         [product.slug]: false, // Set the heart state to false
       };
-  
+
       dispatch(removeFromWishList(product.slug));
       localStorage.setItem('heartStates', JSON.stringify(updatedHeartStates));
       return updatedHeartStates;
     });
 
     handleDeleteWishlist(product.slug);
-  
+
     setIsPopupOpen(false);
     setCurrentProduct(product);
   };
@@ -145,9 +150,8 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
     <div>
       <div className="flex flex-wrap justify-center gap-[25px]">
         {data?.payload.list.map((product: CartProductType) => (
-          <div>
+          <div key={product.slug}>
             <Card
-              key={product.slug}
               isPressable
               className="relative mb-2 h-[330px] w-[250px] flex-none rounded-xl  bg-foreground-50 shadow-none  dark:border-foreground-700"
             >
@@ -174,20 +178,18 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
                         : product.name || 'Product Name'}
                     </h5>
                   </Link>
-                  <div
-                    className="right-4 mt-3 cursor-pointer"
-                  >
+                  <div className="right-4 mt-3 cursor-pointer">
                     <div key={product.slug}>
                       {heartStates[product.slug] ? (
                         <FaHeart
                           className="h-[25px] w-[25px] text-[#eb7d52]"
                           onClick={() => handleRemoveFromWishlist(product)}
-                          />
+                        />
                       ) : (
                         <FaRegHeart
                           className="h-[25px] w-[25px] text-[#eb7d52]"
                           onClick={() => handleAddToWishlist(product)}
-                          />
+                        />
                       )}
                     </div>
                   </div>

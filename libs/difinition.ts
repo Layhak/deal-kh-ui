@@ -55,6 +55,7 @@ export type ImageResponse = {
 };
 
 export type CartProductType = {
+  isPercentage: boolean;
   seller: string;
   images: Image[];
   name: string;
@@ -74,6 +75,10 @@ export type CartProductType = {
   createdBy: string;
   updatedBy: string;
   quantity?: number | 0;
+  address: string;
+  closeAt: string;
+  shopSlug: string;
+  openAt: string;
 };
 
 export type ShopResponse = {
@@ -176,6 +181,6 @@ export type WishListResponse = {
   username: string;
   discountPercentage: string;
   description: string;
-}
+};
 
 export const BASE_URL = 'https://store.istad.co';

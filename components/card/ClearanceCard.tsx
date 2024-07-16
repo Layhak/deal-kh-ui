@@ -48,32 +48,32 @@ export default function ClearanceCardComponent({
               </Link>
               <div className="mb-2 mt-2.5 flex items-center">
                 <div className="flex items-center rtl:space-x-reverse">
-                {Array.from({ length: 5 }, (_, index) => {
-                      if (product.ratingAvg >= index + 1) {
-                        return (
-                          <StarIcon
-                            key={index}
-                            filled
-                            className="h-5 w-5 text-yellow-300"
-                          />
-                        );
-                      } else if (product.ratingAvg >= index + 0.5) {
-                        return (
-                          <StarIcon
-                            key={index}
-                            half
-                            className="h-5 w-5 text-yellow-300"
-                          />
-                        );
-                      } else {
-                        return (
-                          <StarIcon
-                            key={index}
-                            className="h-5 w-5 text-yellow-300"
-                          />
-                        );
-                      }
-                    })}
+                  {Array.from({ length: 5 }, (_, index) => {
+                    if (product.ratingAvg >= index + 1) {
+                      return (
+                        <StarIcon
+                          key={index}
+                          filled
+                          className="h-5 w-5 text-yellow-300"
+                        />
+                      );
+                    } else if (product.ratingAvg >= index + 0.5) {
+                      return (
+                        <StarIcon
+                          key={index}
+                          half
+                          className="h-5 w-5 text-yellow-300"
+                        />
+                      );
+                    } else {
+                      return (
+                        <StarIcon
+                          key={index}
+                          className="h-5 w-5 text-yellow-300"
+                        />
+                      );
+                    }
+                  })}
                 </div>
                 <span className="ml-2 text-[16px] font-medium text-foreground-600">
                   ({totalReviews}) Reviews
@@ -137,9 +137,9 @@ export default function ClearanceCardComponent({
                         openAt: product.openAt,
                         closeAt: product.closeAt,
                         shopSlug: product.shopSlug,
-                        location: product.location,
+                        address: product.address,
                         ratingCount: product.ratingCount,
-                        isPercentage: false,
+                        isPercentage: product.isPercentage,
                       })
                     )
                   }

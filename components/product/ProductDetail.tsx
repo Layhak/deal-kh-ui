@@ -29,10 +29,18 @@ export default function ProductDetail({ slug }: { slug: string }) {
         openAt={product.payload.openAt}
         createdAt={product.payload.createdAt}
         expiredAt={product.payload.expiredAt}
-        location={product.payload.location}
+        address={product.payload.location}
         closeAt={product.payload.closeAt}
-        seller={product.payload.seller} ratingCount={product.payload.ratingCount}
-        ratingAvg={product.payload.ratingAvg} shopSlug={product.payload.shopSlug} discountValue={product.payload.discountValue} isPercentage={false} updatedAt={product.payload.updatedAt} createdBy={product.payload.createdBy} updatedBy={product.payload.updatedBy}   />
+        seller={product.payload.seller}
+        ratingCount={product.payload.ratingCount}
+        ratingAvg={product.payload.ratingAvg}
+        shopSlug={product.payload.shopSlug}
+        discountValue={product.payload.discountValue}
+        isPercentage={false}
+        updatedAt={product.payload.updatedAt}
+        createdBy={product.payload.createdBy}
+        updatedBy={product.payload.updatedBy}
+      />
       <ReviewProductDetailComponent productSlug={product.payload.slug} />
       {product.payload.discountType === 'Top Sales' ? (
         <DiscountCardComponent />

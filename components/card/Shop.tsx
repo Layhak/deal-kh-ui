@@ -108,7 +108,6 @@ export default function ShopCardComponent({
           page={page}
           size={size}
           onChange={handlePageChange}
-          onSizeChange={handleSizeChange}
         />
       </div>
     </div>

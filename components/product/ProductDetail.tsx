@@ -29,7 +29,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
         openAt={product.payload.openAt}
         createdAt={product.payload.createdAt}
         expiredAt={product.payload.expiredAt}
-        address={product.payload.location}
+        address={product.payload.address}
         closeAt={product.payload.closeAt}
         seller={product.payload.seller}
         ratingCount={product.payload.ratingCount}

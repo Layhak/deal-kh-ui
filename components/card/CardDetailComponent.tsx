@@ -3,7 +3,7 @@
 import { ProductDetail } from '@/types/productDetail';
 import { Button, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Key, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -44,7 +44,7 @@ export default function CardDetailComponent({
   createdBy,
   shopSlug,
   ratingCount,
-}: Product) {
+}: any) {
   const router = useRouter();
   const [averageRating, setAverageRating] = useState(0);
   const [totalReviews, setTotalReviews] = useState(0);
@@ -107,19 +107,24 @@ export default function CardDetailComponent({
             disableOnInteraction: false,
           }}
         >
-          {images.map((image, index) => (
-            <SwiperSlide key={index} className={'rounded-2xl'}>
-              <div className="overflow-hidden rounded-xl">
-                <Image
-                  isZoomed
-                  src={image.url}
-                  alt={name}
-                  radius={'lg'}
-                  className="h-[500px] w-[600px] object-cover"
-                />
-              </div>
-            </SwiperSlide>
-          ))}
+          {images.map(
+            (
+              image: { url: string | undefined },
+              index: Key | null | undefined
+            ) => (
+              <SwiperSlide key={index} className={'rounded-2xl'}>
+                <div className="overflow-hidden rounded-xl">
+                  <Image
+                    isZoomed
+                    src={image.url}
+                    alt={name}
+                    radius={'lg'}
+                    className="h-[500px] w-[600px] object-cover"
+                  />
+                </div>
+              </SwiperSlide>
+            )
+          )}
         </Swiper>
         {/* Product Details */}
         <div className="mx-auto w-full md:flex md:flex-col md:gap-4 lg:w-[80%]">

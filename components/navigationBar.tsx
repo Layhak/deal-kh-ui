@@ -19,7 +19,7 @@ import {
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
-import { CartIcon, HeartIcon } from '@/components/icons';
+import { CartIcon, HeartIcon, SearchIcon } from '@/components/icons';
 import {
   removeAccessToken,
   setLogoutSuccess,
@@ -38,6 +38,7 @@ import { Product } from '@/libs/difinition';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { BiUserCircle } from 'react-icons/bi';
+import { Button } from '@nextui-org/button';
 
 export const NavigationBar = () => {
   const pathname = usePathname();
@@ -131,14 +132,26 @@ export const NavigationBar = () => {
               <Image src="/logo.png" alt="logo" className="h-12 w-12" />
             </NextLink>
           </NavbarItem>
-          <NavbarItem className="hidden sm:flex">
+          <NavbarItem className="hidden items-center sm:flex">
             <SearchProduct />
             <SearchLocation />
+            <Tooltip content="Search Nearby Shop" offset={10}>
+              <Button
+                isIconOnly
+                as={NextLink}
+                size={'lg'}
+                href={'/search-nearby'}
+                variant={'light'}
+                radius={'sm'}
+              >
+                <SearchIcon size={24} />
+              </Button>
+            </Tooltip>
           </NavbarItem>
         </NavbarContent>
         <NavbarContent
           justify={'center'}
-          className={'hidden gap-4 pe-16 lg:flex'}
+          className={'hidden gap-4 px-5 lg:flex'}
         >
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} isActive={item.href === pathname}>

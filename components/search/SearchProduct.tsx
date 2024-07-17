@@ -1,70 +1,64 @@
+'use client';
 import React, { useState, useEffect } from 'react';
-import {
-  Autocomplete,
-  AutocompleteItem,
-  Avatar,
-  Button,
-} from '@nextui-org/react';
+import { Autocomplete, AutocompleteItem, Avatar } from '@nextui-org/react';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { SearchIcon } from '@/components/icons';
+import { useRouter } from 'next/navigation';
+import { Button } from '@nextui-org/button';
 import { Product } from '@/libs/difinition';
 
 export default function SearchProduct() {
-  const [pageSize, setPageSize] = useState(10);
-  const [totalElements, setTotalElements] = useState(0);
+  const [productSlug, setProductSlug] = useState<string>('');
+  const [searchValue, setSearchValue] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
+  const router = useRouter();
 
-  // First query to get the total elements
-  const {
-    data: initialData,
-    error: initialError,
-    isLoading: initialLoading,
-  } = useGetProductsQuery({
-    page: 1,
-    size: 1, // Fetching just one item to get the total number of elements
-    filters: {
-      categorySlug: '', // Adjust the filters as needed
-      discountTypeSlug: '',
-      name: '',
-    },
-  });
-
-  // Update pageSize and totalElements based on the initial query
-  useEffect(() => {
-    if (initialData && initialData.payload && initialData.payload.pagination) {
-      setTotalElements(initialData.payload.pagination.totalElements);
-      setPageSize(initialData.payload.pagination.totalElements);
-    }
-  }, [initialData]);
-
-  // Second query to fetch all products with the updated pageSize
   const { data, error, isLoading } = useGetProductsQuery({
     page: 1,
-    size: pageSize, // Use the updated pageSize
+    size: 10, // Limit to 10 products
     filters: {
       categorySlug: '', // Adjust the filters as needed
       discountTypeSlug: '',
-      name: '',
+      name: searchValue,
     },
   });
 
-  // Update products state based on the second query
   useEffect(() => {
     if (data && data.payload && data.payload.list) {
       setProducts(data.payload.list);
     }
   }, [data]);
 
-  if (initialLoading || isLoading) {
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
+  };
+
+  const handleSearchButtonClick = () => {
+    setSearchValue('');
+    console.log('Search Value:', searchValue);
+    if (productSlug) {
+      handleProductClick('');
+      router.push(`/products/${productSlug}`);
+    }
+  };
+
+  const handleProductClick = (slug: string) => {
+    setProductSlug(slug);
+  };
+
+  if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (initialError || error) {
+  if (error) {
     return <div>Error loading products</div>;
   }
 
   return (
     <Autocomplete
+      allowsCustomValue
+      value={searchValue}
+      onValueChange={handleSearchChange}
       classNames={{
         base: 'max-w-xs rounded-e-none',
         listboxWrapper: 'max-h-[320px]',
@@ -95,6 +89,8 @@ export default function SearchProduct() {
       }}
       aria-label="Select a product"
       placeholder="Enter product name"
+      selectedKey={productSlug}
+      onSelectionChange={(key) => setProductSlug(key as string)}
       popoverProps={{
         offset: 10,
         classNames: {
@@ -102,18 +98,34 @@ export default function SearchProduct() {
           content: 'p-1 border-small border-default-100 bg-background fixed',
         },
       }}
-      startContent={<SearchIcon size={24} />}
-      radius="md"
+      startContent={
+        <Button
+          size={'sm'}
+          isIconOnly
+          radius={'full'}
+          variant="light"
+          onClick={handleSearchButtonClick}
+        >
+          <SearchIcon size={24} />
+        </Button>
+      }
+      radius="sm"
       variant="bordered"
     >
-      {(item) => (
-        <AutocompleteItem key={item.slug} textValue={item.name}>
+      {products.map((item) => (
+        <AutocompleteItem
+          key={item.slug}
+          textValue={item.name}
+          value={item.slug}
+          onSelect={() => handleProductClick(item.slug)}
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Avatar
                 alt={item.name}
                 className="flex-shrink-0"
                 size="sm"
+                radius={'sm'}
                 src={item.images.length > 0 ? item.images[0].url : ''}
               />
               <div className="flex flex-col">
@@ -123,7 +135,7 @@ export default function SearchProduct() {
             </div>
           </div>
         </AutocompleteItem>
-      )}
+      ))}
     </Autocomplete>
   );
 }

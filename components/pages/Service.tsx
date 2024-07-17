@@ -11,15 +11,8 @@ export default function Service() {
 
   const { data } = useGetProductScrapeQuery({ page, size });
 
-  useEffect(() => {
-    // Ensure size does not exceed the total number of products
-    if (data && size > (data.payload.pagination?.totalElements || 0)) {
-      setSize(data.payload.pagination.totalElements);
-    }
-  }, [data, size]);
-
   const totalElements = data?.payload.pagination?.totalElements || 0;
-  const totalPages = Math.ceil(totalElements / size);
+  const totalPages = data?.payload.pagination?.totalPages || 0;
 
   return (
     <main>
@@ -42,7 +35,6 @@ export default function Service() {
           page={page}
           size={size}
           onChange={(newPage) => setPage(newPage)}
-          onSizeChange={(newSize) => setSize(newSize)}
         />
       </div>
     </main>

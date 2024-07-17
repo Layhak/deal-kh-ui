@@ -16,7 +16,7 @@ export default function DiscountCardComponent({
     size: 8,
     filters: {
       categorySlug: category,
-      discountTypeSlug: discountType,
+      discountType: discountType,
       name: '',
     },
   });

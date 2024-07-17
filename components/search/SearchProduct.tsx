@@ -8,21 +8,41 @@ import { Button } from '@nextui-org/button';
 import { Product } from '@/libs/difinition';
 
 export default function SearchProduct() {
+  const [pageSize, setPageSize] = useState(10);
+  const [, setTotalElements] = useState(0);
   const [productSlug, setProductSlug] = useState<string>('');
   const [searchValue, setSearchValue] = useState('');
   const [products, setProducts] = useState<Product[]>([]);
   const router = useRouter();
-
-  const { data, error, isLoading } = useGetProductsQuery({
+  const {
+    data: initialData,
+    error: initialError,
+    isLoading: initialLoading,
+  } = useGetProductsQuery({
     page: 1,
-    size: 10, // Limit to 10 products
+    size: 1, // Limit to 10 products
     filters: {
       categorySlug: '', // Adjust the filters as needed
       discountTypeSlug: '',
-      name: searchValue,
     },
+    field: 'name',
   });
-
+  // Update pageSize and totalElements based on the initial query
+  useEffect(() => {
+    if (initialData && initialData.payload && initialData.payload.pagination) {
+      setTotalElements(initialData.payload.pagination.totalElements);
+      setPageSize(initialData.payload.pagination.totalElements);
+    }
+  }, [initialData]);
+  const { data, error, isLoading } = useGetProductsQuery({
+    page: 1,
+    size: pageSize, // Limit to 10 products
+    filters: {
+      categorySlug: '', // Adjust the filters as needed
+      discountTypeSlug: '',
+    },
+    field: 'name',
+  });
   useEffect(() => {
     if (data && data.payload && data.payload.list) {
       setProducts(data.payload.list);
@@ -46,12 +66,12 @@ export default function SearchProduct() {
     setProductSlug(slug);
   };
 
-  if (isLoading) {
+  if (initialLoading || isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return <div>Error loading products</div>;
+  if (initialError || error) {
+    return <div>Error loading shops</div>;
   }
 
   return (
@@ -59,16 +79,41 @@ export default function SearchProduct() {
       allowsCustomValue
       value={searchValue}
       onValueChange={handleSearchChange}
+      className={'border-warning-300'}
       classNames={{
-        base: 'max-w-xs rounded-e-none',
-        listboxWrapper: 'max-h-[320px]',
-        selectorButton: 'text-default-500',
+        base: [
+          'max-w-xl w-[500px] ',
+          'group-data-[focus=true]:border-warning-500',
+        ],
+        listboxWrapper: [
+          'max-h-[320px] ',
+          'transition-opacity',
+          'data-[hover=true]:text-foreground',
+          'dark:data-[hover=true]:bg-warning-50',
+          'data-[pressed=true]:opacity-70',
+          'data-[hover=true]:bg-warning-200',
+          'data-[selectable=true]:focus:bg-warning-500',
+          'data-[focus-visible=true]:ring-warning-500',
+        ],
+        selectorButton: 'text-warning-300',
       }}
       defaultItems={products}
       inputProps={{
         classNames: {
           input: 'ml-1',
-          inputWrapper: 'h-[48px]',
+          inputWrapper: [
+            'h-[48px] ',
+            'transition-opacity',
+            'data-[hover=true]:text-foreground',
+            'border-warning-300',
+            'dark:border-warning-50',
+            'data-[focus-visible=true]:border-warning-500',
+            'group-data-[hover=true]:border-warning-500',
+            'group-data-[focus=true]:border-warning-500',
+            'dark:data-[focus-visible=true]:border-warning-100',
+            'dark:group-data-[hover=true]:border-warning-100',
+            'dark:group-data-[focus=true]:border-warning-100',
+          ],
         },
       }}
       listboxProps={{
@@ -79,11 +124,11 @@ export default function SearchProduct() {
             'text-default-500',
             'transition-opacity',
             'data-[hover=true]:text-foreground',
-            'dark:data-[hover=true]:bg-default-50',
+            'dark:data-[hover=true]:bg-warning-50',
             'data-[pressed=true]:opacity-70',
-            'data-[hover=true]:bg-default-200',
-            'data-[selectable=true]:focus:bg-default-100',
-            'data-[focus-visible=true]:ring-default-500',
+            'data-[hover=true]:bg-warning-100',
+            'data-[selectable=true]:focus:bg-warning-100',
+            'data-[focus-visible=true]:ring-warning-100',
           ],
         },
       }}
@@ -95,12 +140,12 @@ export default function SearchProduct() {
         offset: 10,
         classNames: {
           base: 'rounded-large',
-          content: 'p-1 border-small border-default-100 bg-background fixed',
+          content: 'p-1 border-small border-warning-100 bg-background fixed',
         },
       }}
       startContent={
         <Button
-          size={'sm'}
+          size={'md'}
           isIconOnly
           radius={'full'}
           variant="light"
@@ -109,7 +154,8 @@ export default function SearchProduct() {
           <SearchIcon size={24} />
         </Button>
       }
-      radius="sm"
+      color={'default'}
+      radius="full"
       variant="bordered"
     >
       {products.map((item) => (
@@ -129,8 +175,10 @@ export default function SearchProduct() {
                 src={item.images.length > 0 ? item.images[0].url : ''}
               />
               <div className="flex flex-col">
-                <span className="text-small">{item.name}</span>
-                <span className="text-tiny text-default-400">{item.shop}</span>
+                <span className="text-bold text-small text-default-900">
+                  {item.name}
+                </span>
+                <span className="text-tiny text-warning-500">{item.shop}</span>
               </div>
             </div>
           </div>

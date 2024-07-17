@@ -19,7 +19,7 @@ import {
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
-import { CartIcon, HeartIcon, SearchIcon } from '@/components/icons';
+import { CartIcon, HeartIcon, MapIcon, SearchIcon } from '@/components/icons';
 import {
   removeAccessToken,
   setLogoutSuccess,
@@ -39,6 +39,7 @@ import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { BiUserCircle } from 'react-icons/bi';
 import { Button } from '@nextui-org/button';
+import { GrMapLocation } from 'react-icons/gr';
 
 export const NavigationBar = () => {
   const pathname = usePathname();
@@ -132,26 +133,34 @@ export const NavigationBar = () => {
               <Image src="/logo.png" alt="logo" className="h-12 w-12" />
             </NextLink>
           </NavbarItem>
-          <NavbarItem className="hidden items-center sm:flex">
+          <NavbarItem className="hidden w-full items-center sm:flex">
             <SearchProduct />
-            <SearchLocation />
-            <Tooltip content="Search Nearby Shop" offset={10}>
+            {/*<SearchLocation />*/}
+            <Tooltip
+              content={
+                <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                  Search Nearby Shop
+                </p>
+              }
+              showArrow
+              offset={10}
+            >
               <Button
                 isIconOnly
                 as={NextLink}
                 size={'lg'}
                 href={'/search-nearby'}
                 variant={'light'}
-                radius={'sm'}
+                radius={'full'}
               >
-                <SearchIcon size={24} />
+                <MapIcon size={28} />
               </Button>
             </Tooltip>
           </NavbarItem>
         </NavbarContent>
         <NavbarContent
           justify={'center'}
-          className={'hidden gap-4 px-5 lg:flex'}
+          className={'hidden gap-4 pe-16 lg:flex'}
         >
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} isActive={item.href === pathname}>

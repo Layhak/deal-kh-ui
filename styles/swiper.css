@@ -15,3 +15,22 @@
 .swiper-pagination-bullet-active {
     @apply bg-gradient-to-r from-pink-400 to-yellow-400 w-2 h-2 rounded-full opacity-100;
 }
+
+.marquee-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.marquee {
+  display: flex;
+  animation: marquee 20s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

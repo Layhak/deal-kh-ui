@@ -21,10 +21,7 @@ export default function SearchProduct() {
   } = useGetProductsQuery({
     page: 1,
     size: 1, // Limit to 10 products
-    filters: {
-      categorySlug: '', // Adjust the filters as needed
-      discountTypeSlug: '',
-    },
+    filters: {},
     field: 'name',
   });
   // Update pageSize and totalElements based on the initial query
@@ -37,10 +34,7 @@ export default function SearchProduct() {
   const { data, error, isLoading } = useGetProductsQuery({
     page: 1,
     size: pageSize, // Limit to 10 products
-    filters: {
-      categorySlug: '', // Adjust the filters as needed
-      discountTypeSlug: '',
-    },
+    filters: {},
     field: 'name',
   });
   useEffect(() => {
@@ -81,10 +75,7 @@ export default function SearchProduct() {
       onValueChange={handleSearchChange}
       className={'border-warning-300'}
       classNames={{
-        base: [
-          'max-w-xl w-[500px] ',
-          'group-data-[focus=true]:border-warning-500',
-        ],
+        base: [' max-w-[350px] ', 'group-data-[focus=true]:border-warning-500'],
         listboxWrapper: [
           'max-h-[320px] ',
           'transition-opacity',

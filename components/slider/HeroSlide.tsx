@@ -21,6 +21,7 @@ export default function HeroSlideComponent() {
             delay: 5000,
             disableOnInteraction: false,
           }}
+          grabCursor={true}
           pagination={{
             clickable: true,
             dynamicBullets: true,
@@ -83,6 +84,7 @@ export default function HeroSlideComponent() {
           spaceBetween={50}
           slidesPerView={1}
           onSlideChange={() => {}}
+          grabCursor={true}
           // onSwiper={(swiper: any) => console.log(swiper)}
           autoplay={{
             delay: 1500,
@@ -139,6 +141,7 @@ export default function HeroSlideComponent() {
         </Swiper>
 
         <Swiper
+          grabCursor={true}
           className=" w-full rounded-2xl lg:w-[400px]"
           spaceBetween={50}
           slidesPerView={1}

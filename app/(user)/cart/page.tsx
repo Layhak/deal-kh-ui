@@ -2,7 +2,7 @@ import React from 'react';
 import 'aos/dist/aos.css';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import CartComponent from '@/components/cartComponent';
+import CartComponent from '@/components/card/cartComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 

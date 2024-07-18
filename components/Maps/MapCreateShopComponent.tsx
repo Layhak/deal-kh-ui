@@ -1,40 +1,77 @@
 'use client';
-import React, { useState, useRef } from 'react';
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
-import { Modal, ModalContent, ModalBody, ModalFooter, ModalHeader, Button, useDisclosure } from '@nextui-org/react';
-
-type Coordinates = {
-  lat: number;
-  lng: number;
-};
+import React, { useState, useRef, useEffect } from 'react';
+import {
+  GoogleMap,
+  Marker,
+  useJsApiLoader,
+  StandaloneSearchBox,
+} from '@react-google-maps/api';
+import {
+  Modal,
+  ModalContent,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  Button,
+  useDisclosure,
+} from '@nextui-org/react';
+import { googleMapsConfig } from '@/googleMapConfig';
 
 const containerStyle = {
   width: '100%',
   height: '400px',
 };
 
-const defaultCenter: Coordinates = {
+const defaultCenter = {
   lat: 11.5758609956468,
   lng: 104.90154057741165,
 };
 
-const getGoogleMapsApiKey = () => process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
-
-const apiKey = getGoogleMapsApiKey();
+interface Coordinates {
+  lat: number;
+  lng: number;
+}
 
 interface MapComponentProps {
   onLocationSelect: (location: Coordinates, address: string) => void;
 }
 
-const MapCreateShopComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
+const MapCreateShopComponent: React.FC<MapComponentProps> = ({
+  onLocationSelect,
+}) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [selectedLocation, setSelectedLocation] = useState<Coordinates | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<Coordinates | null>(
+    null
+  );
   const [selectedAddress, setSelectedAddress] = useState<string>('');
   const mapRef = useRef<GoogleMap>(null);
+  const searchBoxRef = useRef<google.maps.places.SearchBox | null>(null);
+
+  const { isLoaded } = useJsApiLoader(googleMapsConfig);
+
+  const fetchAddressFromCoordinates = async ({
+    lat,
+    lng,
+  }: Coordinates): Promise<string> => {
+    try {
+      const response = await fetch(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${googleMapsConfig.googleMapsApiKey}`
+      );
+      const data = await response.json();
+      if (data.results && data.results.length > 0) {
+        return data.results[0].formatted_address;
+      } else {
+        return 'Address not found';
+      }
+    } catch (error) {
+      console.error('Error fetching address:', error);
+      return 'Error fetching address';
+    }
+  };
 
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
     if (event.latLng) {
-      const location: Coordinates = {
+      const location = {
         lat: event.latLng.lat(),
         lng: event.latLng.lng(),
       };
@@ -46,62 +83,65 @@ const MapCreateShopComponent: React.FC<MapComponentProps> = ({ onLocationSelect 
     }
   };
 
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: apiKey,
-    libraries: ['geometry', 'drawing'],
-  });
-
-  const fetchAddressFromCoordinates = async ({ lat, lng }: Coordinates): Promise<string> => {
-    try {
-      const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`
-      );
-      const data = await response.json();
-
-      if (data.results && data.results.length > 0) {
-        const relevantAreas = [
-          'Chamkar Mon', 'Chbar Ampov', 'Chrouy Changvar', 'Dangkor', 'Doun Penh', 'Mean Chey',
-          'Prampi Makara', 'Preaek Pnov', 'Pur Senchey', 'Russey Keo', 'Sensok', 'Tuol Kouk',
-        ];
-
-        const filteredResults = data.results.filter((result: { formatted_address: string; types: string[] }) => {
-          const addressContainsRelevantArea = relevantAreas.some(area => result.formatted_address.includes(area));
-          return result.formatted_address.includes('Phnom Penh') && addressContainsRelevantArea;
+  const handlePlacesChanged = () => {
+    const places = searchBoxRef.current?.getPlaces();
+    if (places && places.length > 0) {
+      const place = places[0];
+      if (place.geometry && place.geometry.location) {
+        const location = {
+          lat: place.geometry.location.lat(),
+          lng: place.geometry.location.lng(),
+        };
+        setSelectedLocation(location);
+        fetchAddressFromCoordinates(location).then((address) => {
+          setSelectedAddress(address);
+          onLocationSelect(location, address);
         });
-
-        const detailedResults = filteredResults.filter((result: { formatted_address: string }) =>
-          /\d/.test(result.formatted_address) || result.formatted_address.includes('Street')
-        );
-
-        const addressResult = detailedResults.length > 0 ? detailedResults[0] : filteredResults[0];
-
-        if (addressResult) {
-          let address = addressResult.formatted_address;
-          address = address.replace(/^Khan\s/, '');
-          return address;
-        } else {
-          return 'Default Address: Street, Sangkat, Khan, City, Country';
-        }
-      } else {
-        return 'Address not found';
+        mapRef.current?.panTo(location);
       }
-    } catch (error) {
-      console.error('Error fetching address:', error);
-      return 'Error fetching address';
     }
   };
 
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const location = {
+            lat: latitude,
+            lng: longitude,
+          };
+          setSelectedLocation(location);
+          fetchAddressFromCoordinates(location).then((address) => {
+            setSelectedAddress(address);
+            onLocationSelect(location, address);
+          });
+          mapRef.current?.panTo(location);
+        },
+        (error) => {
+          console.error('Error getting current location:', error);
+        }
+      );
+    }
+  }, [onLocationSelect]);
+
+  if (!isLoaded) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="space-y-2">
-      <div className="p-4 bg-gray-100 rounded-lg shadow-md">
+      <div className="rounded-lg bg-gray-100 p-4 shadow-md">
         <p className="text-lg font-semibold text-gray-700">
-          {selectedAddress ? `Selected Address: ${selectedAddress}` : 'No location selected'}
+          {selectedAddress
+            ? `Selected Address: ${selectedAddress}`
+            : 'No location selected'}
         </p>
       </div>
       <Button
-        className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-full py-2 px-4 shadow-lg hover:from-blue-600 hover:to-indigo-700 transition duration-300"
-        onPress={onOpen}>
+        className="rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 px-4 py-2 font-semibold text-white shadow-lg transition duration-300 hover:from-blue-600 hover:to-indigo-700"
+        onPress={onOpen}
+      >
         Select Location
       </Button>
       <Modal
@@ -112,31 +152,50 @@ const MapCreateShopComponent: React.FC<MapComponentProps> = ({ onLocationSelect 
         isKeyboardDismissDisabled={true}
       >
         <ModalContent>
-          {onClose => (
+          {(onClose) => (
             <>
               <ModalHeader>Select Location</ModalHeader>
               <ModalBody>
-                {isLoaded && (
-                  <div className="flex flex-col items-center justify-center">
-                    <GoogleMap
-                      ref={mapRef}
-                      mapContainerStyle={containerStyle}
-                      center={defaultCenter}
-                      zoom={15}
-                      onClick={handleMapClick}
+                <div className="flex flex-col items-center justify-center">
+                  <GoogleMap
+                    ref={mapRef}
+                    mapContainerStyle={containerStyle}
+                    center={selectedLocation || defaultCenter}
+                    zoom={15}
+                    onClick={handleMapClick}
+                  >
+                    <StandaloneSearchBox
+                      onLoad={(ref) => (searchBoxRef.current = ref)}
+                      onPlacesChanged={handlePlacesChanged}
                     >
-                      {selectedLocation && <Marker position={selectedLocation} />}
-                    </GoogleMap>
-                  </div>
-                )}
+                      <input
+                        type="text"
+                        placeholder="Search for places..."
+                        className="w-full rounded-md border p-2"
+                        style={{
+                          boxSizing: 'border-box',
+                          border: '1px solid transparent',
+                          width: '240px',
+                          height: '32px',
+                          marginTop: '10px',
+                          padding: '0 12px',
+                          borderRadius: '3px',
+                          boxShadow: '0 2px 6px rgba(0, 0, 0, 0.3)',
+                          fontSize: '14px',
+                          outline: 'none',
+                          textOverflow: 'ellipses',
+                        }}
+                      />
+                    </StandaloneSearchBox>
+                    {selectedLocation && <Marker position={selectedLocation} />}
+                  </GoogleMap>
+                </div>
               </ModalBody>
               <ModalFooter>
                 <Button variant="ghost" onPress={onClose} className="mr-2">
                   Cancel
                 </Button>
-                <Button onPress={onClose}>
-                  Confirm
-                </Button>
+                <Button onPress={onClose}>Confirm</Button>
               </ModalFooter>
             </>
           )}

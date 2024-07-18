@@ -15,7 +15,6 @@ import { fileImgUrl } from '@/libs/ImageUrl';
 import HeaderCreateShop from '@/components/header/HeaderCreateShop';
 import { inter, kantumruyPro } from '@/utils/fonts';
 import FilterComponent from '@/components/Filter';
-import { router } from 'next/client';
 
 export const metadata: Metadata = {
   title: 'DealKH',
@@ -99,7 +98,7 @@ export default function RootLayout({
               <NavigationBar />
               <FilterComponent />
               <ToastContainer />
-              <main className={`container mx-auto min-h-screen  px-0 lg:px-6`}>
+              <main className={`min-h-screen`}>
                 <ErrorBoundary errorComponent={error}>
                   <Suspense fallback={<Loading />}>{children}</Suspense>
                 </ErrorBoundary>

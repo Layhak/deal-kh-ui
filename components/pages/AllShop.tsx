@@ -13,7 +13,7 @@ export default function ShopListComponent() {
           </p>
         </div>
       </div>
-      <ShopCardComponent initialPage={1} size={8} />
+      <ShopCardComponent initialPage={1} size={20} />
     </div>
   );
 }

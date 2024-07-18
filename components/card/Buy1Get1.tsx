@@ -183,7 +183,7 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
                     alt={product.name}
                   />
                 </Link>
-                <span className="absolute right-4 top-3 z-20 h-[54px] w-[54px] rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 pt-2 text-center lg:text-[14px] md:text-[14px] text-[12px] font-medium text-white">
+                <span className="absolute right-4 top-3 z-10 h-[54px] w-[54px] rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 pt-2 text-center lg:text-[14px] md:text-[14px] text-[12px] font-medium text-white">
                   BUY 1 GET 1
                 </span>
                 <div className="flex justify-between">

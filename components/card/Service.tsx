@@ -24,7 +24,7 @@ const ServiceCardComponent: React.FC<ServiceCardComponentProps> = ({
                   ? `${product.name.substring(0, 60)}...`
                   : product.name || 'Product Name'}
               </h4>
-              <div className="mt-2 flex items-center justify-between">
+              <div className="mt-2 flex items-center w-full justify-between">
                 <p className="bg-gradient-to-r from-pink-500 from-20% to-yellow-500 to-100% bg-clip-text text-2xl font-bold text-transparent">
                   ${product.price}
                 </p>

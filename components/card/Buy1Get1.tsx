@@ -30,6 +30,24 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
   const [isDeleted, setIsDeleted] = useState(false);
   const router = useRouter();
 
+  // Adjust the size based on screen size
+  const [size, setSize] = useState(6);
+  useEffect(() => {
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      if (screenWidth > 1024) {
+        setSize(6);
+      } else if (screenWidth >= 768 && screenWidth <= 1024) {
+        setSize(4);
+      } else {
+        setSize(6);
+      }
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const [deleteWishlist] = useDeleteWishListMutation();
   const {
     data: wishlists = [],
@@ -60,7 +78,7 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
 
   const { data } = useGetProductsQuery({
     page: 1,
-    size: 6,
+    size: size,
     filters: {
       categorySlug: category,
       discountType: discountType,
@@ -146,18 +164,18 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
 
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-[25px]">
+      <div className="flex flex-wrap lg:justify-center md:justify-end lg:gap-[25px] md:gap-2 justify-between mx-2">
         {data?.payload.list.map((product: Product) => (
           <div key={product.slug}>
             <Card
               isPressable
-              className="relative mb-2 h-[330px] w-[250px] flex-none rounded-xl  bg-foreground-50 shadow-none  dark:border-foreground-700"
+              className="relative mb-2 lg:h-[330px] md:h-[330px] lg:w-[250px] md:w-[230px] w-[190px] flex-none rounded-xl  shadow-none  dark:border-foreground-700"
             >
-              <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
+              <CardBody className="relative lg:h-[230px] md:h-[230px] h-[325] overflow-visible rounded-b-lg px-4">
                 <Link href={`products/${product.slug}`}>
                   <Image
                     isZoomed
-                    className="h-[160px] w-[224px] object-cover"
+                    className="lg:h-[160px] md:h-[160px] h-[140px] w-[224px] object-cover"
                     src={
                       product.images[0].url ||
                       'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
@@ -165,12 +183,12 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
                     alt={product.name}
                   />
                 </Link>
-                <span className="absolute right-4 top-3 z-20 h-[54px] w-[54px] rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 pt-2 text-center text-[14px] font-medium text-white">
+                <span className="absolute right-4 top-3 z-20 h-[54px] w-[54px] rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 pt-2 text-center lg:text-[14px] md:text-[14px] text-[12px] font-medium text-white">
                   BUY 1 GET 1
                 </span>
-                <div className="flex flex-wrap justify-between">
+                <div className="flex justify-between">
                   <Link href="#">
-                    <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-foreground-800 dark:text-white">
+                    <h5 className="mt-3 h-[45px] lg:text-[18px] md:text-[18px] text-[14px] font-semibold tracking-tight text-foreground-800 dark:text-white">
                       {product.name.length > 30
                         ? `${product.name.substring(0, 25)}...`
                         : product.name || 'Product Name'}
@@ -180,7 +198,7 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
                     <div key={product.slug}>
                       {heartStates[product.slug] ? (
                         <FaHeart
-                          className="h-[25px] w-[25px] text-[#eb7d52]"
+                          className="lg:h-[25px] lg:w-[25px] md:h-[25px] md:w-[25px] h-[20px] w-[20px] text-[#eb7d52]"
                           onClick={() => handleRemoveFromWishlist(product)}
                         />
                       ) : (
@@ -192,8 +210,8 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
                     </div>
                   </div>
                 </div>
-                <div className=" h-[30px] pt-3">
-                  <p className="text-[14px] font-medium text-foreground-600 ">
+                <div className=" h-[30px] lg:pt-3 md:pt-3 pt-1">
+                  <p className="lg:text-[14px] md:text-[14px] text-[12px]  font-medium text-foreground-600 ">
                     Shop :{' '}
                     <Link href="">
                       <span className="text-info-800 text-[14px] font-medium">
@@ -203,14 +221,14 @@ const Buy1Get1Component = ({ category, discountType }: any) => {
                       </span>
                     </Link>
                   </p>
-                  <p className="text-[14px] font-medium text-foreground-600 ">
+                  <p className="lg:text-[14px] md:text-[14px] text-[12px] font-medium text-foreground-600 ">
                     Expired date :{' '}
                     <span className="font-medium text-red-500">
                       {product.expiredAt || 'Expired Date'}
                     </span>
                   </p>
                 </div>
-                <span className="bg-gradient-to-l from-pink-500 from-70% to-yellow-500 to-100% bg-clip-text pt-8 text-2xl font-bold text-transparent">
+                <span className="bg-gradient-to-l from-pink-500 from-70% to-yellow-500 to-100% bg-clip-text lg:pt-8 md:pt-8 pt-6 lg:text-2xl md:text-2xl text-xl font-bold text-transparent">
                   ${product.price || 'Price'}
                 </span>
               </CardBody>

@@ -32,9 +32,7 @@ const loadStateFromLocalStorage = () => {
 	}
   };
 
-
 const initialState = loadStateFromLocalStorage();
-
 
 const cartSlice = createSlice({
   name: 'cart',

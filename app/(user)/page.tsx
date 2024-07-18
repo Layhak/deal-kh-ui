@@ -55,7 +55,6 @@ export default function HomePage() {
       localStorage.removeItem('token');
     }
   }, [theme]);
-
   return (
     <>
       <div>
@@ -402,7 +401,7 @@ export default function HomePage() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/shop-list">
+          <Link href="/shop">
             <div className="flex items-center pt-2">
               <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700">
                 See More

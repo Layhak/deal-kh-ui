@@ -10,11 +10,9 @@ import SessionWrapper from '../SessionProvider';
 import { Metadata } from 'next';
 import { NavigationBar } from '@/components/navigationBar';
 import StoreProvider from '@/app/StoreProvider';
-import { ToastContainer } from 'react-toastify';
 import { fileImgUrl } from '@/libs/ImageUrl';
 import HeaderCreateShop from '@/components/header/HeaderCreateShop';
 import { inter, kantumruyPro } from '@/utils/fonts';
-import FilterComponent from '@/components/Filter';
 
 export const metadata: Metadata = {
   title: 'DealKH',
@@ -96,8 +94,6 @@ export default function RootLayout({
             <Providers>
               <HeaderCreateShop />
               <NavigationBar />
-              <FilterComponent />
-              <ToastContainer />
               <main className={`min-h-screen`}>
                 <ErrorBoundary errorComponent={error}>
                   <Suspense fallback={<Loading />}>{children}</Suspense>

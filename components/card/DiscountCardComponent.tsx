@@ -1,9 +1,9 @@
-import { Product, ProductResponse } from '@/libs/difinition';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { StarIcon } from '@/components/review/StarIcon';
+import { Product } from '@/libs/difinition';
 
 export default function DiscountCardComponent({
   category,
@@ -20,7 +20,6 @@ export default function DiscountCardComponent({
       name: '',
     },
   });
-  console.log('data', data);
 
   return (
     <main>

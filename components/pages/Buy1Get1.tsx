@@ -152,7 +152,7 @@ export default function Buy1Get1Component() {
           </div>
         </Link>
       </div>
-      <BuyMoreGetMoreComponent category={"accessories"} discountType={"buy more get more"}/>
+      <BuyMoreGetMoreComponent category={"accessory"} discountType={"buy more get more"}/>
       {/* Skin Care */}
       <div className="my-8 flex h-[50px] items-center justify-between">
         {/* Left section */}

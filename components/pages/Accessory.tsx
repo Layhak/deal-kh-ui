@@ -26,7 +26,7 @@ export default function Accessory() {
       </div>
       {/* Right section */}
     </div>
-    <DiscountCardComponent category={"accessories"} discountType={"discount off"}/>
+    <DiscountCardComponent category={"accessory"} discountType={"discount off"}/>
     {/* Clearance Sale */}
     <div className="my-8 flex h-[50px] items-center justify-between">
       {/* Left section */}

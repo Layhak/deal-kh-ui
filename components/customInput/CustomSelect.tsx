@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { cn, Select, SelectItem } from '@nextui-org/react';
 import { useField } from 'formik';
 
-interface CustomSelectProps {
+type CustomSelectProps = {
   label: string;
   name: string;
   options: { value: string; label: string }[];
   placeholder?: string;
   onChange?: (value: any) => void;
-}
+};
 
 const CustomSelect: React.FC<CustomSelectProps> = ({
   label,

@@ -26,18 +26,18 @@ import PromptInput from '@/components/review/PromptInput';
 import RatingSlider from '@/components/review/RatingSlider';
 import RatingDisplay from '@/components/review/RatingDisplay';
 
-interface UpdateFeedbackModalProps {
+type UpdateFeedbackModalProps = {
   isOpen: boolean;
   onClose: () => void;
   feedbackId: string;
   productSlug: string;
-}
+};
 
-interface FormValues {
+type FormValues = {
   description: string;
   images: { file: File | null; url: string }[];
   rating: number;
-}
+};
 
 const fileValidation = Yup.mixed<any>()
   .nullable()

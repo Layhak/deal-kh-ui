@@ -21,11 +21,11 @@ import { IoImagesOutline } from 'react-icons/io5';
 import { Cancel } from '../icons';
 import { useUploadShopImageMutation } from '@/redux/service/shop';
 
-interface CreateShopModalProps {
+type CreateShopModalProps = {
   isOpen: boolean;
   onClose: () => void;
   refetch: () => void;
-}
+};
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()

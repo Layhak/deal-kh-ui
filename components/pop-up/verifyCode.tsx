@@ -4,10 +4,10 @@ import { HiOutlineX } from 'react-icons/hi';
 import PropTypes from 'prop-types';
 import { Formik, Form, Field } from 'formik';
 
-interface VerifyCodeModalProps {
+type VerifyCodeModalProps = {
   isOpen: boolean;
   onClose: () => void;
-}
+};
 
 const VerifyCodeModal: React.FC<VerifyCodeModalProps> = ({
   isOpen,

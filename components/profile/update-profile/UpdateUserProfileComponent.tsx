@@ -26,10 +26,10 @@ const validationSchema = Yup.object().shape({
   location: Yup.string().required('Location is required'),
 });
 
-interface UpdateProfileComponentProps {
+type UpdateProfileComponentProps = {
   closeModal: () => void;
   refetchProfile: () => void;
-}
+};
 
 const UpdateProfileComponent: React.FC<UpdateProfileComponentProps> = ({
   closeModal,

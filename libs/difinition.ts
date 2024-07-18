@@ -115,10 +115,10 @@ export type ShopsResponse = {
   payload: ShopPayload;
 };
 
-export interface Coordinates {
+export type Coordinates = {
   lat: number;
   lng: number;
-}
+};
 
 export type Pagination = {
   pageSize: number;
@@ -165,10 +165,10 @@ export type ModalTypeWithId = {
   id: number;
 };
 
-export interface Profile {
+export type Profile = {
   email: string;
   name: string;
-}
+};
 
 // for wishlist response
 export type WishListResponse = {

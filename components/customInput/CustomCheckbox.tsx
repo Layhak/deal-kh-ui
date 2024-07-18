@@ -2,18 +2,19 @@ import React, { useState } from 'react';
 import { useField } from 'formik';
 import { Checkbox, useDisclosure } from '@nextui-org/react';
 import cn from 'classnames';
+import { useRouter } from 'next/navigation';
 
-interface CustomCheckboxProps {
+type CustomCheckboxProps = {
   name: string;
-}
+};
 
 const CustomCheckbox: React.FC<CustomCheckboxProps> = ({ name }) => {
   const [field, meta] = useField({ name, type: 'checkbox' });
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
+  const router = useRouter();
   const handleOpen = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onOpen();
+    router.push('/policy');
   };
 
   return (

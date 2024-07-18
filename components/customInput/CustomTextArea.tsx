@@ -2,12 +2,12 @@ import React from 'react';
 import { useField } from 'formik';
 import { Textarea } from '@nextui-org/react';
 
-interface CustomTextAreaProps {
+type CustomTextAreaProps = {
   label: string;
   name: string;
   placeholder?: string;
   isDisabled?: boolean;
-}
+};
 
 const CustomTextArea: React.FC<CustomTextAreaProps> = ({
   label,

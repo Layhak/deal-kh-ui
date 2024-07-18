@@ -2,14 +2,14 @@ import React from 'react';
 import { useField } from 'formik';
 import { Input } from '@nextui-org/react';
 
-interface CustomInputProps {
+type CustomInputProps = {
   label: string;
   name: string;
   type: string;
   placeholder?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value?: string;
-}
+};
 
 const CustomInput: React.FC<CustomInputProps> = ({
   label,

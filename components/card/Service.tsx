@@ -3,9 +3,9 @@ import { Card, CardBody, CardHeader, Image, Link } from '@nextui-org/react';
 import { ScrapedProduct } from '@/types/productScrape';
 import React from 'react';
 
-interface ServiceCardComponentProps {
+type ServiceCardComponentProps = {
   data: { payload: { list: ScrapedProduct[] } };
-}
+};
 
 const ServiceCardComponent: React.FC<ServiceCardComponentProps> = ({
   data,

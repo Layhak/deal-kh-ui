@@ -12,7 +12,7 @@ import DeleteFeedbackModal from './DeleteFeedbackModal';
 import { DeleteIcon, EditIcon, MoreIcon } from '@/components/icons';
 import UpdateFeedbackModal from '@/components/review/UpdateFeedbackModal';
 
-interface FeedbackItemProps {
+type FeedbackItemProps = {
   review: {
     uuid: string;
     profile?: string;
@@ -26,7 +26,7 @@ interface FeedbackItemProps {
   currentUser: string;
   refetchFeedback: () => void;
   refetchRatings: () => void;
-}
+};
 
 const FeedbackCard: React.FC<FeedbackItemProps> = ({
   review,

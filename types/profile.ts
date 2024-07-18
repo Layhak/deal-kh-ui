@@ -1,5 +1,5 @@
 // types.ts
-export interface UserProfileResponse {
+export type UserProfileResponse = {
   payload: {
     firstName: string;
     lastName: string;
@@ -26,10 +26,10 @@ export interface UserProfileResponse {
   };
   message: string;
   status: number;
-}
+};
 
 // types.ts
-export interface FormValues {
+export type FormValues = {
   firstName: string;
   lastName: string;
   dateOfBirth: string;
@@ -39,9 +39,8 @@ export interface FormValues {
   password: string;
   location: string;
   profileImage: File | null; // Add this line
-  coverImage: File | null;   // Add this line
-}
-
+  coverImage: File | null; // Add this line
+};
 
 export type UserUpdateRequest = {
   firstName?: string;
@@ -53,4 +52,3 @@ export type UserUpdateRequest = {
   gender?: string;
   location?: string;
 };
-

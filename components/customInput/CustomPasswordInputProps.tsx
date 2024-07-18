@@ -5,11 +5,11 @@ import { IoEyeOffSharp, IoEyeSharp } from 'react-icons/io5';
 import { togglePasswordVisibility } from '@/redux/feature/password/passwordVisibilitySlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 
-interface CustomPasswordInputProps {
+type CustomPasswordInputProps = {
   label: string;
   name: string;
   placeholder?: string;
-}
+};
 
 const CustomPasswordInput: React.FC<CustomPasswordInputProps> = ({
   label,

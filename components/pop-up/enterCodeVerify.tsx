@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Formik, Form, Field } from 'formik';
 import { Button, Link } from '@nextui-org/react';
 
-interface EnterCodeVerifyModalProps {
+type EnterCodeVerifyModalProps = {
   isOpen: boolean;
   onClose: () => void;
-}
+};
 
 const EnterCodeVerifyModal: React.FC<EnterCodeVerifyModalProps> = ({
   isOpen,

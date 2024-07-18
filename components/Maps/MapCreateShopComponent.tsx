@@ -27,14 +27,14 @@ const defaultCenter = {
   lng: 104.90154057741165,
 };
 
-interface Coordinates {
+type Coordinates = {
   lat: number;
   lng: number;
-}
+};
 
-interface MapComponentProps {
+type MapComponentProps = {
   onLocationSelect: (location: Coordinates, address: string) => void;
-}
+};
 
 const MapCreateShopComponent: React.FC<MapComponentProps> = ({
   onLocationSelect,

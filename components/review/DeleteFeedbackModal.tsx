@@ -15,14 +15,14 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from 'next-themes';
 
-interface DeleteFeedbackModalProps {
+type DeleteFeedbackModalProps = {
   isOpen: boolean;
   onClose: () => void;
   feedbackId: string;
   productSlug: string;
   refetchFeedback: () => void;
   refetchRatings: () => void;
-}
+};
 
 const DeleteFeedbackModal: React.FC<DeleteFeedbackModalProps> = ({
   isOpen,

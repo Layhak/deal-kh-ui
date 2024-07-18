@@ -1,12 +1,12 @@
-import React from "react";
-import { Pagination } from "@nextui-org/react";
+import React from 'react';
+import { Pagination } from '@nextui-org/react';
 
-interface CustomPaginationProps {
-  total: number;                         
-  currentPage: number;                   
-  onPageChange: (page: number) => void;  
-  pageSize: number;                      
-}
+type CustomPaginationProps = {
+  total: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+  pageSize: number;
+};
 
 const CustomPagination: React.FC<CustomPaginationProps> = ({
   total,
@@ -19,7 +19,7 @@ const CustomPagination: React.FC<CustomPaginationProps> = ({
   };
 
   return (
-    <div className="flex justify-center items-center mt-4">
+    <div className="mt-4 flex items-center justify-center">
       <Pagination
         isCompact
         showControls

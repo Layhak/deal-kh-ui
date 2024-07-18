@@ -17,7 +17,7 @@ import CustomCheckbox from '@/components/customInput/CustomCheckbox';
 import CustomInput from '@/components/customInput/customInput';
 import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
 
-interface RegisterFormValues {
+type RegisterFormValues = {
   firstName: string;
   lastName: string;
   username: string;
@@ -29,7 +29,7 @@ interface RegisterFormValues {
   dob: string;
   address: string;
   acceptPolicy: boolean;
-}
+};
 
 const initialValues: RegisterFormValues = {
   firstName: '',

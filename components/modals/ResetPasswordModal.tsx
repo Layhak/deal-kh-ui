@@ -18,24 +18,24 @@ import {
   useSendOtpMutation,
 } from '@/redux/service/resetpassword';
 
-interface ResetPasswordModalProps {
+type ResetPasswordModalProps = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   email: string;
-}
+};
 
-interface EmailFormValues {
+type EmailFormValues = {
   email: string;
-}
+};
 
-interface OtpFormValues {
+type OtpFormValues = {
   otp: string[];
-}
+};
 
-interface PasswordFormValues {
+type PasswordFormValues = {
   newPassword: string;
   confirmPassword: string;
-}
+};
 
 const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
   isOpen,

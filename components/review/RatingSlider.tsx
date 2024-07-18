@@ -1,10 +1,10 @@
 import React from 'react';
 import { Slider } from '@nextui-org/react';
 
-interface RatingSliderProps {
+type RatingSliderProps = {
   rating: number;
   onRatingChange: (value: number | number[]) => void;
-}
+};
 
 const RatingSlider = ({ rating, onRatingChange }: RatingSliderProps) => {
   return (

@@ -2,12 +2,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '@/redux/store';
 
-interface AuthState {
+type AuthState = {
   token: string | null;
   logoutSuccess: boolean;
   registerSuccess: boolean;
   loginSuccess: boolean;
-}
+};
 
 const initialState: AuthState = {
   token: null,

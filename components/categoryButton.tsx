@@ -4,9 +4,9 @@ import { CategoryIcon } from './icons';
 import Link from 'next/link';
 import { BiCategoryAlt } from 'react-icons/bi';
 
-interface CategoryButtonProps {
+type CategoryButtonProps = {
   categories: string[];
-}
+};
 
 const CategoryButton: React.FC<CategoryButtonProps> = ({ categories }) => {
   const half = Math.ceil(categories.length / 2);

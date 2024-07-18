@@ -117,6 +117,8 @@ export default function ClearanceCardComponent({
                   onClick={() =>
                     dispatch(
                       addToCart({
+                        location: '',
+                        quantity: undefined,
                         slug: product.slug,
                         seller: product.seller,
                         name: product.name,
@@ -134,9 +136,6 @@ export default function ClearanceCardComponent({
                         updatedAt: product.updatedAt,
                         createdBy: product.createdBy,
                         updatedBy: product.updatedBy,
-                        openAt: product.openAt,
-                        closeAt: product.closeAt,
-                        shopSlug: product.shopSlug,
                         address: product.address,
                         ratingCount: product.ratingCount,
                         isPercentage: product.isPercentage,

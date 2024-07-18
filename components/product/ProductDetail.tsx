@@ -40,6 +40,8 @@ export default function ProductDetail({ slug }: { slug: string }) {
         updatedAt={product.payload.updatedAt}
         createdBy={product.payload.createdBy}
         updatedBy={product.payload.updatedBy}
+        location={product.payload.location}
+        quantity={product.payload.quantity || 0}
       />
       <ReviewProductDetailComponent productSlug={product.payload.slug} />
       {product.payload.discountType === 'Top Sales' ? (

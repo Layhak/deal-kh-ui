@@ -99,7 +99,7 @@ export default function RootLayout({
               <NavigationBar />
               <FilterComponent />
               <ToastContainer />
-              <main className={`container mx-auto min-h-screen  px-0 lg:px-6`}>
+              <main className={`mx-auto min-h-screen max-w-7xl px-0 lg:px-6`}>
                 <ErrorBoundary errorComponent={error}>
                   <Suspense fallback={<Loading />}>{children}</Suspense>
                 </ErrorBoundary>

@@ -77,10 +77,11 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent
+        <DiscountCardComponent 
           category={'food'}
-          discountType={'discount off'}
-        />
+          discountType={'discount off'} currentPage={0} onPageChange={function (page: number): void {
+          
+          } }/>
         {/* Clearance Sale Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -251,8 +252,9 @@ export default function HomePage() {
         </div>
         <DiscountCardComponent
           category={'clothes'}
-          discountType={'shop coupons'}
-        />
+          discountType={'shop coupons'} currentPage={0} onPageChange={function (page: number): void {
+            
+          } } />
         {/* Event Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">

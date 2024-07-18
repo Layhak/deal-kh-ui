@@ -95,7 +95,7 @@ DealKh is an online marketplace and platform that offers deals and discounts on 
 
 # Deployment
 
-DealKh [live demo]()
+DealKh [live demo](https://dealkh.istad.co)
 
 ---
 
@@ -115,63 +115,26 @@ DealKh [live demo]()
 
 ## Page URL
 ### Guest
-1. [Login](http://localhost:3000/login)
-2. [Register](http://localhost:3000/register)
-3. [Home](http://localhost:3000)
-4. [Deal](http://localhost:3000/deal)
-5. [About](http://localhost:3000/about)
-6. [Policy](http://localhost:3000/policy)
-7. [Accessory](http://localhost:3000/category/accessory)
-8. [Product](http://localhost:3000/category/all-product)
-9. [Buy More Get More](http://localhost:3000/category/buy-more-get-more)
-10. [Cloth](http://localhost:3000/category/clothes)
-11. [Coupon](http://localhost:3000/category/coupon)
-12. [Discount Off](http://localhost:3000/category/discount-off)
-13. [Drink](http://localhost:3000/category/drink)
-14. [Electronic](http://localhost:3000/category/electronic)
-15. [Event](http://localhost:3000/category/event)
-16. [Flash Sale](http://localhost:3000/category/flash-sale)
-17. [Food](http://localhost:3000/category/food)
-18. [Profile](http://localhost:3000/profile)
-19. [UpdateProfile](http://localhost:3000/profile/update-profile)
-20. [Shoe](http://localhost:3000/category/shoe)
-21. [Skincare](http://localhost:3000/category/skincare)
-22. [Service](http://localhost:3000/service)
-23. [Shop](http://localhost:3000/shop)
-24. [Testing](http://localhost:3000/testing)
-25. [Card](http://localhost:3000/card)
+1. [Login](https://dealkh.istad.co/login)
+2. [Register](https://dealkh.istad.co/register)
+3. [Home](https://dealkh.istad.co)
+4. [Deal](https://dealkh.istad.co/deal)
+5. [About](https://dealkh.istad.co/about)
+6. [Policy](https://dealkh.istad.co/policy)
+7. [Accessory](https://dealkh.istad.co/category/accessory)
+8. [Cloth](https://dealkh.istad.co/category/clothes)
+9. [Drink](https://dealkh.istad.co/category/drink)
+10. [Electronic](https://dealkh.istad.co/category/electronic)
+11. [Flash Sale](https://dealkh.istad.co/category/flash-sale)
+12. [Food](https://dealkh.istad.co/category/food)
+13. [Skincare](https://dealkh.istad.co/category/skin-care)
+14. [Service](https://dealkh.istad.co/service)
 
 ### User
 
-1. [Cart](http://localhost:3000/cart)
-2. [Wishlist](http://localhost:3000/wishlist)
-
-### Seller
-
-1. [Ownshop](http://localhost:3000/sellers/ownshop)
-2. [Product](http://localhost:3000/sellers/product)
-3. [Promotion](http://localhost:3000/sellers/promotions)
-4. [profile](http://localhost:3000/sellers/profile)
-5. [Seller](http://localhost:3000/sellers/seller)
-6. [Wishlist](http://localhost:3000/sellers/wishlists)
-
-
-### Admin
-
-1. [Category](http://localhost:3000/category)
-2. [Shop Keeper](http://localhost:3000/keeper)
-3. [Update Profile](http://localhost:3000/profile/update-profile)
-4. [Promotion](http://localhost:3000/promotion)
-5. [Report](http://localhost:3000/report)
-
-
-### Super Admin
-1. [Reset Password](http://localhost:3000/super-admin/admin-management/reset-password)
-2. [View Report](http://localhost:3000/super-admin/admin-management/view-report)
-3. [Update Profile](http://localhost:3000/super-admin/profile/update-profile)
-4. [Product Management](http://localhost:3000/super-admin/product-management)
-5. [Shop Management](http://localhost:3000/super-admin/shop-management)
-
-
+1. [Cart](https://dealkh.istad.co/cart)
+2. [Wishlist](https://dealkh.istad.co/wishlist)
+3. [Profile](https://dealkh.istad.co/profile)
+4. [UpdateProfile](https://dealkh.istad.co/profile/update-profile)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>gi

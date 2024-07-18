@@ -5,8 +5,8 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { Inter } from 'next/font/google';
 import { Button, Image } from '@nextui-org/react';
-import MentorCard from '@/components/card-about/MentorCard';
-import MemberCard from '@/components/card-about/MemberCard';
+import MentorCard from '@/components/card/card-about/MentorCard';
+import MemberCard from '@/components/card/card-about/MemberCard';
 import NextLink from 'next/link';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -20,10 +20,7 @@ function AboutPageComponent() {
     <>
       {/* First section about Deal-KH */}
       <div className="my-2 flex flex-col items-center md:flex-row">
-        <div
-          className="text-center md:w-1/2 md:text-left"
-          data-aos="fade-up"
-        >
+        <div className="text-center md:w-1/2 md:text-left" data-aos="fade-up">
           <p className="text-4xl font-bold">
             <span className="text-gradient bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
               Deal
@@ -31,7 +28,10 @@ function AboutPageComponent() {
             -KH
           </p>
           <p className="mt-4 text-lg">
-          Easy to use online platform where we connects businesses and customers. Businesses can showcase their services or products. While customers can discover great deals and discounts or even add their favorite item to cart and wishlist all in one place.
+            Easy to use online platform where we connects businesses and
+            customers. Businesses can showcase their services or products. While
+            customers can discover great deals and discounts or even add their
+            favorite item to cart and wishlist all in one place.
           </p>
           <NextLink href="/">
             <Button
@@ -55,10 +55,7 @@ function AboutPageComponent() {
 
       {/* Second section about our story */}
       <div className="my-2 flex flex-col items-center md:flex-row-reverse">
-        <div
-          className="text-center md:w-1/2 md:text-left"
-          data-aos="fade-up"
-        >
+        <div className="text-center md:w-1/2 md:text-left" data-aos="fade-up">
           <p className="text-4xl font-bold">
             Our{' '}
             <span className="text-gradient bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
@@ -86,10 +83,7 @@ function AboutPageComponent() {
       {/* Third section about our vision */}
       <div className="my-2 flex flex-col items-center md:flex-row">
         {/* left section text */}
-        <div
-          className="text-center md:w-1/2 md:text-left"
-          data-aos="fade-up"
-        >
+        <div className="text-center md:w-1/2 md:text-left" data-aos="fade-up">
           <p className="text-4xl font-bold">
             <span className="text-gradient bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
               Our
@@ -106,7 +100,7 @@ function AboutPageComponent() {
         {/* right section image */}
         <div className="md:w-1/2">
           <Image
-             src="/images/vision.svg"
+            src="/images/vision.svg"
             alt="About us"
             width={800}
             height={900}
@@ -118,10 +112,7 @@ function AboutPageComponent() {
       <div className="my-2 flex flex-col items-center md:flex-row-reverse">
         {/* left section image */}
         {/* right section text */}
-        <div
-          className="text-center md:w-1/2 md:text-left"
-          data-aos="fade-up"
-        >
+        <div className="text-center md:w-1/2 md:text-left" data-aos="fade-up">
           <p className="text-4xl font-bold">
             Our{' '}
             <span className="text-gradient bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
@@ -138,7 +129,7 @@ function AboutPageComponent() {
         </div>
         <div className="md:w-1/2">
           <Image
-             src="/images/mission.svg"
+            src="/images/mission.svg"
             alt="About us"
             width={800}
             height={900}

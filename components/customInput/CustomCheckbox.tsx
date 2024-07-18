@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useField } from 'formik';
 import { Checkbox, useDisclosure } from '@nextui-org/react';
 import cn from 'classnames';
-import TermsModal from '@/components/modals/TermsModal';
 
 interface CustomCheckboxProps {
   name: string;
@@ -19,7 +18,6 @@ const CustomCheckbox: React.FC<CustomCheckboxProps> = ({ name }) => {
 
   return (
     <div>
-      <TermsModal isOpen={isOpen} onClose={onOpenChange} />
       <Checkbox
         id={name}
         {...field}

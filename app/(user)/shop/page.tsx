@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     openGraph: {
       type: 'website',
       locale: 'en_US',
-      url: 'https://www.dealkh.com/products',
+      url: 'https://dealkh.istad.co/shop',
       title:
         'Discover the Best Deals, Coupons, and Promotions in Cambodia - DealKH',
       description:

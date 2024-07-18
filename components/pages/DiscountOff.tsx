@@ -154,7 +154,7 @@ export default function Discount() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent category={"accesories"} discountType={"discount off"}/>
+        <DiscountCardComponent category={"accessory"} discountType={"discount off"}/>
         {/* Skin Care */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}

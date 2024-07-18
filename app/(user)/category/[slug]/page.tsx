@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Loading from '@/app/(user)/loading';
 import NotFoundPage from '@/app/(user)/not-found';
 import DiscountCardComponent from '@/components/card/DiscountCardComponent';
@@ -16,14 +16,15 @@ type CategoryPageProps = {
 };
 
 const CategoryPage = ({ params }: CategoryPageProps) => {
+
   const { slug } = params;
   const { data: category, error, isLoading } = useGetCategoryBySlugQuery(slug);
-
+  
   if (isLoading) return <Loading />;
   if (error) {
     return <NotFoundPage />;
   }
-
+  
   return (
     <main>
       <div className="">
@@ -47,6 +48,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
         </div>
       </div>
       <DiscountCardComponent category={slug} discountType="discount off" />
+
       <div className="my-8 flex h-[50px] items-center justify-between">
         <div className="flex-1">
           <p className="relative w-fit text-[26px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
@@ -96,3 +98,4 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
 };
 
 export default CategoryPage;
+

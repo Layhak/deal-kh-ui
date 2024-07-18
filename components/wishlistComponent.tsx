@@ -90,7 +90,7 @@ export default function WishListComponent() {
             <GrMapLocation className="pr-2 text-3xl text-[#eb7d52]" />
 
             <div
-              onClick={() => handleGetDirections(product.location)}
+              // onClick={() => handleGetDirections(product.location)}
               className="my-auto ml-2 cursor-pointer"
             >
               {product.address}
@@ -192,7 +192,7 @@ export default function WishListComponent() {
                   'dark:group-data-[focus=true]:bg-default/60',
                   '!cursor-text',
                   'w-1/3',
-                  'mt-8'
+                  'mt-8',
                 ],
               }}
               placeholder="Type to searh..."

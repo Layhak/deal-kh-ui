@@ -8,23 +8,22 @@ import {
   selectTotalPrice,
 } from '@/redux/feature/cart/cartSlice';
 import { useEffect, useState } from 'react';
-import { Product } from '@/libs/difinition';
 import { Image } from '@nextui-org/react';
 import { Button } from '@nextui-org/button';
 import { GrMapLocation } from 'react-icons/gr';
 import { AnimatePresence, domAnimation, LazyMotion, m } from 'framer-motion';
 import { MdOutlineLocalPhone } from 'react-icons/md';
 import { BsShop } from 'react-icons/bs';
-import ListProductAddToCart from './CartListProductComponent';
-import CartRightSection from './CartRightSection';
+import CartRightSection from '@/components/CartRightSection';
+import ListProductAddToCart from '@/components/CartListProductComponent';
+import { Product } from '@/libs/difinition';
 
 export default function CartComponent() {
   const products = useAppSelector(selectProducts);
   const totalPrice = useAppSelector(selectTotalPrice);
   const dispatch = useAppDispatch();
 
-  const [selectedProduct, setSelectedProduct] =
-    useState<Product | null>(null);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [productQuantities, setProductQuantities] = useState<{
     [key: string]: number;
   }>({});
@@ -79,6 +78,10 @@ export default function CartComponent() {
   };
 
   const handleGetDirections = (location: string) => {
+    if (!location || !location.includes(',')) {
+      console.error('Invalid location format');
+      return;
+    }
     const [lat, lng] = location.split(',');
     const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
     window.open(url, '_blank');
@@ -132,7 +135,7 @@ export default function CartComponent() {
       {products.length !== 0 && (
         <section className="my-8 flex h-full w-full gap-8">
           {/* Left */}
-          <div className="w-full flex-none lg:w-[60%] md:w-[50%]">
+          <div className="w-full flex-none md:w-[50%] lg:w-[60%]">
             <div className="flex h-full flex-1 flex-col">
               <AnimatePresence initial={false} mode="wait">
                 <LazyMotion features={domAnimation}>
@@ -147,14 +150,12 @@ export default function CartComponent() {
                     }}
                     onSubmit={(e) => e.preventDefault()}
                   >
-                    <h1 className="text-fourground-700 lg:pb-4 pb-0 lg:text-2xl text-xl lg:px-0 px-4 font-semibold dark:text-white">
+                    <h1 className="text-fourground-700 px-4 pb-0 text-xl font-semibold dark:text-white lg:px-0 lg:pb-4 lg:text-2xl">
                       Review your add to cart
                     </h1>
-                    <div className="max-h-[none] overflow-y-auto px-4 scrollbar-hide lg:max-h-[480px] md:max-h-[430px] lg:px-0">
+                    <div className="max-h-[none] overflow-y-auto px-4 scrollbar-hide md:max-h-[430px] lg:max-h-[480px] lg:px-0">
                       {products.map((product: Product) => (
-                        <div
-                          key={product.slug}
-                        >
+                        <div key={product.slug}>
                           <ListProductAddToCart
                             product={product}
                             quantity={productQuantities[product.slug] || 0}
@@ -169,9 +170,9 @@ export default function CartComponent() {
                       ))}
                     </div>
 
-                    <div className='lg:px-0 px-4'>
+                    <div className="px-4 lg:px-0">
                       {/* this is the subtotal */}
-                      <dl className="flex flex-col gap-4 lg:mb-4 mb-2">
+                      <dl className="mb-2 flex flex-col gap-4 lg:mb-4">
                         <div className="flex justify-between ">
                           <dt className="text-fourground-600 dark:text-fourground-300">
                             Subtotal
@@ -183,7 +184,7 @@ export default function CartComponent() {
                       </dl>
 
                       {/* this is the discount */}
-                      <dl className="flex flex-col gap-4 lg:mb-4 mb-2">
+                      <dl className="mb-2 flex flex-col gap-4 lg:mb-4">
                         <div className="flex justify-between">
                           <dt className="text-fourground-600 dark:text-fourground-300">
                             Discount
@@ -221,8 +222,8 @@ export default function CartComponent() {
           </div>
 
           {/* Right */}
-          <div className="hidden lg:block md:block lg:w-[40%] max-w-[40%] ">
-            <h3 className="text-fourground-700 pb-4  lg:text-2xl text-xl font-semibold dark:text-white">
+          <div className="hidden max-w-[40%] md:block lg:block lg:w-[40%] ">
+            <h3 className="text-fourground-700 pb-4  text-xl font-semibold dark:text-white lg:text-2xl">
               Product Detail
             </h3>
             {selectedProduct && (

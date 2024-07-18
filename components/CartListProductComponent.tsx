@@ -1,10 +1,10 @@
 'use client';
 import { Button, Image, Tooltip } from '@nextui-org/react';
 import { Icon } from '@iconify/react';
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 
 type ProductProps = {
-  product: CartProductType;
+  product: Product;
   quantity: number;
   imageClick: () => void;
   increaseQty: () => void;
@@ -31,7 +31,7 @@ export default function ListProductAddToCart({
                 <Image
                   alt={product.name}
                   src={product.images[0].url}
-                  className="h-full w-full rounded-md object-cover cursor-pointer"
+                  className="h-full w-full cursor-pointer rounded-md object-cover"
                   onClick={imageClick}
                 />
               </div>

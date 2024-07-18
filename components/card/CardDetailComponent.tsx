@@ -1,6 +1,4 @@
-// CardDetailComponent.jsx
 'use client';
-import { ProductDetail } from '@/types/productDetail';
 import { Button, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { Key, useEffect, useState } from 'react';
@@ -18,8 +16,8 @@ import {
 } from '@/redux/service/ratingAndFeedback';
 import Loading from '@/app/(user)/loading';
 import { StarIcon } from '@/components/review/StarIcon';
+import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/feature/cart/cartSlice';
-import { Product } from '@/libs/difinition';
 
 export default function CardDetailComponent({
   slug,
@@ -42,12 +40,16 @@ export default function CardDetailComponent({
   updatedAt,
   updatedBy,
   createdBy,
+  isPercentage,
   shopSlug,
   ratingCount,
+  location,
+  quantity = 0,
 }: any) {
   const router = useRouter();
   const [averageRating, setAverageRating] = useState(0);
   const [totalReviews, setTotalReviews] = useState(0);
+  const dispatch = useDispatch();
 
   const {
     data: ratingsData,
@@ -84,10 +86,6 @@ export default function CardDetailComponent({
         <div className="text-gray-500">Error loading data</div>
       </div>
     );
-
-  function dispatch(arg0: any): void {
-    throw new Error('Function not implemented.');
-  }
 
   return (
     <div className="container w-full lg:py-8">
@@ -188,29 +186,28 @@ export default function CardDetailComponent({
               onClick={() =>
                 dispatch(
                   addToCart({
-                    slug: slug,
-                    seller: seller,
-                    name: name,
-                    price: price,
-                    discountPrice: discountPrice,
-                    ratingAvg: ratingAvg,
-                    description: description,
-                    images: images,
-                    shop: shop,
-                    discountValue: discountValue,
-                    discountType: discountType,
-                    expiredAt: expiredAt,
-                    category: category,
-                    createdAt: createdAt,
-                    updatedAt: updatedAt,
-                    createdBy: createdBy,
-                    updatedBy: updatedBy,
-                    openAt: openAt,
-                    closeAt: closeAt,
-                    shopSlug: shopSlug,
-                    address: address,
-                    ratingCount: ratingCount,
-                    isPercentage: false,
+                    slug,
+                    seller,
+                    name,
+                    price,
+                    discountPrice,
+                    ratingAvg,
+                    description,
+                    images,
+                    shop,
+                    discountValue,
+                    discountType,
+                    expiredAt,
+                    category,
+                    createdAt,
+                    updatedAt,
+                    createdBy,
+                    updatedBy,
+                    address,
+                    ratingCount,
+                    isPercentage,
+                    location,
+                    quantity,
                   })
                 )
               }

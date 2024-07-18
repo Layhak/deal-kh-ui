@@ -36,7 +36,7 @@ export default function ShopCardComponent({
 
   return (
     <div>
-      <div className="grid min-h-[920px] grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid  grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
         {data?.payload.list.map((shop: ShopResponse) => (
           <Card
             key={shop.slug}

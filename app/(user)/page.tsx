@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import FilterComponent from '@/components/Filter';
 import { useGetProductScrapeQuery } from '@/redux/service/productScrape';
+import PopularShop from '@/components/card/PopularShop';
 
 export default function HomePage() {
   const [page, setPage] = useState(1);
@@ -54,7 +55,6 @@ export default function HomePage() {
       localStorage.removeItem('token');
     }
   }, [theme]);
-
   return (
     <>
       <div>
@@ -406,7 +406,7 @@ export default function HomePage() {
             </p>
           </div>
           {/* Right section */}
-          <Link href="/shop-list">
+          <Link href="/shop">
             <div className="flex items-center pt-2">
               <p className="mr-2 pb-1 lg:text-[17px] text-[15px] font-normal text-foreground-700">
                 See More
@@ -430,7 +430,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <ShopCardComponent initialPage={1} size={3} />
+        <PopularShop />
       </div>
     </>
   );

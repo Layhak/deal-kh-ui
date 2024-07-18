@@ -17,7 +17,7 @@ import { inter, kantumruyPro } from '@/utils/fonts';
 import FilterComponent from '@/components/Filter';
 
 export const metadata: Metadata = {
-  title: 'Home Page',
+  title: 'DealKH',
   description:
     'Find the best deals, coupons, and promotions from shops in Cambodia. Save big on your shopping with exclusive offers and discounts at DealKH.',
   keywords:
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: 'dealkh.istad.co',
   },
   twitter: {
-    site: '@dealkh',
+    site: 'DealKH',
     title: 'Best Deals, Coupons & Promotions in Cambodia - DealKH',
     description:
       'Find the best deals, coupons, and promotions from shops in Cambodia. Save big on your shopping with exclusive offers and discounts at DealKH.',

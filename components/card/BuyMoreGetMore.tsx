@@ -1,4 +1,4 @@
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 import {
   addToWishList,
   removeFromWishList,
@@ -40,7 +40,7 @@ export default function BuyMoreGetMoreComponent({
     }
   }, []);
 
-  const handleHeartClick = (product: CartProductType) => {
+  const handleHeartClick = (product: Product) => {
     setHeartStates((prevHeartStates) => {
       const isAddedToWishlist = !prevHeartStates[product.slug];
       const updatedHeartStates = {
@@ -62,12 +62,12 @@ export default function BuyMoreGetMoreComponent({
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-7">
-        {data?.payload.list.map((product: CartProductType) => (
+        {data?.payload.list.map((product: Product) => (
           <Card
             onClick={() => router.push(`/${product.slug}`)}
             key={product.slug}
             isPressable
-            className="relative mb-2 h-[330px] w-[285px] flex-none rounded-xl border-1 border-foreground-200  bg-foreground-100 shadow-none dark:border-foreground-700  dark:bg-foreground-800"
+            className="relative mb-2 h-[330px] w-[285px] flex-none rounded-xl  shadow-none dark:border-foreground-700  dark:bg-foreground-800"
           >
             <CardBody className="relative h-[230px] overflow-visible rounded-b-lg px-4">
               <Link href="#">
@@ -86,7 +86,7 @@ export default function BuyMoreGetMoreComponent({
                 BUY 1 GET 1
               </span>
               <div className="flex flex-wrap justify-between">
-                <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-gray-800 dark:text-white">
+                <h5 className="mt-3 h-[45px] w-[160px] text-[18px] font-semibold tracking-tight text-foreground-800 dark:text-white">
                   {product.name.length > 28
                     ? `${product.name.substring(0, 20)}...`
                     : product.name}

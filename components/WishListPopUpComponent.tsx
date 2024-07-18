@@ -1,5 +1,5 @@
 import Loading from '@/app/(user)/loading';
-import { CartProductType, WishListResponse } from '@/libs/difinition';
+import { Product, WishListResponse } from '@/libs/difinition';
 import {
   useCreateWishListMutation,
   useDeleteWishListMutation,
@@ -247,15 +247,15 @@ export default function WishListDropDownComponent({
 
             <form onSubmit={handleCreateWishlist}>
               <div
-                className={`mb-2 w-full text-center text-sm px-4 text-red-500 ${!showValidationMessage ? 'hidden' : ''}`}
+                className={`mb-2 w-full px-4 text-center text-sm text-red-500 ${!showValidationMessage ? 'hidden' : ''}`}
               >
                 Please enter Wishlist Percentage and Description.
               </div>
-              <div className="bg-gray-50 lg:mx-0 mx-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+              <div className="mx-4 bg-gray-50 py-3 sm:flex sm:flex-row-reverse sm:px-6 lg:mx-0">
                 <button
                   type="submit"
-                  className={`w-full h-10 lg:h-12 lg:ml-2 rounded-md bg-gradient-to-r from-yellow-500 to-pink-500 py-2 font-bold text-white shadow-md transition duration-300 ease-in-out hover:from-yellow-600 hover:to-pink-800 sm:text-sm lg:mr-2 ${!isFormValid ? 'cursor-not-allowed' : ''}`}
-                  >
+                  className={`h-10 w-full rounded-md bg-gradient-to-r from-yellow-500 to-pink-500 py-2 font-bold text-white shadow-md transition duration-300 ease-in-out hover:from-yellow-600 hover:to-pink-800 sm:text-sm lg:ml-2 lg:mr-2 lg:h-12 ${!isFormValid ? 'cursor-not-allowed' : ''}`}
+                >
                   Submit
                 </button>
               </div>

@@ -1,26 +1,32 @@
-import { CartProductType } from '@/libs/difinition';
+import { Product, ProductResponse } from '@/libs/difinition';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { Card, CardBody, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { StarIcon } from '@/components/review/StarIcon';
 
-export default function DiscountCardComponent({ category, discountType }: any) {
+export default function DiscountCardComponent({
+  category,
+  discountType,
+  name,
+}: any) {
   const router = useRouter();
-  const { data, error } = useGetProductsQuery({
+  const { data, error }: any = useGetProductsQuery({
     page: 1,
     size: 8,
     filters: {
       categorySlug: category,
       discountType: discountType,
+      name: '',
     },
   });
+  console.log('data', data);
 
   return (
     <main>
       {/* for the card section*/}
-      <div className="flex flex-wrap justify-center gap-[25px]">
-        {data?.payload.list.map((product: CartProductType) => (
+      <div className="flex flex-wrap justify-center gap-7">
+        {data?.payload.list.map((product: Product) => (
           <Card
             onClick={() => router.push(`/products/${product.slug}`)}
             key={product.slug}
@@ -40,7 +46,7 @@ export default function DiscountCardComponent({ category, discountType }: any) {
                 />
               </Link>
 
-              <span className="absolute right-0 top-0 z-20 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white">
+              <span className="absolute right-0 top-0 z-10 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white">
                 {`${product.discountValue}${product.isPercentage ? '%' : '$'} OFF`}
               </span>
 
@@ -53,7 +59,7 @@ export default function DiscountCardComponent({ category, discountType }: any) {
                           <StarIcon
                             key={index}
                             filled
-                            className="h-4 w-4 text-yellow-500"
+                            className="h-4 w-4 text-yellow-300"
                           />
                         );
                       } else if (product.ratingAvg >= index + 0.5) {
@@ -61,20 +67,20 @@ export default function DiscountCardComponent({ category, discountType }: any) {
                           <StarIcon
                             key={index}
                             half
-                            className="h-4 w-4 text-yellow-500"
+                            className="h-4 w-4 text-yellow-300"
                           />
                         );
                       } else {
                         return (
                           <StarIcon
                             key={index}
-                            className="h-4 w-4 text-yellow-500"
+                            className="h-4 w-4 text-yellow-300"
                           />
                         );
                       }
                     })}
                     <span className="ml-1 text-[13px] font-medium text-foreground-600">
-                      ({product?.ratingCount}) Reviews
+                      ({Math.round(product.ratingAvg * 10) / 10}) Reviews
                     </span>
                   </div>
                 </div>

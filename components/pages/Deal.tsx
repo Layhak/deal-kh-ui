@@ -7,9 +7,15 @@ import ServiceCardComponent from '@/components/card/Service';
 import { Image, Link } from '@nextui-org/react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useGetProductScrapeQuery } from '@/redux/service/productScrape';
 
 export default function Deal() {
+  const [page, setPage] = useState(1);
+  const size = 4;
+
+  const { data } = useGetProductScrapeQuery({ page, size });
+
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);
@@ -21,16 +27,20 @@ export default function Deal() {
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700
-             after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Discount <span className="text-[#eb7d52]">Off</span>
+            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
+              Discount{' '}
+              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                Off
+              </span>
             </p>
           </div>
           {/* Right section */}
-          <Link href="/discount-off">
+          <Link href="/discount">
             <div className="flex items-center  pt-1">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              ">
+              <p
+                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
+              "
+              >
                 See More
               </p>
               {/* Icon */}
@@ -53,19 +63,26 @@ export default function Deal() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent category={"food"} discountType={"discount off"} />
+        <DiscountCardComponent
+          category={'food'}
+          discountType={'discount off'}
+        />
         {/* Buy1 Get1 Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700
-             after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Buy More <span className="text-[#eb7d52]">Get More</span>
+            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
+              Buy More{' '}
+              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                Get More
+              </span>
             </p>
           </div>
           <Link href="/buy-more-get-more">
             <div className="flex items-center  pt-1">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              ">
+              <p
+                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
+              "
+              >
                 See More
               </p>
               {/* Icon */}
@@ -93,29 +110,36 @@ export default function Deal() {
             <Link href="/buy-more-get-more">
               <Image
                 src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
-                className="h-[690px] w-[366px] object-fill" alt='Buy More Get More'
+                className="h-[690px] w-[366px] object-fill"
+                alt="Buy More Get More"
               ></Image>
             </Link>
           </div>
           <div className="w-[800px]">
-            <Buy1Get1Component category={"clothes"} discountType={"buy more get more"}/>
+            <Buy1Get1Component
+              category={'clothes'}
+              discountType={'buy more get more'}
+            />
           </div>
         </div>
         {/* Service Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700
-             after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              So Many Deals...
-              <span className="text-[#eb7d52]">See Them All</span>
+            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
+              So Many Deal{' '}
+              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                See Them All...
+              </span>
             </p>
           </div>
           {/* Right section */}
           <Link href="/service">
             <div className="flex items-center  pt-1">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              ">
+              <p
+                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
+              "
+              >
                 See More
               </p>
               {/* Icon */}
@@ -138,21 +162,22 @@ export default function Deal() {
             </div>
           </Link>
         </div>
-        <ServiceCardComponent category={"drink"} discountType={"no discount"} />
+        {data && <ServiceCardComponent data={data} />}
         {/* Event Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700
-             after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
+            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
               Event
             </p>
           </div>
           {/* Right section */}
           <Link href="/event">
             <div className="flex items-center  pt-1">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              ">
+              <p
+                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
+              "
+              >
                 See More
               </p>
               {/* Icon */}
@@ -176,22 +201,29 @@ export default function Deal() {
           </Link>
         </div>
         <Link href="/event">
-          <Image src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728" alt='Event'></Image>
+          <Image
+            src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+            alt="Event"
+          ></Image>
         </Link>
         {/* Coupon Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700
-             after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Shop <span className="text-[#eb7d52]">Coupons</span>
+            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
+              Shop{' '}
+              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                Coupons
+              </span>
             </p>
           </div>
           {/* Right section */}
-          <Link href="/coupon">
+          <Link href="/coupons">
             <div className="flex items-center  pt-1">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              ">
+              <p
+                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
+              "
+              >
                 See More
               </p>
               {/* Icon */}
@@ -218,29 +250,38 @@ export default function Deal() {
           <div className="coupon">
             <Image
               src="https://as2.ftcdn.net/v2/jpg/03/29/10/97/1000_F_329109774_iTsyjzLU5O9cagJ9UhahhNF2ZdkW4OHc.jpg"
-              className="h-[250px] w-[550px] object-cover" alt='Coupon'
+              className="h-[250px] w-[550px] object-cover"
+              alt="Coupon"
             />
           </div>
           <div className="coupon">
             <Image
               src="https://as1.ftcdn.net/v2/jpg/03/29/10/98/1000_F_329109835_b1coeNquepUkFoSpqVgLLqKFiBKosY7K.jpg"
-              className="h-[250px] w-[550px] object-cover" alt='Coupon'
+              className="h-[250px] w-[550px] object-cover"
+              alt="Coupon"
             />
           </div>
         </div>
-        <DiscountCardComponent category={"accessories"} discountType={"shop coupons"} />
+        <DiscountCardComponent
+          category={'accessories'}
+          discountType={'shop coupons'}
+        />
         {/* Clearance Sale Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
-            <p className="relative w-fit text-[26px] font-bold text-foreground-700
-             after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]">
-              Clearance <span className="text-[#eb7d52]">Sales</span>
+            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
+              Clearance{' '}
+              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                Sales
+              </span>
             </p>
           </div>
           <Link href="/flash-sale">
             <div className="flex items-center  pt-1">
-              <p className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              ">
+              <p
+                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
+              "
+              >
                 See More
               </p>
               {/* Icon */}
@@ -263,11 +304,15 @@ export default function Deal() {
             </div>
           </Link>
         </div>
-        <ClearanceCardComponent category={"electronic"} discountType={"clearance sales"}/>
+        <ClearanceCardComponent
+          category={'electronic'}
+          discountType={'clearance sales'}
+        />
         <div className="mt-12">
           <Image
             src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
-            className="h-[310px] w-[1300px] object-cover" alt='Clearance Sale'
+            className="h-[310px] w-[1300px] object-cover"
+            alt="Clearance Sale"
           ></Image>
         </div>
       </main>

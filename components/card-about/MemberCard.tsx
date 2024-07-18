@@ -3,7 +3,12 @@ import React, { useState } from 'react';
 import { FaFacebookF, FaGoogle, FaInstagram } from 'react-icons/fa';
 import { MemberList } from './memberList';
 import { Image } from '@nextui-org/react';
-import Marquee from 'react-fast-marquee';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/autoplay';
+import '@/styles/swiper.css';
+import { Autoplay, FreeMode, Pagination } from 'swiper/modules';
 
 type Members = {
   img: string;
@@ -15,18 +20,29 @@ export default function MemberCard() {
   const [members, setMembers] = useState<Members[]>(MemberList);
 
   return (
-    <Marquee pauseOnHover={true} speed={50} className={'my-8 flex space-x-10'}>
-      <div className="flex space-x-10">
+    <div className="marquee-container">
+      <Swiper
+        slidesPerView="auto"
+        spaceBetween={30}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        }}
+        modules={[Autoplay, FreeMode]}
+        speed={5000} // Adjust this value to control the speed
+        loop={true}
+        grabCursor={true}
+      >
         {members.map((item, index) => (
-          <div
+          <SwiperSlide
             key={index}
-            className="relative w-[250px] max-w-sm  items-center  overflow-hidden rounded-3xl   px-5 py-10 dark:border-warning-200"
+            style={{ width: '250px' }}
+            className="relative w-[250px] max-w-sm items-center overflow-hidden rounded-3xl px-5 pt-10 dark:border-warning-200"
           >
             <div className="relative flex items-center justify-center">
-              <span className="absolute inset-[0%] animate-[spin_3s_linear_infinite] rounded-full bg-[conic-gradient(from_90deg_at_50%_50%,#EC4899_0%,#EAB308_50%,#EC4899_100%)]  blur-sm"></span>
+              <span className="absolute inset-[0%] animate-[spin_3s_linear_infinite] rounded-full bg-[conic-gradient(from_90deg_at_50%_50%,#EC4899_0%,#EAB308_50%,#EC4899_100%)] blur-sm"></span>
               <Image
-                isBlurred
-                isZoomed
                 radius={'full'}
                 src={item.img}
                 alt={item.name}
@@ -34,7 +50,7 @@ export default function MemberCard() {
               />
             </div>
             <div className="py-4 text-center">
-              <div className="mb-2 text-2xl font-bold">{item.name}</div>
+              <div className="mb-2 text-xl font-bold">{item.name}</div>
               <div className="mb-2 text-lg ">{item.role}</div>
             </div>
             <div className="flex w-full justify-around px-6 py-4">
@@ -69,9 +85,9 @@ export default function MemberCard() {
                 </div>
               </div>
             </div>
-          </div>
+          </SwiperSlide>
         ))}
-      </div>
-    </Marquee>
+      </Swiper>
+    </div>
   );
 }

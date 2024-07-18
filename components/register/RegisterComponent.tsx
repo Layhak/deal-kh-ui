@@ -27,7 +27,7 @@ interface RegisterFormValues {
   gender: string;
   phoneNumber: string;
   dob: string;
-  location: string;
+  address: string;
   acceptPolicy: boolean;
 }
 
@@ -41,7 +41,7 @@ const initialValues: RegisterFormValues = {
   gender: '',
   phoneNumber: '',
   dob: '',
-  location: '',
+  address: '',
   acceptPolicy: false,
 };
 
@@ -247,7 +247,7 @@ const Register: React.FC = () => {
                     label="Location"
                     name="location"
                     type="text"
-                    placeholder="Enter your location"
+                    placeholder="Enter your address"
                   />
                 </div>
               </div>

@@ -206,7 +206,7 @@ export default function ReviewForm({
   return (
     <FormikProvider value={formik}>
       <form
-        className="flex w-full flex-col items-start rounded-medium border-1 border-foreground-900/20 bg-foreground-50 transition-colors hover:bg-foreground-100/70"
+        className="flex w-full flex-col items-start rounded-medium bg-foreground-50 transition-colors hover:bg-foreground-100/70"
         onSubmit={(e) => {
           e.preventDefault();
           formik.handleSubmit(e);

@@ -1,13 +1,13 @@
 // ProductDetailComponent.tsx
 
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 import { GrMapLocation } from 'react-icons/gr';
 import { BsShop } from 'react-icons/bs';
 import { MdOutlineLocalPhone } from 'react-icons/md';
 import { Image } from '@nextui-org/react';
 
 type ProductDetailProps = {
-  product: CartProductType;
+  product: Product;
   handleGetDirections: (location: string) => void;
 };
 

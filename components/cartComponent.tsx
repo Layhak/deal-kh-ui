@@ -8,7 +8,7 @@ import {
   selectTotalPrice,
 } from '@/redux/feature/cart/cartSlice';
 import { useEffect, useState } from 'react';
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 import { Image } from '@nextui-org/react';
 import { Button } from '@nextui-org/button';
 import { GrMapLocation } from 'react-icons/gr';
@@ -24,14 +24,14 @@ export default function CartComponent() {
   const dispatch = useAppDispatch();
 
   const [selectedProduct, setSelectedProduct] =
-    useState<CartProductType | null>(null);
+    useState<Product | null>(null);
   const [productQuantities, setProductQuantities] = useState<{
     [key: string]: number;
   }>({});
 
   useEffect(() => {
     const initialQuantities: { [key: string]: number } = {};
-    products.forEach((product: CartProductType) => {
+    products.forEach((product: Product) => {
       initialQuantities[product.slug] = productQuantities[product.slug] || 1;
     });
     setProductQuantities(initialQuantities);
@@ -84,13 +84,13 @@ export default function CartComponent() {
     window.open(url, '_blank');
   };
 
-  const handleClickImage = (product: CartProductType) => {
+  const handleClickImage = (product: Product) => {
     setSelectedProduct(product);
   };
 
   const calculateOriginalPrice = () => {
     let totalOriginalPrice = 0;
-    products.forEach((product: CartProductType) => {
+    products.forEach((product: Product) => {
       const quantity = productQuantities[product.slug] || 0;
       totalOriginalPrice += quantity * product.price;
     });
@@ -99,7 +99,7 @@ export default function CartComponent() {
 
   const calculateTotalDiscount = () => {
     let totalDiscount = 0;
-    products.forEach((product: CartProductType) => {
+    products.forEach((product: Product) => {
       const quantity = productQuantities[product.slug] || 0;
       totalDiscount += quantity * product.discountPrice;
     });
@@ -108,7 +108,7 @@ export default function CartComponent() {
 
   const calculateTotalPrice = () => {
     let total = 0;
-    products.forEach((product: CartProductType) => {
+    products.forEach((product: Product) => {
       const quantity = productQuantities[product.slug] || 0;
       total += quantity * (product.price - product.discountPrice);
     });
@@ -151,7 +151,7 @@ export default function CartComponent() {
                       Review your add to cart
                     </h1>
                     <div className="max-h-[none] overflow-y-auto px-4 scrollbar-hide lg:max-h-[480px] md:max-h-[430px] lg:px-0">
-                      {products.map((product: CartProductType) => (
+                      {products.map((product: Product) => (
                         <div
                           key={product.slug}
                         >
@@ -171,8 +171,8 @@ export default function CartComponent() {
 
                     <div className='lg:px-0 px-4'>
                       {/* this is the subtotal */}
-                      <dl className="flex flex-col gap-4">
-                        <div className="flex justify-between">
+                      <dl className="flex flex-col gap-4 lg:mb-4 mb-2">
+                        <div className="flex justify-between ">
                           <dt className="text-fourground-600 dark:text-fourground-300">
                             Subtotal
                           </dt>
@@ -183,7 +183,7 @@ export default function CartComponent() {
                       </dl>
 
                       {/* this is the discount */}
-                      <dl className="flex flex-col gap-4">
+                      <dl className="flex flex-col gap-4 lg:mb-4 mb-2">
                         <div className="flex justify-between">
                           <dt className="text-fourground-600 dark:text-fourground-300">
                             Discount

@@ -75,10 +75,8 @@ export type Product = {
   createdBy: string;
   updatedBy: string;
   quantity?: number | 0;
-  address: string;
-  closeAt: string;
-  shopSlug: string;
-  openAt: string;
+  address?: string;
+  location: string;
 };
 
 export type ShopResponse = {

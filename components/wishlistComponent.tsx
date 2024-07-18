@@ -21,6 +21,9 @@ import {
   selectTotalWishlistPrice,
   selectWishlistProducts,
 } from '@/redux/feature/wishList/wishListSlice';
+import { GrMapLocation } from 'react-icons/gr';
+import { Input } from '@nextui-org/react';
+import { SearchIcon } from './seller/component/table/SearchIcon';
 
 export default function WishListComponent() {
   const products = useAppSelector(selectWishlistProducts);
@@ -59,15 +62,16 @@ export default function WishListComponent() {
       case 'image':
         return (
           <div className="flex items-center">
-            <Image
-              src={
-                product.images?.[0]?.url ||
-                'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
-              }
-              width={50}
-              height={50}
-              alt={product.name}
-            />
+            <div className="h-12 w-12">
+              <Image
+                src={
+                  product.images?.[0]?.url ||
+                  'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
+                }
+                className="h-12 w-12 object-cover"
+                alt={product.name}
+              />
+            </div>
           </div>
         );
       case 'name':
@@ -81,7 +85,18 @@ export default function WishListComponent() {
       case 'shop':
         return <div>{product.shop}</div>;
       case 'location':
-        return <div>{product.address || 'N/A'}</div>;
+        return (
+          <div className="flex">
+            <GrMapLocation className="pr-2 text-3xl text-[#eb7d52]" />
+
+            <div
+              onClick={() => handleGetDirections(product.location)}
+              className="my-auto ml-2 cursor-pointer"
+            >
+              {product.address}
+            </div>
+          </div>
+        );
       case 'price':
         return <div>${product.price}</div>;
       case 'discount price':
@@ -117,7 +132,7 @@ export default function WishListComponent() {
             <Button
               isIconOnly
               onClick={() => dispatch(removeFromWishList(product.slug))}
-              className="rounded-xl bg-red-500 p-2 text-white"
+              className="rounded-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-2 text-white"
             >
               <LuTrash />
             </Button>
@@ -155,6 +170,37 @@ export default function WishListComponent() {
               </p>
             </div>
 
+            <Input
+              isClearable
+              radius="lg"
+              classNames={{
+                label: 'text-black/50 dark:text-white/90',
+                input: [
+                  'bg-transparent',
+                  'text-black/90 dark:text-white/90',
+                  'placeholder:text-default-700/50 dark:placeholder:text-white/60',
+                ],
+                innerWrapper: 'bg-transparent',
+                inputWrapper: [
+                  'bg-default-200/50',
+                  'dark:bg-default/60',
+                  'backdrop-blur-xl',
+                  'backdrop-saturate-200',
+                  'hover:bg-default-200/70',
+                  'dark:hover:bg-default/70',
+                  'group-data-[focus=true]:bg-default-200/50',
+                  'dark:group-data-[focus=true]:bg-default/60',
+                  '!cursor-text',
+                  'w-1/3',
+                  'mt-8'
+                ],
+              }}
+              placeholder="Type to searh..."
+              startContent={
+                <SearchIcon className="pointer-events-none mb-0.5 flex-shrink-0 text-black/50 text-slate-400 dark:text-white/90" />
+              }
+            />
+
             <Table aria-label="Wishlist" className="mt-8">
               <TableHeader
                 columns={[
@@ -174,7 +220,9 @@ export default function WishListComponent() {
                     key={column.uid}
                     align={column.uid === 'actions' ? 'center' : 'start'}
                   >
-                    {column.name}
+                    <span className="text-sm text-[#eb7d52]">
+                      {column.name}
+                    </span>
                   </TableColumn>
                 )}
               </TableHeader>

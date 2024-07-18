@@ -9,48 +9,73 @@ import {
 } from '@/redux/feature/cart/cartSlice';
 import { useEffect, useState } from 'react';
 import { Product } from '@/libs/difinition';
-import {
-  Image,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-} from '@nextui-org/react';
-import { LuMinus, LuPlus, LuTrash } from 'react-icons/lu';
+import { Image } from '@nextui-org/react';
 import { Button } from '@nextui-org/button';
+import { GrMapLocation } from 'react-icons/gr';
+import { AnimatePresence, domAnimation, LazyMotion, m } from 'framer-motion';
+import { MdOutlineLocalPhone } from 'react-icons/md';
+import { BsShop } from 'react-icons/bs';
+import ListProductAddToCart from './CartListProductComponent';
+import CartRightSection from './CartRightSection';
 
 export default function CartComponent() {
   const products = useAppSelector(selectProducts);
   const totalPrice = useAppSelector(selectTotalPrice);
   const dispatch = useAppDispatch();
-  // console.log('product', products);
 
-  // Display number of product that only unique select
-  const [uniqueProducts, setUniqueProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] =
+    useState<Product | null>(null);
+  const [productQuantities, setProductQuantities] = useState<{
+    [key: string]: number;
+  }>({});
 
   useEffect(() => {
-    // Filter unique products based on their IDs
-    const unique = products.filter(
-      (product: { slug: any }, index: any, self: any[]) =>
-        index === self.findIndex((t) => t.slug === product.slug)
-    );
-
-    // Update the state with the unique products
-    setUniqueProducts(unique);
+    const initialQuantities: { [key: string]: number } = {};
+    products.forEach((product: Product) => {
+      initialQuantities[product.slug] = productQuantities[product.slug] || 1;
+    });
+    setProductQuantities(initialQuantities);
+    if (!selectedProduct && products.length > 0) {
+      setSelectedProduct(products[0]);
+    }
   }, [products]);
 
-  const handleIncrementQuantity = (product: Product) => {
-    dispatch(incrementQuantity(product.slug));
+  const increaseQuantity = (slug: string) => {
+    if (!(slug in productQuantities)) {
+      setProductQuantities({ ...productQuantities, [slug]: 1 });
+    } else {
+      dispatch(incrementQuantity(slug));
+      setProductQuantities({
+        ...productQuantities,
+        [slug]: productQuantities[slug] + 1,
+      });
+    }
   };
 
-  const handleDecrementQuantity = (product: Product) => {
-    dispatch(decrementQuantity(product.slug));
+  const decreaseQuantity = (slug: string) => {
+    if (!(slug in productQuantities)) {
+      return;
+    }
+
+    if (productQuantities[slug] === 1) {
+      dispatch(removeFromCart(slug));
+      const updatedQuantities = { ...productQuantities };
+      delete updatedQuantities[slug];
+      setProductQuantities(updatedQuantities);
+    } else {
+      dispatch(decrementQuantity(slug));
+      setProductQuantities({
+        ...productQuantities,
+        [slug]: productQuantities[slug] - 1,
+      });
+    }
   };
 
-  const handleRemoveFromCart = (product: Product) => {
-    dispatch(removeFromCart(product.slug));
+  const handleRemoveFromCart = (slug: string) => {
+    dispatch(removeFromCart(slug));
+    const updatedQuantities = { ...productQuantities };
+    delete updatedQuantities[slug];
+    setProductQuantities(updatedQuantities);
   };
 
   const handleGetDirections = (location: string) => {
@@ -59,82 +84,35 @@ export default function CartComponent() {
     window.open(url, '_blank');
   };
 
-  const renderCell = (product: Product, columnKey: string) => {
-    switch (columnKey) {
-      case 'image':
-        return (
-          <div className="flex items-center">
-            <Image
-              src={
-                product.images?.[0]?.url ||
-                'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
-              }
-              width={50}
-              height={50}
-              alt={product.name}
-            />
-          </div>
-        );
-      case 'name':
-        return (
-          <div>
-            {product.name.length > 30
-              ? `${product.name.substring(0, 26)}...`
-              : product.name || 'Product Name'}
-          </div>
-        );
-      case 'shop':
-        return <div>{product.shop}</div>;
-      case 'location':
-        return (
-          <div className="flex items-center">
-            <Button
-              onClick={() => handleGetDirections(product.address)}
-              className="ml-2"
-            >
-              Get Directions
-            </Button>
-          </div>
-        );
-      case 'price':
-        return <div>${product.price}</div>;
-      case 'discount price':
-        return <div>${product.discountPrice}</div>;
-      case 'quantity':
-        return (
-          <div className="flex items-center">
-            <div className="flex ">
-              <div className="flex h-8 w-8 items-center justify-center rounded-l-lg border">
-                <LuPlus onClick={() => handleIncrementQuantity(product)} />
-              </div>
+  const handleClickImage = (product: Product) => {
+    setSelectedProduct(product);
+  };
 
-              <div className="flex h-8  w-8 items-center justify-center border">
-                <span>{product.quantity}</span>
-              </div>
+  const calculateOriginalPrice = () => {
+    let totalOriginalPrice = 0;
+    products.forEach((product: Product) => {
+      const quantity = productQuantities[product.slug] || 0;
+      totalOriginalPrice += quantity * product.price;
+    });
+    return totalOriginalPrice.toFixed(2);
+  };
 
-              <div className="flex h-8  w-8 items-center justify-center rounded-r-lg border">
-                <LuMinus onClick={() => handleDecrementQuantity(product)} />
-              </div>
-            </div>
-          </div>
-        );
-      case 'total':
-        return <div>${product.discountPrice * (product.quantity || 1)}</div>;
-      case 'delete':
-        return (
-          <div className="flex justify-center">
-            <Button
-              isIconOnly
-              onClick={() => handleRemoveFromCart(product)}
-              className="rounded-xl bg-red-500 p-2 text-white"
-            >
-              <LuTrash />
-            </Button>
-          </div>
-        );
-      default:
-        return null;
-    }
+  const calculateTotalDiscount = () => {
+    let totalDiscount = 0;
+    products.forEach((product: Product) => {
+      const quantity = productQuantities[product.slug] || 0;
+      totalDiscount += quantity * product.discountPrice;
+    });
+    return totalDiscount.toFixed(2);
+  };
+
+  const calculateTotalPrice = () => {
+    let total = 0;
+    products.forEach((product: Product) => {
+      const quantity = productQuantities[product.slug] || 0;
+      total += quantity * (product.price - product.discountPrice);
+    });
+    return total.toFixed(2);
   };
 
   return (
@@ -152,54 +130,109 @@ export default function CartComponent() {
         </div>
       )}
       {products.length !== 0 && (
-        <div>
-          <div className="col-span-3 p-4">
-            <div className="flex justify-between">
-              <p className="relative w-fit text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[3px] after:w-full after:bg-[#eab308]  lg:text-[26px]">
-                Your <span className="text-[#eb7d52]">Cart</span>
-              </p>
-            </div>
-
-            <Table aria-label="Cart" className="mt-8">
-              <TableHeader
-                columns={[
-                  { uid: 'image', name: 'Image' },
-                  { uid: 'name', name: 'Name' },
-                  { uid: 'shop', name: 'Shop Name' },
-                  { uid: 'location', name: 'Location' },
-                  { uid: 'price', name: 'Price' },
-                  { uid: 'discount price', name: 'Discount Price' },
-                  { uid: 'quantity', name: 'Quantity' },
-                  { uid: 'total', name: 'Total' },
-                  { uid: 'delete', name: 'Delete' },
-                ]}
-              >
-                {(column) => (
-                  <TableColumn
-                    key={column.uid}
-                    align={column.uid === 'actions' ? 'center' : 'start'}
+        <section className="my-8 flex h-full w-full gap-8">
+          {/* Left */}
+          <div className="w-full flex-none lg:w-[60%] md:w-[50%]">
+            <div className="flex h-full flex-1 flex-col">
+              <AnimatePresence initial={false} mode="wait">
+                <LazyMotion features={domAnimation}>
+                  <m.form
+                    animate="center"
+                    className="flex flex-col gap-3"
+                    exit="exit"
+                    initial="enter"
+                    transition={{
+                      x: { type: 'spring', stiffness: 300, damping: 30 },
+                      opacity: { duration: 0.2 },
+                    }}
+                    onSubmit={(e) => e.preventDefault()}
                   >
-                    {column.name}
-                  </TableColumn>
-                )}
-              </TableHeader>
-              <TableBody items={uniqueProducts}>
-                {(product) => (
-                  <TableRow key={product.slug}>
-                    {(columnKey: any) => (
-                      <TableCell>{renderCell(product, columnKey)}</TableCell>
-                    )}
-                  </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="mt-4 flex justify-end">
-            <div>
-              <div>Total Price: ${totalPrice}</div>
+                    <h1 className="text-fourground-700 lg:pb-4 pb-0 lg:text-2xl text-xl lg:px-0 px-4 font-semibold dark:text-white">
+                      Review your add to cart
+                    </h1>
+                    <div className="max-h-[none] overflow-y-auto px-4 scrollbar-hide lg:max-h-[480px] md:max-h-[430px] lg:px-0">
+                      {products.map((product: Product) => (
+                        <div
+                          key={product.slug}
+                        >
+                          <ListProductAddToCart
+                            product={product}
+                            quantity={productQuantities[product.slug] || 0}
+                            imageClick={() => handleClickImage(product)}
+                            increaseQty={() => increaseQuantity(product.slug)}
+                            decreaseQty={() => decreaseQuantity(product.slug)}
+                            removeFromCart={() =>
+                              handleRemoveFromCart(product.slug)
+                            }
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className='lg:px-0 px-4'>
+                      {/* this is the subtotal */}
+                      <dl className="flex flex-col gap-4 lg:mb-4 mb-2">
+                        <div className="flex justify-between ">
+                          <dt className="text-fourground-600 dark:text-fourground-300">
+                            Subtotal
+                          </dt>
+                          <dd className="text-fourground-600 dark:text-fourground-300 font-semibold">
+                            ${calculateOriginalPrice()}
+                          </dd>
+                        </div>
+                      </dl>
+
+                      {/* this is the discount */}
+                      <dl className="flex flex-col gap-4 lg:mb-4 mb-2">
+                        <div className="flex justify-between">
+                          <dt className="text-fourground-600 dark:text-fourground-300">
+                            Discount
+                          </dt>
+                          <dd className="font-semibold text-success">
+                            - ${calculateTotalDiscount()}
+                          </dd>
+                        </div>
+                      </dl>
+
+                      {/* this is the total */}
+                      <dl className="flex flex-col gap-4 border-t-small border-divider py-2 ">
+                        <div className="flex justify-between">
+                          <dt className="text-fourground-600 dark:text-fourground-300">
+                            Total
+                          </dt>
+                          <dd className="text-fourground-600 dark:text-fourground-300 font-semibold">
+                            ${calculateTotalPrice()}
+                          </dd>
+                        </div>
+                      </dl>
+
+                      <Button
+                        fullWidth
+                        className="text-forceground-200 font-md bg-gradient-to-r from-pink-500 to-yellow-500 text-xl"
+                        size="lg"
+                      >
+                        Check out
+                      </Button>
+                    </div>
+                  </m.form>
+                </LazyMotion>
+              </AnimatePresence>
             </div>
           </div>
-        </div>
+
+          {/* Right */}
+          <div className="hidden lg:block md:block lg:w-[40%] max-w-[40%] ">
+            <h3 className="text-fourground-700 pb-4  lg:text-2xl text-xl font-semibold dark:text-white">
+              Product Detail
+            </h3>
+            {selectedProduct && (
+              <CartRightSection
+                product={selectedProduct}
+                handleGetDirections={handleGetDirections}
+              />
+            )}
+          </div>
+        </section>
       )}
     </main>
   );

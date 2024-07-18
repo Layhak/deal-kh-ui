@@ -216,7 +216,7 @@ const UpdateProfileComponent: React.FC<UpdateProfileComponentProps> = ({
               label="Location"
               name="location"
               type="text"
-              placeholder="Enter your location"
+              placeholder="Enter your address"
             />
             <ErrorMessage
               name="location"

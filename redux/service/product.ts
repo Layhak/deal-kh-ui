@@ -1,26 +1,25 @@
-// Define a service using a base URL and expected endpoints
 import { ecommerceApi } from '@/redux/api';
+import { ProductResponse } from '@/libs/difinition';
 
 export const productApi = ecommerceApi.injectEndpoints({
-  // The name of the slice of state that will be managed by this api
   endpoints: (builder) => ({
-    // // get all products
-    // getProducts: builder.query<
-    //   any,
-    //   { page: number; size: number; field: string; fieldName: any }
-    // >({
-    //   query: ({ page, size, field, fieldName }) =>
-    //     `products?page=${page}&size=${size}&${field}=${fieldName}`,
-    // }),
-
-    // get all products
     getProducts: builder.query<
       any,
-      { page: number; size: number; filters: { [key: string]: any } }
+      {
+        page: number;
+        size: number;
+        filters: { [key: string]: any };
+        field?: string;
+      }
     >({
-      query: ({ page, size, filters }) => {
+      query: ({ page, size, filters, field }) => {
         // Base URL
         let queryString = `products?page=${page}&size=${size}`;
+
+        // Append field to the query string if provided
+        if (field) {
+          queryString += `&field=${encodeURIComponent(field)}`;
+        }
 
         // Append each filter to the query string
         if (filters) {
@@ -42,7 +41,6 @@ export const productApi = ecommerceApi.injectEndpoints({
       query: () => `products`,
     }),
 
-    // get single product
     getProductBySlug: builder.query<any, string>({
       query: (slug) => `products/${slug}`,
     }),
@@ -52,7 +50,6 @@ export const productApi = ecommerceApi.injectEndpoints({
           `/products/?page=${page}&page_size=${pageSize}`,
       }
     ),
-    // create a product
     createProduct: builder.mutation<any, { newProduct: object }>({
       query: ({ newProduct }) => ({
         url: '/products',
@@ -61,7 +58,6 @@ export const productApi = ecommerceApi.injectEndpoints({
       }),
     }),
 
-    // page.tsx a product
     updateProduct: builder.mutation<
       any,
       { id: number; updatedProduct: object }
@@ -72,7 +68,6 @@ export const productApi = ecommerceApi.injectEndpoints({
         body: updatedProduct,
       }),
     }),
-    // delete a product
     deleteProduct: builder.mutation<any, { id: number }>({
       query: ({ id }) => ({
         url: `products/${id}/`,
@@ -107,7 +102,7 @@ export const productApi = ecommerceApi.injectEndpoints({
     }),
   }),
 });
-// Export hooks for usage in components, which are
+
 export const {
   useGetProductsQuery,
   useGetProductBySlugQuery,

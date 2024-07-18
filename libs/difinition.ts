@@ -54,8 +54,10 @@ export type ImageResponse = {
   url: string;
 };
 
-export type CartProductType = {
+export type Product = {
+  isPercentage: boolean;
   seller: string;
+  images: Image[];
   name: string;
   ratingCount: number;
   slug: string;
@@ -63,14 +65,8 @@ export type CartProductType = {
   discountPrice: number;
   ratingAvg: number;
   description: string;
-  images: Image[];
   shop: string;
-  shopSlug: string;
-  location: string;
-  openAt: string;
-  closeAt: string;
   discountValue: number;
-  isPercentage: boolean;
   discountType: string;
   expiredAt: string;
   category: string;
@@ -79,7 +75,10 @@ export type CartProductType = {
   createdBy: string;
   updatedBy: string;
   quantity?: number | 0;
-  address?: string;
+  address: string;
+  closeAt: string;
+  shopSlug: string;
+  openAt: string;
 };
 
 export type ShopResponse = {
@@ -105,7 +104,7 @@ export type ShopResponse = {
 };
 
 export type Payload = {
-  list: CartProductType[];
+  list: Product[];
   pagination: Pagination;
 };
 
@@ -143,7 +142,7 @@ export type ApiResponse = {
 // types/productScrape.ts
 
 export type ProductResponse = {
-  list: CartProductType[];
+  list: Product[];
   pagination: {
     pageSize: number;
     pageNumber: number;
@@ -172,5 +171,16 @@ export interface Profile {
   email: string;
   name: string;
 }
+
+// for wishlist response
+export type WishListResponse = {
+  uuid: string;
+  productSlug: string;
+  profile: string;
+  productName: string;
+  username: string;
+  discountPercentage: string;
+  description: string;
+};
 
 export const BASE_URL = 'https://store.istad.co';

@@ -1,4 +1,3 @@
-// redux/service/authApi.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   removeAccessToken,

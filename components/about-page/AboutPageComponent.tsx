@@ -13,16 +13,16 @@ const inter = Inter({ subsets: ['latin'] });
 
 function AboutPageComponent() {
   useEffect(() => {
-    Aos.init({ duration: 3000 });
+    Aos.init({ duration: 1000 });
   }, []);
 
   return (
     <>
       {/* First section about Deal-KH */}
-      <div className="my-8 flex flex-col items-center md:flex-row">
+      <div className="my-2 flex flex-col items-center md:flex-row">
         <div
-          className="p-4 text-center md:w-1/2 md:text-left"
-          data-aos="fade-right"
+          className="text-center md:w-1/2 md:text-left"
+          data-aos="fade-up"
         >
           <p className="text-4xl font-bold">
             <span className="text-gradient bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
@@ -31,8 +31,7 @@ function AboutPageComponent() {
             -KH
           </p>
           <p className="mt-4 text-lg">
-            Marketplace facilitates retail by providing a platform for small
-            businesses.
+          Easy to use online platform where we connects businesses and customers. Businesses can showcase their services or products. While customers can discover great deals and discounts or even add their favorite item to cart and wishlist all in one place.
           </p>
           <NextLink href="/">
             <Button
@@ -44,7 +43,7 @@ function AboutPageComponent() {
           </NextLink>
         </div>
         {/* right section image */}
-        <div className="p-4 md:w-1/2">
+        <div className="md:w-1/2">
           <Image
             src="/images/online.svg"
             alt="About us"
@@ -55,10 +54,10 @@ function AboutPageComponent() {
       </div>
 
       {/* Second section about our story */}
-      <div className="my-8 flex flex-col items-center md:flex-row-reverse">
+      <div className="my-2 flex flex-col items-center md:flex-row-reverse">
         <div
-          className="p-4 text-center md:w-1/2 md:text-left"
-          data-aos="fade-left"
+          className="text-center md:w-1/2 md:text-left"
+          data-aos="fade-up"
         >
           <p className="text-4xl font-bold">
             Our{' '}
@@ -74,23 +73,22 @@ function AboutPageComponent() {
             its customers.
           </p>
         </div>
-        <div className="p-4 md:w-1/2">
+        <div className="md:w-1/2">
           <Image
-            src="/images/about-second.png"
+            src="/images/story.svg"
             alt="About us"
             width={800}
             height={900}
-            data-aos="fade-up"
           />
         </div>
       </div>
 
       {/* Third section about our vision */}
-      <div className="my-8 flex flex-col items-center md:flex-row">
+      <div className="my-2 flex flex-col items-center md:flex-row">
         {/* left section text */}
         <div
-          className="p-4 text-center md:w-1/2 md:text-left"
-          data-aos="fade-right"
+          className="text-center md:w-1/2 md:text-left"
+          data-aos="fade-up"
         >
           <p className="text-4xl font-bold">
             <span className="text-gradient bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
@@ -106,24 +104,23 @@ function AboutPageComponent() {
           </p>
         </div>
         {/* right section image */}
-        <div className="p-4 md:w-1/2">
+        <div className="md:w-1/2">
           <Image
-            src="/images/about-third.png"
+             src="/images/vision.svg"
             alt="About us"
             width={800}
             height={900}
-            data-aos="fade-up"
           />
         </div>
       </div>
 
       {/* Fourth section about our mission */}
-      <div className="my-8 flex flex-col items-center md:flex-row-reverse">
+      <div className="my-2 flex flex-col items-center md:flex-row-reverse">
         {/* left section image */}
         {/* right section text */}
         <div
-          className="p-4 text-center md:w-1/2 md:text-left"
-          data-aos="fade-left"
+          className="text-center md:w-1/2 md:text-left"
+          data-aos="fade-up"
         >
           <p className="text-4xl font-bold">
             Our{' '}
@@ -139,19 +136,18 @@ function AboutPageComponent() {
             its customers.
           </p>
         </div>
-        <div className="p-4 md:w-1/2">
+        <div className="md:w-1/2">
           <Image
-            src="/images/about-forth.png"
+             src="/images/mission.svg"
             alt="About us"
-            width={1000}
+            width={800}
             height={900}
-            data-aos="fade-up"
           />
         </div>
       </div>
 
       {/* Mentors Section */}
-      <div className="my-8 text-center">
+      <div className="my-2 text-center">
         <p className="text-3xl font-bold" data-aos="fade-up">
           Our{' '}
           <span
@@ -171,7 +167,7 @@ function AboutPageComponent() {
       </div>
 
       {/* Members section */}
-      <div className="my-8 text-center">
+      <div className="mt-8 text-center">
         <p className="text-3xl font-bold" data-aos="fade-up">
           Our{' '}
           <span

@@ -152,7 +152,7 @@ export default function FlashSale() {
             </div>
           </Link>
         </div>
-        <ClearanceCardComponent category={"accessories"} discountType={"clearance sales"}/>
+        <ClearanceCardComponent category={"accessory"} discountType={"clearance sales"}/>
         {/* Skin Care */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}

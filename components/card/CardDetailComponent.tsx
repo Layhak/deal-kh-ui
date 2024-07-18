@@ -3,7 +3,7 @@
 import { ProductDetail } from '@/types/productDetail';
 import { Button, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Key, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -18,21 +18,33 @@ import {
 } from '@/redux/service/ratingAndFeedback';
 import Loading from '@/app/(user)/loading';
 import { StarIcon } from '@/components/review/StarIcon';
+import { addToCart } from '@/redux/feature/cart/cartSlice';
+import { Product } from '@/libs/difinition';
 
 export default function CardDetailComponent({
-  id,
+  slug,
   name,
   category,
   description,
   images,
-  shopName,
+  shop,
   discountType,
-  originalPrice,
+  price,
   discountPrice,
-  open,
-  promotionDate,
-  expiryDate,
-}: ProductDetail) {
+  openAt,
+  createdAt,
+  expiredAt,
+  address,
+  closeAt,
+  seller,
+  ratingAvg,
+  discountValue,
+  updatedAt,
+  updatedBy,
+  createdBy,
+  shopSlug,
+  ratingCount,
+}: any) {
   const router = useRouter();
   const [averageRating, setAverageRating] = useState(0);
   const [totalReviews, setTotalReviews] = useState(0);
@@ -41,12 +53,12 @@ export default function CardDetailComponent({
     data: ratingsData,
     error: ratingError,
     isLoading: ratingLoading,
-  } = useGetProductRatingsByProductSlugQuery({ productSlug: id });
+  } = useGetProductRatingsByProductSlugQuery({ productSlug: slug });
   const {
     data: feedbackData,
     error: feedbackError,
     isLoading: feedbackLoading,
-  } = useGetProductFeedbackQuery({ productSlug: id });
+  } = useGetProductFeedbackQuery({ productSlug: slug });
 
   useEffect(() => {
     if (ratingsData) {
@@ -73,44 +85,51 @@ export default function CardDetailComponent({
       </div>
     );
 
+  function dispatch(arg0: any): void {
+    throw new Error('Function not implemented.');
+  }
+
   return (
-    <div className="container mx-auto px-4 lg:py-8">
-      <div className="grid grid-cols-1 content-center gap-8 sm:grid-cols-2">
+    <div className="container w-full lg:py-8">
+      <div className="grid grid-cols-1 content-center gap-8 lg:grid-cols-2">
         {/* Product Image */}
         <Swiper
           pagination={{
             dynamicBullets: true,
           }}
-          navigation={true}
           slidesPerView={1}
           modules={[Pagination, Autoplay, EffectFade, Navigation]}
-          className="h-full w-full md:w-[80%] "
+          className="w-full"
           loop={true}
           effect={'fade'}
           autoplay={{
-            delay: 5000,
+            delay: 2500,
             disableOnInteraction: false,
           }}
         >
-          {images.map((image, index) => (
-            <SwiperSlide key={index} className={'rounded-2xl'}>
-              <div className="overflow-hidden rounded-2xl border-2 border-foreground/80 bg-foreground-100 ">
-                <Image
-                  isZoomed
-                  isBlurred
-                  src={image.url}
-                  alt={name}
-                  radius={'lg'}
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </SwiperSlide>
-          ))}
+          {images.map(
+            (
+              image: { url: string | undefined },
+              index: Key | null | undefined
+            ) => (
+              <SwiperSlide key={index} className={'rounded-2xl'}>
+                <div className="overflow-hidden rounded-xl">
+                  <Image
+                    isZoomed
+                    src={image.url}
+                    alt={name}
+                    radius={'lg'}
+                    className="h-[500px] w-[600px] object-cover"
+                  />
+                </div>
+              </SwiperSlide>
+            )
+          )}
         </Swiper>
         {/* Product Details */}
-        <div className="md:flex md:flex-col md:gap-4">
+        <div className="mx-auto w-full md:flex md:flex-col md:gap-4 lg:w-[80%]">
           {/* Star section */}
-          <div className="mb-2 flex items-center">
+          <div className="flex items-center">
             {[...Array(5)].map((_, index) => {
               const isHalf = roundedRating - index === 0.5;
               return (
@@ -118,57 +137,86 @@ export default function CardDetailComponent({
                   key={index}
                   filled={index < Math.floor(roundedRating)}
                   half={isHalf}
-                  className="h-5 w-5 text-yellow-500"
+                  className="h-5 w-5 text-yellow-400"
                 />
               );
             })}
-            <span className="text-fourground-600 pl-2 text-sm dark:text-white">
-              {totalReviews} Reviews
+            <span className="ml-2 text-[16px] font-medium text-foreground-600">
+              ({totalReviews}) Reviews
             </span>
           </div>
           {/* Product information */}
           <div>
-            <h1 className="text-fourground-700 text-2xl font-semibold dark:text-white md:text-3xl">
+            <h1 className="text-2xl font-semibold text-foreground-800 dark:text-white md:text-3xl md:font-semibold">
               {name}
             </h1>
-            <p className="text-fourground-600 dark:text-fourground-300 mt-4">
-              {description}
+            <p className="mt-3 h-[150px] text-lg text-foreground-600">
+              {description.length > 300
+                ? `${description.substring(0, 300)}...`
+                : description || 'Description'}
             </p>
             {/* Price */}
-            <div className="mt-4 flex text-foreground-400 md:flex-row">
-              <p className="text-lg font-bold line-through dark:text-white md:mr-3">
-                ${originalPrice}
+            <div className="mt-4 flex text-foreground-500 md:flex-row">
+              <p className="mt-2 text-xl font-bold text-foreground-500 line-through dark:text-white">
+                ${price}
               </p>
-              <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
-                ${(originalPrice - discountPrice).toFixed(2)}
+              <p className="ml-3 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-3xl font-bold text-transparent">
+                ${(price - discountPrice).toFixed(2)}
               </p>
             </div>
             {/* Shop and other details */}
             <div className="mt-4 space-y-2">
-              <p className="text-fourground-600 dark:text-fourground-300 text-sm">
-                Shop: <span className="font-semibold">{shopName}</span>
+              <p className="text-base font-medium text-foreground-600">
+                Expired Date :{' '}
+                <span className="font-semibold text-red-500">{expiredAt}</span>
               </p>
-              <p className="text-fourground-600 dark:text-fourground-300 text-sm">
-                Open: {open}
+              <p className="text-base font-medium text-foreground-600">
+                Shop :{' '}
+                <span className="font-semibold text-blue-800">{shop}</span>
               </p>
-              <p className="text-fourground-600 dark:text-fourground-300 text-sm">
-                Discount Type:{' '}
-                <span className="font-semibold">{discountType}</span>
+              <p className="text-base font-medium text-foreground-600">
+                Open : {openAt.slice(0, 5)} AM - {closeAt.slice(0, 5)} PM
               </p>
-              <p className="text-fourground-600 dark:text-fourground-300 text-sm">
-                Promotion Date:{' '}
-                <span className="font-semibold text-red-600">
-                  {promotionDate}
-                </span>
+              <p className="text-base font-medium text-foreground-600">
+                Location : <span className="font-semibold">{address}</span>
               </p>
             </div>
           </div>
           {/* Buttons */}
           <div className="mt-4 grid grid-cols-1 gap-8 md:grid-cols-2">
             <Button
+              onClick={() =>
+                dispatch(
+                  addToCart({
+                    slug: slug,
+                    seller: seller,
+                    name: name,
+                    price: price,
+                    discountPrice: discountPrice,
+                    ratingAvg: ratingAvg,
+                    description: description,
+                    images: images,
+                    shop: shop,
+                    discountValue: discountValue,
+                    discountType: discountType,
+                    expiredAt: expiredAt,
+                    category: category,
+                    createdAt: createdAt,
+                    updatedAt: updatedAt,
+                    createdBy: createdBy,
+                    updatedBy: updatedBy,
+                    openAt: openAt,
+                    closeAt: closeAt,
+                    shopSlug: shopSlug,
+                    address: address,
+                    ratingCount: ratingCount,
+                    isPercentage: false,
+                  })
+                )
+              }
               variant={'solid'}
               radius={'lg'}
-              className=" cursor-pointer border-1  border-warning-500 bg-foreground-50  hover:bg-foreground-100"
+              className="cursor-pointer border-2 border-warning-500 bg-foreground-50 text-base font-medium text-foreground-600  hover:bg-foreground-100"
             >
               Add to Cart
             </Button>

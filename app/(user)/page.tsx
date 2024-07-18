@@ -2,7 +2,7 @@
 import { Image, Link } from '@nextui-org/react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Category from '@/components/card/Category';
 import NormalProductComponent from '@/components/card/NormalProduct';
 import ShopCardComponent from '@/components/card/Shop';
@@ -15,8 +15,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
+import FilterComponent from '@/components/Filter';
+import { useGetProductScrapeQuery } from '@/redux/service/productScrape';
 
 export default function HomePage() {
+  const [page, setPage] = useState(1);
+  const size = 4;
+
+  const { data } = useGetProductScrapeQuery({ page, size });
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);
@@ -34,8 +40,21 @@ export default function HomePage() {
         theme: theme,
       });
       localStorage.removeItem('token');
+    } else if (localStorage.getItem('token') === 'verified') {
+      toast.success('Email verified successfully!', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
+      localStorage.removeItem('token');
     }
   }, [theme]);
+
   return (
     <>
       <div>
@@ -77,11 +96,12 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent 
+        <DiscountCardComponent
           category={'food'}
-          discountType={'discount off'} currentPage={0} onPageChange={function (page: number): void {
-          
-          } }/>
+          discountType={'discount off'}
+          name={'food'}
+        />
+
         {/* Clearance Sale Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -120,6 +140,7 @@ export default function HomePage() {
           category={'clothes'}
           discountType={'clearance sales'}
         />
+        {/* Banner */}
         <div>
           <Image
             src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
@@ -127,6 +148,7 @@ export default function HomePage() {
             alt="image"
           />
         </div>
+
         {/* Buy1 Get1 Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -178,6 +200,7 @@ export default function HomePage() {
             />
           </div>
         </div>
+
         {/* Service Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -209,10 +232,7 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
-        <ServiceCardComponent
-          category={'accessories'}
-          discountType={'no discount'}
-        />
+        {data && <ServiceCardComponent data={data} />}
         {/* Coupon Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -247,14 +267,15 @@ export default function HomePage() {
             </div>
           </Link>
         </div>
+        {/* Coupon Image */}
         <div>
           <CardCouponComponent displayCount={2} />
         </div>
         <DiscountCardComponent
           category={'clothes'}
-          discountType={'shop coupons'} currentPage={0} onPageChange={function (page: number): void {
-            
-          } } />
+          discountType={'shop coupons'}
+        />
+
         {/* Event Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -293,6 +314,7 @@ export default function HomePage() {
             className=""
           ></Image>
         </Link>
+
         {/* Feature Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -332,6 +354,7 @@ export default function HomePage() {
           category={'electronic'}
           discountType={'no discount'}
         />
+
         {/* Category */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           <div className="flex-1">
@@ -365,6 +388,7 @@ export default function HomePage() {
           </Link>
         </div>
         <Category />
+
         {/* Shop Section */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}

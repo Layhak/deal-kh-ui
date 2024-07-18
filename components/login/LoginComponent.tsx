@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import Aos from 'aos';
-import { Button, Checkbox, Spacer } from '@nextui-org/react';
+import { Button, Checkbox, Spacer, useDisclosure } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import 'react-toastify/dist/ReactToastify.css';
 import { useLoginUserMutation } from '@/redux/service/auth';
@@ -16,6 +16,8 @@ import CustomPasswordInput from '@/components/customInput/CustomPasswordInputPro
 import { Cancel, Logo } from '@/components/icons';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { useAppDispatch } from '@/redux/hook';
+import ResetPasswordModal from '@/components/modals/ResetPasswordModal';
+import 'react-toastify/dist/ReactToastify.css';
 
 type FormValues = {
   email: string;
@@ -38,6 +40,8 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function MyShop() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [email, setEmail] = useState<string>(''); // State to store email
   const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
   const router = useRouter();
   const { theme } = useTheme();
@@ -121,13 +125,16 @@ export default function MyShop() {
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {(errors) => (
+            {({ values }) => (
               <Form action="#" method="POST" className="space-y-5">
                 <CustomInput
                   label={'Email'}
                   name={'email'}
                   type={'email'}
                   placeholder={'Enter your email address'}
+                  onChange={(e) => {
+                    setEmail(e.target.value); // Update email state
+                  }}
                 />
                 <Spacer y={5} />
                 <CustomPasswordInput
@@ -147,6 +154,10 @@ export default function MyShop() {
                     <a
                       href="#"
                       className="font-semibold text-primary-500 hover:text-primary-600"
+                      onClick={() => {
+                        setEmail(values.email); // Ensure email state is set before opening modal
+                        onOpen();
+                      }}
                     >
                       Forgot password?
                     </a>
@@ -195,9 +206,14 @@ export default function MyShop() {
           {/*  </div>*/}
           {/*</div>*/}
           {/*</div>*/}
-          {/*<ToastContainer />*/}
+          <ToastContainer />
         </div>
       </div>
+      <ResetPasswordModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        email={email}
+      />
     </div>
   );
 }

@@ -18,4 +18,5 @@ export type ShopDetail = {
     updatedAt: string,
     createdBy: string,
     updateBy: string,
+    ratingAvg: number,
   };

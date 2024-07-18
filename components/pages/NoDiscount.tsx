@@ -152,7 +152,7 @@ export default function NoDiscount() {
             </div>
           </Link>
         </div>
-        <NormalProductComponent category={"accessories"} discountType={"no discount"}/>
+        <NormalProductComponent category={"accessory"} discountType={"no discount"}/>
         {/* Skin Care */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}

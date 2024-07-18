@@ -19,7 +19,7 @@ import {
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
-import { CartIcon, HeartIcon } from '@/components/icons';
+import { CartIcon, HeartIcon, MapIcon, SearchIcon } from '@/components/icons';
 import {
   removeAccessToken,
   setLogoutSuccess,
@@ -34,10 +34,12 @@ import SearchProduct from './search/SearchProduct';
 import SearchLocation from './search/SearchLocation';
 import { productSearchList } from '@/types/productSearch';
 import { selectProducts } from '@/redux/feature/cart/cartSlice';
-import { CartProductType } from '@/libs/difinition';
+import { Product } from '@/libs/difinition';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { BiUserCircle } from 'react-icons/bi';
+import { Button } from '@nextui-org/button';
+import { GrMapLocation } from 'react-icons/gr';
 
 export const NavigationBar = () => {
   const pathname = usePathname();
@@ -91,7 +93,7 @@ export const NavigationBar = () => {
   };
 
   const products = useAppSelector(selectProducts);
-  const [uniqueProducts, setUniqueProducts] = useState<CartProductType[]>([]);
+  const [uniqueProducts, setUniqueProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const unique = products.filter(
@@ -104,7 +106,7 @@ export const NavigationBar = () => {
   // For Wishlist
   const wishlistProducts = useAppSelector(selectWishlistProducts);
   const [uniqueWishlistProducts, setUniqueWishlistProducts] = useState<
-    CartProductType[]
+    Product[]
   >([]);
 
   useEffect(() => {
@@ -117,7 +119,7 @@ export const NavigationBar = () => {
 
   const searchInput = (
     <>
-      <SearchProduct products={productSearchList} />
+      <SearchProduct />
       <SearchLocation />
     </>
   );
@@ -125,19 +127,40 @@ export const NavigationBar = () => {
   return (
     <>
       <Navbar position="sticky" maxWidth={'xl'}>
-        <NavbarContent>
-          <NavbarBrand>
-            <NextLink href="/" className="h-12 w-12">
+        <NavbarContent justify={'start'} className={'flex gap-4'}>
+          <NavbarItem>
+            <NextLink href="/" className="flex h-12 w-12 items-center">
               <Image src="/logo.png" alt="logo" className="h-12 w-12" />
             </NextLink>
-          </NavbarBrand>
-          <NavbarContent className="ml-2 flex gap-4">
-            <NavbarItem className="hidden sm:flex">{searchInput}</NavbarItem>
-          </NavbarContent>
+          </NavbarItem>
+          <NavbarItem className="hidden w-full items-center sm:flex">
+            <SearchProduct />
+            {/*<SearchLocation />*/}
+            <Tooltip
+              content={
+                <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                  Search Nearby Shop
+                </p>
+              }
+              showArrow
+              offset={10}
+            >
+              <Button
+                isIconOnly
+                as={NextLink}
+                size={'lg'}
+                href={'/search-nearby'}
+                variant={'light'}
+                radius={'full'}
+              >
+                <MapIcon size={28} />
+              </Button>
+            </Tooltip>
+          </NavbarItem>
         </NavbarContent>
         <NavbarContent
-          justify={'start'}
-          className={'hidden gap-4 px-16 lg:flex'}
+          justify={'center'}
+          className={'hidden gap-4 pe-16 lg:flex'}
         >
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href} isActive={item.href === pathname}>

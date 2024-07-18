@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useField } from 'formik';
 import { Checkbox, useDisclosure } from '@nextui-org/react';
 import cn from 'classnames';
-import TermsModal from '@/components/termsModal/TermsModal';
+import TermsModal from '@/components/modals/TermsModal';
 
 interface CustomCheckboxProps {
   name: string;

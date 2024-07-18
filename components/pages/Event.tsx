@@ -154,7 +154,7 @@ export default function Event() {
             </div>
           </Link>
         </div>
-        <DiscountCardComponent category={"accessories"} discountType={"event"}/>
+        <DiscountCardComponent category={"accessory"} discountType={"event"}/>
         {/* Skin Care */}
         <div className="my-8 flex h-[50px] items-center justify-between">
           {/* Left section */}

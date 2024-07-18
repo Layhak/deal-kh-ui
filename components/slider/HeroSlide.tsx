@@ -42,7 +42,7 @@ export default function HeroSlideComponent() {
           <SwiperSlide>
             <Image
               isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              src="https://romand.us/cdn/shop/files/PC_d3b56cad-04f5-4a7d-a2ac-2e24fd163b05.png?v=1720596444&width=1728"
               alt=""
               className=" object-cover"
             />
@@ -50,7 +50,7 @@ export default function HeroSlideComponent() {
           <SwiperSlide>
             <Image
               isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              src="https://romand.us/cdn/shop/files/PC_60612138-c193-466a-ae69-860b9752ac41.jpg?v=1719296112&width=1728"
               alt=""
               className=" object-cover"
             />
@@ -58,7 +58,7 @@ export default function HeroSlideComponent() {
           <SwiperSlide>
             <Image
               isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              src="https://romand.us/cdn/shop/files/PC-2.png?v=1719967761&width=1728"
               alt=""
               className=" object-cover"
             />
@@ -66,14 +66,13 @@ export default function HeroSlideComponent() {
           <SwiperSlide>
             <Image
               isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              src="https://romand.us/cdn/shop/files/PC_2.png?v=1719967521&width=1728"
               alt=""
               className=" object-cover"
             />
           </SwiperSlide>
         </Swiper>
-      </div>
-
+      </div>{' '}
       <div
         className={
           ' flex flex-col items-center gap-2 md:flex-row md:justify-between  lg:flex-col'
@@ -100,7 +99,7 @@ export default function HeroSlideComponent() {
           <SwiperSlide>
             <Image
               isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              src="https://romand.us/cdn/shop/files/PC_d3b56cad-04f5-4a7d-a2ac-2e24fd163b05.png?v=1720596444&width=1728"
               alt=""
               className="object-cover"
             />
@@ -116,7 +115,7 @@ export default function HeroSlideComponent() {
           <SwiperSlide>
             <Image
               isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              src="https://romand.us/cdn/shop/files/PC_60612138-c193-466a-ae69-860b9752ac41.jpg?v=1719296112&width=1728"
               alt=""
               className=" object-cover"
             />
@@ -132,7 +131,7 @@ export default function HeroSlideComponent() {
           <SwiperSlide>
             <Image
               isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              src="https://romand.us/cdn/shop/files/PC-2.png?v=1719967761&width=1728"
               alt=""
               className=" object-cover"
             />
@@ -160,7 +159,7 @@ export default function HeroSlideComponent() {
           <SwiperSlide>
             <Image
               isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              src="https://romand.us/cdn/shop/files/PC_60612138-c193-466a-ae69-860b9752ac41.jpg?v=1719296112&width=1728"
               alt=""
               className="object-cover"
             />
@@ -168,7 +167,15 @@ export default function HeroSlideComponent() {
           <SwiperSlide>
             <Image
               isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              src="https://romand.us/cdn/shop/files/PC_2.png?v=1719967521&width=1728"
+              alt=""
+              className=" object-cover"
+            />
+          </SwiperSlide>
+          <SwiperSlide>
+            <Image
+              isZoomed
+              src="https://romand.us/cdn/shop/files/PC-2.png?v=1719967761&width=1728"
               alt=""
               className=" object-cover"
             />
@@ -184,15 +191,7 @@ export default function HeroSlideComponent() {
           <SwiperSlide>
             <Image
               isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+              src="https://romand.us/cdn/shop/files/PC_d3b56cad-04f5-4a7d-a2ac-2e24fd163b05.png?v=1720596444&width=1728"
               alt=""
               className=" object-cover"
             />

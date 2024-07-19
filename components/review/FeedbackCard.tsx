@@ -74,12 +74,12 @@ const FeedbackCard: React.FC<FeedbackItemProps> = ({
         <div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
-              <div className="inline-flex items-center justify-center gap-2 rounded-small outline-none data-[focus-visible=true]:z-10 data-[focus-visible=true]:outline-2 data-[focus-visible=true]:outline-offset-2 data-[focus-visible=true]:outline-focus">
+              <div className="headerOne-[focus-visible=true]:z-10 headerOne-[focus-visible=true]:outline-2 headerOne-[focus-visible=true]:outline-offset-2 headerOne-[focus-visible=true]:outline-focus inline-flex items-center justify-center gap-2 rounded-small outline-none">
                 <Image
                   src={review?.profile || '/images/members/votey.jpg'}
                   className="h-12 w-12 rounded-full bg-foreground-900 object-contain"
                   alt={review.username}
-                  data-loaded="true"
+                  headerOne-loaded="true"
                 />
                 <div className="inline-flex flex-col items-start">
                   <span className="text-small font-medium text-inherit">

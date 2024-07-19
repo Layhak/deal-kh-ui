@@ -419,6 +419,7 @@ export const MapIcon = ({ size, width, height }: IconSvgProps) => (
     }}
   ></div>
 );
+
 export const SearchIcon = (props: IconSvgProps) => (
   <svg
     aria-hidden="true"

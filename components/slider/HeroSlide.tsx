@@ -5,16 +5,61 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import '@/styles/swiper.css';
-import { Image } from '@nextui-org/react';
+import { Image, Skeleton } from '@nextui-org/react';
 // import required modules
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { useGetBannersQuery } from '@/redux/service/banner';
+import { Banner } from '@/types/banner';
 
 export default function HeroSlideComponent() {
+  const {
+    data: headerOne,
+    isLoading: isHeaderOneLoading,
+    error: headerOneError,
+  } = useGetBannersQuery({
+    bannerType: 'Hero-1',
+  });
+  const {
+    data: headerTwo,
+    isLoading: isHeaderTwoLoading,
+    error: headerTwoError,
+  } = useGetBannersQuery({
+    bannerType: 'Hero-2',
+  });
+
+  const {
+    data: headerThree,
+    isLoading: isHeaderThreeLoading,
+    error: headerThreeError,
+  } = useGetBannersQuery({
+    bannerType: 'Hero-3',
+  });
+
+  if (isHeaderOneLoading || isHeaderTwoLoading || isHeaderThreeLoading) {
+    return (
+      <div className={'mt-2 grid w-full grid-cols-1 gap-2 lg:grid-cols-3'}>
+        <Skeleton className=" col-span-2 rounded-2xl" />
+        <div className="flex flex-col items-center gap-2 md:flex-row md:justify-between lg:flex-col">
+          <Skeleton className="h-[200px] w-full rounded-2xl lg:w-[400px]" />
+          <Skeleton className="h-[200px] w-full rounded-2xl lg:w-[400px]" />
+        </div>
+      </div>
+    );
+  }
+
+  if (headerOneError || headerTwoError || headerThreeError) {
+    return <div>Error loading banners.</div>;
+  }
+
+  const headerOneBanners = headerOne?.payload || [];
+  const headerTwoBanners = headerTwo?.payload || [];
+  const headerThreeBanners = headerThree?.payload || [];
+
   return (
-    <div className="mt-2 grid  w-full grid-cols-1 gap-2 lg:grid-cols-3">
-      <div className={'col-span-2'}>
+    <div className="mt-2 grid w-full grid-cols-1 gap-2 lg:grid-cols-3">
+      <div className="col-span-2">
         <Swiper
-          className="  rounded-2xl"
+          className="rounded-2xl"
           spaceBetween={50}
           slidesPerView={1}
           autoplay={{
@@ -28,64 +73,37 @@ export default function HeroSlideComponent() {
           }}
           navigation={false}
           modules={[Autoplay, Pagination, Navigation]}
-          onSlideChange={() => {}}
-          // onSwiper={}
           loop={true}
         >
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_d3b56cad-04f5-4a7d-a2ac-2e24fd163b05.png?v=1720596444&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_60612138-c193-466a-ae69-860b9752ac41.jpg?v=1719296112&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC-2.png?v=1719967761&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_2.png?v=1719967521&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
+          {headerOneBanners.length > 0 ? (
+            headerOneBanners.map((banner: Banner) => (
+              <SwiperSlide key={banner.uuid}>
+                <Image
+                  isZoomed
+                  src={banner.image}
+                  alt={banner.name}
+                  className="object-cover"
+                />
+              </SwiperSlide>
+            ))
+          ) : (
+            <SwiperSlide>
+              <Image
+                isZoomed
+                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+                alt="default"
+                className="object-cover"
+              />
+            </SwiperSlide>
+          )}
         </Swiper>
-      </div>{' '}
-      <div
-        className={
-          ' flex flex-col items-center gap-2 md:flex-row md:justify-between  lg:flex-col'
-        }
-      >
+      </div>
+      <div className="flex flex-col items-center gap-2 md:flex-row md:justify-between lg:flex-col">
         <Swiper
-          className=" w-full rounded-2xl lg:w-[400px]"
+          className="w-full rounded-2xl lg:w-[400px]"
           spaceBetween={50}
           slidesPerView={1}
-          onSlideChange={() => {}}
           grabCursor={true}
-          // onSwiper={(swiper: any) => console.log(swiper)}
           autoplay={{
             delay: 1500,
             disableOnInteraction: false,
@@ -98,55 +116,34 @@ export default function HeroSlideComponent() {
           modules={[Autoplay, Pagination, Navigation]}
           loop={true}
         >
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_d3b56cad-04f5-4a7d-a2ac-2e24fd163b05.png?v=1720596444&width=1728"
-              alt=""
-              className="object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_60612138-c193-466a-ae69-860b9752ac41.jpg?v=1719296112&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC-2.png?v=1719967761&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
+          {headerTwoBanners.length > 0 ? (
+            headerTwoBanners.map((banner: Banner) => (
+              <SwiperSlide key={banner.uuid}>
+                <Image
+                  isZoomed
+                  src={banner.image}
+                  alt={banner.name}
+                  className="object-cover"
+                />
+              </SwiperSlide>
+            ))
+          ) : (
+            <SwiperSlide>
+              <Image
+                isZoomed
+                src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
+                alt="default"
+                className="object-cover"
+              />
+            </SwiperSlide>
+          )}
         </Swiper>
 
         <Swiper
           grabCursor={true}
-          className=" w-full rounded-2xl lg:w-[400px]"
+          className="w-full rounded-2xl lg:w-[400px]"
           spaceBetween={50}
           slidesPerView={1}
-          onSlideChange={() => {}}
-          // onSwiper={(swiper: any) => console.log(swiper)}
           autoplay={{
             delay: 2500,
             disableOnInteraction: false,
@@ -159,46 +156,27 @@ export default function HeroSlideComponent() {
           modules={[Autoplay, Pagination, Navigation]}
           loop={true}
         >
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_60612138-c193-466a-ae69-860b9752ac41.jpg?v=1719296112&width=1728"
-              alt=""
-              className="object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_2.png?v=1719967521&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC-2.png?v=1719967761&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image
-              isZoomed
-              src="https://romand.us/cdn/shop/files/PC_d3b56cad-04f5-4a7d-a2ac-2e24fd163b05.png?v=1720596444&width=1728"
-              alt=""
-              className=" object-cover"
-            />
-          </SwiperSlide>
+          {headerThreeBanners.length > 0 ? (
+            headerThreeBanners.map((banner: Banner) => (
+              <SwiperSlide key={banner.uuid}>
+                <Image
+                  isZoomed
+                  src={banner.image}
+                  alt={banner.name}
+                  className="object-cover"
+                />
+              </SwiperSlide>
+            ))
+          ) : (
+            <SwiperSlide>
+              <Image
+                isZoomed
+                src="https://romand.us/cdn/shop/files/PC-2.png?v=1719967761&width=1728"
+                alt=""
+                className="object-cover"
+              />
+            </SwiperSlide>
+          )}
         </Swiper>
       </div>
     </div>

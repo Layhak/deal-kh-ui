@@ -1,6 +1,11 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { Autocomplete, AutocompleteItem, Avatar } from '@nextui-org/react';
+import {
+  Autocomplete,
+  AutocompleteItem,
+  Avatar,
+  Skeleton,
+} from '@nextui-org/react';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { SearchIcon } from '@/components/icons';
 import { useRouter } from 'next/navigation';
@@ -61,7 +66,9 @@ export default function SearchProduct() {
   };
 
   if (initialLoading || isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <Skeleton className={'h-[50px] w-full max-w-[350px] rounded-full'} />
+    );
   }
 
   if (initialError || error) {
@@ -86,7 +93,7 @@ export default function SearchProduct() {
           'data-[selectable=true]:focus:bg-warning-500',
           'data-[focus-visible=true]:ring-warning-500',
         ],
-        selectorButton: 'text-warning-300',
+        selectorButton: 'text-warning-500 dark:text-warning-300',
       }}
       defaultItems={products}
       inputProps={{

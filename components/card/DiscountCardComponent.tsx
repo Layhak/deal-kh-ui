@@ -1,5 +1,5 @@
 import { useGetProductsQuery } from '@/redux/service/product';
-import { Card, CardBody, Image, Link } from '@nextui-org/react';
+import { Card, CardBody, Image, Link, Skeleton } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { StarIcon } from '@/components/review/StarIcon';
@@ -11,7 +11,7 @@ export default function DiscountCardComponent({
   name,
 }: any) {
   const router = useRouter();
-  const { data, error }: any = useGetProductsQuery({
+  const { data, isLoading, error }: any = useGetProductsQuery({
     page: 1,
     size: 8,
     filters: {
@@ -20,6 +20,40 @@ export default function DiscountCardComponent({
       name: '',
     },
   });
+  if (isLoading)
+    return (
+      <div className="flex flex-wrap justify-center gap-7 ">
+        {/*map 8 times*/}
+        {Array.from({ length: 8 }, (_, index) => (
+          <div
+            key={index}
+            className=" relative mb-2 h-[386px] w-[284px] flex-none  rounded-2xl  text-gray-50 shadow-none"
+          >
+            <div
+              className={
+                'relative h-[260px]  overflow-visible rounded-b-lg px-4'
+              }
+            >
+              <Skeleton
+                className={'h-[193px] w-[284px] rounded-2xl object-cover'}
+              />
+              <Skeleton
+                className={
+                  'absolute right-0 top-0 z-10 h-[55px] w-[40px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white'
+                }
+              />
+              <div className={'mt-2 space-y-2'}>
+                <Skeleton className={'h-3 w-24 rounded-full'} />
+                <Skeleton className={'h-3 w-28 rounded-full'} />
+                <Skeleton className={'h-3 w-16 rounded-full'} />
+                <Skeleton className={'h-3 w-20 rounded-full'} />
+                <Skeleton className={'h-3 w-16 rounded-full'} />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
 
   return (
     <main>

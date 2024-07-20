@@ -1,5 +1,12 @@
 import { useGetProductsQuery } from '@/redux/service/product';
-import { Card, CardBody, Image, Link, Skeleton } from '@nextui-org/react';
+import {
+  Card,
+  CardBody,
+  Image,
+  Link,
+  Skeleton,
+  Spacer,
+} from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { StarIcon } from '@/components/review/StarIcon';
@@ -25,136 +32,146 @@ export default function DiscountCardComponent({
       <div className="flex flex-wrap justify-center gap-7 ">
         {/*map 8 times*/}
         {Array.from({ length: 8 }, (_, index) => (
-          <div
+          <Card
             key={index}
             className=" relative mb-2 h-[386px] w-[284px] flex-none  rounded-2xl  text-gray-50 shadow-none"
           >
-            <div
+            <CardBody
               className={
                 'relative h-[260px]  overflow-visible rounded-b-lg px-4'
               }
             >
               <Skeleton
-                className={'h-[193px] w-[284px] rounded-2xl object-cover'}
+                className={'h-[193px] w-[253px] rounded-2xl object-cover'}
               />
               <Skeleton
                 className={
-                  'absolute right-0 top-0 z-10 h-[55px] w-[40px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white'
+                  'absolute right-0 top-0 z-10 h-[55px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white'
                 }
               />
-              <div className={'mt-2 space-y-2'}>
-                <Skeleton className={'h-3 w-24 rounded-full'} />
-                <Skeleton className={'h-3 w-28 rounded-full'} />
-                <Skeleton className={'h-3 w-16 rounded-full'} />
-                <Skeleton className={'h-3 w-20 rounded-full'} />
-                <Skeleton className={'h-3 w-16 rounded-full'} />
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
-
-  return (
-    <main>
-      {/* for the card section*/}
-      <div className="flex flex-wrap justify-center gap-7">
-        {data?.payload.list.map((product: Product) => (
-          <Card
-            onClick={() => router.push(`/products/${product.slug}`)}
-            key={product.slug}
-            isPressable
-            className=" relative mb-2 h-[386px] w-[284px] flex-none  rounded-xl  text-gray-50 shadow-none"
-          >
-            <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
-              <Link href={`/products/${product.slug}`}>
-                <Image
-                  className="h-[193px] w-[284px] object-cover"
-                  isZoomed
-                  src={
-                    product.images[0].url ||
-                    'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
-                  }
-                  alt={product.name}
-                />
-              </Link>
-
-              <span className="absolute right-0 top-0 z-10 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white">
-                {`${product.discountValue}${product.isPercentage ? '%' : '$'} OFF`}
-              </span>
-
-              <div className="mt-4 h-[16] w-full">
-                <div className={'flex items-center justify-between'}>
-                  <div className="flex">
-                    {Array.from({ length: 5 }, (_, index) => {
-                      if (product.ratingAvg >= index + 1) {
-                        return (
-                          <StarIcon
-                            key={index}
-                            filled
-                            className="h-4 w-4 text-yellow-300"
-                          />
-                        );
-                      } else if (product.ratingAvg >= index + 0.5) {
-                        return (
-                          <StarIcon
-                            key={index}
-                            half
-                            className="h-4 w-4 text-yellow-300"
-                          />
-                        );
-                      } else {
-                        return (
-                          <StarIcon
-                            key={index}
-                            className="h-4 w-4 text-yellow-300"
-                          />
-                        );
-                      }
-                    })}
-                    <span className="ml-1 text-[13px] font-medium text-foreground-600">
-                      ({Math.round(product.ratingAvg * 10) / 10}) Reviews
-                    </span>
+              <div className={'mt-4 h-[16] w-full'}>
+                <div className={'flex flex-col '}>
+                  <div className={'flex gap-1'}>
+                    <Skeleton className={' h-3 w-24 rounded-full'} />
+                    <Spacer y={1} />
+                    <Skeleton className={'h-3 w-14 rounded-full'} />
+                  </div>
+                  <Spacer y={4} />
+                  <Skeleton className={'h-3 w-36 rounded-full'} />
+                  <Spacer y={12} />
+                  <div>
+                    <Skeleton className={'h-3 w-16 rounded-full'} />
+                    <Spacer y={1} />
+                    <Skeleton className={'h-3 w-36 rounded-full'} />
+                    <Spacer y={3} />
+                    <Skeleton className={'h-3 w-28 rounded-full'} />
                   </div>
                 </div>
-              </div>
-              <Link href={`/products/${product.slug}`}>
-                <h5 className="mt-1 h-[45px] text-[18px] font-semibold tracking-tight text-foreground-800">
-                  {product.name.length > 60
-                    ? `${product.name.substring(0, 45)}...`
-                    : product.name || 'Product Name'}
-                </h5>
-              </Link>
-              <div className="h-[30px] pt-2">
-                <p className="text-[14px] font-medium text-foreground-600">
-                  Shop :{' '}
-                  <Link href="">
-                    <span className="text-[14px] font-medium text-blue-800">
-                      {product.shop.length > 30
-                        ? `${product.shop.substring(0, 20)}...`
-                        : product.shop || 'Shop Name'}
-                    </span>
-                  </Link>
-                </p>
-                <p className="text-[14px] font-medium text-foreground-600">
-                  Expired date :{' '}
-                  <span className="font-medium text-red-500">
-                    {product.expiredAt}
-                  </span>
-                </p>
-              </div>
-              <div className="flex h-[30px] items-center justify-start pt-10 font-semibold">
-                <span className="pt-1 text-xl font-bold text-foreground-500 line-through dark:text-white">
-                  ${product.price || 'Price'}
-                </span>
-                <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                  ${(product.price - product.discountPrice).toFixed(2) || '0'}
-                </span>
               </div>
             </CardBody>
           </Card>
         ))}
       </div>
-    </main>
+    );
+
+  return (
+    <>
+      {/* for the card section*/}
+      {data?.payload.list.map((product: Product) => (
+        <Card
+          onClick={() => router.push(`/products/${product.slug}`)}
+          key={product.slug}
+          isPressable
+          className=" relative mb-2 h-[386px] w-[284px] flex-none  rounded-xl  text-gray-50 shadow-none"
+        >
+          <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
+            <Link href={`/products/${product.slug}`}>
+              <Image
+                className="h-[193px] w-[284px] object-cover"
+                isZoomed
+                src={
+                  product.images[0].url ||
+                  'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
+                }
+                alt={product.name}
+              />
+            </Link>
+
+            <span className="absolute right-0 top-0 z-10 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white">
+              {`${product.discountValue}${product.isPercentage ? '%' : '$'} OFF`}
+            </span>
+
+            <div className="mt-4 h-[16] w-full">
+              <div className={'flex items-center justify-between'}>
+                <div className="flex">
+                  {Array.from({ length: 5 }, (_, index) => {
+                    if (product.ratingAvg >= index + 1) {
+                      return (
+                        <StarIcon
+                          key={index}
+                          filled
+                          className="h-4 w-4 text-yellow-300"
+                        />
+                      );
+                    } else if (product.ratingAvg >= index + 0.5) {
+                      return (
+                        <StarIcon
+                          key={index}
+                          half
+                          className="h-4 w-4 text-yellow-300"
+                        />
+                      );
+                    } else {
+                      return (
+                        <StarIcon
+                          key={index}
+                          className="h-4 w-4 text-yellow-300"
+                        />
+                      );
+                    }
+                  })}
+                  <span className="ml-1 text-[13px] font-medium text-foreground-600">
+                    ({Math.round(product.ratingAvg * 10) / 10}) Reviews
+                  </span>
+                </div>
+              </div>
+            </div>
+            <Link href={`/products/${product.slug}`}>
+              <h5 className="mt-1 h-[45px] text-[18px] font-semibold tracking-tight text-foreground-800">
+                {product.name.length > 60
+                  ? `${product.name.substring(0, 45)}...`
+                  : product.name || 'Product Name'}
+              </h5>
+            </Link>
+            <div className="h-[30px] pt-2">
+              <p className="text-[14px] font-medium text-foreground-600">
+                Shop :{' '}
+                <Link href="">
+                  <span className="text-[14px] font-medium text-blue-800">
+                    {product.shop.length > 30
+                      ? `${product.shop.substring(0, 20)}...`
+                      : product.shop || 'Shop Name'}
+                  </span>
+                </Link>
+              </p>
+              <p className="text-[14px] font-medium text-foreground-600">
+                Expired date :{' '}
+                <span className="font-medium text-red-500">
+                  {product.expiredAt}
+                </span>
+              </p>
+            </div>
+            <div className="flex h-[30px] items-center justify-start pt-10 font-semibold">
+              <span className="pt-1 text-xl font-bold text-foreground-500 line-through dark:text-white">
+                ${product.price || 'Price'}
+              </span>
+              <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
+                ${(product.price - product.discountPrice).toFixed(2) || '0'}
+              </span>
+            </div>
+          </CardBody>
+        </Card>
+      ))}
+    </>
   );
 }

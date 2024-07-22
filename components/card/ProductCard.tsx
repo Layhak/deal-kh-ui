@@ -85,7 +85,10 @@ export default function ProductCard({
             <div className={'flex items-center justify-between'}>
               <div className="flex">
                 {!['buy-more-get-more'].includes(discountType) && (
-                  <RatingStar ratingAvg={product.ratingAvg} />
+                  <RatingStar
+                    ratingAvg={product.ratingAvg}
+                    ratingCount={product.ratingCount}
+                  />
                 )}
               </div>
             </div>
@@ -122,105 +125,109 @@ export default function ProductCard({
               </p>
             </div>
             <div className="flex h-[30px] w-full items-center justify-start pt-10 font-semibold">
-              {['no-discount'].includes(discountType) ? (
-                <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-xl font-bold text-transparent">
-                  ${product.price - product.discountPrice || '0'}
-                </span>
-              ) : (
-                <div
-                  className={
-                    'flex w-full flex-col items-start justify-start sm:flex-row md:items-center md:justify-between '
-                  }
-                >
+              <div
+                className={
+                  'flex w-full flex-col items-start justify-start sm:flex-row md:items-center md:justify-between '
+                }
+              >
+                {['no-discount'].includes(discountType) ? (
+                  <div>
+                    <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-xl font-bold text-transparent">
+                      ${product.price || '0'}
+                    </span>
+                  </div>
+                ) : (
                   <div>
                     <span className="pt-1 text-lg font-bold text-foreground-400 line-through dark:text-white">
                       ${product.price || '0'}
                     </span>
                     <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                      ${product.price - product.discountPrice || '0'}
+                      $
+                      {(product.price - product.discountPrice).toFixed(2) ||
+                        '0'}
                     </span>
                   </div>
-                  <div
-                    className={
-                      'flex items-start justify-start gap-1 sm:items-center sm:justify-center '
+                )}
+                <div
+                  className={
+                    'flex items-start justify-start gap-1 sm:items-center sm:justify-center '
+                  }
+                >
+                  <Tooltip
+                    content={
+                      <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                        Add to cart
+                      </p>
                     }
+                    showArrow
                   >
-                    <Tooltip
-                      content={
-                        <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                          Add to cart
-                        </p>
+                    <Button
+                      isIconOnly
+                      variant={'light'}
+                      color={'default'}
+                      radius={'full'}
+                      onPress={() =>
+                        dispatch(
+                          addToCart({
+                            discountTypeSlug: product.discountTypeSlug,
+                            closeAt: product.closeAt,
+                            isPercentage: product.isPercentage,
+                            ratingCount: product.ratingCount,
+                            openAt: product.openAt,
+                            seller: product.seller,
+                            slug: product.slug,
+                            name: product.name,
+                            price: product.price,
+                            discountPrice: product.discountPrice,
+                            ratingAvg: product.ratingAvg,
+                            description: product.description,
+                            images: product.images,
+                            shop: product.shop,
+                            discountValue: product.discountValue,
+                            discountType: product.discountType,
+                            expiredAt: product.expiredAt,
+                            category: product.category,
+                            createdAt: product.createdAt,
+                            updatedAt: product.updatedAt,
+                            createdBy: product.createdBy,
+                            updatedBy: product.updatedBy,
+                            address: product.address,
+                            quantity: product.quantity,
+                            location: product.location,
+                          })
+                        )
                       }
-                      showArrow
                     >
-                      <Button
-                        isIconOnly
-                        variant={'light'}
-                        color={'default'}
-                        radius={'full'}
-                        onPress={() =>
-                          dispatch(
-                            addToCart({
-                              discountTypeSlug: product.discountTypeSlug,
-                              closeAt: product.closeAt,
-                              isPercentage: product.isPercentage,
-                              ratingCount: product.ratingCount,
-                              openAt: product.openAt,
-                              seller: product.seller,
-                              slug: product.slug,
-                              name: product.name,
-                              price: product.price,
-                              discountPrice: product.discountPrice,
-                              ratingAvg: product.ratingAvg,
-                              description: product.description,
-                              images: product.images,
-                              shop: product.shop,
-                              discountValue: product.discountValue,
-                              discountType: product.discountType,
-                              expiredAt: product.expiredAt,
-                              category: product.category,
-                              createdAt: product.createdAt,
-                              updatedAt: product.updatedAt,
-                              createdBy: product.createdBy,
-                              updatedBy: product.updatedBy,
-                              address: product.address,
-                              quantity: product.quantity,
-                              location: product.location,
-                            })
-                          )
-                        }
-                      >
-                        {['clearance-sales'].includes(discountType) ? (
-                          <CartIcon className="fill-current" size={32} />
-                        ) : (
-                          <CartIcon className="fill-current" size={24} />
-                        )}
-                      </Button>
-                    </Tooltip>
-                    <Tooltip
-                      content={
-                        <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                          Add to wishlist
-                        </p>
-                      }
-                      showArrow
+                      {['clearance-sales'].includes(discountType) ? (
+                        <CartIcon className="fill-current" size={32} />
+                      ) : (
+                        <CartIcon className="fill-current" size={24} />
+                      )}
+                    </Button>
+                  </Tooltip>
+                  <Tooltip
+                    content={
+                      <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                        Add to wishlist
+                      </p>
+                    }
+                    showArrow
+                  >
+                    <Button
+                      isIconOnly
+                      radius={'full'}
+                      variant={'light'}
+                      color={'default'}
                     >
-                      <Button
-                        isIconOnly
-                        radius={'full'}
-                        variant={'light'}
-                        color={'default'}
-                      >
-                        {['clearance-sales'].includes(discountType) ? (
-                          <HeartIcon className="fill-current" size={32} />
-                        ) : (
-                          <HeartIcon className="fill-current" size={24} />
-                        )}
-                      </Button>
-                    </Tooltip>
-                  </div>
+                      {['clearance-sales'].includes(discountType) ? (
+                        <HeartIcon className="fill-current" size={32} />
+                      ) : (
+                        <HeartIcon className="fill-current" size={24} />
+                      )}
+                    </Button>
+                  </Tooltip>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </CardBody>
@@ -228,7 +235,13 @@ export default function ProductCard({
     </>
   );
 }
-const RatingStar = ({ ratingAvg }: { ratingAvg: number }) => {
+const RatingStar = ({
+  ratingAvg,
+  ratingCount,
+}: {
+  ratingAvg: number;
+  ratingCount: number;
+}) => {
   const stars = Array.from({ length: 5 }, (_, index) => {
     if (ratingAvg >= index + 1) {
       return (
@@ -256,7 +269,7 @@ const RatingStar = ({ ratingAvg }: { ratingAvg: number }) => {
     <>
       {stars}
       <span className="ml-1 text-[9px] font-medium text-foreground-600 md:text-small">
-        ({Math.round(ratingAvg * 10) / 10}) Reviews
+        ({ratingCount}) Reviews
       </span>
     </>
   );

@@ -15,7 +15,6 @@ import SectionHome from '@/components/card/SectionHome';
 import ServiceCardComponent from '@/components/card/Service';
 import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
 import Category from '@/components/card/Category';
-import ShopCardComponent from '@/components/card/Shop';
 import PopularShop from '@/components/card/PopularShop';
 
 export default function HomePage() {
@@ -85,7 +84,7 @@ export default function HomePage() {
                         </span>
                       </p>
                     </div>
-                    <Link href="/discount">
+                    <Link href={`/discount/${discountType.slug}`}>
                       <div className="flex items-center pt-2">
                         <p className="mr-2 pb-1 text-[15px] font-normal text-foreground-700 lg:text-[17px]">
                           See More
@@ -192,6 +191,24 @@ export default function HomePage() {
                               <CardCouponComponent displayCount={3} />
                               <section>
                                 <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                                  <SectionHome
+                                    discountType={discountType.name}
+                                    name={discountType.name}
+                                  />
+                                </div>
+                              </section>
+                            </>
+                          );
+                        case 'event':
+                          return (
+                            <>
+                              <Image
+                                src="https://romand.us/cdn/shop/files/PC_1.png?v=1719967761&width=1728"
+                                className="h-[500px] w-[1300px] object-cover"
+                                alt="Event"
+                              />
+                              <section>
+                                <div className="my-5 grid grid-cols-2 gap-5 lg:grid-cols-4">
                                   <SectionHome
                                     discountType={discountType.name}
                                     name={discountType.name}

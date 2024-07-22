@@ -1,321 +1,173 @@
 'use client';
-
-import Buy1Get1Component from '@/components/card/Buy1Get1';
-import ClearanceCardComponent from '@/components/card/ClearanceCard';
-import DiscountCardComponent from '@/components/card/DiscountCardComponent';
 import ServiceCardComponent from '@/components/card/Service';
 import { Image, Link } from '@nextui-org/react';
-import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect, useState } from 'react';
 import { useGetProductScrapeQuery } from '@/redux/service/productScrape';
+import { useGetDiscountTypesQuery } from '@/redux/service/discountTypes';
+import { DiscountType } from '@/types/DiscountType';
+import SectionHome from '@/components/card/SectionHome';
+import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
+import Category from '@/components/card/Category';
+import PopularShop from '@/components/card/PopularShop';
 
 export default function Deal() {
-  const [page, setPage] = useState(1);
+  const [page] = useState(1);
   const size = 4;
 
   const { data } = useGetProductScrapeQuery({ page, size });
-
-  useEffect(() => {
-    Aos.init({ duration: 1000 });
-  }, []);
+  const {
+    data: discountTypes,
+    isLoading: isLoadingDiscountTypes,
+    error: errorDiscountTypes,
+  } = useGetDiscountTypesQuery();
+  if (errorDiscountTypes) {
+    console.error('Error fetching discount types:', errorDiscountTypes);
+    return <div>Error loading discount types</div>;
+  }
 
   return (
     <>
-      <main>
-        {/* Top Sale Section */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
-              Discount{' '}
-              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                Off
-              </span>
-            </p>
-          </div>
-          {/* Right section */}
-          <Link href="/discount">
-            <div className="flex items-center  pt-1">
-              <p
-                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              "
-              >
-                See More
-              </p>
-              {/* Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                color="black"
-                viewBox="0 0 48 48"
-              >
-                <path
-                  fill="none"
-                  stroke="#545c6a"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="4"
-                  d="M42 24H6m24-12l12 12l-12 12"
-                />
-              </svg>
-            </div>
-          </Link>
-        </div>
-        <DiscountCardComponent
-          category={'food'}
-          discountType={'discount off'}
-        />
-        {/* Buy1 Get1 Section */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          <div className="flex-1">
-            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
-              Buy More{' '}
-              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                Get More
-              </span>
-            </p>
-          </div>
-          <Link href="/buy-more-get-more">
-            <div className="flex items-center  pt-1">
-              <p
-                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              "
-              >
-                See More
-              </p>
-              {/* Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                color="black"
-                viewBox="0 0 48 48"
-              >
-                <path
-                  fill="none"
-                  stroke="#545c6a"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="4"
-                  d="M42 24H6m24-12l12 12l-12 12"
-                />
-              </svg>
-            </div>
-          </Link>
-        </div>
-        <div className="flex flex-wrap justify-between">
-          <div className="w-[366px]">
-            <Link href="/buy-more-get-more">
-              <Image
-                src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
-                className="h-[690px] w-[366px] object-fill"
-                alt="Buy More Get More"
-              ></Image>
-            </Link>
-          </div>
-          <div className="w-[800px]">
-            <Buy1Get1Component
-              category={'clothes'}
-              discountType={'buy more get more'}
-            />
-          </div>
-        </div>
-        {/* Service Section */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
-              So Many Deal{' '}
-              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                See Them All...
-              </span>
-            </p>
-          </div>
-          {/* Right section */}
-          <Link href="/service">
-            <div className="flex items-center  pt-1">
-              <p
-                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              "
-              >
-                See More
-              </p>
-              {/* Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                color="black"
-                viewBox="0 0 48 48"
-              >
-                <path
-                  fill="none"
-                  stroke="#545c6a"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="4"
-                  d="M42 24H6m24-12l12 12l-12 12"
-                />
-              </svg>
-            </div>
-          </Link>
-        </div>
-        {data && <ServiceCardComponent data={data} />}
-        {/* Event Section */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
-              Event
-            </p>
-          </div>
-          {/* Right section */}
-          <Link href="/event">
-            <div className="flex items-center  pt-1">
-              <p
-                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              "
-              >
-                See More
-              </p>
-              {/* Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                color="black"
-                viewBox="0 0 48 48"
-              >
-                <path
-                  fill="none"
-                  stroke="#545c6a"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="4"
-                  d="M42 24H6m24-12l12 12l-12 12"
-                />
-              </svg>
-            </div>
-          </Link>
-        </div>
-        <Link href="/event">
-          <Image
-            src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
-            alt="Event"
-          ></Image>
-        </Link>
-        {/* Coupon Section */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          {/* Left section */}
-          <div className="flex-1">
-            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
-              Shop{' '}
-              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                Coupons
-              </span>
-            </p>
-          </div>
-          {/* Right section */}
-          <Link href="/coupons">
-            <div className="flex items-center  pt-1">
-              <p
-                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              "
-              >
-                See More
-              </p>
-              {/* Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                color="black"
-                viewBox="0 0 48 48"
-              >
-                <path
-                  fill="none"
-                  stroke="#545c6a"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="4"
-                  d="M42 24H6m24-12l12 12l-12 12"
-                />
-              </svg>
-            </div>
-          </Link>
-        </div>
-        <div className="coupon-container flex justify-between pb-10">
-          <div className="coupon">
-            <Image
-              src="https://as2.ftcdn.net/v2/jpg/03/29/10/97/1000_F_329109774_iTsyjzLU5O9cagJ9UhahhNF2ZdkW4OHc.jpg"
-              className="h-[250px] w-[550px] object-cover"
-              alt="Coupon"
-            />
-          </div>
-          <div className="coupon">
-            <Image
-              src="https://as1.ftcdn.net/v2/jpg/03/29/10/98/1000_F_329109835_b1coeNquepUkFoSpqVgLLqKFiBKosY7K.jpg"
-              className="h-[250px] w-[550px] object-cover"
-              alt="Coupon"
-            />
-          </div>
-        </div>
-        <DiscountCardComponent
-          category={'accessories'}
-          discountType={'shop coupons'}
-        />
-        {/* Clearance Sale Section */}
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          <div className="flex-1">
-            <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
-              Clearance{' '}
-              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                Sales
-              </span>
-            </p>
-          </div>
-          <Link href="/flash-sale">
-            <div className="flex items-center  pt-1">
-              <p
-                className="mr-2 pb-1 text-[17px] font-normal text-foreground-700
-              "
-              >
-                See More
-              </p>
-              {/* Icon */}
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                color="black"
-                viewBox="0 0 48 48"
-              >
-                <path
-                  fill="none"
-                  stroke="#545c6a"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="4"
-                  d="M42 24H6m24-12l12 12l-12 12"
-                />
-              </svg>
-            </div>
-          </Link>
-        </div>
-        <ClearanceCardComponent
-          category={'electronic'}
-          discountType={'clearance sales'}
-        />
-        <div className="mt-12">
-          <Image
-            src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
-            className="h-[310px] w-[1300px] object-cover"
-            alt="Clearance Sale"
-          ></Image>
-        </div>
-      </main>
+      {isLoadingDiscountTypes
+        ? 'Loading'
+        : discountTypes.payload.map((discountType: DiscountType) => {
+            const [firstPart, ...restParts] = discountType.name.split(' ');
+            const secondPart = restParts.join(' ');
+
+            return (
+              !['top-sales', 'flash-sales', 'no-discount'].includes(
+                discountType.slug
+              ) && (
+                <>
+                  <div className="mx-6 my-4 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
+                    <div className="flex-1">
+                      <p className="relative w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
+                        {firstPart}
+                        <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                          {' ' + secondPart}
+                        </span>
+                      </p>
+                    </div>
+                    <Link href="/discount">
+                      <div className="flex items-center pt-2">
+                        <p className="mr-2 pb-1 text-[15px] font-normal text-foreground-700 lg:text-[17px]">
+                          See More
+                        </p>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          color="black"
+                          viewBox="0 0 48 48"
+                        >
+                          <path
+                            fill="none"
+                            stroke="#6b7280"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="4"
+                            d="M42 24H6m24-12l12 12-12 12"
+                          />
+                        </svg>
+                      </div>
+                    </Link>
+                  </div>
+                  <section>
+                    {(() => {
+                      switch (discountType.slug) {
+                        case 'clearance-sales':
+                          return (
+                            <>
+                              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                                <SectionHome
+                                  size={3}
+                                  discountType={discountType.name}
+                                  name={discountType.name}
+                                />
+                              </div>
+                              <div className="mx-auto w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
+                                <Image
+                                  src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
+                                  className="mt-[35px] h-[200px] w-[1300px] object-cover lg:h-[310px]"
+                                  alt="image"
+                                />
+                              </div>
+                            </>
+                          );
+                        case 'buy-more-get-more':
+                          return (
+                            <>
+                              <div className="flex flex-col gap-5 lg:flex-row ">
+                                <div className="mx-auto  md:mx-0  ">
+                                  <Link href="/buy-more-get-more">
+                                    <Image
+                                      width="800"
+                                      src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
+                                      className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[900px]"
+                                      alt="image"
+                                    />
+                                  </Link>
+                                </div>
+                                <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">
+                                  <SectionHome
+                                    discountType={discountType.name}
+                                    name={discountType.name}
+                                    size={6}
+                                  />
+                                </div>
+                              </div>
+                            </>
+                          );
+                        case 'shop-coupons':
+                          return (
+                            <>
+                              <CardCouponComponent displayCount={3} />
+                              <section>
+                                <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                                  <SectionHome
+                                    discountType={discountType.name}
+                                    name={discountType.name}
+                                  />
+                                </div>
+                              </section>
+                            </>
+                          );
+                        case 'event':
+                          return (
+                            <>
+                              <Image
+                                src="https://romand.us/cdn/shop/files/PC_1.png?v=1719967761&width=1728"
+                                className="h-[500px] w-[1300px] object-cover"
+                                alt="Event"
+                              />
+                              <section>
+                                <div className="my-5 grid grid-cols-2 gap-5 lg:grid-cols-4">
+                                  <SectionHome
+                                    discountType={discountType.name}
+                                    name={discountType.name}
+                                  />
+                                </div>
+                              </section>
+                            </>
+                          );
+                        default:
+                          return (
+                            <section>
+                              <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                                <SectionHome
+                                  discountType={discountType.name}
+                                  name={discountType.name}
+                                />
+                              </div>
+                            </section>
+                          );
+                      }
+                    })()}
+                  </section>
+                </>
+              )
+            );
+          })}
     </>
   );
 }

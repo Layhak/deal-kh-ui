@@ -12,19 +12,14 @@ const ServiceCardComponent: React.FC<ServiceCardComponentProps> = ({
 }) => {
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-7 ">
+      <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 ">
         {data?.payload.list.map((product: ScrapedProduct) => (
-          <Card
-            key={product.name}
-            className="h-[340px] w-[285px] py-4 shadow-none "
-          >
-            <CardHeader className="h-[130px] flex-col items-start px-4 pb-0  pt-2">
-              <h4 className="text-large font-bold text-foreground-800">
-                {product.name.length > 60
-                  ? `${product.name.substring(0, 60)}...`
-                  : product.name || 'Product Name'}
+          <Card key={product.name} className=" py-4 shadow-none ">
+            <CardHeader className=" flex-col items-start px-4 pb-0  pt-2">
+              <h4 className="line-clamp-2 text-large font-bold text-foreground-800">
+                {product.name || 'Product Name'}
               </h4>
-              <div className="mt-2 flex items-center w-full justify-between">
+              <div className="mt-2 flex w-full items-center justify-between">
                 <p className="bg-gradient-to-r from-pink-500 from-20% to-yellow-500 to-100% bg-clip-text text-2xl font-bold text-transparent">
                   ${product.price}
                 </p>

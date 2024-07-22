@@ -145,12 +145,12 @@ export default function ReviewProductDetailComponent({
     <>
       <div className="mb-6 py-4">
         <div className="mb-8">
-        <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
-              Product{' '}
-              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                Rating
-              </span>
-            </p>
+          <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
+            Product{' '}
+            <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+              Rating
+            </span>
+          </p>
         </div>
         <div className={'mb-5'}>
           <ReviewForm
@@ -159,7 +159,7 @@ export default function ReviewProductDetailComponent({
             hasRated={hasRated}
           />
         </div>
-        <div className={'grid grid-cols-1 lg:grid-cols-3 gap-5'}>
+        <div className={'grid grid-cols-1 gap-5 lg:grid-cols-3'}>
           <section className="mx-auto w-full max-w-md ">
             <div className="flex flex-col gap-2">
               <SummaryRatingCard
@@ -211,19 +211,6 @@ export default function ReviewProductDetailComponent({
             )}
           </div>
         </div>
-        <div className="my-8 flex h-[50px] items-center justify-between">
-          <div className="flex-1">
-          <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
-              Related{' '}
-              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                Products
-              </span>
-            </p>
-          </div>
-        
-        </div>
-        <DiscountCardComponent category={'food'}
-          discountType={'discount off'}/>
       </div>
     </>
   );

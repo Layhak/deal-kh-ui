@@ -68,6 +68,7 @@ export type Product = {
   shop: string;
   discountValue: number;
   discountType: string;
+  discountTypeSlug: string;
   expiredAt: string;
   category: string;
   createdAt: string;
@@ -77,6 +78,8 @@ export type Product = {
   quantity?: number | 0;
   address?: string;
   location: string;
+  openAt?: string;
+  closeAt?: string;
 };
 
 export type ShopResponse = {

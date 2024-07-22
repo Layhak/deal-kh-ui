@@ -17,6 +17,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
   return (
     <>
       <CardDetailComponent
+        discountTypeSlug={product.payload.discountTypeSlug}
         slug={product.payload.slug}
         name={product.payload.name}
         category={product.payload.category}

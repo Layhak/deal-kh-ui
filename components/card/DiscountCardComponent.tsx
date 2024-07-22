@@ -22,19 +22,16 @@ export default function DiscountCardComponent({
     page: 1,
     size: 8,
     filters: {
-      categorySlug: category,
       discountType: discountType,
-      name: '',
     },
   });
   if (isLoading)
     return (
-      <div className="flex flex-wrap justify-center gap-7 ">
-        {/*map 8 times*/}
+      <>
         {Array.from({ length: 8 }, (_, index) => (
           <Card
             key={index}
-            className=" relative mb-2 h-[386px] w-[284px] flex-none  rounded-2xl  text-gray-50 shadow-none"
+            className=" relative mb-2 h-[380px] w-[300px]   rounded-2xl  text-gray-50 shadow-none"
           >
             <CardBody
               className={
@@ -71,7 +68,7 @@ export default function DiscountCardComponent({
             </CardBody>
           </Card>
         ))}
-      </div>
+      </>
     );
 
   return (
@@ -82,9 +79,9 @@ export default function DiscountCardComponent({
           onClick={() => router.push(`/products/${product.slug}`)}
           key={product.slug}
           isPressable
-          className=" relative mb-2 h-[386px] w-[284px] flex-none  rounded-xl  text-gray-50 shadow-none"
+          className=" relative  h-[380px] w-[300px] rounded-xl  text-gray-50 shadow-none"
         >
-          <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
+          <CardBody className="relativrounded-b-lg">
             <Link href={`/products/${product.slug}`}>
               <Image
                 className="h-[193px] w-[284px] object-cover"

@@ -18,6 +18,8 @@ import Loading from '@/app/(user)/loading';
 import { StarIcon } from '@/components/review/StarIcon';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/feature/cart/cartSlice';
+import { images } from 'next/dist/build/webpack/config/blocks/images';
+import { Product } from '@/libs/difinition';
 
 export default function CardDetailComponent({
   slug,
@@ -27,12 +29,13 @@ export default function CardDetailComponent({
   images,
   shop,
   discountType,
+  discountTypeSlug,
   price,
   discountPrice,
-  openAt,
   createdAt,
   expiredAt,
   address,
+  openAt,
   closeAt,
   seller,
   ratingAvg,
@@ -41,7 +44,6 @@ export default function CardDetailComponent({
   updatedBy,
   createdBy,
   isPercentage,
-  shopSlug,
   ratingCount,
   location,
   quantity = 0,
@@ -186,8 +188,11 @@ export default function CardDetailComponent({
               onClick={() =>
                 dispatch(
                   addToCart({
-                    slug,
+                    discountTypeSlug,
+                    closeAt,
+                    openAt,
                     seller,
+                    slug,
                     name,
                     price,
                     discountPrice,

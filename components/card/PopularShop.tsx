@@ -5,7 +5,6 @@ import { BsShop } from 'react-icons/bs';
 import React, { useState } from 'react';
 import Pagination from '@/components/pagination/Pagination';
 import { ShopResponse } from '@/libs/difinition';
-import { AiTwotoneShop } from 'react-icons/ai';
 
 type ShopCardComponentProps = {
   initialPage: number;
@@ -27,13 +26,13 @@ export default function PopularShop() {
       {data?.payload.list.map((shop: ShopResponse) => (
         <Card
           key={shop.slug}
-          isPressable
           className=" h-[450px] w-full object-cover shadow-none"
         >
           <CardBody>
             <Link href={`/shop/${shop.slug}`}>
               <Image
-                className="h-[195px] w-[380px] rounded-lg object-cover object-center"
+                isZoomed
+                className="h-[250px] w-[380px] rounded-lg object-cover object-center"
                 src={
                   shop.profile ||
                   'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
@@ -42,19 +41,12 @@ export default function PopularShop() {
               />
             </Link>
             <div className="mt-2 flex">
-              <AiTwotoneShop className="h-[35px] w-[35px] text-[#eb7d52]" />
+              <BsShop className="h-[35px] w-[35px] text-[#eb7d52]" />
               <h5 className="ml-2 mt-2 h-[52px] text-2xl font-semibold tracking-tight text-foreground-800 dark:text-white">
                 {shop.name.length > 25
                   ? `${shop.name.substring(0, 25)}...`
                   : shop.name || 'Shop Name'}
               </h5>
-            </div>
-            <div className="my-1 text-foreground-600">
-              <p>
-                {shop.description.length > 25
-                  ? `${shop.description.substring(0, 25)}...`
-                  : shop.description || 'Shop Description'}
-              </p>
             </div>
             <div className="flex flex-col gap-1">
               <p className=" text-foreground-600">
@@ -72,9 +64,8 @@ export default function PopularShop() {
             </div>
             <div className="flex items-center justify-between pt-4">
               <div className="flex items-center justify-start">
-                <span className="pt-2 text-sm font-medium text-blue-700 ">
-                  Available Now.
-                  <p>Get Notified.</p>
+                <span className="pt-2 text-sm font-medium text-blue-700 cursor-pointer">
+                  Shop Location
                 </span>
               </div>
               <Link href={`/shop/${shop.slug}`}>

@@ -27,7 +27,7 @@ const config: Config = {
       themes: {
         light: {
           extend: 'light',
-          colors: { 
+          colors: {
             danger: {
               50: '#fef2f2',
               100: '#fee2e2',
@@ -39,8 +39,6 @@ const config: Config = {
               700: '#b91c1c',
               800: '#991b1b',
               900: '#7f1d1d',
-              foreground: '#fef2f2',
-              DEFAULT: '#ef4444',
             },
             background: '#f3f4f6',
           },
@@ -59,8 +57,6 @@ const config: Config = {
               700: '#b91c1c',
               800: '#991b1b',
               900: '#7f1d1d',
-              foreground: '#fef2f2',
-              DEFAULT: '#ef4444',
             },
             background: '#0F0F0F',
           },

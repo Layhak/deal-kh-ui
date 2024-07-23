@@ -13,7 +13,7 @@ import StoreProvider from '@/app/StoreProvider';
 import { ToastContainer } from 'react-toastify';
 import { fileImgUrl } from '@/libs/ImageUrl';
 import { inter, kantumruyPro } from '@/utils/fonts';
-import FilterComponent from '@/components/Filter';
+import FilterComponent from '@/components/FilterCategory';
 
 export const metadata: Metadata = {
   title: 'DealKH',

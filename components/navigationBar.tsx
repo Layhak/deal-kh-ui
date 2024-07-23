@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import {
   Avatar,
   Badge,
+  Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
@@ -16,6 +17,7 @@ import {
   NavbarMenu,
   NavbarMenuItem,
   NavbarMenuToggle,
+  ScrollShadow,
   Tooltip,
 } from '@nextui-org/react';
 import { siteConfig } from '@/config/site';
@@ -39,7 +41,6 @@ import { Product } from '@/libs/difinition';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { BiUserCircle } from 'react-icons/bi';
-import { Button } from '@nextui-org/button';
 import HeaderCreateShop from '@/components/header/HeaderCreateShop';
 
 export const NavigationBar = () => {
@@ -140,7 +141,8 @@ export const NavigationBar = () => {
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
         classNames={{
-          menu: ['bg-warning-500'],
+          base: 'bg-default-50/50',
+          menu: ['bg-default-50/50'],
           item: [
             'relative',
             'h-1/2',
@@ -450,20 +452,40 @@ export const NavigationBar = () => {
           />
         </NavbarContent>
       </Navbar>
-      <Navbar
-        position="sticky"
-        className={'block sm:hidden'}
-        maxWidth={'xl'}
-        classNames={{
-          base: 'w-full gap-0 p-0',
-        }}
-      >
-        <NavbarContent className={'w-full'}>
-          <NavbarItem>
-            <SearchProduct />
-          </NavbarItem>
-        </NavbarContent>
-      </Navbar>
+      {!isMenuOpen && (
+        <Navbar
+          position="sticky"
+          className={'top-14 sm:hidden'}
+          maxWidth={'xl'}
+          classNames={{
+            base: 'bg-default-50/50',
+            menu: ['bg-default-50/50'],
+          }}
+        >
+          <ScrollShadow
+            hideScrollBar
+            orientation={'horizontal'}
+            size={20}
+            className={'w-300px h-50px items-center'}
+          >
+            <NavbarContent>
+              <NavbarItem>
+                <SearchProduct />
+                <Button
+                  isIconOnly
+                  as={NextLink}
+                  size={'lg'}
+                  href={'/search-nearby'}
+                  variant={'light'}
+                  radius={'full'}
+                >
+                  <MapIcon size={28} />
+                </Button>
+              </NavbarItem>
+            </NavbarContent>
+          </ScrollShadow>
+        </Navbar>
+      )}
     </>
   );
 };

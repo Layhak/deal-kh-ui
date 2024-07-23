@@ -141,8 +141,8 @@ export const NavigationBar = () => {
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
         classNames={{
-          base: 'bg-default-50/50',
-          menu: ['bg-default-50/50'],
+          base: 'bg-default-50/80',
+          menu: ['bg-default-50/80'],
           item: [
             'relative',
             'h-1/2',
@@ -458,8 +458,8 @@ export const NavigationBar = () => {
           className={'top-14 sm:hidden'}
           maxWidth={'xl'}
           classNames={{
-            base: 'bg-default-50/50',
-            menu: ['bg-default-50/50'],
+            base: 'bg-default-50/80',
+            menu: ['bg-default-50/80'],
           }}
         >
           <ScrollShadow

@@ -11,7 +11,6 @@ import { Metadata } from 'next';
 import { NavigationBar } from '@/components/navigationBar';
 import StoreProvider from '@/app/StoreProvider';
 import { fileImgUrl } from '@/libs/ImageUrl';
-import HeaderCreateShop from '@/components/header/HeaderCreateShop';
 import { inter, kantumruyPro } from '@/utils/fonts';
 
 export const metadata: Metadata = {
@@ -92,7 +91,6 @@ export default function RootLayout({
         <body className={`${kantumruyPro.variable} ${inter.variable}`}>
           <StoreProvider>
             <Providers>
-              <HeaderCreateShop />
               <NavigationBar />
               <main className={`min-h-screen`}>
                 <ErrorBoundary errorComponent={error}>

@@ -17,9 +17,11 @@ import FilterComponent from '@/components/Filter';
 
 export const metadata: Metadata = {
   title: 'DealKH',
+  manifest: '/manifest.json',
   description:
     'Find the best deals, coupons, and promotions from shops in Cambodia. Save big on your shopping with exclusive offers and discounts at DealKH.',
   keywords: [
+    // Your keywords here
     'Dealkh',
     'Deal kh',
     'Deal-kh',
@@ -109,3 +111,6 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+// ],

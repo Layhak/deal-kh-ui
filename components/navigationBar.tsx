@@ -10,6 +10,7 @@ import {
   Image,
   Link,
   Navbar,
+  NavbarBrand,
   NavbarContent,
   NavbarItem,
   NavbarMenu,
@@ -133,6 +134,7 @@ export const NavigationBar = () => {
     <>
       <HeaderCreateShop isMenuOpen={isMenuOpen} />
       <Navbar
+        isBlurred
         position="sticky"
         maxWidth={'xl'}
         isMenuOpen={isMenuOpen}
@@ -166,11 +168,11 @@ export const NavigationBar = () => {
         }}
       >
         <NavbarContent justify={'center'} className={'flex items-center gap-4'}>
-          <NavbarItem>
-            <NextLink href="/" className="flex h-12 w-12 items-center">
-              <Image src="/logo.png" alt="logo" />
-            </NextLink>
-          </NavbarItem>
+          <NextLink href="/">
+            <NavbarBrand>
+              <Image src="/logo.png" alt="logo" width={50} height={50} />
+            </NavbarBrand>
+          </NextLink>
           <NavbarItem className="hidden w-full items-center sm:flex">
             <SearchProduct />
             {/*<SearchLocation />*/}

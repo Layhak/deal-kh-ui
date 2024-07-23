@@ -3,7 +3,10 @@ import React, { useState } from 'react';
 import { Button } from '@nextui-org/react';
 import CreateShopModal from './FormCreateShop';
 
-export default function HeaderCreateShop() {
+type openMenuProps = {
+  isMenuOpen: boolean;
+};
+export default function HeaderCreateShop({ isMenuOpen }: openMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -18,6 +21,10 @@ export default function HeaderCreateShop() {
     // Implement your refetch logic here
     // console.log('Refetching data...');
   };
+
+  if (isMenuOpen) {
+    return null;
+  }
 
   return (
     <div className="flex h-[30px] bg-gradient-to-r from-pink-500 to-yellow-500">

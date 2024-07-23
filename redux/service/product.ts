@@ -1,5 +1,4 @@
 import { ecommerceApi } from '@/redux/api';
-import { ProductResponse } from '@/libs/difinition';
 
 export const productApi = ecommerceApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -100,6 +99,9 @@ export const productApi = ecommerceApi.injectEndpoints({
         body: data,
       }),
     }),
+    getProductsByShop: builder.query<any, string>({
+      query: (slug) => `products/shop/${slug}`,
+    }),
   }),
 });
 
@@ -115,4 +117,5 @@ export const {
   useUploadImageMutation,
   useUploadCategoryImageMutation,
   useGetAllProductsQuery,
+  useGetProductsByShopQuery,
 } = productApi;

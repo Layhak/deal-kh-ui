@@ -44,6 +44,9 @@ export const productApi = ecommerceApi.injectEndpoints({
     getProductBySlug: builder.query<any, string>({
       query: (slug) => `products/${slug}`,
     }),
+    getProductByShopOwner: builder.query<any, string>({
+      query: (slug) => `products/shop/${slug}`
+    }),
     getProductByProfile: builder.query<any, { page: number; pageSize: number }>(
       {
         query: ({ page = 1, pageSize = 10 }) =>
@@ -106,6 +109,7 @@ export const productApi = ecommerceApi.injectEndpoints({
 export const {
   useGetProductsQuery,
   useGetProductBySlugQuery,
+  useGetProductByShopOwnerQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,

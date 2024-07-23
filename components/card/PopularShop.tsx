@@ -21,6 +21,17 @@ export default function PopularShop() {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading data</div>;
 
+  const handleGetDirections = (location: string) => {
+    if (!location || !location.includes(',')) {
+      console.error('Invalid location format');
+      return;
+    }
+    const [lat, lng] = location.split(',');
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+    window.open(url, '_blank');
+  };
+
+
   return (
     <div className={'grid grid-cols-2 gap-4 md:grid-cols-3'}>
       {data?.payload.list.map((shop: ShopResponse) => (
@@ -64,7 +75,10 @@ export default function PopularShop() {
             </div>
             <div className="flex items-center justify-between pt-4">
               <div className="flex items-center justify-start">
-                <span className="pt-2 text-sm font-medium text-blue-700 cursor-pointer">
+                <span
+                  className="cursor-pointer pt-2 text-sm font-medium text-blue-700"
+                  onClick={() => handleGetDirections(shop.location)}
+                >
                   Shop Location
                 </span>
               </div>

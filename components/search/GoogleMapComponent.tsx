@@ -20,6 +20,7 @@ import { useGetShopNearbyQuery } from '@/redux/service/shop';
 import Loading from '@/app/(user)/loading';
 import { googleMapsConfig } from '@/googleMapConfig';
 import NextLink from 'next/link';
+import Pagination from '../pagination/Pagination';
 
 type GoogleMapProps = {};
 
@@ -41,6 +42,8 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
   const [longitude, setLongitude] = useState<number>(104.9282);
   const [nearbyShops, setNearbyShops] = useState<any[]>([]);
   const [hoveredShop, setHoveredShop] = useState<any | null>(null);
+  const [page, setPage] = useState(1); // Current page state
+  const [size] = useState(3); // Number of items per page
 
   const onLoad = useCallback(
     (map: google.maps.Map) => {
@@ -137,154 +140,174 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
 </svg>
 `;
 
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const displayedShops = nearbyShops.slice((page - 1) * size, page * size);
+
   return isLoaded ? (
     <>
-      {/* Card Shop Section */}
-      <ScrollShadow hideScrollBar>
-        <div className="w-full lg:pr-4">
-          {nearbyShops.length > 0 ? (
-            nearbyShops.map((shop, index) => (
-              <Card
-                key={shop.slug}
-                isPressable
-                className="my-8 w-full shadow-none"
-                onMouseEnter={() => setHoveredShop(shop)}
-                onMouseLeave={() => setHoveredShop(null)}
-              >
-                <CardBody className="flex flex-col sm:flex-row">
-                  {/* Image section */}
-                  <div className="h-64 w-full rounded-2xl lg:w-1/3">
-                    <Image
-                      className="h-64 w-screen object-cover"
-                      src={
-                        shop.profile ||
-                        'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
-                      }
-                      alt={shop.name}
-                    />
-                  </div>
-
-                  {/* Content section */}
-                  <div className="mt-4 w-full text-foreground-600 lg:my-auto lg:ml-8 lg:w-2/3">
-                    <a href="#">
-                      <h5 className="mb-2 text-xl font-semibold tracking-tight text-foreground-800 dark:text-white">
-                        {shop.name.length > 50
-                          ? `${shop.name.substring(0, 20)}...`
-                          : shop.name || 'Shop Name'}
-                      </h5>
-                    </a>
-                    <p>
-                      {shop.description.length > 115
-                        ? `${shop.description.substring(0, 115)}...`
-                        : shop.description || 'Product Description'}
-                    </p>
-
-                    <div className="my-2 flex flex-col gap-1">
-                      <p className=" text-foreground-600">
-                        Category :{' '}
-                        <span className="font-medium text-foreground-900">
-                          {shop.shopType || 'Product Category'}
-                        </span>
-                      </p>
-                      <p className="text-sm text-foreground-600">
-                        Open :{' '}
-                        <span className="text-sm font-medium text-foreground-900">
-                          {shop.openAt.slice(0, 5)}
-                          {'  to  '}
-                          {shop.closeAt.slice(0, 5)}
-                        </span>
-                      </p>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center justify-start">
-                        <span className=" text-sm text-foreground-900 dark:text-white">
-                          Available Now.
-                          <p>Get Notified.</p>
-                        </span>
-                      </div>
-                      <Button
-                        onClick={() => handleCardClick(shop)}
-                        className="h-[37px] w-[130px] rounded-lg bg-gradient-to-r from-pink-500 to-yellow-500 text-center text-[14px] text-white"
-                      >
-                        Check Us Out
-                      </Button>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            ))
-          ) : (
-            <div>Shop Not Found</div>
-          )}
-        </div>
-      </ScrollShadow>
-
-      {/* Google Map Section */}
-      <div className="h-full w-full">
-        <GoogleMap
-          mapContainerStyle={{ width: '100%', height: '100%' }}
-          center={center}
-          zoom={14}
-          onLoad={onLoad}
-          onUnmount={onUnmount}
-          options={options}
-        >
-          <Marker
-            icon={{
-              url: `data:image/svg+xml;base64,${btoa(currentLocationIcon)}`,
-              scaledSize: new google.maps.Size(40, 40),
-            }}
-            position={center}
-          />
-          {nearbyShops.map((shop, index) => {
-            const [shopLat, shopLng] = shop.location.split(',').map(parseFloat);
-
-            return (
+      {/* Container for map and card section */}
+      <div className="flex flex-col lg:flex-row h-screen lg:h-full">
+        {/* Google Map Section */}
+        <div className="w-full lg:w-1/3 lg:h-full h-[60vh] lg:relative lg:order-last">
+          <div className="h-full w-full">
+            <GoogleMap
+              mapContainerStyle={{ width: '100%', height: '100%' }}
+              center={center}
+              zoom={14}
+              onLoad={onLoad}
+              onUnmount={onUnmount}
+              options={options}
+            >
               <Marker
-                key={index}
-                position={{
-                  lat: shopLat,
-                  lng: shopLng,
-                }}
-                // custom the icon on google map
                 icon={{
-                  url: `data:image/svg+xml;base64,${btoa(shopLocationIcon)}`,
+                  url: `data:image/svg+xml;base64,${btoa(currentLocationIcon)}`,
                   scaledSize: new google.maps.Size(40, 40),
                 }}
-                onMouseOver={() => setHoveredShop(shop)}
-              >
-                {hoveredShop && hoveredShop.location === shop.location && (
-                  <InfoWindow
-                    onCloseClick={() => {
-                      setHoveredShop(null);
+                position={center}
+              />
+              {nearbyShops.map((shop, index) => {
+                const [shopLat, shopLng] = shop.location.split(',').map(parseFloat);
+  
+                return (
+                  <Marker
+                    key={index}
+                    position={{
+                      lat: shopLat,
+                      lng: shopLng,
                     }}
+                    icon={{
+                      url: `data:image/svg+xml;base64,${btoa(shopLocationIcon)}`,
+                      scaledSize: new google.maps.Size(40, 40),
+                    }}
+                    onMouseOver={() => setHoveredShop(shop)}
                   >
-                    <div className="h-44 w-40 hover:cursor-pointer">
-                      <NextLink href={`/shop/${shop.slug}`}>
+                    {hoveredShop && hoveredShop.location === shop.location && (
+                      <InfoWindow
+                        onCloseClick={() => {
+                          setHoveredShop(null);
+                        }}
+                      >
+                        <div className="h-44 w-40 hover:cursor-pointer">
+                          <NextLink href={`/shop/${shop.slug}`}>
+                            <Image
+                              className="h-36 w-40 object-cover"
+                              src={shop.profile}
+                              alt={shop.name}
+                            />
+                          </NextLink>
+                          <p className="mt-2 font-medium text-gray-900">
+                            {shop.name}
+                          </p>
+                        </div>
+                      </InfoWindow>
+                    )}
+                  </Marker>
+                );
+              })}
+            </GoogleMap>
+          </div>
+        </div>
+        {/* Card Shop Section */}
+        <div className="w-full lg:w-2/3 lg:mr-5 lg:pt-4 lg:pb-4 lg:h-full overflow-auto lg:overflow-visible lg:order-first">
+          <ScrollShadow hideScrollBar>
+            <div className="w-full">
+              {displayedShops.length > 0 ? (
+                displayedShops.map((shop) => (
+                  <Card
+                    key={shop.slug}
+                    isPressable
+                    className="my-5 w-full shadow-none"
+                    onMouseEnter={() => setHoveredShop(shop)}
+                    onMouseLeave={() => setHoveredShop(null)}
+                  >
+                    <CardBody className="flex flex-col sm:flex-row">
+                      {/* Image section */}
+                      <div className="h-48 w-full mr-8 sm:w-1/3 rounded-2xl">
                         <Image
-                          className="h-36 w-40 object-cover"
-                          src={shop.profile}
+                          className="h-48 w-screen object-cover"
+                          src={
+                            shop.profile ||
+                            'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
+                          }
                           alt={shop.name}
                         />
-                      </NextLink>
-                      <p className="mt-2 font-medium text-gray-900">
-                        {shop.name}
-                      </p>
-                    </div>
-                  </InfoWindow>
-                )}
-              </Marker>
-            );
-          })}
-        </GoogleMap>
+                      </div>
+  
+                      {/* Content section */}
+                      <div className="mt-4 w-full sm:w-2/3 text-foreground-600">
+                        <a href={`/shop/${shop.slug}`}>
+                          <h5 className="mb-2 text-[16px] sm:text-[18px] font-bold tracking-tight text-foreground-800 dark:text-white">
+                            {shop.name.length > 50
+                              ? `${shop.name.substring(0, 20)}...`
+                              : shop.name || 'Shop Name'}
+                          </h5>
+                        </a>
+                        <p className="text-sm sm:text-base">
+                          {shop.description.length > 75
+                            ? `${shop.description.substring(0, 75)}...`
+                            : shop.description || 'Product Description'}
+                        </p>
+  
+                        <div className="my-2 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                          <p className="text-foreground-600 text-sm sm:text-base">
+                            Category :{' '}
+                            <span className="font-medium text-foreground-900">
+                              {shop.shopType || 'Product Category'}
+                            </span>
+                          </p>
+                          <p className="text-xs sm:text-sm text-foreground-600">
+                            Open :{' '}
+                            <span className="text-xs sm:text-sm font-medium text-foreground-900">
+                              {shop.openAt.slice(0, 5)}
+                              {'  to  '}
+                              {shop.closeAt.slice(0, 5)}
+                            </span>
+                          </p>
+                        </div>
+  
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                          <div className="flex items-center justify-start mb-2 sm:mb-0">
+                            <span className="text-xs sm:text-sm text-blue-600 dark:text-white">
+                              Available Now.
+                              <p>Get Notified.</p>
+                            </span>
+                          </div>
+                          <Button
+                            onClick={() => handleCardClick(shop)}
+                            className="rounded-full border-2 border-yellow-500 text-center text-[12px] sm:text-[14px] text-white bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"
+                          >
+                            Check Us Out
+                          </Button>
+                        </div>
+                      </div>
+                    </CardBody>
+                  </Card>
+                ))
+              ) : (
+                <div>Shop Not Found</div>
+              )}
+            </div>
+            {/* Pagination */}
+            <div className="my-4">
+              <Pagination
+                total={Math.ceil(nearbyShops.length / size)}
+                page={page}
+                size={size}
+                onChange={handlePageChange}
+              />
+            </div>
+          </ScrollShadow>
+        </div>
       </div>
     </>
   ) : (
-    <div className={'flex w-full items-center justify-center md:w-[50%] '}>
-      <Spinner color={'warning'} />
+    <div className="flex h-screen items-center justify-center">
+      <Spinner size="lg" />
     </div>
   );
-};
-
+    
+};  
 export default GoogleMapComponent;

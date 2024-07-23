@@ -1,5 +1,3 @@
-// CardShop.tsx
-import { ShopDetail } from '@/types/shopDtail';
 import { Card, CardBody, Image } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -17,7 +15,7 @@ const ShopNearbyComponent: React.FC<CardShopProps> = ({ shop }) => {
   };
 
   return (
-    <div className='mx-2 lg:mx-0'>
+    <div className='mx-2 lg:mx-0 '>
       <Card
         key={shop.slug}
         isPressable
@@ -26,9 +24,9 @@ const ShopNearbyComponent: React.FC<CardShopProps> = ({ shop }) => {
       >
         <CardBody className="flex sm:flex-row flex-col">
           {/* image section */}
-          <div className="h-64 lg:w-1/3 w-full rounded-2xl">
+          <div className="h-40 lg:w-1/3 w-full rounded-md">
           <Image
-                className="h-64 w-screen object-cover"
+                className="h-40 w-screen object-cover"
                 src={
                   shop.profile ||
                   'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'

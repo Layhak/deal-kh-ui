@@ -5,6 +5,7 @@ import { BsShop } from 'react-icons/bs';
 import React, { useState } from 'react';
 import Pagination from '@/components/pagination/Pagination';
 import { ShopResponse } from '@/libs/difinition';
+import { AiTwotoneShop } from 'react-icons/ai';
 
 type ShopCardComponentProps = {
   initialPage: number;
@@ -41,7 +42,7 @@ export default function PopularShop() {
               />
             </Link>
             <div className="mt-2 flex">
-              <BsShop className="h-[35px] w-[35px] text-[#eb7d52]" />
+              <AiTwotoneShop className="h-[35px] w-[35px] text-[#eb7d52]" />
               <h5 className="ml-2 mt-2 h-[52px] text-2xl font-semibold tracking-tight text-foreground-800 dark:text-white">
                 {shop.name.length > 25
                   ? `${shop.name.substring(0, 25)}...`

@@ -1,4 +1,4 @@
-import { useGetProductByShopOwnerQuery, useGetProductsQuery } from '@/redux/service/product';
+import { useGetProductByShopOwnerQuery } from '@/redux/service/product';
 
 import { useRouter } from 'next/navigation';
 import React from 'react';
@@ -12,11 +12,15 @@ export default function SectionProfileShop({ category, discountType, size, shopS
     data: products,
     isLoading,
     error,
-  }: any = useGetProductByShopOwnerQuery((shopSlug));
+  }: any = useGetProductByShopOwnerQuery(shopSlug);
   console.log("Products of the shop with slug: ", shopSlug)
   console.log("Here are the products: ", products)
+  console.log("Erro: ", error)
   if (products?.payload?.pagination?.totalElements === 0) {
     return <div>No Products Found</div>;
+  }
+  if (error) {
+    return <p>Error: {error.message}</p>;
   }
   return (
     <>

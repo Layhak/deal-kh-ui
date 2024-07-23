@@ -1,5 +1,5 @@
 'use client';
-import { Button, Image } from '@nextui-org/react';
+import { Button, Image, Link } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { Key, useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -89,6 +89,16 @@ export default function CardDetailComponent({
       </div>
     );
 
+  const handleGetDirections = (location: string) => {
+    if (!location || !location.includes(',')) {
+      console.error('Invalid location format');
+      return;
+    }
+    const [lat, lng] = location.split(',');
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <div className="container w-full lg:py-8">
       <div className="grid grid-cols-1 content-center gap-8 lg:grid-cols-2">
@@ -172,7 +182,11 @@ export default function CardDetailComponent({
               </p>
               <p className="text-base font-medium text-foreground-600">
                 Shop :{' '}
-                <span className="font-semibold text-blue-800">{shop}</span>
+                <Link href={`/shop/${shop.slug}`}>
+                  <span className="cursor-pointer font-semibold text-blue-800">
+                    {shop}
+                  </span>
+                </Link>
               </p>
               <p className="text-base font-medium text-foreground-600">
                 Open : {openAt.slice(0, 5)} AM - {closeAt.slice(0, 5)} PM

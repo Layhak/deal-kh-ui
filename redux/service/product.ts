@@ -45,7 +45,7 @@ export const productApi = ecommerceApi.injectEndpoints({
       query: (slug) => `products/${slug}`,
     }),
     getProductByShopOwner: builder.query<any, string>({
-      query: (slug) => `products/shop/${slug}`
+      query: (slug) => `/products/shop/${slug}`
     }),
     getProductByProfile: builder.query<any, { page: number; pageSize: number }>(
       {

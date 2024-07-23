@@ -17,7 +17,7 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
   return (
     <div>
       {/* profile cover section */}
-      <div className=" flex w-full flex-col items-center lg:flex-row">
+      <div className="flex lg:w-full w-[96%] flex-col items-center lg:flex-row lg:mx-0 mx-2">
         <div
           className="relative flex h-40 w-full justify-start rounded-lg bg-gray-800 lg:h-96"
           style={{
@@ -40,41 +40,41 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
       </div>
 
       {/* page details section */}
-      <div className="mt-[74px] flex flex-col lg:mt-28 lg:flex-row lg:mx-0 md:mx-0 mx-4">
+      <div className="mt-[74px] flex flex-col lg:mt-28 lg:flex-row lg:mx-0 mx-4">
         {/* description section */}
         <div className="mt-9 w-full lg:mt-0">
-          <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 lg:text-2xl">
+          <p className="text-lg font-semibold lg:text-2xl">
             Page&apos;s Detail
           </p>
-          <p className="mt-4 text-[16px] text-gray-600 dark:text-gray-300">
+          <p className="mt-4 text-[16px]">
             {shopProfile.description}
           </p>
 
           {/* icons */}
           {/* location */}
           <div className="mt-4 flex flex-row gap-4">
-            <div className="self-center text-[24px] text-gray-700">
+            <div className="self-center text-[24px]">
               <MdOutlineDirections />
             </div>
-            <p className="text-[16px] text-gray-600 dark:text-gray-300">
+            <p className="text-[16px] ">
               {shopProfile.address}
             </p>
           </div>
           {/* phone number */}
           <div className="mt-4 flex flex-row gap-4">
-            <div className="self-center text-[24px] text-gray-700">
+            <div className="self-center text-[24px]">
               <HiOutlinePhone />
             </div>
-            <p className="text-[16px] text-gray-600 dark:text-gray-300">
+            <p className="text-[16px]">
               {shopProfile.phoneNumber}
             </p>
           </div>
           {/* open and close */}
           <div className="mt-4 flex flex-row gap-4">
-            <div className="self-center text-[24px] text-gray-700">
+            <div className="self-center text-[24px]">
               <LuClock10 />
             </div>
-            <p className="text-[16px] text-gray-600 dark:text-gray-300">
+            <p className="text-[16px]">
               {shopProfile.openAt.slice(0, 5)}
               {'  to  '}
               {shopProfile.closeAt.slice(0, 5)}
@@ -82,10 +82,10 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
           </div>
           {/* mail */}
           <div className="mt-4 flex flex-row gap-4">
-            <div className="self-center text-[24px] text-gray-700">
+            <div className="self-center text-[24px]">
               <BiCategory />
             </div>
-            <p className="text-[16px] text-gray-600 dark:text-gray-300">
+            <p className="text-[16px]">
               {shopProfile.shopType}
             </p>
           </div>

@@ -5,6 +5,7 @@ import { BsShop } from 'react-icons/bs';
 import React, { useState } from 'react';
 import Pagination from '@/components/pagination/Pagination';
 import { ShopResponse } from '@/libs/difinition';
+import { AiOutlineShop } from 'react-icons/ai';
 
 type ShopCardComponentProps = {
   initialPage: number;
@@ -31,13 +32,12 @@ export default function PopularShop() {
     window.open(url, '_blank');
   };
 
-
   return (
-    <div className={'grid grid-cols-2 gap-4 md:grid-cols-3'}>
+    <div className={'grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 lg:mx-0 mx-2'}>
       {data?.payload.list.map((shop: ShopResponse) => (
         <Card
           key={shop.slug}
-          className=" h-[450px] w-full object-cover shadow-none"
+          className=" h-[470px] w-full object-cover shadow-none"
         >
           <CardBody>
             <Link href={`/shop/${shop.slug}`}>
@@ -52,10 +52,12 @@ export default function PopularShop() {
               />
             </Link>
             <div className="mt-2 flex">
-              <BsShop className="h-[35px] w-[35px] text-[#eb7d52]" />
-              <h5 className="ml-2 mt-2 h-[52px] text-2xl font-semibold tracking-tight text-foreground-800 dark:text-white">
-                {shop.name.length > 25
-                  ? `${shop.name.substring(0, 25)}...`
+              <div className=''>
+                <AiOutlineShop className="h-[37px] w-[37px]  text-[#eb7d52]" />
+              </div>
+              <h5 className="ml-2 mt-2 line-clamp-2 h-[66px] text-2xl font-semibold tracking-tight text-foreground-800 dark:text-white">
+                {shop.name.length > 18
+                  ? `${shop.name.substring(0, 18)}...`
                   : shop.name || 'Shop Name'}
               </h5>
             </div>

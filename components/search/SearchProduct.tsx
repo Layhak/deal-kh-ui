@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Autocomplete,
   AutocompleteItem,
@@ -8,7 +8,7 @@ import {
 } from '@nextui-org/react';
 import { useGetProductsQuery } from '@/redux/service/product';
 import { SearchIcon } from '@/components/icons';
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@nextui-org/button';
 import { Product } from '@/libs/difinition';
 
@@ -91,9 +91,7 @@ export default function SearchProduct() {
   };
 
   if (initialLoading || isLoading) {
-    return (
-      <Skeleton className={'h-[50px] w-full max-w-[350px] rounded-full'} />
-    );
+    return <Skeleton className={'h-[50px] w-full rounded-full sm:w-[300px]'} />;
   }
 
   if (initialError || error) {
@@ -109,11 +107,11 @@ export default function SearchProduct() {
         className={'border-warning-300'}
         classNames={{
           base: [
-            ' max-w-[350px] ',
+            ' max-w-[350px] w-[290px] sm:w-[350px]  ',
             'group-data-[focus=true]:border-warning-500',
           ],
           listboxWrapper: [
-            'max-h-[320px] ',
+            'max-h-[320px]  ',
             'transition-opacity',
             'data-[hover=true]:text-foreground',
             'dark:data-[hover=true]:bg-warning-50',
@@ -130,7 +128,7 @@ export default function SearchProduct() {
           classNames: {
             input: 'ml-1',
             inputWrapper: [
-              'h-[48px] ',
+              'h-[48px] w-[290px] sm:w-[350px] ',
               'transition-opacity',
               'data-[hover=true]:text-foreground',
               'border-warning-300',
@@ -148,7 +146,7 @@ export default function SearchProduct() {
           hideSelectedIcon: true,
           itemClasses: {
             base: [
-              'rounded-medium',
+              'rounded-medium w-[290px] sm:w-[350px]',
               'text-default-500',
               'transition-opacity',
               'data-[hover=true]:text-foreground',
@@ -166,7 +164,7 @@ export default function SearchProduct() {
         popoverProps={{
           offset: 10,
           classNames: {
-            base: 'rounded-large',
+            base: 'rounded-large ',
             content: 'p-1 border-small border-warning-100 bg-background fixed',
           },
         }}

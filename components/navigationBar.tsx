@@ -140,6 +140,7 @@ export const NavigationBar = () => {
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
         classNames={{
+          menu: ['bg-warning-500'],
           item: [
             'relative',
             'h-1/2',
@@ -447,6 +448,20 @@ export const NavigationBar = () => {
           <NavbarMenuToggle
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           />
+        </NavbarContent>
+      </Navbar>
+      <Navbar
+        position="sticky"
+        className={'block sm:hidden'}
+        maxWidth={'xl'}
+        classNames={{
+          base: 'w-full gap-0 p-0',
+        }}
+      >
+        <NavbarContent className={'w-full'}>
+          <NavbarItem>
+            <SearchProduct />
+          </NavbarItem>
         </NavbarContent>
       </Navbar>
     </>

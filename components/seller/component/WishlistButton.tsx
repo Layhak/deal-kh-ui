@@ -1,25 +1,38 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Button, Tooltip, useDisclosure } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 import { HeartFilledIcon, HeartIcon } from '@/components/icons';
-import WishListDropDownComponent from '@/components/WishListDropDownComponent';
+import WishListDropDownComponent from '@/components/wishlist/WishListDropDownComponent';
 import { Product } from '@/libs/difinition';
 import { useGetAllUserWishListQuery } from '@/redux/service/wishList';
 import { useGetProfileQuery } from '@/redux/service/user';
 import { WishListItem } from '@/types/wishList';
+import DeleteWishListConfirmationModal from '@/components/wishlist/DeleteWishlistConfirmationModal';
 
 type WishlistButtonProps = {
   product: Product;
 };
 
 const WishlistButton: React.FC<WishlistButtonProps> = ({ product }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isAddWishlistOpen,
+    onOpen: onAddWishlistOpen,
+    onClose: onAddWishlistClose,
+  } = useDisclosure();
+  const {
+    isOpen: isDeleteModalOpen,
+    onOpen: onDeleteModalOpen,
+    onClose: onDeleteModalClose,
+  } = useDisclosure();
   const [isInWishlist, setIsInWishlist] = useState(false);
   const [totalElements, setTotalElements] = useState(0);
   const [pageSize, setPageSize] = useState(1);
+  const [wishlistItemUuid, setWishlistItemUuid] = useState<string | null>(null);
 
   const { data: userProfile, isLoading: isLoadingUserProfile } =
     useGetProfileQuery();
+  const router = useRouter();
 
   // Initial fetch with limited size
   const {
@@ -51,13 +64,33 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({ product }) => {
   });
 
   useEffect(() => {
+    if (userProfile && !initialLoading) {
+      refetchWishList();
+    }
+  }, [userProfile, refetchWishList, initialLoading]);
+
+  useEffect(() => {
     if (userProfile && wishListData && wishListData.payload) {
-      const found = wishListData.payload.list.some(
+      const foundItem = wishListData.payload.list.find(
         (item: WishListItem) => item.productSlug === product.slug
       );
-      setIsInWishlist(found);
+      setIsInWishlist(!!foundItem);
+      setWishlistItemUuid(foundItem ? foundItem.uuid : null);
     }
   }, [userProfile, wishListData, product.slug]);
+
+  const handleWishlistToggle = async () => {
+    if (!userProfile) {
+      router.push('/login');
+      return;
+    }
+
+    if (isInWishlist && wishlistItemUuid) {
+      onDeleteModalOpen();
+    } else {
+      onAddWishlistOpen();
+    }
+  };
 
   return (
     <>
@@ -74,7 +107,7 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({ product }) => {
           radius={'full'}
           variant={'light'}
           color={'default'}
-          onPress={onOpen}
+          onPress={handleWishlistToggle}
         >
           {isInWishlist ? (
             <HeartFilledIcon className="fill-current" size={24} />
@@ -85,9 +118,17 @@ const WishlistButton: React.FC<WishlistButtonProps> = ({ product }) => {
       </Tooltip>
 
       <WishListDropDownComponent
-        isOpen={isOpen}
-        onOpenChange={onClose}
+        isOpen={isAddWishlistOpen}
+        onOpenChange={onAddWishlistClose}
         product={product}
+        refetchWishList={refetchWishList}
+      />
+
+      <DeleteWishListConfirmationModal
+        isOpen={isDeleteModalOpen}
+        onOpenChange={onDeleteModalClose}
+        wishlistItemUuid={wishlistItemUuid as string}
+        refetchWishList={refetchWishList}
       />
     </>
   );

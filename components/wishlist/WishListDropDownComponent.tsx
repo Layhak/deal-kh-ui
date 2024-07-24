@@ -6,7 +6,6 @@ import {
   ModalContent,
   ModalFooter,
   ModalHeader,
-  Slider,
 } from '@nextui-org/react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -15,6 +14,9 @@ import { Product } from '@/libs/difinition';
 import { WishiList } from '@/types/wishList';
 import { useCreateWishListMutation } from '@/redux/service/wishList';
 import { toast } from 'react-toastify';
+import { useTheme } from 'next-themes';
+import CustomInput from '@/components/customInput/customInput';
+import { useGetProfileQuery } from '@/redux/service/user';
 
 const validationSchema = Yup.object({
   wishlistDescription: Yup.string()
@@ -22,7 +24,7 @@ const validationSchema = Yup.object({
     .min(5, 'Description must be at least 5 characters long'),
   wishlistPercentage: Yup.number()
     .min(0, 'Percentage must be at least 0')
-    .max(1, 'Percentage must be at most 1')
+    .max(100, 'Percentage must be at most 100')
     .required('Percentage is required'),
 });
 
@@ -30,40 +32,68 @@ type WishListDropDownComponentProps = {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;
   product: Product;
+  refetchWishList?: () => void;
 };
 
 const WishListDropDownComponent: React.FC<WishListDropDownComponentProps> = ({
   isOpen,
   onOpenChange,
   product,
+  refetchWishList,
 }) => {
   const [createWishList, { isLoading }] = useCreateWishListMutation();
+  const { data: userProfile, isLoading: isLoadingUserProfile } =
+    useGetProfileQuery();
+  const { theme } = useTheme();
 
   const initialValues = {
     wishlistDescription: '',
-    wishlistPercentage: 0,
+    wishedProductMessage: '',
+    wishlistPercentage: '',
   };
 
   const handleSubmit = async (
     values: typeof initialValues,
-    {
-      setSubmitting,
-      resetForm,
-    }: { setSubmitting: (isSubmitting: boolean) => void; resetForm: () => void }
+    { setSubmitting, resetForm, setErrors }: any
   ) => {
     try {
+      const discountPercentage = parseFloat(values.wishlistPercentage).toFixed(
+        2
+      );
       const wishListData: WishiList = {
         productSlug: product.slug,
-        discountPercentage: values.wishlistPercentage,
+        discountPercentage: Number(discountPercentage),
         description: values.wishlistDescription,
       };
 
       await createWishList(wishListData).unwrap();
-      toast.success('Wish list created');
+      toast.success('Wish list created', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
       resetForm();
       onOpenChange(false); // Close modal after submit
-    } catch (error) {
-      console.error('Failed to create wishlist:', error);
+      if (refetchWishList) {
+        refetchWishList();
+      } // Refetch the wishlist data
+    } catch (error: any) {
+      if (
+        error?.data?.error?.description ===
+        'You have already wished this product!'
+      ) {
+        setErrors({
+          wishedProductMessage:
+            'You have already added this product to your wishlist!',
+        });
+      } else {
+        console.error('Failed to create wishlist:', error);
+      }
     } finally {
       setSubmitting(false);
     }
@@ -75,6 +105,7 @@ const WishListDropDownComponent: React.FC<WishListDropDownComponentProps> = ({
       onOpenChange={onOpenChange}
       isDismissable={false}
       size="lg"
+      backdrop={'blur'}
       isKeyboardDismissDisabled={true}
     >
       <ModalContent>
@@ -85,57 +116,13 @@ const WishListDropDownComponent: React.FC<WishListDropDownComponentProps> = ({
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
           >
-            {({ setFieldValue }) => (
+            {({ errors }) => (
               <Form className="space-y-4">
-                <Slider
+                <CustomInput
                   label="Wishlist Percentage"
-                  step={0.1}
-                  color="warning"
-                  maxValue={1}
-                  minValue={0}
-                  defaultValue={initialValues.wishlistPercentage}
-                  showSteps={true}
-                  showTooltip={true}
-                  showOutline={true}
-                  disableThumbScale={true}
-                  formatOptions={{
-                    style: 'percent',
-                    maximumFractionDigits: 0,
-                  }}
-                  tooltipValueFormatOptions={{
-                    style: 'percent',
-                    maximumFractionDigits: 0,
-                  }}
-                  classNames={{
-                    base: 'w-[450px]',
-                    filler: 'bg-gradient-to-r from-yellow-500 to-pink-500',
-                    labelWrapper: 'mb-2',
-                    label: 'block text-sm font-medium text-gray-700',
-                    value: 'font-medium text-default-500 text-small',
-                    thumb: [
-                      'transition-size',
-                      'bg-gradient-to-r from-pink-500 to-yellow-500',
-                      'data-[dragging=true]:shadow-lg data-[dragging=true]:shadow-black/20',
-                      'data-[dragging=true]:w-7 data-[dragging=true]:h-7 data-[dragging=true]:after:h-6 data-[dragging=true]:after:w-6',
-                    ],
-                    step: 'data-[in-range=true]:bg-black/30 dark:data-[in-range=true]:bg-white/50',
-                  }}
-                  tooltipProps={{
-                    offset: 10,
-                    placement: 'bottom',
-                    classNames: {
-                      base: [
-                        'before:bg-gradient-to-r before:from-pink-500 before:to-yellow-500',
-                      ],
-                      content: [
-                        'py-2 shadow-xl',
-                        'text-white bg-gradient-to-r from-pink-500 to-yellow-500',
-                      ],
-                    },
-                  }}
-                  onChange={(value: any) =>
-                    setFieldValue('wishlistPercentage', value)
-                  }
+                  name="wishlistPercentage"
+                  type="text"
+                  placeholder="Enter percentage (0-100)"
                 />
                 <CustomTextArea
                   label="Wishlist Description"
@@ -143,6 +130,11 @@ const WishListDropDownComponent: React.FC<WishListDropDownComponentProps> = ({
                   placeholder="Make a wish here ✨..."
                   isDisabled={false}
                 />
+                {errors.wishedProductMessage && (
+                  <div className="text-sm text-red-500">
+                    {errors.wishedProductMessage}
+                  </div>
+                )}
                 <ModalFooter>
                   <Button
                     color="danger"
@@ -151,7 +143,12 @@ const WishListDropDownComponent: React.FC<WishListDropDownComponentProps> = ({
                   >
                     Close
                   </Button>
-                  <Button color="primary" type="submit" isLoading={isLoading}>
+                  <Button
+                    color="primary"
+                    className={'bg-gradient-to-r from-pink-500 to-warning-500'}
+                    type="submit"
+                    isLoading={isLoading}
+                  >
                     Submit
                   </Button>
                 </ModalFooter>

@@ -4,8 +4,7 @@ import Products from '@/components/pages/AllProduct';
 import { fileImgUrl } from '@/libs/ImageUrl';
 
 export const metadata: Metadata = {
-  title:
-    'Discover the Best Deals, Coupons, and Promotions in Cambodia - DealKH',
+  title: ' DealKH | Product Page ',
   description:
     'Explore a wide range of deals, coupons, and promotions from various shops in Cambodia. Save big on your shopping with exclusive offers at DealKH.',
   keywords:

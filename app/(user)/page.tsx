@@ -70,7 +70,7 @@ export default function HomePage() {
       {isLoadingDiscountTypes ? (
         <>
           <Skeleton className="my-10 h-[30px] w-full max-w-[200px] rounded-2xl" />
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
             {Array.from({ length: size || 8 }, (_, index) => (
               <SkeletonCard key={index} />
             ))}
@@ -123,7 +123,7 @@ export default function HomePage() {
                       case 'clearance-sales':
                         return (
                           <>
-                            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                               <SectionHome
                                 size={3}
                                 discountType={discountType.name}
@@ -142,18 +142,18 @@ export default function HomePage() {
                       case 'buy-more-get-more':
                         return (
                           <>
-                            <div className="flex flex-col gap-5 lg:flex-row ">
+                            <div className="flex flex-col gap-8 lg:flex-row ">
                               <div className="mx-auto  md:mx-0  ">
                                 <Link href="/buy-more-get-more">
                                   <Image
                                     width="800"
                                     src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
-                                    className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[900px]"
+                                    className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[800px]"
                                     alt="image"
                                   />
                                 </Link>
                               </div>
-                              <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">
+                              <div className="grid grid-cols-2 gap-8 lg:grid-cols-3">
                                 <SectionHome
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -199,7 +199,7 @@ export default function HomePage() {
                           <>
                             <CardCouponComponent displayCount={3} />
                             <section>
-                              <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                              <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
                                 <SectionHome
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -217,7 +217,7 @@ export default function HomePage() {
                               alt="Event"
                             />
                             <section>
-                              <div className="my-5 grid grid-cols-2 gap-5 lg:grid-cols-4">
+                              <div className="my-5 grid grid-cols-2 gap-8 lg:grid-cols-4">
                                 <SectionHome
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -229,7 +229,7 @@ export default function HomePage() {
                       default:
                         return (
                           <section>
-                            <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                            <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
                               <SectionHome
                                 discountType={discountType.name}
                                 name={discountType.name}
@@ -245,19 +245,44 @@ export default function HomePage() {
           );
         })
       )}
-      <div className={'my-5'}>
-        <p className="relative my-5 w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
+      <div className={'my-10'}>
+        <p className="relative my-10 w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
           Category{' '}
         </p>
         <Category />
       </div>
       <div>
-        <p className="relative my-5 w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
-          Popular{' '}
-          <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-            Shop
-          </span>
-        </p>
+        <div className={'flex items-center justify-between'}>
+          <p className="relative my-10 w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
+            Popular{' '}
+            <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+              Shop
+            </span>
+          </p>
+          <Link href={`shop`}>
+            <div className="flex items-center pt-2">
+              <p className="mr-2 pb-1 text-[15px] font-normal text-foreground-700 lg:text-[17px]">
+                See More
+              </p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                color="black"
+                viewBox="0 0 48 48"
+              >
+                <path
+                  fill="none"
+                  stroke="#6b7280"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="4"
+                  d="M42 24H6m24-12l12 12-12 12"
+                />
+              </svg>
+            </div>
+          </Link>
+        </div>
         <PopularShop />
       </div>
     </>

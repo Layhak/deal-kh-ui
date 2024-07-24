@@ -66,6 +66,7 @@ export type Product = {
   ratingAvg: number;
   description: string;
   shop: string;
+  shopSlug: string;
   discountValue: number;
   discountType: string;
   discountTypeSlug: string;

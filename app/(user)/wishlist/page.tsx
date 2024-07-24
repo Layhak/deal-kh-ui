@@ -3,7 +3,7 @@ import 'aos/dist/aos.css';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { fileImgUrl } from '@/libs/ImageUrl';
-import WishListTableComponent from '@/components/wishlistComponent';
+import WishListTableComponent from '@/components/wishlist/wishlistComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 

@@ -117,6 +117,7 @@ export default function ClearanceCardComponent({
                   onClick={() =>
                     dispatch(
                       addToCart({
+                        shopSlug: '',
                         location: '',
                         closeAt: '',
                         discountTypeSlug: '',

@@ -4,8 +4,11 @@ import { WishiList, WishListResponse } from '@/types/wishList';
 export const wishListApi = ecommerceApi.injectEndpoints({
   overrideExisting: true,
   endpoints: (builder) => ({
-    getAllUserWishList: builder.query<WishListResponse, void>({
-      query: () => '/wishlists/me',
+    getAllUserWishList: builder.query<
+      WishListResponse,
+      { page: number; size: number }
+    >({
+      query: ({ page, size }) => `/wishlists/me?page=${page}&size=${size}`,
     }),
     createWishList: builder.mutation<
       { message: string; status: number },
@@ -30,4 +33,5 @@ export const {
   useCreateWishListMutation,
   useDeleteWishListMutation,
   useGetAllUserWishListQuery,
+  useLazyGetAllUserWishListQuery,
 } = wishListApi;

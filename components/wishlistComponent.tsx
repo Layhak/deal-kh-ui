@@ -21,7 +21,7 @@ import { SearchIcon, VerticalDotsIcon } from '@/components/icons';
 import { useGetAllUserWishListQuery } from '@/redux/service/wishList';
 import { WishListItem } from '@/types/wishList';
 import Loading from '@/app/(user)/loading';
-import { useGetProfileQuery } from '@/redux/service/user'; // Make sure you have these types
+import { useGetProfileQuery } from '@/redux/service/user';
 
 const INITIAL_VISIBLE_COLUMNS = [
   'productName',
@@ -64,8 +64,9 @@ const WishListTableComponent: React.FC = () => {
     isLoading: isProfileLoading,
     isError: isProfileError,
   } = useGetProfileQuery();
+
   const { data, isLoading, isError, error } = useGetAllUserWishListQuery(
-    undefined,
+    { page: page, size: rowsPerPage },
     {
       skip: !userProfile,
     }
@@ -86,12 +87,7 @@ const WishListTableComponent: React.FC = () => {
     return [];
   }, [data, filterValue]);
 
-  const totalPages = Math.ceil(allItems.length / rowsPerPage);
-
-  const paginatedItems = useMemo(() => {
-    const startIndex = (page - 1) * rowsPerPage;
-    return allItems.slice(startIndex, startIndex + rowsPerPage);
-  }, [page, rowsPerPage, allItems]);
+  const totalPages = data?.payload?.pagination?.totalPages || 0;
 
   const renderCell = useCallback((item: WishListItem, columnKey: string) => {
     const cellValue = item[columnKey as keyof WishListItem];
@@ -183,9 +179,9 @@ const WishListTableComponent: React.FC = () => {
     return (
       <div className="flex items-center justify-between px-2 py-2">
         <span className="w-[30%] text-small text-default-400">
-          {selectedKeys && selectedKeys.size === paginatedItems.length
+          {selectedKeys && selectedKeys.size === allItems.length
             ? 'All items selected'
-            : `${selectedKeys ? selectedKeys.size : 0} of ${paginatedItems.length} selected`}
+            : `${selectedKeys ? selectedKeys.size : 0} of ${allItems.length} selected`}
         </span>
         <Pagination
           isCompact
@@ -216,7 +212,7 @@ const WishListTableComponent: React.FC = () => {
         </div>
       </div>
     );
-  }, [selectedKeys, page, totalPages, paginatedItems]);
+  }, [selectedKeys, page, totalPages, allItems]);
 
   if (isProfileLoading || isLoading) {
     return <Loading />;
@@ -226,8 +222,9 @@ const WishListTableComponent: React.FC = () => {
     console.log(error);
     return <div>Error loading wishlist</div>;
   }
+
   return (
-    <div className={'flex h-full  items-center justify-center'}>
+    <div className={'flex h-full items-center justify-center'}>
       <Table
         aria-label="Wishlist table with custom cells, pagination and sorting"
         isHeaderSticky
@@ -247,10 +244,7 @@ const WishListTableComponent: React.FC = () => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody
-          emptyContent={'No wishlist items found'}
-          items={paginatedItems}
-        >
+        <TableBody emptyContent={'No wishlist items found'} items={allItems}>
           {(item) => (
             <TableRow key={item.uuid}>
               {(columnKey: any) => (

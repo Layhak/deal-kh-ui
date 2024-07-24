@@ -35,9 +35,17 @@ export type WishListResponsePayload = {
   pagination: Pagination;
 };
 
-// Define the WishListResponse type
-export type WishListResponse = {
-  payload: WishListResponsePayload;
+export interface WishListResponse {
   message: string;
+  payload: {
+    list: WishListItem[];
+    pagination: {
+      pageSize: number;
+      pageNumber: number;
+      totalPages: number;
+      totalElements: number;
+      numberOfElements: number;
+    };
+  };
   status: number;
-};
+}

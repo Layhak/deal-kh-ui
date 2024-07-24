@@ -6,7 +6,6 @@ import {
   Image,
   Link,
   Tooltip,
-  useDisclosure,
 } from '@nextui-org/react';
 import { Product } from '@/libs/difinition';
 import { StarIcon } from '@/components/review/StarIcon';
@@ -17,9 +16,9 @@ import {
   removeFromCart,
   selectIsProductInCart,
 } from '@/redux/feature/cart/cartSlice';
-import { CartIcon, FilledCartIcon, HeartIcon } from '@/components/icons';
+import { CartIcon, FilledCartIcon } from '@/components/icons';
 import { RootState } from '@/redux/store';
-import WishListDropDownComponent from '@/components/WishListDropDownComponent';
+import WishlistButton from '@/components/seller/component/WishlistButton';
 
 type ProductDiscountType =
   | 'no-discount'
@@ -45,7 +44,6 @@ export default function ProductCard({
   const isInCart = useSelector((state: RootState) =>
     selectIsProductInCart(state, product.slug)
   );
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleCartToggle = () => {
     if (isInCart) {
@@ -208,39 +206,14 @@ export default function ProductCard({
                       )}
                     </Button>
                   </Tooltip>
-                  <Tooltip
-                    content={
-                      <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                        Add to wishlist
-                      </p>
-                    }
-                    showArrow
-                  >
-                    <Button
-                      isIconOnly
-                      radius={'full'}
-                      variant={'light'}
-                      color={'default'}
-                      onPress={onOpen}
-                    >
-                      {['clearance-sales'].includes(discountType) ? (
-                        <HeartIcon className="fill-current" size={32} />
-                      ) : (
-                        <HeartIcon className="fill-current" size={24} />
-                      )}
-                    </Button>
-                  </Tooltip>
+
+                  <WishlistButton product={product} />
                 </div>
               </div>
             </div>
           </div>
         </CardBody>
       </Card>
-      <WishListDropDownComponent
-        isOpen={isOpen}
-        onOpenChange={onClose}
-        product={product}
-      />
     </>
   );
 }

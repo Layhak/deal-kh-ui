@@ -6,7 +6,7 @@ import NextLink from 'next/link';
 import { Category } from '@/types/category';
 import { usePathname } from 'next/navigation';
 
-export default function Filter() {
+export default function FilterCategory() {
   const { data, isLoading, error } = useGetCategoryQuery();
   const [showNavbar, setShowNavbar] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -35,14 +35,18 @@ export default function Filter() {
     <Navbar
       position="sticky"
       maxWidth={'xl'}
-      className={`  top-16 z-30 transition-all duration-700 ${
+      className={` top-28 z-30 transition-all duration-700 sm:top-16 ${
         showNavbar ? 'translate-y-0 opacity-100' : 'translate-y-full opacity-0'
       }
       ${pathnameLists.includes(pathname) ? 'hidden' : ''}
       `}
+      classNames={{
+        base: 'bg-default-50/80 backdrop-blur-md	',
+        menu: 'bg-default-50/80 backdrop-blur-md	',
+      }}
     >
       <ScrollShadow
-        size={100}
+        size={20}
         hideScrollBar
         orientation={'horizontal'}
         className="h-[30px] w-full space-x-5"

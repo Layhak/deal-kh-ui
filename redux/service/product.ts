@@ -1,5 +1,4 @@
 import { ecommerceApi } from '@/redux/api';
-import { ProductResponse } from '@/libs/difinition';
 
 export const productApi = ecommerceApi.injectEndpoints({
   endpoints: (builder) => ({

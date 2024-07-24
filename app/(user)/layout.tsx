@@ -12,16 +12,16 @@ import { NavigationBar } from '@/components/navigationBar';
 import StoreProvider from '@/app/StoreProvider';
 import { ToastContainer } from 'react-toastify';
 import { fileImgUrl } from '@/libs/ImageUrl';
-import HeaderCreateShop from '@/components/header/HeaderCreateShop';
 import { inter, kantumruyPro } from '@/utils/fonts';
-import FilterComponent from '@/components/Filter';
-import { router } from 'next/client';
+import FilterComponent from '@/components/FilterCategory';
 
 export const metadata: Metadata = {
   title: 'DealKH',
+  manifest: '/manifest.json',
   description:
     'Find the best deals, coupons, and promotions from shops in Cambodia. Save big on your shopping with exclusive offers and discounts at DealKH.',
   keywords: [
+    // Your keywords here
     'Dealkh',
     'Deal kh',
     'Deal-kh',
@@ -95,7 +95,6 @@ export default function RootLayout({
         <body className={`${kantumruyPro.variable} ${inter.variable}`}>
           <StoreProvider>
             <Providers>
-              <HeaderCreateShop />
               <NavigationBar />
               <FilterComponent />
               <ToastContainer />
@@ -112,3 +111,6 @@ export default function RootLayout({
     </html>
   );
 }
+
+
+// ],

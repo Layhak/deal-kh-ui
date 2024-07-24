@@ -1,11 +1,11 @@
 import { useGetApprovedShopsQuery } from '@/redux/service/shop';
-import { Card, CardBody, Image, Link } from '@nextui-org/react';
+import { Card, CardBody, Image, Link, Skeleton } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { BsShop } from 'react-icons/bs';
-import React, { useState } from 'react';
-import Pagination from '@/components/pagination/Pagination';
+import React from 'react';
 import { ShopResponse } from '@/libs/difinition';
 import { AiOutlineShop } from 'react-icons/ai';
+import SkeletonCard from '@/components/card/SkeletonCard';
 
 type ShopCardComponentProps = {
   initialPage: number;
@@ -19,7 +19,17 @@ export default function PopularShop() {
     size: 3,
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <>
+        <Skeleton className="my-10 h-[30px] w-full max-w-[200px] rounded-2xl" />
+        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 3 }, (_, index) => (
+            <SkeletonCard key={index} />
+          ))}
+        </div>
+      </>
+    );
   if (error) return <div>Error loading data</div>;
 
   const handleGetDirections = (location: string) => {

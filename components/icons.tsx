@@ -193,7 +193,19 @@ export const CloseIcon = (props: IconSvgProps) => (
   </svg>
 );
 
-export const CartIcon = ({ width, height, size, ...props }: IconSvgProps) => (
+export const FilledCartIcon = ({ width, height, size }: IconSvgProps) => (
+  <div
+    style={{
+      width: size || width || 32,
+      height: size || height || 32,
+      background: 'linear-gradient(to right, #EC4899, #EAB308)',
+      mask: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M7 22q-.825 0-1.412-.587T5 20t.588-1.412T7 18t1.413.588T9 20t-.587 1.413T7 22m10 0q-.825 0-1.412-.587T15 20t.588-1.412T17 18t1.413.588T19 20t-.587 1.413T17 22M5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.737.775T15.55 13H8.1L7 15h11q.425 0 .713.288T19 16t-.288.713T18 17H7q-1.125 0-1.7-.987t-.05-1.963L6.6 11.6L3 4H2q-.425 0-.712-.288T1 3t.288-.712T2 2h1.625q.275 0 .525.15t.375.425z'%3E%3C/path%3E%3C/svg%3E") center / contain no-repeat`,
+      WebkitMask: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M7 22q-.825 0-1.412-.587T5 20t.588-1.412T7 18t1.413.588T9 20t-.587 1.413T7 22m10 0q-.825 0-1.412-.587T15 20t.588-1.412T17 18t1.413.588T19 20t-.587 1.413T17 22M5.2 4h14.75q.575 0 .875.513t.025 1.037l-3.55 6.4q-.275.5-.737.775T15.55 13H8.1L7 15h11q.425 0 .713.288T19 16t-.288.713T18 17H7q-1.125 0-1.7-.987t-.05-1.963L6.6 11.6L3 4H2q-.425 0-.712-.288T1 3t.288-.712T2 2h1.625q.275 0 .525.15t.375.425z'%3E%3C/path%3E%3C/svg%3E") center / contain no-repeat`,
+    }}
+  ></div>
+);
+
+export const CartIcon = ({ width, height, size }: IconSvgProps) => (
   <div
     style={{
       width: size || width,
@@ -753,26 +765,17 @@ export const SunFilledIcon = ({
   ></div>
 );
 
-export const HeartFilledIcon = ({ width, height, ...props }: IconSvgProps) => (
-  <svg
-    width="30"
-    height="30"
-    aria-hidden="true"
-    focusable="false"
-    role="presentation"
-    viewBox="0 0 24 24"
-    {...props}
-  >
-    <path
-      d="M12.62 20.81c-.34.12-.9.12-1.24 0C8.48 19.82 2 15.69 2 8.69 2 5.6 4.49 3.1 7.56 3.1c1.82 0 3.43.88 4.44 2.24a5.53 5.53 0 0 1 4.44-2.24C19.51 3.1 22 5.6 22 8.69c0 7-6.48 11.13-9.38 12.12Z"
-      fill="linear-gradient(to right, #EC4899,#EAB308)"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={1.5}
-    />
-  </svg>
+export const HeartFilledIcon = ({ size = 24, width, height }: IconSvgProps) => (
+  <div
+    style={{
+      width: size,
+      height: size,
+      background: 'linear-gradient(to right, #EC4899,#EAB308)',
+      mask: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M12.62 20.81c-.34.12-.9.12-1.24 0C8.48 19.82 2 15.69 2 8.69 2 5.6 4.49 3.1 7.56 3.1c1.82 0 3.43.88 4.44 2.24a5.53 5.53 0 0 1 4.44-2.24C19.51 3.1 22 5.6 22 8.69c0 7-6.48 11.13-9.38 12.12Z'%3E%3C/path%3E%3C/svg%3E") center / contain no-repeat`,
+      WebkitMask: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' d='M12.62 20.81c-.34.12-.9.12-1.24 0C8.48 19.82 2 15.69 2 8.69 2 5.6 4.49 3.1 7.56 3.1c1.82 0 3.43.88 4.44 2.24a5.53 5.53 0 0 1 4.44-2.24C19.51 3.1 22 5.6 22 8.69c0 7-6.48 11.13-9.38 12.12Z'%3E%3C/path%3E%3C/svg%3E") center / contain no-repeat`,
+    }}
+  ></div>
 );
-
 export const HeartIcon = ({
   size = 24,
   width,

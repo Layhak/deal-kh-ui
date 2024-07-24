@@ -5,14 +5,10 @@ import Aos from 'aos';
 import 'aos/dist/aos.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { useGetCategoryBySlugQuery } from '@/redux/service/category';
-import { useGetProductsQuery } from '@/redux/service/product';
 import { useGetDiscountTypesQuery } from '@/redux/service/discountTypes';
 import Loading from '@/app/(user)/loading';
 import NotFoundPage from '@/app/(user)/not-found';
 import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
-import Category from '@/components/card/Category';
-import PopularShop from '@/components/card/PopularShop';
-import ProductCard from '@/components/card/ProductCard';
 import SkeletonCard from '@/components/card/SkeletonCard';
 import SectionCategory from '@/components/card/SectionCategory';
 import { DiscountType } from '@/types/DiscountType';
@@ -42,7 +38,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
       <div className="">
         <Image
           src={
-            category.payload?.bannerUrl ||
+            category.payload?.banner ||
             'https://img.freepik.com/free-vector/hand-drawn-fast-food-sale-banner_23-2150970567.jpg?t=st=1717934947~exp=1717938547~hmac=58c8ea86733d88849707b728b3db59c8fea2a3eb7f0c83aafb02112d07442ad8&w=1060'
           }
           className="h-[320px] w-[1300px] object-cover"

@@ -1,12 +1,24 @@
-import { Card, CardBody, Image, Link, Tooltip } from '@nextui-org/react';
 import React from 'react';
+import {
+  Button,
+  Card,
+  CardBody,
+  Image,
+  Link,
+  Tooltip,
+} from '@nextui-org/react';
 import { Product } from '@/libs/difinition';
 import { StarIcon } from '@/components/review/StarIcon';
 import NextLink from 'next/link';
-import { Button } from '@nextui-org/button';
-import { useDispatch } from 'react-redux';
-import { addToCart } from '@/redux/feature/cart/cartSlice';
-import { CartIcon, HeartIcon } from '@/components/icons';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addToCart,
+  removeFromCart,
+  selectIsProductInCart,
+} from '@/redux/feature/cart/cartSlice';
+import { CartIcon, FilledCartIcon } from '@/components/icons';
+import { RootState } from '@/redux/store';
+import WishlistButton from '@/components/seller/component/WishlistButton';
 
 type ProductDiscountType =
   | 'no-discount'
@@ -18,15 +30,29 @@ type ProductDiscountType =
   | 'clearance-sales'
   | 'flash-sales'
   | 'top-sales';
+
 type ProductCardProps = {
   product: Product;
   discountType?: ProductDiscountType | string;
 };
+
 export default function ProductCard({
   product,
   discountType = 'no-discount',
 }: ProductCardProps) {
   const dispatch = useDispatch();
+  const isInCart = useSelector((state: RootState) =>
+    selectIsProductInCart(state, product.slug)
+  );
+
+  const handleCartToggle = () => {
+    if (isInCart) {
+      dispatch(removeFromCart(product.slug));
+    } else {
+      dispatch(addToCart(product));
+    }
+  };
+
   return (
     <>
       <Card
@@ -37,10 +63,9 @@ export default function ProductCard({
             : ['buy-more-get-more'].includes(discountType)
               ? 'h-[420px] sm:h-[400px]'
               : 'h-[420px] sm:h-[410px]'
-        }
-        } rounded-xl  bg-foreground-50  ring-1 ring-foreground-200  `}
+        } rounded-xl  bg-foreground-50  ring-1 ring-foreground-200`}
       >
-        <CardBody className="relative  rounded-b-lg ">
+        <CardBody className="relative  rounded-b-lg">
           <Link href={`/products/${product.slug}`}>
             <Image
               width={500}
@@ -156,7 +181,7 @@ export default function ProductCard({
                   <Tooltip
                     content={
                       <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                        Add to cart
+                        {isInCart ? 'Remove from cart' : 'Add to cart'}
                       </p>
                     }
                     showArrow
@@ -166,66 +191,23 @@ export default function ProductCard({
                       variant={'light'}
                       color={'default'}
                       radius={'full'}
-                      onPress={() =>
-                        dispatch(
-                          addToCart({
-                            discountTypeSlug: product.discountTypeSlug,
-                            closeAt: product.closeAt,
-                            isPercentage: product.isPercentage,
-                            ratingCount: product.ratingCount,
-                            openAt: product.openAt,
-                            seller: product.seller,
-                            slug: product.slug,
-                            name: product.name,
-                            price: product.price,
-                            discountPrice: product.discountPrice,
-                            ratingAvg: product.ratingAvg,
-                            description: product.description,
-                            images: product.images,
-                            shop: product.shop,
-                            discountValue: product.discountValue,
-                            discountType: product.discountType,
-                            expiredAt: product.expiredAt,
-                            category: product.category,
-                            createdAt: product.createdAt,
-                            updatedAt: product.updatedAt,
-                            createdBy: product.createdBy,
-                            updatedBy: product.updatedBy,
-                            address: product.address,
-                            quantity: product.quantity,
-                            location: product.location,
-                          })
-                        )
-                      }
+                      onPress={handleCartToggle}
                     >
-                      {['clearance-sales'].includes(discountType) ? (
-                        <CartIcon className="fill-current" size={32} />
+                      {['clearance-sales'].includes(product.discountType) ? (
+                        isInCart ? (
+                          <FilledCartIcon className="fill-current" size={32} />
+                        ) : (
+                          <CartIcon className="fill-current" size={32} />
+                        )
+                      ) : isInCart ? (
+                        <FilledCartIcon className="fill-current" size={24} />
                       ) : (
                         <CartIcon className="fill-current" size={24} />
                       )}
                     </Button>
                   </Tooltip>
-                  <Tooltip
-                    content={
-                      <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                        Add to wishlist
-                      </p>
-                    }
-                    showArrow
-                  >
-                    <Button
-                      isIconOnly
-                      radius={'full'}
-                      variant={'light'}
-                      color={'default'}
-                    >
-                      {['clearance-sales'].includes(discountType) ? (
-                        <HeartIcon className="fill-current" size={32} />
-                      ) : (
-                        <HeartIcon className="fill-current" size={24} />
-                      )}
-                    </Button>
-                  </Tooltip>
+
+                  <WishlistButton product={product} />
                 </div>
               </div>
             </div>
@@ -235,6 +217,7 @@ export default function ProductCard({
     </>
   );
 }
+
 const RatingStar = ({
   ratingAvg,
   ratingCount,

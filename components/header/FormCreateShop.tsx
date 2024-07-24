@@ -21,11 +21,38 @@ import { IoImagesOutline } from 'react-icons/io5';
 import { Cancel } from '../icons';
 import { useUploadShopImageMutation } from '@/redux/service/shop';
 
-type CreateShopModalProps = {
+interface CreateShopModalProps {
   isOpen: boolean;
   onClose: () => void;
   refetch: () => void;
-};
+}
+const timeOptions = [
+  { value: '00:00', label: '00:00' },
+  { value: '01:00', label: '01:00' },
+  { value: '02:00', label: '02:00' },
+  { value: '03:00', label: '03:00' },
+  { value: '04:00', label: '04:00' },
+  { value: '05:00', label: '05:00' },
+  { value: '06:00', label: '06:00' },
+  { value: '07:00', label: '07:00' },
+  { value: '08:00', label: '08:00' },
+  { value: '09:00', label: '09:00' },
+  { value: '10:00', label: '10:00' },
+  { value: '11:00', label: '11:00' },
+  { value: '12:00', label: '12:00' },
+  { value: '13:00', label: '13:00' },
+  { value: '14:00', label: '14:00' },
+  { value: '15:00', label: '15:00' },
+  { value: '16:00', label: '16:00' },
+  { value: '17:00', label: '17:00' },
+  { value: '18:00', label: '18:00' },
+  { value: '19:00', label: '19:00' },
+  { value: '20:00', label: '20:00' },
+  { value: '21:00', label: '21:00' },
+  { value: '22:00', label: '22:00' },
+  { value: '23:00', label: '23:00' },
+  { value: '24:00', label: '24:00' },
+];
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -36,10 +63,6 @@ const validationSchema = Yup.object().shape({
     )
     .max(100, 'Name must be less than 100 characters'),
   address: Yup.string().required('Address is required'),
-  description: Yup.string().max(
-    500,
-    'Description must be less than 500 characters'
-  ),
   slug: Yup.string().matches(
     /^[a-z0-9\-]+$/,
     'Slug must be properly formatted and can contain lowercase letters, numbers, and single dashes'
@@ -50,14 +73,17 @@ const validationSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email')
     .max(100, 'Email must be less than 100 characters'),
-  openAt: Yup.string().matches(
-    /^\d{2}:\d{2}$/,
-    'Please provide a valid opening time in the format HH:mm'
-  ),
-  closeAt: Yup.string().matches(
-    /^\d{2}:\d{2}$/,
-    'Please provide a valid closing time in the format HH:mm'
-  ),
+  openAt: Yup.string().required('Opening time is required'),
+  closeAt: Yup.string()
+    .required('Closing time is required')
+    .test(
+      'is-greater',
+      'Closing time must be later than opening time',
+      function (value) {
+        const { openAt } = this.parent;
+        return value > openAt;
+      }
+    ),
   shopType: Yup.string().required('Shop type is required'),
   location: Yup.string().required('Location is required'),
 });
@@ -160,12 +186,7 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
   }
 
   return (
-    <Modal
-      backdrop="blur"
-      isOpen={isOpen}
-      onClose={onClose}
-      scrollBehavior={'inside'}
-    >
+    <Modal backdrop="blur" isOpen={isOpen} onClose={onClose}>
       <ModalContent className="h-auto w-[90vw] max-w-[600px]">
         <ModalHeader className="dark:text-gray-100">DealKh</ModalHeader>
         <ModalBody className="text-2xl font-semibold dark:text-gray-100">
@@ -180,7 +201,6 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
             {({ setFieldValue }) => (
               <Form className="space-y-4">
                 <CustomInput label="Shop Name" type="text" name="name" />
-
                 <div className="grid grid-cols-2 gap-4">
                   <CustomInput
                     label="Phone Number"
@@ -190,17 +210,17 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
                   <CustomInput label="Email" type="email" name="email" />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
-                  <CustomInput
+                  <CustomSelect
                     label="Opening Time"
-                    placeholder="07:00"
-                    type="text"
                     name="openAt"
+                    options={timeOptions}
+                    placeholder="Select Opening Time"
                   />
-                  <CustomInput
+                  <CustomSelect
                     label="Closing Time"
-                    placeholder="19:00"
-                    type="text"
                     name="closeAt"
+                    options={timeOptions}
+                    placeholder="Select Closing Time"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-4">
@@ -222,17 +242,9 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
                         : []
                     }
                     placeholder="Select Shop Type"
-                    onChange={(e: any) =>
-                      setFieldValue('shopType', e.target.value)
-                    }
                   />
                 </div>
 
-                <CustomTextArea
-                  label="Description"
-                  name="description"
-                  placeholder="Enter shop description"
-                />
                 <div>
                   <label className="block pb-2 font-medium text-slate-900">
                     Location
@@ -285,7 +297,7 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
                           </div>
                         </label>
                         <p className="mt-2 text-gray-500">
-                          Click to upload or drag and drop
+                          Click to upload Shop Profile
                         </p>
                       </div>
                     )}

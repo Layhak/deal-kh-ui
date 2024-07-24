@@ -56,11 +56,10 @@ export default function HeroSlideComponent() {
   const headerThreeBanners = headerThree?.payload || [];
 
   return (
-    <div className="mt-2 grid w-full grid-cols-1 gap-2 lg:grid-cols-3">
-      <div className="col-span-2">
+    <div className="mt-2 grid grid-cols-1 gap-3 lg:grid-cols-3">
+      <div className="col-span-2 ">
         <Swiper
-          className="rounded-2xl"
-          spaceBetween={50}
+          className="w-full rounded-2xl"
           slidesPerView={1}
           autoplay={{
             delay: 5000,
@@ -89,6 +88,7 @@ export default function HeroSlideComponent() {
           ) : (
             <SwiperSlide>
               <Image
+                width={500}
                 isZoomed
                 src="https://romand.us/cdn/shop/files/PC_1.png?v=1717143214&width=1728"
                 alt="default"
@@ -98,10 +98,9 @@ export default function HeroSlideComponent() {
           )}
         </Swiper>
       </div>
-      <div className="flex flex-col items-center gap-2 md:flex-row md:justify-between lg:flex-col">
+      <div className="grid  grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
         <Swiper
-          className="w-full rounded-2xl lg:w-[400px]"
-          spaceBetween={50}
+          className=" w-full rounded-2xl"
           slidesPerView={1}
           grabCursor={true}
           autoplay={{
@@ -120,6 +119,7 @@ export default function HeroSlideComponent() {
             headerTwoBanners.map((banner: Banner) => (
               <SwiperSlide key={banner.uuid}>
                 <Image
+                  width={500}
                   isZoomed
                   src={banner.image}
                   alt={banner.name}
@@ -141,7 +141,7 @@ export default function HeroSlideComponent() {
 
         <Swiper
           grabCursor={true}
-          className="w-full rounded-2xl lg:w-[400px]"
+          className=" w-full rounded-2xl"
           spaceBetween={50}
           slidesPerView={1}
           autoplay={{

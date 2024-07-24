@@ -10,10 +10,7 @@ import {
 import { useEffect, useState } from 'react';
 import { Image } from '@nextui-org/react';
 import { Button } from '@nextui-org/button';
-import { GrMapLocation } from 'react-icons/gr';
 import { AnimatePresence, domAnimation, LazyMotion, m } from 'framer-motion';
-import { MdOutlineLocalPhone } from 'react-icons/md';
-import { BsShop } from 'react-icons/bs';
 import CartRightSection from '@/components/CartRightSection';
 import ListProductAddToCart from '@/components/CartListProductComponent';
 import { Product } from '@/libs/difinition';
@@ -209,7 +206,7 @@ export default function CartComponent() {
 
                       <Button
                         fullWidth
-                        className="text-forceground-200 font-md bg-gradient-to-r from-pink-500 to-yellow-500 text-xl"
+                        className="font-md bg-gradient-to-r from-pink-500 to-yellow-500 text-xl text-gray-100"
                         size="lg"
                       >
                         Check out

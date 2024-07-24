@@ -3,23 +3,27 @@ import { useEffect, useState } from 'react';
 import {
   Avatar,
   Badge,
+  Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
   Image,
+  Link,
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
   NavbarMenu,
+  NavbarMenuItem,
   NavbarMenuToggle,
+  ScrollShadow,
   Tooltip,
 } from '@nextui-org/react';
 import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
-import { CartIcon, HeartIcon, MapIcon, SearchIcon } from '@/components/icons';
+import { CartIcon, HeartIcon, MapIcon } from '@/components/icons';
 import {
   removeAccessToken,
   setLogoutSuccess,
@@ -32,14 +36,12 @@ import { useLogoutUserMutation } from '@/redux/service/auth';
 import { useGetProfileQuery } from '@/redux/service/user';
 import SearchProduct from './search/SearchProduct';
 import SearchLocation from './search/SearchLocation';
-import { productSearchList } from '@/types/productSearch';
 import { selectProducts } from '@/redux/feature/cart/cartSlice';
 import { Product } from '@/libs/difinition';
 import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { BiUserCircle } from 'react-icons/bi';
-import { Button } from '@nextui-org/button';
-import { GrMapLocation } from 'react-icons/gr';
+import HeaderCreateShop from '@/components/header/HeaderCreateShop';
 
 export const NavigationBar = () => {
   const pathname = usePathname();
@@ -91,6 +93,11 @@ export const NavigationBar = () => {
       console.error('Failed to logout:', error);
     }
   };
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [pathname]);
 
   const products = useAppSelector(selectProducts);
   const [uniqueProducts, setUniqueProducts] = useState<Product[]>([]);
@@ -126,13 +133,49 @@ export const NavigationBar = () => {
 
   return (
     <>
-      <Navbar position="sticky" maxWidth={'xl'}>
-        <NavbarContent justify={'start'} className={'flex gap-4'}>
-          <NavbarItem>
-            <NextLink href="/" className="flex h-12 w-12 items-center">
-              <Image src="/logo.png" alt="logo" className="h-12 w-12" />
-            </NextLink>
-          </NavbarItem>
+      <HeaderCreateShop isMenuOpen={isMenuOpen} />
+      <Navbar
+        isBlurred
+        position="sticky"
+        maxWidth={'xl'}
+        isMenuOpen={isMenuOpen}
+        onMenuOpenChange={setIsMenuOpen}
+        classNames={{
+          base: 'bg-default-50/80 backdrop-blur-md	',
+          menu: 'bg-default-50/80 backdrop-blur-md	',
+          item: [
+            'relative',
+            'h-1/2',
+            "data-[active=true]:after:content-['']",
+            'data-[active=true]:after:absolute',
+            'data-[active=true]:after:bottom-0',
+            'data-[active=true]:after:left-0',
+            'data-[active=true]:after:right-0',
+            'data-[active=true]:after:h-[2px]',
+            'data-[active=true]:after:rounded-[2px]',
+            'data-[active=true]:after:bg-gradient-to-r',
+            'data-[active=true]:after:from-pink-500',
+            'data-[active=true]:after:to-yellow-500',
+            'data-[active=true]:after:transition-colors',
+            'data-[active=true]:after:transition-colors',
+            'hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-500 hover:bg-clip-text hover:text-transparent',
+            'data-[active=true]:after:duration-300',
+          ],
+          menuItem: [
+            'rounded-md',
+            'px-4',
+            'py-2',
+            'hover:bg-default-900/10',
+            'data-[active=true]:bg-default-900/10',
+          ],
+        }}
+      >
+        <NavbarContent justify={'center'} className={'flex items-center gap-4'}>
+          <NextLink href="/">
+            <NavbarBrand>
+              <Image src="/logo.png" alt="logo" width={50} height={50} />
+            </NavbarBrand>
+          </NextLink>
           <NavbarItem className="hidden w-full items-center sm:flex">
             <SearchProduct />
             {/*<SearchLocation />*/}
@@ -177,10 +220,11 @@ export const NavigationBar = () => {
                 <NextLink
                   className={`${
                     item.href === pathname
-                      ? 'bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent'
-                      : 'text-foreground'
-                  } transition-all ease-linear hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-600 hover:bg-clip-text hover:font-normal hover:text-transparent`}
+                      ? 'bg-gradient-to-r from-pink-500 to-warning-500 bg-clip-text text-transparent '
+                      : 'text-foreground hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-500 hover:bg-clip-text hover:text-transparent'
+                  } relative`}
                   href={item.href}
+                  aria-current={item.href === pathname ? 'page' : undefined}
                 >
                   {item.label}
                 </NextLink>
@@ -283,43 +327,165 @@ export const NavigationBar = () => {
         </NavbarContent>
 
         <NavbarMenu>
-          <div className=" mx-4 mt-2 flex h-full flex-col justify-between gap-2">
-            <div>
-              {siteConfig.navItems.map((item) => (
-                <NavbarItem key={item.href} isActive={item.href === pathname}>
-                  <NextLink
-                    className={
-                      item.href === pathname
-                        ? 'text-warning'
-                        : 'text-foreground'
-                    }
-                    href={item.href}
-                  >
-                    {item.label}
-                  </NextLink>
-                </NavbarItem>
-              ))}
-            </div>
-            <AuthLink />
-          </div>
+          {!isLoggedIn && (
+            <>
+              <NavbarMenuItem>
+                <NextLink href="/login" className={'text-sm'}>
+                  Log In
+                </NextLink>
+              </NavbarMenuItem>
+              <NavbarMenuItem>
+                <NextLink href="/register" className={'text-sm'}>
+                  Register
+                </NextLink>
+              </NavbarMenuItem>
+            </>
+          )}
+          {siteConfig.navItems.map((item) => (
+            <NavbarMenuItem key={item.href} isActive={item.href === pathname}>
+              <Link
+                className={` group w-full`}
+                href={item.href}
+                aria-current={item.href === pathname ? 'page' : undefined}
+              >
+                <p
+                  className={`${
+                    item.href === pathname
+                      ? 'bg-gradient-to-r from-pink-500 to-warning-500 bg-clip-text text-transparent'
+                      : 'text-foreground group-hover:bg-gradient-to-r group-hover:from-pink-500 group-hover:to-yellow-500 group-hover:bg-clip-text group-hover:text-transparent'
+                  }`}
+                >
+                  {item.label}
+                </p>
+              </Link>
+            </NavbarMenuItem>
+          ))}
         </NavbarMenu>
-        <NavbarContent className="basis-3 pl-4 lg:hidden" justify="end">
-          <ThemeSwitch />
-          <NextLink href="/wishlist">
-            <HeartIcon size={32} />
-          </NextLink>
-          <NextLink href="/cart">
-            <CartIcon size={32} />
-          </NextLink>
-          <Avatar
-            isBordered
-            color="warning"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-            size="sm"
+        <NavbarContent className="basis-3  lg:hidden" justify="center">
+          <NavbarItem>
+            <ThemeSwitch />
+          </NavbarItem>
+          <NavbarItem>
+            <NextLink
+              className={'relative'}
+              href={isLoggedIn ? '/wishlist' : '/login'}
+            >
+              <Badge
+                color="danger"
+                className={'bg-gradient-to-r from-pink-500 to-yellow-500'}
+                content={uniqueWishlistProducts.length}
+                isInvisible={uniqueWishlistProducts.length <= 0}
+                variant="solid"
+                shape="circle"
+                size="sm"
+              >
+                <HeartIcon className="fill-current" size={32} />
+              </Badge>
+            </NextLink>
+          </NavbarItem>
+          <NavbarItem>
+            <NextLink
+              href={isLoggedIn ? '/cart' : '/login'}
+              className={'relative'}
+            >
+              <Badge
+                color="danger"
+                className={'bg-gradient-to-r from-pink-500 to-yellow-500'}
+                content={uniqueProducts.length}
+                isInvisible={uniqueProducts.length <= 0}
+                variant="solid"
+                shape="circle"
+                size="sm"
+              >
+                <CartIcon className="fill-current" size={32} />
+              </Badge>
+            </NextLink>
+          </NavbarItem>
+          {isLoggedIn && (
+            <Dropdown placement="bottom-end">
+              <DropdownTrigger>
+                <Avatar
+                  classNames={{
+                    base: 'ring-pink-600',
+                  }}
+                  isBordered
+                  color="warning"
+                  src={
+                    userProfile?.payload?.profile ||
+                    'https://i.pravatar.cc/150?u=a042581f4e29026704d'
+                  }
+                  size="sm"
+                />
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Profile Actions" variant="shadow">
+                <DropdownItem
+                  key="profile"
+                  className="h-14 w-full gap-2"
+                  isDisabled
+                >
+                  <p className="font-semibold">Signed in as</p>
+                  <p className="font-semibold">{userProfile?.payload?.email}</p>
+                </DropdownItem>
+                <DropdownItem
+                  href={'/profile'}
+                  key="profile"
+                  className=" w-full gap-2"
+                >
+                  <div className="flex items-center gap-2">
+                    <BiUserCircle size={24} />
+                    <p className="font-semibold">Profile</p>
+                  </div>
+                </DropdownItem>
+                <DropdownItem
+                  key="logout"
+                  color="danger"
+                  className="text-danger"
+                  onClick={handleLogout}
+                >
+                  Log Out
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+          )}
+          <NavbarMenuToggle
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           />
-          <NavbarMenuToggle />
         </NavbarContent>
       </Navbar>
+      {!isMenuOpen && (
+        <Navbar
+          position="sticky"
+          className={'top-14 sm:hidden'}
+          maxWidth={'xl'}
+          classNames={{
+            base: 'bg-default-50/80 backdrop-blur-md	',
+            menu: ['bg-default-50/80 backdrop-blur-md	'],
+          }}
+        >
+          <ScrollShadow
+            hideScrollBar
+            orientation={'horizontal'}
+            size={20}
+            className={'w-300px h-50px items-center'}
+          >
+            <NavbarContent>
+              <NavbarItem>
+                <SearchProduct />
+                <Button
+                  isIconOnly
+                  as={NextLink}
+                  size={'lg'}
+                  href={'/search-nearby'}
+                  variant={'light'}
+                  radius={'full'}
+                >
+                  <MapIcon size={28} />
+                </Button>
+              </NavbarItem>
+            </NavbarContent>
+          </ScrollShadow>
+        </Navbar>
+      )}
     </>
   );
 };

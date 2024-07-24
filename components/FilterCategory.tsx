@@ -41,8 +41,8 @@ export default function FilterCategory() {
       ${pathnameLists.includes(pathname) ? 'hidden' : ''}
       `}
       classNames={{
-        base: 'bg-default-50/80',
-        menu: 'bg-default-50/80',
+        base: 'bg-default-50/50 backdrop-blur	',
+        menu: 'bg-default-50/50 backdrop-blur	',
       }}
     >
       <ScrollShadow

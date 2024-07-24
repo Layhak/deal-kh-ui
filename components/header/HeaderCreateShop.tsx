@@ -6,6 +6,7 @@ import CreateShopModal from './FormCreateShop';
 type openMenuProps = {
   isMenuOpen: boolean;
 };
+
 export default function HeaderCreateShop({ isMenuOpen }: openMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,7 +28,7 @@ export default function HeaderCreateShop({ isMenuOpen }: openMenuProps) {
   }
 
   return (
-    <div className="flex h-[30px] bg-gradient-to-r from-pink-500 to-yellow-500">
+    <div className="flex h-[30px] bg-gradient-to-r from-pink-500 to-yellow-500 ">
       <div className="hidden lg:flex lg:w-full lg:items-center lg:justify-center lg:px-36">
         <div>
           <div className="flex items-center justify-center gap-2">

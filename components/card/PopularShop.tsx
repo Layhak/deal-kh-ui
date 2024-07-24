@@ -37,7 +37,7 @@ export default function PopularShop() {
         <Card
           key={shop.slug}
           isPressable
-          className=" h-[450px] w-full object-cover shadow-none"
+          className="  w-full object-cover shadow-none"
         >
           <CardBody>
             <Link href={`/shop/${shop.slug}`}>
@@ -57,13 +57,6 @@ export default function PopularShop() {
                   ? `${shop.name.substring(0, 25)}...`
                   : shop.name || 'Shop Name'}
               </h5>
-            </div>
-            <div className="my-1 text-foreground-600">
-              <p>
-                {shop.description.length > 25
-                  ? `${shop.description.substring(0, 25)}...`
-                  : shop.description || 'Shop Description'}
-              </p>
             </div>
             <div className="flex flex-col gap-1">
               <p className=" text-foreground-600">

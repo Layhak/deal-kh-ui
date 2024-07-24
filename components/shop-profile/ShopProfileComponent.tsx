@@ -30,7 +30,7 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
             <Image
               src={shopProfile.profile}
               alt="Profile Picture"
-              className="h-24 w-24 bg-white rounded-full border-4 border-white lg:h-40 lg:w-40"
+              className="h-24 w-24 rounded-full border-4 border-white bg-white lg:h-40 lg:w-40"
             />
             <h1 className="self-center text-start text-lg font-semibold lg:ml-4 lg:mt-16 lg:text-2xl">
               {shopProfile.name}
@@ -40,7 +40,7 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
       </div>
 
       {/* page details section */}
-      <div className="mt-[74px] flex flex-col lg:mt-28 lg:flex-row lg:mx-0 md:mx-0 mx-4">
+      <div className="mx-4 mt-[74px] flex flex-col md:mx-0 lg:mx-0 lg:mt-28 lg:flex-row">
         {/* description section */}
         <div className="mt-9 w-full lg:mt-0">
           <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 lg:text-2xl">
@@ -97,7 +97,6 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
       </div>
 
       {/* category */}
-      
     </div>
   );
 }

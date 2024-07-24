@@ -2,8 +2,8 @@ import React from 'react';
 import 'aos/dist/aos.css';
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import WishlistComponent from '@/components/wishlistComponent';
 import { fileImgUrl } from '@/libs/ImageUrl';
+import WishListTableComponent from '@/components/wishlistComponent';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -34,11 +34,10 @@ export const metadata: Metadata = {
   },
 };
 
-
 export default function WishlistPage() {
   return (
     <>
-      <WishlistComponent />
+      <WishListTableComponent />
     </>
   );
 }

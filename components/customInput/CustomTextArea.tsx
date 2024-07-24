@@ -22,11 +22,12 @@ const CustomTextArea: React.FC<CustomTextAreaProps> = ({
       {...field}
       label={label}
       placeholder={placeholder}
-      size={'md'}
+      size="md"
       isInvalid={meta.touched && !!meta.error}
       errorMessage={meta.touched && meta.error ? meta.error : ''}
-      variant={'bordered'}
+      variant="bordered"
       color={meta.touched && meta.error ? 'danger' : 'default'}
+      disabled={isDisabled}
     />
   );
 };

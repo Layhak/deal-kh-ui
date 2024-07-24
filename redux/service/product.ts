@@ -10,11 +10,17 @@ export const productApi = ecommerceApi.injectEndpoints({
         size: number;
         filters: { [key: string]: any };
         field?: string;
+        shopName?: string;
       }
     >({
-      query: ({ page, size, filters, field }) => {
+      query: ({ page, size, filters, field, shopName }) => {
         // Base URL
         let queryString = `products?page=${page}&size=${size}`;
+
+        // Append shopName to the query string if provided
+        if (shopName) {
+          queryString += `&shop=${encodeURIComponent(shopName)}`;
+        }
 
         // Append field to the query string if provided
         if (field) {
@@ -32,9 +38,12 @@ export const productApi = ecommerceApi.injectEndpoints({
               )
               .join('&');
         }
-
         return queryString;
       },
+    }),
+
+    getProductsByShop: builder.query<any, string>({
+      query: (slug) => `products/shop/${slug}`,
     }),
 
     getAllProducts: builder.query<any, void>({
@@ -43,9 +52,6 @@ export const productApi = ecommerceApi.injectEndpoints({
 
     getProductBySlug: builder.query<any, string>({
       query: (slug) => `products/${slug}`,
-    }),
-    getProductByShopOwner: builder.query<any, string>({
-      query: (slug) => `/products/shop/${slug}`
     }),
     getProductByProfile: builder.query<any, { page: number; pageSize: number }>(
       {
@@ -109,7 +115,6 @@ export const productApi = ecommerceApi.injectEndpoints({
 export const {
   useGetProductsQuery,
   useGetProductBySlugQuery,
-  useGetProductByShopOwnerQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,
@@ -119,4 +124,5 @@ export const {
   useUploadImageMutation,
   useUploadCategoryImageMutation,
   useGetAllProductsQuery,
+  useGetProductsByShopQuery
 } = productApi;

@@ -33,7 +33,7 @@ const ShopProfile = ({ params }: Props) => {
 
   return (
     <div>
-      <ShopProfileComponent shopProfile={data.payload} />
+      <ShopProfileComponent shopProfile={data.payload} shopSlug={slug}/>
       <main>
         {isLoadingDiscountTypes ? (
           <SkeletonCard />
@@ -54,29 +54,6 @@ const ShopProfile = ({ params }: Props) => {
                         </span>
                       </p>
                     </div>
-                    <Link href={`/discount/${discountType.slug}`}>
-                      <div className="flex items-center pt-2">
-                        <p className="mr-2 pb-1 text-[15px] font-normal text-foreground-700 lg:text-[17px]">
-                          See More
-                        </p>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          color="black"
-                          viewBox="0 0 48 48"
-                        >
-                          <path
-                            fill="none"
-                            stroke="#6b7280"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="4"
-                            d="M42 24H6m24-12l12 12-12 12"
-                          />
-                        </svg>
-                      </div>
-                    </Link>
                   </div>
                   <section>
                     {(() => {
@@ -87,6 +64,7 @@ const ShopProfile = ({ params }: Props) => {
                               <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
                                 <SectionProfileShop
                                   shopSlug={slug}
+                                  shopName={data.payload.name}
                                   size={3}
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -119,6 +97,7 @@ const ShopProfile = ({ params }: Props) => {
                                 <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">
                                   <SectionProfileShop
                                     shopSlug={slug}
+                                    shopName={data.payload.name}
                                     discountType={discountType.name}
                                     name={discountType.name}
                                     category={slug}
@@ -136,6 +115,28 @@ const ShopProfile = ({ params }: Props) => {
                                 <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
                                   <SectionProfileShop
                                     shopSlug={slug}
+                                    shopName={data.payload.name}
+                                    discountType={discountType.name}
+                                    name={discountType.name}
+                                    category={slug}
+                                  />
+                                </div>
+                              </section>
+                            </>
+                          );
+                          case 'event':
+                          return (
+                            <>
+                              <Image
+                                src="https://romand.us/cdn/shop/files/PC_1.png?v=1719967761&width=1728"
+                                className="h-[500px] w-[1300px] object-cover"
+                                alt="Event"
+                              />
+                              <section>
+                                <div className="my-5 grid grid-cols-2 gap-5 lg:grid-cols-4">
+                                  <SectionProfileShop
+                                    shopSlug={slug}
+                                    shopName={data.payload.name}
                                     discountType={discountType.name}
                                     name={discountType.name}
                                     category={slug}
@@ -150,6 +151,7 @@ const ShopProfile = ({ params }: Props) => {
                               <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
                                 <SectionProfileShop
                                   shopSlug={slug}
+                                  shopName={data.payload.name}
                                   discountType={discountType.name}
                                   name={discountType.name}
                                   category={slug}

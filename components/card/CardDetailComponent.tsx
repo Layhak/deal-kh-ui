@@ -18,8 +18,6 @@ import Loading from '@/app/(user)/loading';
 import { StarIcon } from '@/components/review/StarIcon';
 import { useDispatch } from 'react-redux';
 import { addToCart } from '@/redux/feature/cart/cartSlice';
-import { images } from 'next/dist/build/webpack/config/blocks/images';
-import { Product } from '@/libs/difinition';
 
 export default function CardDetailComponent({
   slug,
@@ -28,6 +26,7 @@ export default function CardDetailComponent({
   description,
   images,
   shop,
+  shopSlug,
   discountType,
   discountTypeSlug,
   price,
@@ -89,14 +88,8 @@ export default function CardDetailComponent({
       </div>
     );
 
-  const handleGetDirections = (location: string) => {
-    if (!location || !location.includes(',')) {
-      console.error('Invalid location format');
-      return;
-    }
-    const [lat, lng] = location.split(',');
-    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
-    window.open(url, '_blank');
+  const navigateToShop = () => {
+    router.push(`/shop/${shopSlug}`);
   };
 
   return (
@@ -182,11 +175,12 @@ export default function CardDetailComponent({
               </p>
               <p className="text-base font-medium text-foreground-600">
                 Shop :{' '}
-                <Link href={`/shop/${shop.slug}`}>
-                  <span className="cursor-pointer font-semibold text-blue-800">
-                    {shop}
-                  </span>
-                </Link>
+                <span
+                  className="cursor-pointer font-semibold text-blue-800"
+                  onClick={navigateToShop}
+                >
+                  {shop}
+                </span>
               </p>
               <p className="text-base font-medium text-foreground-600">
                 Open : {openAt.slice(0, 5)} AM - {closeAt.slice(0, 5)} PM

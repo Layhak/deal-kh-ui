@@ -14,6 +14,7 @@ import { AnimatePresence, domAnimation, LazyMotion, m } from 'framer-motion';
 import CartRightSection from '@/components/CartRightSection';
 import ListProductAddToCart from '@/components/CartListProductComponent';
 import { Product } from '@/libs/difinition';
+import CheckoutConfirmationModal from '@/components/checkout/CheckoutConfirmationModal'; // Import the modal component
 
 export default function CartComponent() {
   const products = useAppSelector(selectProducts);
@@ -24,6 +25,7 @@ export default function CartComponent() {
   const [productQuantities, setProductQuantities] = useState<{
     [key: string]: number;
   }>({});
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false); // Modal state
 
   useEffect(() => {
     const initialQuantities: { [key: string]: number } = {};
@@ -115,18 +117,27 @@ export default function CartComponent() {
     return total.toFixed(2);
   };
 
+  const handleCheckout = () => {
+    setIsModalOpen(true); // Open the modal
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // Close the modal
+  };
+
   return (
     <main>
       {products.length === 0 && (
-        <div className="flex h-[800px] flex-col items-center  justify-center">
+        <div className="flex h-[800px] flex-col items-center justify-center">
           <Image
             alt="cartEmpty"
             src={'https://store.istad.co/media/product_images/cartEmpty.png'}
             width={200}
             height={200}
           />
-          <p className="mt-4 text-2xl font-semibold ">Your cart is empty!</p>
-          <p>Look like you {"haven'"}t made any choice yet...</p>
+          <p className="mt-4 text-2xl font-semibold">Your cart is empty!</p>
+          {/* eslint-disable-next-line react/no-unescaped-entities */}
+          <p>Looks like you haven't made any choice yet...</p>
         </div>
       )}
       {products.length !== 0 && (
@@ -168,7 +179,7 @@ export default function CartComponent() {
                     </div>
 
                     <div className="px-4 lg:px-0">
-                      {/* this is the subtotal */}
+                      {/* Subtotal */}
                       <dl className="mb-2 flex flex-col gap-4 lg:mb-4">
                         <div className="flex justify-between ">
                           <dt className="text-fourground-600 dark:text-fourground-300">
@@ -180,7 +191,7 @@ export default function CartComponent() {
                         </div>
                       </dl>
 
-                      {/* this is the discount */}
+                      {/* Discount */}
                       <dl className="mb-2 flex flex-col gap-4 lg:mb-4">
                         <div className="flex justify-between">
                           <dt className="text-fourground-600 dark:text-fourground-300">
@@ -192,8 +203,8 @@ export default function CartComponent() {
                         </div>
                       </dl>
 
-                      {/* this is the total */}
-                      <dl className="flex flex-col gap-4 border-t-small border-divider py-2 ">
+                      {/* Total */}
+                      <dl className="flex flex-col gap-4 border-t-small border-divider py-2">
                         <div className="flex justify-between">
                           <dt className="text-fourground-600 dark:text-fourground-300">
                             Total
@@ -208,6 +219,7 @@ export default function CartComponent() {
                         fullWidth
                         className="font-md bg-gradient-to-r from-pink-500 to-yellow-500 text-xl text-gray-100"
                         size="lg"
+                        onClick={handleCheckout}
                       >
                         Check out
                       </Button>
@@ -220,7 +232,7 @@ export default function CartComponent() {
 
           {/* Right */}
           <div className="hidden max-w-[40%] md:block lg:block lg:w-[40%] ">
-            <h3 className="text-fourground-700 pb-4  text-xl font-semibold dark:text-white lg:text-2xl">
+            <h3 className="text-fourground-700 pb-4 text-xl font-semibold dark:text-white lg:text-2xl">
               Product Detail
             </h3>
             {selectedProduct && (
@@ -232,6 +244,16 @@ export default function CartComponent() {
           </div>
         </section>
       )}
+
+      {/* Checkout Confirmation Modal */}
+      <CheckoutConfirmationModal
+        isOpen={isModalOpen}
+        onOpenChange={closeModal}
+        wishlistItemUuid={selectedProduct?.slug || ''}
+        refetchWishList={() => {
+          // Refetch logic if needed
+        }}
+      />
     </main>
   );
 }

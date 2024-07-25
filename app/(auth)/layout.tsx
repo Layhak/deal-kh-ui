@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import StoreProvider from '@/app/StoreProvider';
 import SessionWrapper from '@/app/SessionProvider';
 import { Providers } from '@/app/providers';
+import React from 'react';
 
 export const metadata: Metadata = {
   title: {

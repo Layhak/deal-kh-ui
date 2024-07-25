@@ -1,10 +1,9 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
-import Aos from 'aos';
 import { Button, Checkbox, Spacer, useDisclosure } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
@@ -17,7 +16,7 @@ import { Cancel, Logo } from '@/components/icons';
 import { ThemeSwitch } from '@/components/ThemeSwitch';
 import { useAppDispatch } from '@/redux/hook';
 import ResetPasswordModal from '@/components/modals/ResetPasswordModal';
-import 'react-toastify/dist/ReactToastify.css';
+import ParticlesComponent from '@/components/ParticlesComponent';
 
 type FormValues = {
   email: string;
@@ -46,7 +45,6 @@ export default function MyShop() {
   const router = useRouter();
   const { theme } = useTheme();
   const dispatch = useAppDispatch();
-
   const handleSubmit = async (
     values: FormValues,
     { setErrors }: FormikHelpers<FormValues>
@@ -71,15 +69,13 @@ export default function MyShop() {
     }
   };
 
-  useEffect(() => {
-    Aos.init({ duration: 1000 });
-  }, []);
-
   return (
-    <div className="flex h-screen w-screen items-center justify-center bg-foreground-200 p-2 sm:p-4 lg:p-8">
+    <div className="relative z-50 flex h-screen w-screen items-center justify-center p-2 sm:p-4 lg:p-8">
+      <ParticlesComponent id="tsparticles" />
       <div
-        className="flex w-full max-w-md flex-col gap-4 rounded-large bg-background/60 px-8 pb-10 pt-6 backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+        className="relative flex w-full max-w-md flex-col gap-4 rounded-large bg-background px-8 pb-10 pt-6 backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
         data-aos="flip-up"
+        style={{ zIndex: 1 }}
       >
         <div className="flex items-center justify-between">
           <NextLink href="/">
@@ -97,14 +93,14 @@ export default function MyShop() {
           <ThemeSwitch />
         </div>
         <div>
-          <div className=" flex items-center gap-1">
+          <div className="flex items-center gap-1">
             <Logo size={56} />
-            <h2 className=" bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold leading-9 tracking-tight text-transparent">
+            <h2 className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold leading-9 tracking-tight text-transparent">
               Deal KH
             </h2>
           </div>
           <div>
-            <h1 className=" text-3xl  font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-200">
+            <h1 className="text-3xl font-bold leading-9 tracking-tight text-gray-900 dark:text-gray-200">
               Sign in to your account
             </h1>
           </div>
@@ -167,7 +163,7 @@ export default function MyShop() {
                 <div>
                   <Button
                     color={'warning'}
-                    className="w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-lg  text-gray-50"
+                    className="w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-lg text-gray-50"
                     type="submit"
                     variant={'solid'}
                   >
@@ -177,35 +173,6 @@ export default function MyShop() {
               </Form>
             )}
           </Formik>
-          {/*  <Spacer y={3} />*/}
-          {/*  <div className="flex items-center gap-4 py-2">*/}
-          {/*    <Divider className="flex-1" />*/}
-          {/*    <p className="shrink-0 text-tiny text-default-500">OR</p>*/}
-          {/*    <Divider className="flex-1" />*/}
-          {/*  </div>*/}
-          {/*  <div className="mt-3 grid grid-cols-1 gap-3">*/}
-          {/*    <Button*/}
-          {/*      className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"*/}
-          {/*      onClick={() => signIn('google')}*/}
-          {/*      startContent={<Google className={'text-gray-50'} />}*/}
-          {/*    >*/}
-          {/*      <span className="text-sm font-semibold leading-6 text-foreground-800">*/}
-          {/*        Google*/}
-          {/*      </span>*/}
-          {/*    </Button>*/}
-
-          {/*    <Button*/}
-          {/*      className="border-1 border-foreground-300 bg-foreground-50 dark:bg-foreground-50/30"*/}
-          {/*      startContent={<FacebookWithColorIcon />}*/}
-          {/*      onClick={() => signIn('facebook')}*/}
-          {/*    >*/}
-          {/*      <span className="text-sm font-semibold leading-6 text-foreground-800">*/}
-          {/*        Facebook*/}
-          {/*      </span>*/}
-          {/*    </Button>*/}
-          {/*  </div>*/}
-          {/*</div>*/}
-          {/*</div>*/}
           <ToastContainer />
         </div>
       </div>

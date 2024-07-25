@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Field, Form, Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import NextLink from 'next/link';
 import { Button } from '@nextui-org/react';
@@ -16,6 +16,7 @@ import CustomDatePicker from '@/components/customInput/customDatePicker';
 import CustomCheckbox from '@/components/customInput/CustomCheckbox';
 import CustomInput from '@/components/customInput/customInput';
 import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
+import ParticlesComponent from '@/components/ParticlesComponent';
 
 type RegisterFormValues = {
   firstName: string;
@@ -124,6 +125,7 @@ const Register: React.FC = () => {
         'flex min-h-screen w-screen items-center justify-center bg-foreground-200 p-2 sm:p-4 lg:p-8'
       }
     >
+      <ParticlesComponent id="tsparticles" />
       <div
         className="flex w-full max-w-xl flex-col gap-4 rounded-large bg-default-50 px-8 pb-10 pt-6  backdrop-blur-md backdrop-saturate-150 dark:bg-default-100"
         data-aos="flip-up"

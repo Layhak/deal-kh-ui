@@ -43,6 +43,10 @@ const CustomInput: React.FC<CustomInputProps> = ({
       errorMessage={meta.touched && meta.error ? meta.error : ''}
       color={meta.touched && meta.error ? 'danger' : 'default'}
       placeholder={placeholder}
+      classNames={{
+        inputWrapper: '!bg-transparent',
+        input: 'text-md',
+      }}
       isClearable={true}
       onClear={handleClear}
       onChange={handleChange} // Use the custom handleChange

@@ -17,11 +17,6 @@ export default function CartRightSection({
   handleGetDirections,
 }: ProductDetailProps) {
 
-  // const router = useRouter();
-  // const navigateToShop = () => {
-  //   router.push(`/shop/${shopSlug}`);
-  // };
-
   return (
     <div>
       <div className="flex md:h-[300px] flex-shrink-0 items-center justify-center lg:h-[400px]">
@@ -81,7 +76,7 @@ export default function CartRightSection({
       </div>
       <div className="mb-4 flex gap-4">
         <BsShop className="text-2xl text-[#eb7d52]" />
-        <span className="text-fourground-600 dark:text-fourground-300 cursor-pointer hover:text-[#eb7b52]">
+        <span className="text-fourground-600 dark:text-fourground-300">
           {product.shop}
         </span>
       </div>

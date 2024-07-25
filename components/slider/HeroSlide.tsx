@@ -1,3 +1,5 @@
+'use client';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/autoplay';
@@ -6,12 +8,14 @@ import 'swiper/css/effect-fade';
 import 'swiper/css/navigation';
 import '@/styles/swiper.css';
 import { Image, Skeleton } from '@nextui-org/react';
-// import required modules
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { useGetBannersQuery } from '@/redux/service/banner';
 import { Banner } from '@/types/banner';
+import { useRouter } from 'next/navigation';
 
 export default function HeroSlideComponent() {
+  const router = useRouter();
+
   const {
     data: headerOne,
     isLoading: isHeaderOneLoading,
@@ -55,6 +59,10 @@ export default function HeroSlideComponent() {
   const headerTwoBanners = headerTwo?.payload || [];
   const headerThreeBanners = headerThree?.payload || [];
 
+  const handleBannerClick = (shopLink: string) => {
+    router.push(shopLink);
+  };
+
   return (
     <div className="mt-2 grid grid-cols-1 gap-3 lg:grid-cols-3">
       <div className="col-span-2 ">
@@ -76,7 +84,10 @@ export default function HeroSlideComponent() {
         >
           {headerOneBanners.length > 0 ? (
             headerOneBanners.map((banner: Banner) => (
-              <SwiperSlide key={banner.uuid}>
+              <SwiperSlide
+                key={banner.uuid}
+                onClick={() => handleBannerClick(banner.shopLink)}
+              >
                 <Image
                   isZoomed
                   src={banner.image}
@@ -98,7 +109,7 @@ export default function HeroSlideComponent() {
           )}
         </Swiper>
       </div>
-      <div className="grid  grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-1">
         <Swiper
           className=" w-full rounded-2xl"
           slidesPerView={1}
@@ -117,7 +128,10 @@ export default function HeroSlideComponent() {
         >
           {headerTwoBanners.length > 0 ? (
             headerTwoBanners.map((banner: Banner) => (
-              <SwiperSlide key={banner.uuid}>
+              <SwiperSlide
+                key={banner.uuid}
+                onClick={() => handleBannerClick(banner.shopLink)}
+              >
                 <Image
                   width={500}
                   isZoomed
@@ -158,7 +172,10 @@ export default function HeroSlideComponent() {
         >
           {headerThreeBanners.length > 0 ? (
             headerThreeBanners.map((banner: Banner) => (
-              <SwiperSlide key={banner.uuid}>
+              <SwiperSlide
+                key={banner.uuid}
+                onClick={() => handleBannerClick(banner.shopLink)}
+              >
                 <Image
                   isZoomed
                   src={banner.image}

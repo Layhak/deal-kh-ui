@@ -17,6 +17,8 @@ import CardCouponComponent from '@/components/card/coupon-detail/CardCouponCompo
 import Category from '@/components/card/Category';
 import PopularShop from '@/components/card/PopularShop';
 import SkeletonCard from '@/components/card/SkeletonCard';
+import EvenSlideComponent from '@/components/slider/EvenSlide';
+import ClearanceSaleSlideComponentProps from '@/components/slider/ClearanceSaleSlide';
 
 export default function HomePage() {
   const [page] = useState(1);
@@ -131,11 +133,7 @@ export default function HomePage() {
                               />
                             </div>
                             <div className="mx-auto w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
-                              <Image
-                                src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
-                                className="mt-[35px] h-[200px] w-[1300px] object-cover lg:h-[310px]"
-                                alt="image"
-                              />
+                              <ClearanceSaleSlideComponentProps bannerType="home-clearance" />
                             </div>
                           </>
                         );
@@ -211,11 +209,7 @@ export default function HomePage() {
                       case 'event':
                         return (
                           <>
-                            <Image
-                              src="https://romand.us/cdn/shop/files/PC_1.png?v=1719967761&width=1728"
-                              className="h-[500px] w-[1300px] object-cover"
-                              alt="Event"
-                            />
+                            <EvenSlideComponent />
                             <section>
                               <div className="my-5 grid grid-cols-2 gap-8 lg:grid-cols-4">
                                 <SectionHome

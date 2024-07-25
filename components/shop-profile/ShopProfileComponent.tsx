@@ -11,12 +11,22 @@ import { useGetShopBySlugQuery } from '@/redux/service/shop';
 
 type Props = {
   shopProfile: ShopDetail;
-  shopSlug: string
+  shopSlug: string;
 };
 export default function ShopProfileComponent({ shopProfile, shopSlug }: Props) {
   if (!shopProfile) {
     return null;
   }
+
+  const handleGetDirections = (location: string) => {
+    if (!location || !location.includes(',')) {
+      console.error('Invalid location format');
+      return;
+    }
+    const [lat, lng] = location.split(',');
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+    window.open(url, '_blank');
+  };
 
   return (
     <div>
@@ -64,7 +74,12 @@ export default function ShopProfileComponent({ shopProfile, shopSlug }: Props) {
               <div className="self-center text-[24px]">
                 <MdOutlineDirections />
               </div>
-              <p className="text-[16px] ">{shopProfile.address}</p>
+              <p
+                className="text-[16px] cursor-pointer hover:text-[#eb7b52]"
+                onClick={() => handleGetDirections(shopProfile.location)}
+              >
+                {shopProfile.address}
+              </p>
             </div>
             {/* phone number */}
             <div className="mt-4 flex flex-row gap-4">

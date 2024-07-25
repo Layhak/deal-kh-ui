@@ -1,9 +1,7 @@
 'use client';
-
 import ShopProfileComponent from '@/components/shop-profile/ShopProfileComponent';
 import React, { useEffect } from 'react';
 import { useGetShopBySlugQuery } from '@/redux/service/shop';
-import { useGetProductsByShopQuery } from '@/redux/service/product';
 import Loading from '@/app/(user)/loading';
 import { useGetDiscountTypesQuery } from '@/redux/service/discountTypes';
 import Aos from 'aos';

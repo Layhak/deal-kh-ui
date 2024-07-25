@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Link, ScrollShadow } from '@nextui-org/react';
+import { Button, ScrollShadow } from '@nextui-org/react';
 import { MdExpandLess, MdExpandMore } from 'react-icons/md';
 import SummaryRatingCard from '@/components/review/SummaryRatingCard';
 import { FeedbackItem, RatingResponse } from '@/types/ratings';
@@ -11,8 +11,6 @@ import ReviewForm from '@/components/review/ReviewForm';
 import Loading from '@/app/(user)/loading';
 import FeedbackCard from '@/components/review/FeedbackCard';
 import { useGetProfileQuery } from '@/redux/service/user';
-import DiscountCardComponent from '../card/DiscountCardComponent';
-import Category from '../card/Category';
 
 interface CombinedFeedbackItem extends FeedbackItem {
   ratingValue: number;

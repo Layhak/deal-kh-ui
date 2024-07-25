@@ -7,6 +7,7 @@ import {
   Link,
   Tooltip,
 } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 import { Product } from '@/libs/difinition';
 import { StarIcon } from '@/components/review/StarIcon';
 import NextLink from 'next/link';
@@ -19,6 +20,7 @@ import {
 import { CartIcon, FilledCartIcon } from '@/components/icons';
 import { RootState } from '@/redux/store';
 import WishlistButton from '@/components/seller/component/WishlistButton';
+import { useGetProfileQuery } from '@/redux/service/user';
 
 type ProductDiscountType =
   | 'no-discount'
@@ -41,11 +43,18 @@ export default function ProductCard({
   discountType = 'no-discount',
 }: ProductCardProps) {
   const dispatch = useDispatch();
+  const router = useRouter();
   const isInCart = useSelector((state: RootState) =>
     selectIsProductInCart(state, product.slug)
   );
+  const { data: userProfile, isLoading: isLoadingUserProfile } =
+    useGetProfileQuery();
 
   const handleCartToggle = () => {
+    if (!userProfile) {
+      router.push('/login');
+      return;
+    }
     if (isInCart) {
       dispatch(removeFromCart(product.slug));
     } else {
@@ -59,13 +68,13 @@ export default function ProductCard({
         isPressable
         className={`${
           ['clearance-sales'].includes(discountType)
-            ? 'h-[560px] sm:h-[530px]'
+            ? 'h-[560px] sm:h-[535px]'
             : ['buy-more-get-more'].includes(discountType)
-              ? 'h-[420px] sm:h-[400px]'
-              : 'h-[420px] sm:h-[410px]'
-        } rounded-xl  bg-foreground-50  ring-1 ring-foreground-200`}
+              ? 'h-[420px] sm:h-[380px]'
+              : 'h-[420px] sm:h-[415px]'
+        }   rounded-xl bg-foreground-50 ring-1 ring-foreground-200`}
       >
-        <CardBody className="relative  rounded-b-lg">
+        <CardBody className="relative overflow-hidden  rounded-b-lg">
           <Link href={`/products/${product.slug}`}>
             <Image
               width={500}
@@ -129,12 +138,18 @@ export default function ProductCard({
               {product.name || 'Product Name'}
             </h5>
           </NextLink>
-          <div className="flex h-[30px] flex-col items-start justify-between">
-            <div className=" py-1 sm:py-3">
+          <div className="flex  flex-col items-start justify-between">
+            <div
+              className={`py-1 ${
+                ['buy-more-get-more'].includes(discountType)
+                  ? 'space-y-2 sm:py-2'
+                  : 'space-y-3 sm:py-3'
+              }`}
+            >
               <p className="text-xs font-medium text-foreground-600 md:text-sm">
                 Shop :{' '}
                 <Link
-                  href={`/shop/${product.shop}`}
+                  href={`/shop/${product.shopSlug}`}
                   className={'w-full overflow-hidden sm:w-fit'}
                 >
                   <span className="line-clamp-1 text-xs font-medium text-blue-500 md:text-sm">
@@ -149,7 +164,7 @@ export default function ProductCard({
                 </span>
               </p>
             </div>
-            <div className="flex h-[30px] w-full items-center justify-start pt-10 font-semibold">
+            <div className="flex  w-full items-center justify-between font-semibold">
               <div
                 className={
                   'flex w-full flex-col items-start justify-start sm:flex-row md:items-center md:justify-between '

@@ -120,7 +120,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                                   <Image
                                     width="800"
                                     src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
-                                    className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[900px]"
+                                    className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[800px]"
                                     alt="image"
                                   />
                                 </Link>

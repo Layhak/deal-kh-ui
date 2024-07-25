@@ -1,15 +1,7 @@
 import { useGetProductsQuery } from '@/redux/service/product';
-import {
-  Card,
-  CardBody,
-  Image,
-  Link,
-  Skeleton,
-  Spacer,
-} from '@nextui-org/react';
+
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import { StarIcon } from '@/components/review/StarIcon';
 import { Product } from '@/libs/difinition';
 import SkeletonCard from '@/components/card/SkeletonCard';
 import ProductCard from '@/components/card/ProductCard';

@@ -38,10 +38,10 @@ import SearchProduct from './search/SearchProduct';
 import SearchLocation from './search/SearchLocation';
 import { selectProducts } from '@/redux/feature/cart/cartSlice';
 import { Product } from '@/libs/difinition';
-import { selectWishlistProducts } from '@/redux/feature/wishList/wishListSlice';
 import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { BiUserCircle } from 'react-icons/bi';
 import HeaderCreateShop from '@/components/header/HeaderCreateShop';
+import { useGetAllUserWishListQuery } from '@/redux/service/wishList';
 
 export const NavigationBar = () => {
   const pathname = usePathname();
@@ -51,14 +51,6 @@ export const NavigationBar = () => {
   const { data: userProfile, isLoading: isLoadingUserProfile } =
     useGetProfileQuery();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    if (userProfile) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, [userProfile]);
 
   const dispatch = useAppDispatch();
   const [logoutUser, { isLoading: isLoggingOut }] = useLogoutUserMutation();
@@ -110,19 +102,22 @@ export const NavigationBar = () => {
     setUniqueProducts(unique);
   }, [products]);
 
-  // For Wishlist
-  const wishlistProducts = useAppSelector(selectWishlistProducts);
-  const [uniqueWishlistProducts, setUniqueWishlistProducts] = useState<
-    Product[]
-  >([]);
+  const {
+    data: wishlistData,
+    isLoading: isLoadingWishlist,
+    refetch: refetchWishlist,
+  } = useGetAllUserWishListQuery({ page: 1, size: 10 });
 
   useEffect(() => {
-    const uniqueWishlist = wishlistProducts.filter(
-      (product: { slug: any }, index: any, self: any[]) =>
-        index === self.findIndex((t) => t.slug === product.slug)
-    );
-    setUniqueWishlistProducts(uniqueWishlist);
-  }, [wishlistProducts]);
+    if (userProfile) {
+      setIsLoggedIn(true);
+      refetchWishlist();
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [userProfile, refetchWishlist]);
+
+  const wishlistCount = wishlistData?.payload?.pagination?.totalElements || 0;
 
   const searchInput = (
     <>
@@ -178,7 +173,6 @@ export const NavigationBar = () => {
           </NextLink>
           <NavbarItem className="hidden w-full items-center sm:flex">
             <SearchProduct />
-            {/*<SearchLocation />*/}
             <Tooltip
               content={
                 <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
@@ -244,8 +238,8 @@ export const NavigationBar = () => {
               <Badge
                 color="danger"
                 className={'bg-gradient-to-r from-pink-500 to-yellow-500'}
-                content={uniqueWishlistProducts.length}
-                isInvisible={uniqueWishlistProducts.length <= 0}
+                content={wishlistCount}
+                isInvisible={wishlistCount <= 0}
                 variant="solid"
                 shape="circle"
                 size="sm"
@@ -373,8 +367,8 @@ export const NavigationBar = () => {
               <Badge
                 color="danger"
                 className={'bg-gradient-to-r from-pink-500 to-yellow-500'}
-                content={uniqueWishlistProducts.length}
-                isInvisible={uniqueWishlistProducts.length <= 0}
+                content={wishlistCount}
+                isInvisible={wishlistCount <= 0}
                 variant="solid"
                 shape="circle"
                 size="sm"

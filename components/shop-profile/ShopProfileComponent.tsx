@@ -75,7 +75,7 @@ export default function ShopProfileComponent({ shopProfile, shopSlug }: Props) {
                 <MdOutlineDirections />
               </div>
               <p
-                className="text-[16px] cursor-pointer hover:text-[#eb7b52]"
+                className="cursor-pointer text-[16px] hover:text-[#eb7b52]"
                 onClick={() => handleGetDirections(shopProfile.location)}
               >
                 {shopProfile.address}

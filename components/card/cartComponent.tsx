@@ -118,7 +118,7 @@ export default function CartComponent() {
   return (
     <main>
       {products.length === 0 && (
-        <div className="flex flex-col items-center justify-center ">
+        <div className="flex h-[800px] flex-col items-center  justify-center">
           <Image
             alt="cartEmpty"
             src={'https://store.istad.co/media/product_images/cartEmpty.png'}

@@ -1,15 +1,12 @@
 'use client';
-import ServiceCardComponent from '@/components/card/Service';
 import { Image, Link } from '@nextui-org/react';
 import 'aos/dist/aos.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useGetProductScrapeQuery } from '@/redux/service/productScrape';
 import { useGetDiscountTypesQuery } from '@/redux/service/discountTypes';
 import { DiscountType } from '@/types/DiscountType';
 import SectionHome from '@/components/card/SectionHome';
 import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
-import Category from '@/components/card/Category';
-import PopularShop from '@/components/card/PopularShop';
 
 export default function Deal() {
   const [page] = useState(1);
@@ -103,7 +100,7 @@ export default function Deal() {
                                     <Image
                                       width="800"
                                       src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
-                                      className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[900px]"
+                                      className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[800px]"
                                       alt="image"
                                     />
                                   </Link>

@@ -2,11 +2,9 @@
 import React from 'react';
 import CardDetailComponent from '@/components/card/CardDetailComponent';
 import ReviewProductDetailComponent from '@/components/review/ReviewProductDetailComponent';
-import DiscountCardComponent from '@/components/card/DiscountCardComponent';
 import { useGetProductBySlugQuery } from '@/redux/service/product';
 import Loading from '@/app/(user)/loading';
 import NotFoundPage from '@/app/(user)/not-found';
-import SectionCategory from '@/components/card/SectionCategory';
 import SectionRelatedProduct from '@/components/card/SectionRelatedProduct';
 import Link from 'next/link';
 
@@ -19,34 +17,7 @@ export default function ProductDetail({ slug }: { slug: string }) {
   }
   return (
     <>
-      <CardDetailComponent
-        discountTypeSlug={product.payload.discountTypeSlug}
-        slug={product.payload.slug}
-        name={product.payload.name}
-        category={product.payload.categorySlug}
-        description={product.payload.description}
-        images={product.payload.images}
-        shop={product.payload.shop}
-        discountType={product.payload.discountType}
-        price={product.payload.price}
-        discountPrice={product.payload.discountPrice}
-        openAt={product.payload.openAt}
-        createdAt={product.payload.createdAt}
-        expiredAt={product.payload.expiredAt}
-        address={product.payload.address}
-        closeAt={product.payload.closeAt}
-        seller={product.payload.seller}
-        ratingCount={product.payload.ratingCount}
-        ratingAvg={product.payload.ratingAvg}
-        shopSlug={product.payload.shopSlug}
-        discountValue={product.payload.discountValue}
-        isPercentage={false}
-        updatedAt={product.payload.updatedAt}
-        createdBy={product.payload.createdBy}
-        updatedBy={product.payload.updatedBy}
-        location={product.payload.location}
-        quantity={product.payload.quantity || 0}
-      />
+      <CardDetailComponent product={product.payload} />
       <ReviewProductDetailComponent productSlug={product.payload.slug} />
       <div className={'flex items-center  justify-between'}>
         <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
@@ -79,7 +50,9 @@ export default function ProductDetail({ slug }: { slug: string }) {
           </div>
         </Link>
       </div>
-      <div className={'grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4'}>
+      <div
+        className={'my-10 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-4'}
+      >
         <SectionRelatedProduct
           size={4}
           category={product.payload.categorySlug}

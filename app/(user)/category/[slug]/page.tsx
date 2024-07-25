@@ -103,7 +103,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                                 category={slug}
                               />
                             </div>
-                            <div className="mx-auto w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
+                            <div className="mx-auto mt-5 w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
                               <ClearanceSaleSlideComponentProps
                                 bannerType={slug}
                               />

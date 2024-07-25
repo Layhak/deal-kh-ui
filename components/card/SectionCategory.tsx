@@ -21,7 +21,7 @@ export default function SectionCategory({ category, discountType, size }: any) {
     },
   });
   if (products?.payload?.pagination?.totalElements === 0) {
-    return <div>No Products Found</div>;
+    return <div></div>;
   }
   return (
     <>

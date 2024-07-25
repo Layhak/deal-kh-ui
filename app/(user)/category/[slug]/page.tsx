@@ -12,6 +12,7 @@ import CardCouponComponent from '@/components/card/coupon-detail/CardCouponCompo
 import SkeletonCard from '@/components/card/SkeletonCard';
 import SectionCategory from '@/components/card/SectionCategory';
 import { DiscountType } from '@/types/DiscountType';
+import ClearanceSaleSlideComponentProps from '@/components/slider/ClearanceSaleSlide';
 
 type CategoryPageProps = {
   params: {
@@ -102,11 +103,9 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                                 category={slug}
                               />
                             </div>
-                            <div className="mx-auto w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
-                              <Image
-                                src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
-                                className="mt-[35px] h-[200px] w-[1300px] object-cover lg:h-[310px]"
-                                alt="image"
+                            <div className="mx-auto mt-5 w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
+                              <ClearanceSaleSlideComponentProps
+                                bannerType={slug}
                               />
                             </div>
                           </>

@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { BsShop } from 'react-icons/bs';
 import React from 'react';
 import { ShopResponse } from '@/libs/difinition';
+import { AiOutlineShop } from 'react-icons/ai';
 import SkeletonCard from '@/components/card/SkeletonCard';
 
 type ShopCardComponentProps = {
@@ -31,18 +32,28 @@ export default function PopularShop() {
     );
   if (error) return <div>Error loading data</div>;
 
+  const handleGetDirections = (location: string) => {
+    if (!location || !location.includes(',')) {
+      console.error('Invalid location format');
+      return;
+    }
+    const [lat, lng] = location.split(',');
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+    window.open(url, '_blank');
+  };
+
   return (
-    <div className={'grid grid-cols-2 gap-4 md:grid-cols-3'}>
+    <div className={'grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-4 lg:mx-0 mx-2'}>
       {data?.payload.list.map((shop: ShopResponse) => (
         <Card
           key={shop.slug}
-          isPressable
-          className="  w-full object-cover shadow-none"
+          className=" h-[470px] w-full object-cover shadow-none"
         >
           <CardBody>
             <Link href={`/shop/${shop.slug}`}>
               <Image
-                className="h-[195px] w-[380px] rounded-lg object-cover object-center"
+                isZoomed
+                className="h-[250px] w-[380px] rounded-lg object-cover object-center"
                 src={
                   shop.profile ||
                   'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
@@ -51,10 +62,12 @@ export default function PopularShop() {
               />
             </Link>
             <div className="mt-2 flex">
-              <BsShop className="h-[35px] w-[35px] text-[#eb7d52]" />
-              <h5 className="ml-2 mt-2 h-[52px] text-2xl font-semibold tracking-tight text-foreground-800 dark:text-white">
-                {shop.name.length > 25
-                  ? `${shop.name.substring(0, 25)}...`
+              <div className=''>
+                <AiOutlineShop className="h-[37px] w-[37px]  text-[#eb7d52]" />
+              </div>
+              <h5 className="ml-2 mt-2 line-clamp-2 h-[66px] text-2xl font-semibold tracking-tight text-foreground-800 dark:text-white">
+                {shop.name.length > 18
+                  ? `${shop.name.substring(0, 18)}...`
                   : shop.name || 'Shop Name'}
               </h5>
             </div>
@@ -74,9 +87,11 @@ export default function PopularShop() {
             </div>
             <div className="flex items-center justify-between pt-4">
               <div className="flex items-center justify-start">
-                <span className="pt-2 text-sm font-medium text-blue-700 ">
-                  Available Now.
-                  <p>Get Notified.</p>
+                <span
+                  className="cursor-pointer pt-2 text-sm font-medium text-blue-700"
+                  onClick={() => handleGetDirections(shop.location)}
+                >
+                  Shop Location
                 </span>
               </div>
               <Link href={`/shop/${shop.slug}`}>

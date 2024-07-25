@@ -5,6 +5,7 @@ import { GrMapLocation } from 'react-icons/gr';
 import { BsShop } from 'react-icons/bs';
 import { MdOutlineLocalPhone } from 'react-icons/md';
 import { Image } from '@nextui-org/react';
+import { useRouter } from 'next/navigation';
 
 type ProductDetailProps = {
   product: Product;
@@ -15,6 +16,7 @@ export default function CartRightSection({
   product,
   handleGetDirections,
 }: ProductDetailProps) {
+
   return (
     <div>
       <div className="flex md:h-[300px] flex-shrink-0 items-center justify-center lg:h-[400px]">

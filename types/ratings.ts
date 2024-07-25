@@ -6,6 +6,10 @@ export type RatingResponse = {
   createdAt: string;
 };
 
+export type ShopRatingResponse = {
+  payload: RatingResponse[]
+};
+
 export type FeedbackResponse = {
   payload: FeedbackItem[];
 };
@@ -25,7 +29,18 @@ export type CreateFeedbackRequest = {
   images: { url: string }[];
 };
 
+export type CreateReportRequest = {
+  description: string;
+  shopSlug: string;
+  images: { url: string }[];
+};
+
 export type CreateRatingRequest = {
   ratingValue: number;
   productSlug: string;
+};
+
+export type CreateShopRatingRequest = {
+  ratingValue: number;
+  shopSlug: string;
 };

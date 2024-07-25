@@ -5,19 +5,33 @@ import { LuClock10 } from 'react-icons/lu';
 import { BiCategory } from 'react-icons/bi';
 import { Image } from '@nextui-org/react';
 import { ShopDetail } from '@/types/shopDtail';
+import ReviewSHopProfile from '../review/ReviewShopProfile';
+import { useGetProductBySlugQuery } from '@/redux/service/product';
+import { useGetShopBySlugQuery } from '@/redux/service/shop';
 
 type Props = {
   shopProfile: ShopDetail;
+  shopSlug: string;
 };
-export default function ShopProfileComponent({ shopProfile }: Props) {
+export default function ShopProfileComponent({ shopProfile, shopSlug }: Props) {
   if (!shopProfile) {
     return null;
   }
 
+  const handleGetDirections = (location: string) => {
+    if (!location || !location.includes(',')) {
+      console.error('Invalid location format');
+      return;
+    }
+    const [lat, lng] = location.split(',');
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+    window.open(url, '_blank');
+  };
+
   return (
     <div>
       {/* profile cover section */}
-      <div className=" flex w-full flex-col items-center lg:flex-row">
+      <div className="mx-2 flex w-[96%] flex-col items-center lg:mx-0 lg:w-full lg:flex-row">
         <div
           className="relative flex h-40 w-full justify-start rounded-lg bg-gray-800 lg:h-96"
           style={{
@@ -40,60 +54,63 @@ export default function ShopProfileComponent({ shopProfile }: Props) {
       </div>
 
       {/* page details section */}
-      <div className="mx-4 mt-[74px] flex flex-col md:mx-0 lg:mx-0 lg:mt-28 lg:flex-row">
-        {/* description section */}
-        <div className="mt-9 w-full lg:mt-0">
-          <p className="text-lg font-semibold text-gray-700 dark:text-gray-300 lg:text-2xl">
-            Page&apos;s Detail
-          </p>
-          <p className="mt-4 text-[16px] text-gray-600 dark:text-gray-300">
-            {shopProfile.description}
-          </p>
+      <div className="grid grid-cols-1 gap-0 md:grid-cols-2 lg:grid-cols-2 lg:gap-4">
+        <div className="mx-4  mt-[100px] flex flex-col lg:mx-0 lg:mt-28 lg:flex-row">
+          {/* description section */}
+          <div className=" w-full lg:mt-0">
+            <div className="mb-8">
+              <p className="relative w-fit from-pink-500 to-yellow-500  text-[20px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r lg:text-[26px]">
+                Page&apos;s{' '}
+                <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                  Detail
+                </span>
+              </p>
+            </div>
+            <p className="mt-4 text-[16px]">{shopProfile.description}</p>
 
-          {/* icons */}
-          {/* location */}
-          <div className="mt-4 flex flex-row gap-4">
-            <div className="self-center text-[24px] text-gray-700">
-              <MdOutlineDirections />
+            {/* icons */}
+            {/* location */}
+            <div className="mt-4 flex flex-row gap-4">
+              <div className="self-center text-[24px]">
+                <MdOutlineDirections />
+              </div>
+              <p
+                className="cursor-pointer text-[16px] hover:text-[#eb7b52]"
+                onClick={() => handleGetDirections(shopProfile.location)}
+              >
+                {shopProfile.address}
+              </p>
             </div>
-            <p className="text-[16px] text-gray-600 dark:text-gray-300">
-              {shopProfile.address}
-            </p>
-          </div>
-          {/* phone number */}
-          <div className="mt-4 flex flex-row gap-4">
-            <div className="self-center text-[24px] text-gray-700">
-              <HiOutlinePhone />
+            {/* phone number */}
+            <div className="mt-4 flex flex-row gap-4">
+              <div className="self-center text-[24px]">
+                <HiOutlinePhone />
+              </div>
+              <p className="text-[16px]">{shopProfile.phoneNumber}</p>
             </div>
-            <p className="text-[16px] text-gray-600 dark:text-gray-300">
-              {shopProfile.phoneNumber}
-            </p>
-          </div>
-          {/* open and close */}
-          <div className="mt-4 flex flex-row gap-4">
-            <div className="self-center text-[24px] text-gray-700">
-              <LuClock10 />
+            {/* open and close */}
+            <div className="mt-4 flex flex-row gap-4">
+              <div className="self-center text-[24px]">
+                <LuClock10 />
+              </div>
+              <p className="text-[16px]">
+                {shopProfile.openAt.slice(0, 5)}
+                {'  to  '}
+                {shopProfile.closeAt.slice(0, 5)}
+              </p>
             </div>
-            <p className="text-[16px] text-gray-600 dark:text-gray-300">
-              {shopProfile.openAt.slice(0, 5)}
-              {'  to  '}
-              {shopProfile.closeAt.slice(0, 5)}
-            </p>
-          </div>
-          {/* mail */}
-          <div className="mt-4 flex flex-row gap-4">
-            <div className="self-center text-[24px] text-gray-700">
-              <BiCategory />
+            {/* mail */}
+            <div className="mt-4 flex flex-row gap-4">
+              <div className="self-center text-[24px]">
+                <BiCategory />
+              </div>
+              <p className="text-[16px]">{shopProfile.shopType}</p>
             </div>
-            <p className="text-[16px] text-gray-600 dark:text-gray-300">
-              {shopProfile.shopType}
-            </p>
           </div>
         </div>
-
-        {/* map section */}
-        {/* <div className="w-full h-24">
-        </div> */}
+        <div className="mx-4 mt-2 md:mt-[100px] lg:mx-0 lg:mt-28">
+          <ReviewSHopProfile productSlug={shopSlug} />
+        </div>
       </div>
 
       {/* category */}

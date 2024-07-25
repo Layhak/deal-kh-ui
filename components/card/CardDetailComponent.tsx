@@ -45,6 +45,7 @@ export default function CardDetailComponent({
     discountType,
     discountTypeSlug,
     price,
+    shopSlug,
     discountPrice,
     createdAt,
     expiredAt,
@@ -149,6 +150,11 @@ export default function CardDetailComponent({
       </div>
     );
 
+    const navigateToShop = () => {
+      router.push(`/shop/${shopSlug}`);
+    };
+  
+
   return (
     <div className="container w-full lg:py-8">
       <div className="grid grid-cols-1 content-center gap-8 lg:grid-cols-2">
@@ -230,9 +236,9 @@ export default function CardDetailComponent({
                 Expired Date :{' '}
                 <span className="font-semibold text-red-500">{expiredAt}</span>
               </p>
-              <p className="text-base font-medium text-foreground-600">
+              <p className="text-base font-medium text-foreground-600" onClick={navigateToShop}>
                 Shop :{' '}
-                <span className="font-semibold text-blue-800">{shop}</span>
+                <span className="font-semibold text-blue-800 cursor-pointer">{shop}</span>
               </p>
               <p className="text-base font-medium text-foreground-600">
                 Open : {openAt?.slice(0, 5)} AM - {closeAt?.slice(0, 5)} PM

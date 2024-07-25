@@ -1,12 +1,16 @@
 'use client';
 import ShopProfileComponent from '@/components/shop-profile/ShopProfileComponent';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useGetShopBySlugQuery } from '@/redux/service/shop';
 import Loading from '@/app/(user)/loading';
-import { Card, CardBody, Image, Link } from '@nextui-org/react';
-import { StarIcon } from '@/components/review/StarIcon';
-import { Product } from '@/libs/difinition';
-import { useGetProductsByShopQuery } from '@/redux/service/product';
+import { useGetDiscountTypesQuery } from '@/redux/service/discountTypes';
+import Aos from 'aos';
+import NotFoundPage from '@/app/(auth)/[...slug]/page';
+import { Image, Link } from '@nextui-org/react';
+import SkeletonCard from '@/components/card/SkeletonCard';
+import { DiscountType } from '@/types/DiscountType';
+import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
+import SectionProfileShop from '@/components/card/SectionProfileShop';
 
 type Props = {
   params: {
@@ -16,140 +20,154 @@ type Props = {
 
 const ShopProfile = ({ params }: Props) => {
   const slug = params.slug;
-  // console.log('slug', slug);
-  const {
-    data: shop,
-    isLoading: shopLoading,
-    error: shopError,
-  } = useGetShopBySlugQuery(slug);
-  const {
-    data: products,
-    isLoading: productsLoading,
-    error: productsError,
-  } = useGetProductsByShopQuery(slug);
+  const { data, isLoading, error } = useGetShopBySlugQuery(slug);
+  const { data: discountTypes, isLoading: isLoadingDiscountTypes } =
+    useGetDiscountTypesQuery();
 
-  if (shopLoading || productsLoading) {
-    return <Loading />;
-  }
+  useEffect(() => {
+    Aos.init({ duration: 1000 });
+  }, []);
 
-  if (productsError) {
-    return <p>Error fetching products</p>;
-  }
+  if (isLoading) return <Loading />;
+  if (error) return <NotFoundPage />;
 
   return (
     <div>
-      {/* for shop profile */}
-      <ShopProfileComponent shopProfile={shop.payload} />
-      {/* for shop product */}
+      <ShopProfileComponent shopProfile={data.payload} shopSlug={slug}/>
+      <main>
+        {isLoadingDiscountTypes ? (
+          <SkeletonCard />
+        ) : (
+          discountTypes.payload.map((discountType: DiscountType) => {
+            const [firstPart, ...restParts] = discountType.name.split(' ');
+            const secondPart = restParts.join(' ');
 
-      <div className="mx-2 my-2 flex h-[40px] items-center justify-between md:my-8 md:h-[50px] lg:mx-0 lg:my-8 lg:h-[50px]">
-        <p className="relative w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
-          All{' '}
-          <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-            Products
-          </span>
-        </p>
-      </div>
-
-      {/* card section */}
-      <div className="flex flex-wrap justify-center gap-2 lg:gap-[25px]">
-        {products.payload.list.map((product: Product) => {
-          return (
-            <Card
-              key={product.slug}
-              className="relative mb-0 h-[300px] w-[195px] flex-none rounded-xl text-gray-50 shadow-none md:h-[395px] md:w-[245px]  lg:mb-2  lg:h-[410px] lg:w-[289px]"
-            >
-              <CardBody className="relative h-[260px] overflow-visible rounded-b-lg px-4">
-                <Link href={`/products/${product.slug}`}>
-                  <Image
-                    className="h-[140px] w-[284px] object-cover md:h-[193px] lg:h-[193px]"
-                    isZoomed
-                    src={
-                      product.images[0]?.url ||
-                      'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
-                    }
-                    alt={product.name}
-                  />
-                </Link>
-
-                <span className="absolute right-0 top-0 z-10 h-[54px] w-[54px] rounded-bl-xl rounded-tr-xl bg-gradient-to-tr from-pink-500 to-yellow-500 p-1 text-center text-[14px] font-semibold text-white">
-                  {`${product.discountValue}${product.isPercentage ? '%' : '$'} OFF`}
-                </span>
-
-                <div className="mt-2 h-[16] w-full lg:mt-4">
-                  <div className={'flex items-center justify-between'}>
-                    <div className="flex items-center">
-                      {Array.from({ length: 5 }, (_, index) => {
-                        if (product.ratingAvg >= index + 1) {
-                          return (
-                            <StarIcon
-                              key={index}
-                              filled
-                              className="h-3 w-3 text-yellow-300 md:h-4 md:w-4 lg:h-4 lg:w-4"
-                            />
-                          );
-                        } else if (product.ratingAvg >= index + 0.5) {
-                          return (
-                            <StarIcon
-                              key={index}
-                              half
-                              className="h-3 w-3 text-yellow-300 md:h-4 md:w-4 lg:h-4 lg:w-4"
-                            />
-                          );
-                        } else {
-                          return (
-                            <StarIcon
-                              key={index}
-                              className="h-3 w-3 text-yellow-300 md:h-4 md:w-4 lg:h-4 lg:w-4"
-                            />
-                          );
-                        }
-                      })}
-                      <span className="ml-2 text-[12px] font-medium text-foreground-600 md:text-[14px] lg:text-[18px] ">
-                        ({Math.round(product.ratingAvg * 10) / 10}) Reviews
-                      </span>
+            return (
+              !['top-sales', 'flash-sales'].includes(discountType.slug) && (
+                <React.Fragment key={discountType.slug}>
+                  <div className="mx-6 my-4 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
+                    <div className="flex-1">
+                      <p className="relative w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
+                        {firstPart}
+                        <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                          {' ' + secondPart}
+                        </span>
+                      </p>
                     </div>
                   </div>
-                </div>
-                <Link>
-                  <h5 className="mt-1 line-clamp-1 h-[18px]  text-[14px] font-semibold tracking-tight text-foreground-800 md:line-clamp-2  md:h-[45px] md:text-[18px] lg:line-clamp-3 lg:h-[45px] lg:text-[18px]">
-                    {product.name.length > 60
-                      ? `${product.name.substring(0, 25)}...`
-                      : product.name || 'Product Name'}
-                  </h5>
-                </Link>
-                <div className="h-[30px] pt-2">
-                  <p className="text-[12px] font-medium text-foreground-600 md:text-[14px] lg:text-[18px]">
-                    Shop :{' '}
-                    <Link href={`/shop/${product.shopSlug}`}>
-                      <span className="line-clamp-1 cursor-pointer text-[14px] font-medium text-blue-800 lg:line-clamp-2">
-                        {product.shop.length >
-                        (window.innerWidth >= 768 ? 30 : 15)
-                          ? `${product.shop.substring(0, window.innerWidth >= 768 ? 30 : 15)}...`
-                          : product.shop || 'Shop Name'}
-                      </span>
-                    </Link>
-                  </p>
-                  <p className="text-[12px] font-medium text-foreground-600 md:text-[14px] lg:text-[18px]">
-                    Expired date :{' '}
-                    <span className="font-medium text-red-500">
-                      {product.expiredAt}
-                    </span>
-                  </p>
-                </div>
-                <div className="flex h-[30px] items-center justify-start pt-10 font-semibold lg:my-4">
-                  <span className="pt-1 text-[14px] font-bold text-foreground-500 line-through dark:text-white md:text-xl lg:text-xl">
-                    ${product.price || 'Price'}
-                  </span>
-                  <span className="md:2xl  ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-[18px] font-bold text-transparent lg:text-2xl">
-                    ${(product.price - product.discountPrice).toFixed(2) || '0'}
-                  </span>
-                </div>
-              </CardBody>
-            </Card>
-          );
-        })}
-      </div>
+                  <section>
+                    {(() => {
+                      switch (discountType.slug) {
+                        case 'clearance-sales':
+                          return (
+                            <>
+                              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                                <SectionProfileShop
+                                  shopSlug={slug}
+                                  shopName={data.payload.name}
+                                  size={3}
+                                  discountType={discountType.name}
+                                  name={discountType.name}
+                                  category={slug}
+                                />
+                              </div>
+                              <div className="mx-auto w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
+                                <Image
+                                  src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
+                                  className="mt-[35px] h-[200px] w-[1300px] object-cover lg:h-[310px]"
+                                  alt="image"
+                                />
+                              </div>
+                            </>
+                          );
+                        case 'buy-more-get-more':
+                          return (
+                            <>
+                              <div className="flex flex-col gap-5 lg:flex-row">
+                                <div className="mx-auto md:mx-0">
+                                  <Link href="/buy-more-get-more">
+                                    <Image
+                                      width="800"
+                                      src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
+                                      className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[900px]"
+                                      alt="image"
+                                    />
+                                  </Link>
+                                </div>
+                                <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">
+                                  <SectionProfileShop
+                                    shopSlug={slug}
+                                    shopName={data.payload.name}
+                                    discountType={discountType.name}
+                                    name={discountType.name}
+                                    category={slug}
+                                    size={6}
+                                  />
+                                </div>
+                              </div>
+                            </>
+                          );
+                        case 'shop-coupons':
+                          return (
+                            <>
+                              <CardCouponComponent displayCount={3} />
+                              <section>
+                                <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                                  <SectionProfileShop
+                                    shopSlug={slug}
+                                    shopName={data.payload.name}
+                                    discountType={discountType.name}
+                                    name={discountType.name}
+                                    category={slug}
+                                  />
+                                </div>
+                              </section>
+                            </>
+                          );
+                          case 'event':
+                          return (
+                            <>
+                              <Image
+                                src="https://romand.us/cdn/shop/files/PC_1.png?v=1719967761&width=1728"
+                                className="h-[500px] w-[1300px] object-cover"
+                                alt="Event"
+                              />
+                              <section>
+                                <div className="my-5 grid grid-cols-2 gap-5 lg:grid-cols-4">
+                                  <SectionProfileShop
+                                    shopSlug={slug}
+                                    shopName={data.payload.name}
+                                    discountType={discountType.name}
+                                    name={discountType.name}
+                                    category={slug}
+                                  />
+                                </div>
+                              </section>
+                            </>
+                          );
+                        default:
+                          return (
+                            <section>
+                              <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                                <SectionProfileShop
+                                  shopSlug={slug}
+                                  shopName={data.payload.name}
+                                  discountType={discountType.name}
+                                  name={discountType.name}
+                                  category={slug}
+                                />
+                              </div>
+                            </section>
+                          );
+                      }
+                    })()}
+                  </section>
+                </React.Fragment>
+              )
+            );
+          })
+        )}
+      </main>
     </div>
   );
 };

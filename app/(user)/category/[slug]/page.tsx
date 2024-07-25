@@ -94,7 +94,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                       case 'clearance-sales':
                         return (
                           <>
-                            <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                               <SectionCategory
                                 size={3}
                                 discountType={discountType.name}
@@ -114,7 +114,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                       case 'buy-more-get-more':
                         return (
                           <>
-                            <div className="flex flex-col gap-5 lg:flex-row">
+                            <div className="flex flex-col gap-8 lg:flex-row">
                               <div className="mx-auto md:mx-0">
                                 <Link href="/buy-more-get-more">
                                   <Image
@@ -125,7 +125,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                                   />
                                 </Link>
                               </div>
-                              <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">
+                              <div className="grid grid-cols-2 gap-8 lg:grid-cols-3">
                                 <SectionCategory
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -141,7 +141,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                           <>
                             <CardCouponComponent displayCount={3} />
                             <section>
-                              <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                              <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
                                 <SectionCategory
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -154,7 +154,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                       default:
                         return (
                           <section>
-                            <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                            <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
                               <SectionCategory
                                 discountType={discountType.name}
                                 name={discountType.name}

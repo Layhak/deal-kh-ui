@@ -102,22 +102,47 @@ export const NavigationBar = () => {
     setUniqueProducts(unique);
   }, [products]);
 
+  const [totalElements, setTotalElements] = useState(0);
+  const [pageSize, setPageSize] = useState(1);
+  const [wishlistItemUuid, setWishlistItemUuid] = useState<string | null>(null);
+
+  // Initial fetch with limited size
   const {
-    data: wishlistData,
-    isLoading: isLoadingWishlist,
-    refetch: refetchWishlist,
-  } = useGetAllUserWishListQuery({ page: 1, size: 10 });
+    data: initialWishListData,
+    error: initialError,
+    isLoading: initialLoading,
+  } = useGetAllUserWishListQuery({ page: 1, size: 1 });
 
   useEffect(() => {
-    if (userProfile) {
-      setIsLoggedIn(true);
-      refetchWishlist();
-    } else {
-      setIsLoggedIn(false);
+    if (
+      initialWishListData &&
+      initialWishListData.payload &&
+      initialWishListData.payload.pagination
+    ) {
+      setTotalElements(initialWishListData.payload.pagination.totalElements);
+      setPageSize(initialWishListData.payload.pagination.totalElements);
     }
-  }, [userProfile, refetchWishlist]);
+  }, [initialWishListData]);
 
-  const wishlistCount = wishlistData?.payload?.pagination?.totalElements || 0;
+  // Subsequent fetch with the correct page size
+  const {
+    data: wishListData,
+    error,
+    isLoading,
+    refetch: refetchWishList,
+  } = useGetAllUserWishListQuery({
+    page: 1,
+    size: pageSize,
+  });
+
+  useEffect(() => {
+    if (userProfile && !initialLoading) {
+      setIsLoggedIn(true);
+      refetchWishList();
+    }
+  }, [userProfile, refetchWishList, initialLoading]);
+
+  const wishlistCount = wishListData?.payload?.pagination?.totalElements || 0;
 
   const searchInput = (
     <>

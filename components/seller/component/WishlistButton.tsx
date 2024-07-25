@@ -1,3 +1,5 @@
+// src/components/WishlistButton.tsx
+
 'use client';
 import React, { useEffect, useState } from 'react';
 import { Button, Tooltip, useDisclosure } from '@nextui-org/react';

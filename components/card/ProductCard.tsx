@@ -115,9 +115,9 @@ export default function ProductCard({
               })()}
             </span>
           )}
-          <div className="mt-4 h-[16] w-full">
-            <div className={'flex items-center justify-between'}>
-              <div className="flex">
+          <div className={'flex h-full flex-col justify-between'}>
+            <div className="mt-4 h-[16] w-full">
+              <div className={'flex'}>
                 {!['buy-more-get-more'].includes(discountType) && (
                   <RatingStar
                     ratingAvg={product.ratingAvg}
@@ -125,104 +125,108 @@ export default function ProductCard({
                   />
                 )}
               </div>
-            </div>
-          </div>
-          <NextLink href={`/products/${product.slug}`}>
-            <h5
-              className={`mt-1 line-clamp-2  h-[45px] sm:h-[54px] ${
-                ['clearance-sales'].includes(discountType)
-                  ? 'text-md md:text-2xl '
-                  : 'text-md md:text-xl'
-              }  overflow-hidden font-bold text-foreground-700`}
-            >
-              {product.name || 'Product Name'}
-            </h5>
-          </NextLink>
-          <div className="flex  flex-col items-start justify-between">
-            <div
-              className={`py-1 ${
-                ['buy-more-get-more'].includes(discountType)
-                  ? 'space-y-2 sm:py-2'
-                  : 'space-y-3 sm:py-3'
-              }`}
-            >
-              <p className="text-xs font-medium text-foreground-600 md:text-sm">
-                Shop :{' '}
-                <Link
-                  href={`/shop/${product.shopSlug}`}
-                  className={'w-full overflow-hidden sm:w-fit'}
+              <NextLink href={`/products/${product.slug}`}>
+                <h5
+                  className={`mt-1 line-clamp-2  ${
+                    ['clearance-sales'].includes(discountType)
+                      ? 'text-md md:text-2xl'
+                      : 'text-md md:text-xl'
+                  }  overflow-hidden font-bold text-foreground-700 `}
                 >
-                  <span className="line-clamp-1 text-xs font-medium text-blue-500 md:text-sm">
-                    {product.shop || 'Shop Name'}
-                  </span>
-                </Link>
-              </p>
-              <p className="text-xs font-medium text-foreground-600 md:text-sm">
-                Expired date :{' '}
-                <span className="font-medium text-red-500">
-                  {product.expiredAt}
-                </span>
-              </p>
+                  {product.name || 'Product Name'}
+                </h5>
+              </NextLink>
             </div>
-            <div className="flex  w-full items-center justify-between font-semibold">
+
+            <div className="flex  flex-col items-start justify-between">
               <div
-                className={
-                  'flex w-full flex-col items-start justify-start sm:flex-row md:items-center md:justify-between '
-                }
+                className={`py-1 ${
+                  ['buy-more-get-more'].includes(discountType)
+                    ? 'space-y-2 sm:py-2'
+                    : 'space-y-3 sm:py-3'
+                }`}
               >
-                {['no-discount'].includes(discountType) ? (
-                  <div>
-                    <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-xl font-bold text-transparent">
-                      ${product.price || '0'}
+                <p className="text-xs font-medium text-foreground-600 md:text-sm">
+                  Shop :{' '}
+                  <Link
+                    href={`/shop/${product.shopSlug}`}
+                    className={'w-full overflow-hidden sm:w-fit'}
+                  >
+                    <span className="line-clamp-1 text-xs font-medium text-blue-500 md:text-sm">
+                      {product.shop || 'Shop Name'}
                     </span>
-                  </div>
-                ) : (
-                  <div>
-                    <span className="pt-1 text-lg font-bold text-foreground-400 line-through dark:text-white">
-                      ${product.price || '0'}
-                    </span>
-                    <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
-                      $
-                      {(product.price - product.discountPrice).toFixed(2) ||
-                        '0'}
-                    </span>
-                  </div>
-                )}
+                  </Link>
+                </p>
+                <p className="text-xs font-medium text-foreground-600 md:text-sm">
+                  Expired date :{' '}
+                  <span className="font-medium text-red-500">
+                    {product.expiredAt}
+                  </span>
+                </p>
+              </div>
+              <div className="flex  w-full items-center justify-between font-semibold">
                 <div
                   className={
-                    'flex items-start justify-start gap-1 sm:items-center sm:justify-center '
+                    'flex w-full flex-col items-start justify-start sm:flex-row md:items-center md:justify-between '
                   }
                 >
-                  <Tooltip
-                    content={
-                      <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                        {isInCart ? 'Remove from cart' : 'Add to cart'}
-                      </p>
+                  {['no-discount'].includes(discountType) ? (
+                    <div>
+                      <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-xl font-bold text-transparent">
+                        ${product.price || '0'}
+                      </span>
+                    </div>
+                  ) : (
+                    <div>
+                      <span className="pt-1 text-lg font-bold text-foreground-400 line-through dark:text-white">
+                        ${product.price || '0'}
+                      </span>
+                      <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
+                        $
+                        {(product.price - product.discountPrice).toFixed(2) ||
+                          '0'}
+                      </span>
+                    </div>
+                  )}
+                  <div
+                    className={
+                      'flex items-start justify-start gap-1 sm:items-center sm:justify-center '
                     }
-                    showArrow
                   >
-                    <Button
-                      isIconOnly
-                      variant={'light'}
-                      color={'default'}
-                      radius={'full'}
-                      onPress={handleCartToggle}
+                    <Tooltip
+                      content={
+                        <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                          {isInCart ? 'Remove from cart' : 'Add to cart'}
+                        </p>
+                      }
+                      showArrow
                     >
-                      {['clearance-sales'].includes(product.discountType) ? (
-                        isInCart ? (
-                          <FilledCartIcon className="fill-current" size={32} />
+                      <Button
+                        isIconOnly
+                        variant={'light'}
+                        color={'default'}
+                        radius={'full'}
+                        onPress={handleCartToggle}
+                      >
+                        {['clearance-sales'].includes(product.discountType) ? (
+                          isInCart ? (
+                            <FilledCartIcon
+                              className="fill-current"
+                              size={32}
+                            />
+                          ) : (
+                            <CartIcon className="fill-current" size={32} />
+                          )
+                        ) : isInCart ? (
+                          <FilledCartIcon className="fill-current" size={24} />
                         ) : (
-                          <CartIcon className="fill-current" size={32} />
-                        )
-                      ) : isInCart ? (
-                        <FilledCartIcon className="fill-current" size={24} />
-                      ) : (
-                        <CartIcon className="fill-current" size={24} />
-                      )}
-                    </Button>
-                  </Tooltip>
+                          <CartIcon className="fill-current" size={24} />
+                        )}
+                      </Button>
+                    </Tooltip>
 
-                  <WishlistButton product={product} />
+                    <WishlistButton product={product} />
+                  </div>
                 </div>
               </div>
             </div>

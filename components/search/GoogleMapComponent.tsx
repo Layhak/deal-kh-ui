@@ -17,10 +17,9 @@ import {
 } from '@nextui-org/react';
 import { useRouter } from 'next/navigation';
 import { useGetShopNearbyQuery } from '@/redux/service/shop';
-import Loading from '@/app/(user)/loading';
-import { googleMapsConfig } from '@/googleMapConfig';
 import NextLink from 'next/link';
-import Pagination from '../pagination/Pagination';
+import Pagination from '@/components/pagination/Pagination';
+import { googleMapsConfig } from '@/config/googleMapConfig';
 
 type GoogleMapProps = {};
 
@@ -44,6 +43,9 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
   const [hoveredShop, setHoveredShop] = useState<any | null>(null);
   const [page, setPage] = useState(1); // Current page state
   const [size] = useState(3); // Number of items per page
+  const [mapTypeId, setMapTypeId] = useState<'roadmap' | 'satellite'>(
+    'roadmap'
+  );
 
   const onLoad = useCallback(
     (map: google.maps.Map) => {
@@ -91,7 +93,7 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
 
   const options: google.maps.MapOptions = isLoaded
     ? {
-        mapTypeId: 'roadmap',
+        mapTypeId: mapTypeId,
         zoomControl: true,
         mapTypeControl: true,
         mapTypeControlOptions: {
@@ -108,8 +110,8 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
 
   const shopLocationIcon = `
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-   viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-<linearGradient id="gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="512" y2="512">
+  viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<linearGradient id="gradient" gradientUnits="userSpaceOnUse" x1="0" y="0" x2="512" y2="512">
   <stop offset="0%" style="stop-color:#f472b6;stop-opacity:1" />
   <stop offset="100%" style="stop-color:#facc15;stop-opacity:1" />
 </linearGradient>
@@ -125,8 +127,8 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
 
   const currentLocationIcon = `
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-   viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
-<linearGradient id="gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="512" y2="512">
+  viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<linearGradient id="gradient" gradientUnits="userSpaceOnUse" x1="0" y="0" x2="512" y2="512">
   <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
   <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
 </linearGradient>
@@ -144,14 +146,18 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
     setPage(newPage);
   };
 
+  const handleMapTypeChange = () => {
+    setMapTypeId((prev) => (prev === 'roadmap' ? 'satellite' : 'roadmap'));
+  };
+
   const displayedShops = nearbyShops.slice((page - 1) * size, page * size);
 
   return isLoaded ? (
     <>
       {/* Container for map and card section */}
-      <div className="flex flex-col lg:flex-row h-screen lg:h-full">
+      <div className="flex h-screen flex-col lg:h-full lg:flex-row">
         {/* Google Map Section */}
-        <div className="w-full lg:w-1/3 lg:h-full h-[60vh] lg:relative lg:order-last">
+        <div className="h-[60vh] w-full lg:relative lg:order-last lg:h-full lg:w-1/3">
           <div className="h-full w-full">
             <GoogleMap
               mapContainerStyle={{ width: '100%', height: '100%' }}
@@ -160,6 +166,7 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
               onLoad={onLoad}
               onUnmount={onUnmount}
               options={options}
+              mapTypeId={mapTypeId}
             >
               <Marker
                 icon={{
@@ -169,8 +176,10 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
                 position={center}
               />
               {nearbyShops.map((shop, index) => {
-                const [shopLat, shopLng] = shop.location.split(',').map(parseFloat);
-  
+                const [shopLat, shopLng] = shop.location
+                  .split(',')
+                  .map(parseFloat);
+
                 return (
                   <Marker
                     key={index}
@@ -208,10 +217,14 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
                 );
               })}
             </GoogleMap>
+            <Button
+              className="absolute right-4 top-4 z-10 bg-transparent"
+              onClick={handleMapTypeChange}
+            ></Button>
           </div>
         </div>
         {/* Card Shop Section */}
-        <div className="w-full lg:w-2/3 lg:mr-5 lg:pt-4 lg:pb-4 lg:h-full overflow-auto lg:overflow-visible lg:order-first">
+        <div className="w-full overflow-auto lg:order-first lg:mr-5 lg:h-full lg:w-2/3 lg:overflow-visible lg:pb-4 lg:pt-4">
           <ScrollShadow hideScrollBar>
             <div className="w-full">
               {displayedShops.length > 0 ? (
@@ -225,7 +238,7 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
                   >
                     <CardBody className="flex flex-col sm:flex-row">
                       {/* Image section */}
-                      <div className="h-48 w-full mr-8 sm:w-1/3 rounded-2xl">
+                      <div className="mr-8 h-48 w-full rounded-2xl sm:w-1/3">
                         <Image
                           className="h-48 w-screen object-cover"
                           src={
@@ -235,11 +248,11 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
                           alt={shop.name}
                         />
                       </div>
-  
+
                       {/* Content section */}
-                      <div className="mt-4 w-full sm:w-2/3 text-foreground-600">
+                      <div className="mt-4 w-full text-foreground-600 sm:w-2/3">
                         <a href={`/shop/${shop.slug}`}>
-                          <h5 className="mb-2 text-[16px] sm:text-[18px] font-bold tracking-tight text-foreground-800 dark:text-white">
+                          <h5 className="mb-2 text-[16px] font-bold tracking-tight text-foreground-800 dark:text-white sm:text-[18px]">
                             {shop.name.length > 50
                               ? `${shop.name.substring(0, 20)}...`
                               : shop.name || 'Shop Name'}
@@ -250,34 +263,34 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
                             ? `${shop.description.substring(0, 75)}...`
                             : shop.description || 'Product Description'}
                         </p>
-  
+
                         <div className="my-2 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                          <p className="text-foreground-600 text-sm sm:text-base">
+                          <p className="text-sm text-foreground-600 sm:text-base">
                             Category :{' '}
                             <span className="font-medium text-foreground-900">
                               {shop.shopType || 'Product Category'}
                             </span>
                           </p>
-                          <p className="text-xs sm:text-sm text-foreground-600">
+                          <p className="text-xs text-foreground-600 sm:text-sm">
                             Open :{' '}
-                            <span className="text-xs sm:text-sm font-medium text-foreground-900">
+                            <span className="text-xs font-medium text-foreground-900 sm:text-sm">
                               {shop.openAt.slice(0, 5)}
                               {'  to  '}
                               {shop.closeAt.slice(0, 5)}
                             </span>
                           </p>
                         </div>
-  
+
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
-                          <div className="flex items-center justify-start mb-2 sm:mb-0">
-                            <span className="text-xs sm:text-sm text-blue-600 dark:text-white">
+                          <div className="mb-2 flex items-center justify-start sm:mb-0">
+                            <span className="text-xs text-blue-600 dark:text-white sm:text-sm">
                               Available Now.
                               <p>Get Notified.</p>
                             </span>
                           </div>
                           <Button
                             onClick={() => handleCardClick(shop)}
-                            className="rounded-full border-2 border-yellow-500 text-center text-[12px] sm:text-[14px] text-white bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500"
+                            className="rounded-full border-2 border-yellow-500 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 text-center text-[12px] text-white sm:text-[14px]"
                           >
                             Check Us Out
                           </Button>
@@ -308,6 +321,6 @@ const GoogleMapComponent: React.FC<GoogleMapProps> = () => {
       <Spinner size="lg" />
     </div>
   );
-    
-};  
+};
+
 export default GoogleMapComponent;

@@ -11,8 +11,8 @@ const ServiceCardComponent: React.FC<ServiceCardComponentProps> = ({
   data,
 }) => {
   return (
-    <div>
-      <div className="grid grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 ">
+    <div className={'my-auto flex h-full w-full max-w-7xl flex-col gap-2 p-4'}>
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-4 ">
         {data?.payload.list.map((product: ScrapedProduct) => (
           <Card key={product.name} className=" py-4 shadow-none ">
             <CardHeader className=" flex-col items-start px-4 pb-0  pt-2">
@@ -34,14 +34,14 @@ const ServiceCardComponent: React.FC<ServiceCardComponentProps> = ({
             <CardBody className="overflow-visible py-2">
               <Link href={product.url} target="_blank">
                 <Image
+                  width={500}
                   alt="Card Service"
                   isZoomed
-                  className="mt-2 h-[160px] w-[284px] rounded-xl object-cover"
+                  className="mt-2 h-[160px] rounded-xl object-cover"
                   src={
                     product?.image ||
                     'https://imgs.search.brave.com/8YEIyVNJNDivQtduj2cwz5qVVIXwC6bCWE_eCVL1Lvw/rs:fit:860:0:0/g:ce/aHR0cHM6Ly90NC5m/dGNkbi5uZXQvanBn/LzA1Lzk3LzQ3Lzk1/LzM2MF9GXzU5NzQ3/OTU1Nl83YmJRN3Q0/WjhrM3hiQWxvSEZI/VmRaSWl6V0sxUGRP/by5qcGc'
                   }
-                  width={270}
                 />
               </Link>
             </CardBody>

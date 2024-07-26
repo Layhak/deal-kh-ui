@@ -72,7 +72,7 @@ export default function HomePage() {
       {isLoadingDiscountTypes ? (
         <>
           <Skeleton className="my-10 h-[30px] w-full max-w-[200px] rounded-2xl" />
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
             {Array.from({ length: size || 8 }, (_, index) => (
               <SkeletonCard key={index} />
             ))}
@@ -124,7 +124,11 @@ export default function HomePage() {
                     switch (discountType.slug) {
                       case 'clearance-sales':
                         return (
-                          <>
+                          <section
+                            className={
+                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 p-4'
+                            }
+                          >
                             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                               <SectionHome
                                 size={3}
@@ -135,7 +139,7 @@ export default function HomePage() {
                             <div className="mx-auto mt-5 w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
                               <ClearanceSaleSlideComponentProps bannerType="home-clearance" />
                             </div>
-                          </>
+                          </section>
                         );
                       case 'buy-more-get-more':
                         return (
@@ -151,12 +155,18 @@ export default function HomePage() {
                                   />
                                 </Link>
                               </div>
-                              <div className="grid grid-cols-2 gap-8 lg:grid-cols-3">
-                                <SectionHome
-                                  discountType={discountType.name}
-                                  name={discountType.name}
-                                  size={6}
-                                />
+                              <div
+                                className={
+                                  'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4'
+                                }
+                              >
+                                <div className="grid grid-cols-1  gap-8 md:grid-cols-2 lg:grid-cols-3">
+                                  <SectionHome
+                                    discountType={discountType.name}
+                                    name={discountType.name}
+                                    size={6}
+                                  />
+                                </div>
                               </div>
                             </div>
                             <div className="mx-6 my-4 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
@@ -196,8 +206,12 @@ export default function HomePage() {
                         return (
                           <>
                             <CardCouponComponent displayCount={3} />
-                            <section>
-                              <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+                            <section
+                              className={
+                                'my-auto flex h-full w-full max-w-7xl flex-col gap-2 p-4'
+                              }
+                            >
+                              <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                                 <SectionHome
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -210,8 +224,12 @@ export default function HomePage() {
                         return (
                           <>
                             <EvenSlideComponent />
-                            <section>
-                              <div className="my-5 grid grid-cols-2 gap-8 lg:grid-cols-4">
+                            <section
+                              className={
+                                'my-auto flex h-full w-full max-w-7xl flex-col gap-2 p-4'
+                              }
+                            >
+                              <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                                 <SectionHome
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -222,8 +240,12 @@ export default function HomePage() {
                         );
                       default:
                         return (
-                          <section>
-                            <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+                          <section
+                            className={
+                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 p-4'
+                            }
+                          >
+                            <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                               <SectionHome
                                 discountType={discountType.name}
                                 name={discountType.name}

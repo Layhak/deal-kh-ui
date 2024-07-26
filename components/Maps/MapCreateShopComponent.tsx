@@ -1,21 +1,17 @@
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
+
+import React, { useEffect, useRef, useState } from 'react';
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import {
-  GoogleMap,
-  Marker,
-  useJsApiLoader,
-  StandaloneSearchBox,
-} from '@react-google-maps/api';
-import {
+  Button,
   Modal,
-  ModalContent,
   ModalBody,
+  ModalContent,
   ModalFooter,
   ModalHeader,
-  Button,
   useDisclosure,
 } from '@nextui-org/react';
-import { googleMapsConfig } from '@/googleMapConfig';
+import { googleMapsConfig } from '@/config/googleMapConfig';
 
 type Coordinates = {
   lat: number;
@@ -32,11 +28,6 @@ const defaultCenter: Coordinates = {
   lng: 104.90154057741165,
 };
 
-const getGoogleMapsApiKey = () =>
-  process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '';
-
-const apiKey = getGoogleMapsApiKey();
-
 interface MapComponentProps {
   onLocationSelect: (location: Coordinates, address: string) => void;
 }
@@ -47,6 +38,9 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
     null
   );
   const [selectedAddress, setSelectedAddress] = useState<string>('');
+  const [currentLocation, setCurrentLocation] = useState<Coordinates | null>(
+    null
+  );
   const mapRef = useRef<GoogleMap>(null);
 
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
@@ -63,11 +57,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
     }
   };
 
-  const { isLoaded } = useJsApiLoader({
-    id: 'google-map-script',
-    googleMapsApiKey: apiKey,
-    libraries: ['geometry', 'drawing'],
-  });
+  const { isLoaded } = useJsApiLoader(googleMapsConfig);
 
   const fetchAddressFromCoordinates = async ({
     lat,
@@ -75,51 +65,18 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
   }: Coordinates): Promise<string> => {
     try {
       const response = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${apiKey}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${googleMapsConfig.googleMapsApiKey}`
       );
       const data = await response.json();
 
       if (data.results && data.results.length > 0) {
-        const relevantAreas = [
-          'Chamkar Mon',
-          'Chbar Ampov',
-          'Chrouy Changvar',
-          'Dangkor',
-          'Doun Penh',
-          'Mean Chey',
-          'Prampi Makara',
-          'Preaek Pnov',
-          'Pur Senchey',
-          'Russey Keo',
-          'Sensok',
-          'Tuol Kouk',
-        ];
-
-        const filteredResults = data.results.filter(
-          (result: { formatted_address: string; types: string[] }) => {
-            const addressContainsRelevantArea = relevantAreas.some((area) =>
-              result.formatted_address.includes(area)
-            );
-            return (
-              result.formatted_address.includes('Phnom Penh') &&
-              addressContainsRelevantArea
-            );
-          }
-        );
-
-        const detailedResults = filteredResults.filter(
+        const addressResult = data.results.find(
           (result: { formatted_address: string }) =>
-            /\d/.test(result.formatted_address) ||
-            result.formatted_address.includes('Street')
+            result.formatted_address.includes('Cambodia')
         );
-
-        const addressResult =
-          detailedResults.length > 0 ? detailedResults[0] : filteredResults[0];
 
         if (addressResult) {
-          let address = addressResult.formatted_address;
-          address = address.replace(/^Khan\s/, '');
-          return address;
+          return addressResult.formatted_address;
         } else {
           return 'Default Address: Street, Sangkat, Khan, City, Country';
         }
@@ -131,6 +88,29 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
       return 'Error fetching address';
     }
   };
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          const location: Coordinates = {
+            lat: latitude,
+            lng: longitude,
+          };
+          setCurrentLocation(location);
+          setSelectedLocation(location);
+          fetchAddressFromCoordinates(location).then((address) => {
+            setSelectedAddress(address);
+            onLocationSelect(location, address);
+          });
+        },
+        (error) => {
+          console.error('Error getting current location:', error);
+        }
+      );
+    }
+  }, [onLocationSelect]);
 
   return (
     <div className="space-y-2">
@@ -164,7 +144,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
                     <GoogleMap
                       ref={mapRef}
                       mapContainerStyle={containerStyle}
-                      center={defaultCenter}
+                      center={currentLocation || defaultCenter}
                       zoom={15}
                       onClick={handleMapClick}
                     >

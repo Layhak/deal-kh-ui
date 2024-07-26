@@ -1,5 +1,4 @@
 'use client';
-
 import React from 'react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
@@ -87,6 +86,7 @@ const Register: React.FC = () => {
     { setSubmitting, setStatus }: any
   ) => {
     setSubmitting(true);
+    setStatus(null);
     try {
       const formattedValues = {
         ...values,
@@ -94,12 +94,13 @@ const Register: React.FC = () => {
       };
 
       const response = await registerUser(formattedValues).unwrap();
-      // console.log('Register successful!', response);
       router.push('/');
-      // Handle successful register (e.g., redirect)
-    } catch (error) {
-      console.error('Error:', error);
-      setStatus({ message: 'Something went wrong. Please try again later.' });
+    } catch (error: any) {
+      if (error.data && error.data.error && error.data.error.description) {
+        setStatus({ message: error.data.error.description });
+      } else {
+        setStatus({ message: 'Something went wrong. Please try again later.' });
+      }
     } finally {
       setSubmitting(false);
     }
@@ -107,15 +108,15 @@ const Register: React.FC = () => {
 
   const handleLoginGoogle = async () => {
     await signIn('google', {
-      redirect: false, // Prevent automatic redirection
-      callbackUrl: '/', // Redirect to home page after successful authentication
+      redirect: false,
+      callbackUrl: '/',
     });
   };
 
   const handleLoginFacebook = async () => {
     // await signIn('facebook', {
-    //   redirect: false, // Prevent automatic redirection
-    //   callbackUrl: '/', // Redirect to home page after successful authentication
+    //   redirect: false,
+    //   callbackUrl: '/',
     // });
   };
 
@@ -127,7 +128,7 @@ const Register: React.FC = () => {
     >
       <ParticlesComponent id="tsparticles" />
       <div
-        className="flex w-full max-w-xl flex-col gap-4 rounded-large bg-default-50 px-8 pb-10 pt-6  backdrop-blur-md backdrop-saturate-150 dark:bg-default-100"
+        className="relative flex w-full max-w-xl flex-col gap-4 rounded-large bg-foreground-100 px-8 pb-10 pt-6  "
         data-aos="flip-up"
       >
         <div className={'flex items-center justify-between'}>
@@ -173,8 +174,11 @@ const Register: React.FC = () => {
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({ errors, touched }) => (
+          {({ errors, touched, status }) => (
             <Form action="#" method="POST" className="space-y-2">
+              {status && status.message && (
+                <div className="text-sm text-red-500">{status.message}</div>
+              )}
               <div className="grid grid-cols-2 gap-2">
                 <div className="mt-3">
                   <CustomInput
@@ -220,7 +224,7 @@ const Register: React.FC = () => {
                     label="Confirm Password"
                     name="confirmedPassword"
                     placeholder="Confirm your password"
-                  />{' '}
+                  />
                 </div>
                 <div className={'mt-3'}>
                   <CustomSelect

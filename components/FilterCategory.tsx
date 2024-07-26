@@ -51,13 +51,22 @@ export default function FilterCategory() {
         orientation={'horizontal'}
         className="h-[30px] w-full space-x-5"
       >
-        <NavbarContent className="flex items-center gap-1">
+        <NavbarContent className="flex items-center gap-2">
           {data?.payload.map((category: Category) => (
             <NextLink key={category.slug} href={`/category/${category.slug}`}>
               <Chip
+                color={'default'}
+                variant="bordered"
                 classNames={{
-                  base: 'bg-gradient-to-r from-pink-500 to-yellow-500 cursor-pointer',
-                  content: 'drop-shadow text-white',
+                  // base: 'bg-gradient-to-r from-pink-500 to-yellow-500 cursor-pointer',
+                  base:
+                    pathname === `/category/${category.slug}`
+                      ? 'bg-gradient-to-r from-pink-500 to-yellow-500 cursor-pointer'
+                      : ' cursor-pointer  ring-foreground-200 hover:bg-gradient-to-r hover:from-pink-500 hover:to-yellow-500 transition-all duration-700 ',
+                  content:
+                    pathname === `/category/${category.slug}`
+                      ? 'drop-shadow text-gray-50'
+                      : 'drop-shadow text-foreground',
                 }}
               >
                 {category.name}

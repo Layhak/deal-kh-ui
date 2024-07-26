@@ -26,7 +26,7 @@ const ParticlesComponent = ({ id }: ParticlesComponentProps) => {
     () => ({
       background: {
         color: {
-          value: theme === 'dark' ? '#3f3f46' : '#e4e4e7',
+          value: theme === 'dark' ? '#1b191b' : '#e4e4e7',
         },
       },
       fpsLimit: 100,

@@ -1,3 +1,4 @@
+// CreateShopModal.tsx
 import React, { useRef, useState } from 'react';
 import {
   Button,
@@ -10,22 +11,24 @@ import {
 } from '@nextui-org/react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import { useCreateShopMutation } from '@/redux/service/shop';
+import {
+  useCreateShopMutation,
+  useUploadShopImageMutation,
+} from '@/redux/service/shop';
 import { useGetAllShopTypesQuery } from '@/redux/service/shopType';
 import CustomInput from '../customInput/customInput';
 import CustomSelect from '../customInput/CustomSelect';
-import CustomTextArea from '../customInput/CustomTextArea';
 import MapCreateShopComponent from '@/components/Maps/MapCreateShopComponent';
-import { ShopCreateRequest, Coordinates } from '@/types/shop';
+import { Coordinates, ShopCreateRequest } from '@/types/shop';
 import { IoImagesOutline } from 'react-icons/io5';
 import { Cancel } from '../icons';
-import { useUploadShopImageMutation } from '@/redux/service/shop';
 
 interface CreateShopModalProps {
   isOpen: boolean;
   onClose: () => void;
   refetch: () => void;
 }
+
 const timeOptions = [
   { value: '00:00', label: '00:00' },
   { value: '01:00', label: '01:00' },

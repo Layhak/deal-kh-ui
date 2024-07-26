@@ -57,8 +57,8 @@ export default function MyShop() {
       console.error('Login error:', error);
       if (error.data?.message) {
         setErrors({
-          email: 'invalid email or password',
-          password: 'invalid email or password',
+          email: 'Incorrect email or password',
+          password: 'Incorrect email or password',
         });
       } else {
         toast.error('An error occurred. Please try again later.', {
@@ -70,10 +70,10 @@ export default function MyShop() {
   };
 
   return (
-    <div className="relative z-50 flex h-screen w-screen items-center justify-center p-2 sm:p-4 lg:p-8">
+    <div className=" flex h-screen w-screen items-center justify-center p-2 sm:p-4 lg:p-8">
       <ParticlesComponent id="tsparticles" />
       <div
-        className="relative flex w-full max-w-md flex-col gap-4 rounded-large bg-background px-8 pb-10 pt-6 backdrop-blur-md backdrop-saturate-150 dark:bg-default-100/50"
+        className="flex w-full max-w-md flex-col gap-4 rounded-large bg-foreground-100 px-8 pb-10 pt-6  backdrop-saturate-150"
         data-aos="flip-up"
         style={{ zIndex: 1 }}
       >

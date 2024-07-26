@@ -115,9 +115,9 @@ export default function ProductCard({
               })()}
             </span>
           )}
-          <div className={'flex h-full flex-col justify-between'}>
+          <div className={'flex h-full flex-col flex-wrap justify-between'}>
             <div className="mt-4 h-[16] w-full">
-              <div className={'flex'}>
+              <div className={'flex flex-wrap'}>
                 {!['buy-more-get-more'].includes(discountType) && (
                   <RatingStar
                     ratingAvg={product.ratingAvg}
@@ -150,7 +150,7 @@ export default function ProductCard({
                   Shop :{' '}
                   <Link
                     href={`/shop/${product.shopSlug}`}
-                    className={'w-full overflow-hidden sm:w-fit'}
+                    className={' overflow-hidden '}
                   >
                     <span className="line-clamp-1 text-xs font-medium text-blue-500 md:text-sm">
                       {product.shop || 'Shop Name'}
@@ -164,69 +164,66 @@ export default function ProductCard({
                   </span>
                 </p>
               </div>
-              <div className="flex  w-full items-center justify-between font-semibold">
-                <div
-                  className={
-                    'flex w-full flex-col items-start justify-start sm:flex-row md:items-center md:justify-between '
-                  }
-                >
+              <div
+                className={
+                  'flex w-full flex-col items-start justify-start sm:flex-row md:items-center md:justify-between '
+                }
+              >
+                <div className={'flex items-center justify-center gap-2'}>
                   {['no-discount'].includes(discountType) ? (
-                    <div>
-                      <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-xl font-bold text-transparent">
+                    <>
+                      <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
                         ${product.price || '0'}
                       </span>
-                    </div>
+                    </>
                   ) : (
-                    <div>
-                      <span className="pt-1 text-lg font-bold text-foreground-400 line-through dark:text-white">
+                    <>
+                      <span className="pt-1 text-lg  font-bold text-foreground-400 line-through ">
                         ${product.price || '0'}
                       </span>
-                      <span className="ml-4 bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-2xl font-bold text-transparent">
+                      <span className=" bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-xl font-bold text-transparent ">
                         $
                         {(product.price - product.discountPrice).toFixed(2) ||
                           '0'}
                       </span>
-                    </div>
+                    </>
                   )}
-                  <div
-                    className={
-                      'flex items-start justify-start gap-1 sm:items-center sm:justify-center '
+                </div>
+                <div
+                  className={
+                    'flex items-start justify-start gap-1 sm:items-center sm:justify-center '
+                  }
+                >
+                  <Tooltip
+                    content={
+                      <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                        {isInCart ? 'Remove from cart' : 'Add to cart'}
+                      </p>
                     }
+                    showArrow
                   >
-                    <Tooltip
-                      content={
-                        <p className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                          {isInCart ? 'Remove from cart' : 'Add to cart'}
-                        </p>
-                      }
-                      showArrow
+                    <Button
+                      isIconOnly
+                      variant={'light'}
+                      color={'default'}
+                      radius={'full'}
+                      onPress={handleCartToggle}
                     >
-                      <Button
-                        isIconOnly
-                        variant={'light'}
-                        color={'default'}
-                        radius={'full'}
-                        onPress={handleCartToggle}
-                      >
-                        {['clearance-sales'].includes(product.discountType) ? (
-                          isInCart ? (
-                            <FilledCartIcon
-                              className="fill-current"
-                              size={32}
-                            />
-                          ) : (
-                            <CartIcon className="fill-current" size={32} />
-                          )
-                        ) : isInCart ? (
-                          <FilledCartIcon className="fill-current" size={24} />
+                      {['clearance-sales'].includes(product.discountType) ? (
+                        isInCart ? (
+                          <FilledCartIcon className="fill-current" size={32} />
                         ) : (
-                          <CartIcon className="fill-current" size={24} />
-                        )}
-                      </Button>
-                    </Tooltip>
+                          <CartIcon className="fill-current" size={32} />
+                        )
+                      ) : isInCart ? (
+                        <FilledCartIcon className="fill-current" size={24} />
+                      ) : (
+                        <CartIcon className="fill-current" size={24} />
+                      )}
+                    </Button>
+                  </Tooltip>
 
-                    <WishlistButton product={product} />
-                  </div>
+                  <WishlistButton product={product} />
                 </div>
               </div>
             </div>

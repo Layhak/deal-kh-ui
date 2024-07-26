@@ -4,14 +4,11 @@ import { serialize } from 'cookie';
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { email, password } = body;
-  // console.log('body', body);
-  // console.log('Env', process.env.DEALKH_API_URL);
   const response = await fetch(`${process.env.DEALKH_API_URL}auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email, password }),
   });
-  // console.log('Response Login:', response);
   if (!response.ok) {
     return NextResponse.json(
       {
@@ -24,8 +21,6 @@ export async function POST(req: NextRequest) {
   }
 
   const data = await response.json();
-  // console.log('Data Login:', data);
-  // const user = data?.user || null;
   const accessToken = data?.payload?.accessToken || null;
   const refreshToken = data?.payload?.refreshToken || null;
 

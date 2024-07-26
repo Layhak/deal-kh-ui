@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  // console.log(body);
   const {
     email,
     password,
@@ -22,7 +21,7 @@ export async function POST(req: NextRequest) {
     body: JSON.stringify({
       email,
       password,
-      confirmedPassword,  
+      confirmedPassword,
       firstName,
       lastName,
       username,
@@ -33,23 +32,9 @@ export async function POST(req: NextRequest) {
     }),
   });
 
-  if (!response.ok) {
-    return NextResponse.json(
-      {
-        message: 'Fail to register',
-      },
-      {
-        status: response.status,
-      }
-    );
-  }
+  const responseBody = await response.json();
 
-  return NextResponse.json(
-    {
-      message: 'Register success',
-    },
-    {
-      status: 200,
-    }
-  );
+  return NextResponse.json(responseBody, {
+    status: response.status,
+  });
 }

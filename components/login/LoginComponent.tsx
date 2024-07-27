@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
+import { useRouter, useSearchParams } from 'next/navigation';
 import NextLink from 'next/link';
 import { Button, Checkbox, Spacer, useDisclosure } from '@nextui-org/react';
-import { useRouter } from 'next/navigation';
 import { toast, ToastContainer } from 'react-toastify';
 import { useTheme } from 'next-themes';
 import 'react-toastify/dist/ReactToastify.css';
@@ -43,8 +43,18 @@ export default function MyShop() {
   const [email, setEmail] = useState<string>(''); // State to store email
   const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
   const router = useRouter();
+  const searchParams = useSearchParams(); // Access search parameters
   const { theme } = useTheme();
   const dispatch = useAppDispatch();
+
+  // Retrieve email from query parameters
+  useEffect(() => {
+    const emailParam = searchParams.get('email');
+    if (emailParam) {
+      setEmail(emailParam);
+    }
+  }, [searchParams]);
+
   const handleSubmit = async (
     values: FormValues,
     { setErrors }: FormikHelpers<FormValues>
@@ -117,9 +127,10 @@ export default function MyShop() {
 
         <div>
           <Formik
-            initialValues={initialValues}
+            initialValues={{ ...initialValues, email }}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}
+            enableReinitialize // Ensure Formik reinitializes when email state changes
           >
             {({ values }) => (
               <Form action="#" method="POST" className="space-y-5">
@@ -128,6 +139,7 @@ export default function MyShop() {
                   name={'email'}
                   type={'email'}
                   placeholder={'Enter your email address'}
+                  value={values.email} // Ensure Formik value is passed
                   onChange={(e) => {
                     setEmail(e.target.value); // Update email state
                   }}
@@ -166,6 +178,8 @@ export default function MyShop() {
                     className="w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-lg text-gray-50"
                     type="submit"
                     variant={'solid'}
+                    disabled={isLoading}
+                    isLoading={isLoading}
                   >
                     Sign in
                   </Button>

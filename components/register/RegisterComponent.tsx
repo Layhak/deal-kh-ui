@@ -16,6 +16,7 @@ import CustomCheckbox from '@/components/customInput/CustomCheckbox';
 import CustomInput from '@/components/customInput/customInput';
 import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
 import ParticlesComponent from '@/components/ParticlesComponent';
+import LocationInput from '../customInput/customInputWithLocation';
 
 type RegisterFormValues = {
   firstName: string;
@@ -27,7 +28,7 @@ type RegisterFormValues = {
   gender: string;
   phoneNumber: string;
   dob: string;
-  address: string;
+  location: string;
   acceptPolicy: boolean;
 };
 
@@ -38,10 +39,10 @@ const initialValues: RegisterFormValues = {
   email: '',
   password: '',
   confirmedPassword: '',
-  gender: '',
+  gender: 'male', // Set default value to male
   phoneNumber: '',
   dob: '',
-  address: '',
+  location: '',
   acceptPolicy: false,
 };
 
@@ -54,12 +55,17 @@ const validationSchema = Yup.object().shape({
     .required('Email is required'),
   password: Yup.string()
     .required('Password is required')
-    .min(6, 'Password must be at least 6 characters'),
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      'Password must be at least 8 characters long and contain one uppercase letter, one lowercase letter, one number, and one special character'
+    ),
   confirmedPassword: Yup.string()
     .oneOf([Yup.ref('password')], 'Passwords must match')
     .required('Confirm password is required'),
   gender: Yup.string().required('Gender is required'),
-  phoneNumber: Yup.string().required('Phone number is required'),
+  phoneNumber: Yup.string()
+    .matches(/^\d+$/, 'Phone number must contain only digits')
+    .required('Phone number is required'),
   dob: Yup.date()
     .required('Date of birth is required')
     .min(
@@ -77,8 +83,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const Register: React.FC = () => {
-  const [registerUser, { isLoading, isError, error }] =
-    useRegisterUserMutation();
+  const [registerUser, { isLoading }] = useRegisterUserMutation();
   const router = useRouter();
 
   const onSubmit = async (
@@ -93,11 +98,18 @@ const Register: React.FC = () => {
         dob: format(new Date(values.dob), 'yyyy-MM-dd'),
       };
 
-      const response = await registerUser(formattedValues).unwrap();
+      await registerUser(formattedValues).unwrap();
       router.push('/');
     } catch (error: any) {
       if (error.data && error.data.error && error.data.error.description) {
-        setStatus({ message: error.data.error.description });
+        if (
+          error.data.error.description ===
+          'Email already taken! Try another one.'
+        ) {
+          router.push(`/login?email=${values.email}`);
+        } else {
+          setStatus({ message: error.data.error.description });
+        }
       } else {
         setStatus({ message: 'Something went wrong. Please try again later.' });
       }
@@ -111,13 +123,6 @@ const Register: React.FC = () => {
       redirect: false,
       callbackUrl: '/',
     });
-  };
-
-  const handleLoginFacebook = async () => {
-    // await signIn('facebook', {
-    //   redirect: false,
-    //   callbackUrl: '/',
-    // });
   };
 
   return (
@@ -174,7 +179,7 @@ const Register: React.FC = () => {
           validationSchema={validationSchema}
           onSubmit={onSubmit}
         >
-          {({ errors, touched, status }) => (
+          {({ status }) => (
             <Form action="#" method="POST" className="space-y-2">
               {status && status.message && (
                 <div className="text-sm text-red-500">{status.message}</div>
@@ -249,10 +254,9 @@ const Register: React.FC = () => {
                   <CustomDatePicker name="dob" />
                 </div>
                 <div className={'mt-3'}>
-                  <CustomInput
+                  <LocationInput
                     label="Location"
                     name="location"
-                    type="text"
                     placeholder="Enter your address"
                   />
                 </div>

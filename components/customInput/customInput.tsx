@@ -34,13 +34,14 @@ const CustomInput: React.FC<CustomInputProps> = ({
   return (
     <Input
       {...field}
+      value={value || field.value} // Ensure the value prop is used
       type={type}
       label={label}
       labelPlacement={'outside'}
       size={'md'}
       variant={'bordered'}
       isInvalid={meta.touched && !!meta.error}
-      errorMessage={meta.touched && meta.error ? meta.error : ''}
+      errorMessage={meta.touched && meta.error ? String(meta.error) : ''} // Ensure errorMessage is a string
       color={meta.touched && meta.error ? 'danger' : 'default'}
       placeholder={placeholder}
       classNames={{
@@ -50,7 +51,6 @@ const CustomInput: React.FC<CustomInputProps> = ({
       isClearable={true}
       onClear={handleClear}
       onChange={handleChange} // Use the custom handleChange
-      value={value} // Pass the value prop to Input
     />
   );
 };

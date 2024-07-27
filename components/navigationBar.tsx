@@ -349,14 +349,26 @@ export const NavigationBar = () => {
           {!isLoggedIn && (
             <>
               <NavbarMenuItem>
-                <NextLink href="/login" className={'text-sm'}>
-                  Log In
-                </NextLink>
+                <Link href={'/login'} className={' group w-full'}>
+                  <p
+                    className={
+                      'text-foreground group-hover:bg-gradient-to-r group-hover:from-pink-500 group-hover:to-yellow-500 group-hover:bg-clip-text group-hover:text-transparent'
+                    }
+                  >
+                    Log In
+                  </p>
+                </Link>
               </NavbarMenuItem>
               <NavbarMenuItem>
-                <NextLink href="/register" className={'text-sm'}>
-                  Register
-                </NextLink>
+                <Link href={'/register'} className={' group w-full'}>
+                  <p
+                    className={
+                      'text-foreground group-hover:bg-gradient-to-r group-hover:from-pink-500 group-hover:to-yellow-500 group-hover:bg-clip-text group-hover:text-transparent'
+                    }
+                  >
+                    Register
+                  </p>
+                </Link>
               </NavbarMenuItem>
             </>
           )}

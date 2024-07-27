@@ -15,7 +15,9 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
   const [field, meta] = useField(name);
 
   const handleChange = (value: any) => {
-    setFieldValue(name, value.toString());
+    setFieldValue(name, value ? value.toString() : '').then((r) =>
+      console.log('Date value:', r)
+    );
   };
 
   return (
@@ -23,13 +25,14 @@ const CustomDatePicker: React.FC<CustomDatePickerProps> = ({
       {...props}
       name={name}
       label="Date of Birth"
-      variant={'bordered'}
+      variant="bordered"
       isInvalid={meta.touched && !!meta.error}
       errorMessage={meta.touched && meta.error ? meta.error : ''}
       color={meta.touched && meta.error ? 'danger' : 'default'}
-      value={field.value ? parseDate(field.value) : undefined}
+      value={field.value ? parseDate(field.value) : undefined} // Parse the date value
       onChange={handleChange}
-      className="w-full"
+      showMonthAndYearPickers
+      className="w-full max-w-[284px]"
       labelPlacement={'outside'}
     />
   );

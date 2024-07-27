@@ -1,9 +1,8 @@
 'use client';
-
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import NextLink from 'next/link';
 import { Button, Checkbox, Spacer, useDisclosure } from '@nextui-org/react';
 import { toast, ToastContainer } from 'react-toastify';
@@ -38,22 +37,15 @@ const validationSchema = Yup.object().shape({
     .max(255, 'Password must be less than 255 characters'),
 });
 
-export default function MyShop() {
+const LoginComponent: React.FC<{ email: string }> = ({
+  email: initialEmail,
+}) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [email, setEmail] = useState<string>(''); // State to store email
+  const [email, setEmail] = useState<string>(initialEmail); // State to store email
   const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
   const router = useRouter();
-  const searchParams = useSearchParams(); // Access search parameters
   const { theme } = useTheme();
   const dispatch = useAppDispatch();
-
-  // Retrieve email from query parameters
-  useEffect(() => {
-    const emailParam = searchParams.get('email');
-    if (emailParam) {
-      setEmail(emailParam);
-    }
-  }, [searchParams]);
 
   const handleSubmit = async (
     values: FormValues,
@@ -197,4 +189,6 @@ export default function MyShop() {
       />
     </div>
   );
-}
+};
+
+export default LoginComponent;

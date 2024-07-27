@@ -1,8 +1,5 @@
-import LoginComponent from '@/components/login/LoginComponent'
-import React from 'react'
+import LoginPageWrapper from '@/components/login/LoginPageWrapper';
 
 export default function LoginPage() {
-  return (
-    <LoginComponent />
-  )
+  return <LoginPageWrapper />;
 }

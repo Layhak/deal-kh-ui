@@ -16,45 +16,16 @@ import { inter, kantumruyPro } from '@/utils/fonts';
 import FilterComponent from '@/components/FilterCategory';
 
 export const metadata: Metadata = {
-  title: 'DealKH',
+  title: 'Istad DealKH | Platform for Cambodian Deals',
   manifest: '/manifest.json',
   description:
     'Find the best deals, coupons, and promotions from shops in Cambodia. Save big on your shopping with exclusive offers and discounts at DealKH.',
-  keywords: [
-    // Your keywords here
-    'Dealkh',
-    'Deal kh',
-    'Deal-kh',
-    'dealkh istad',
-    'dealkh khmer',
-    'dealkh cambodia',
-    'dealkh cambodian',
-    'dealkh deals',
-    'dealkh coupons',
-    'dealkh promotions',
-    'dealkh shopping',
-    'dealkh shopping deals',
-    'dealkh shopping coupons',
-    'dealkh shopping promotions',
-    'dealkh shopping deals coupons',
-    'dealkh shopping deals promotions',
-    'dealkh deals coupons',
-    'dealkh deals promotions',
-    'dealkh coupons promotions',
-    'dealkh cambodia deals',
-    'dealkh cambodia coupons',
-    'dealkh cambodia promotions',
-    'shop deals',
-    'shopping discounts',
-    'exclusive offers',
-    'DealKH',
-    'dealkh-istad',
-  ],
+  keywords: ['Dealkh', 'Deal kh', 'Deal-kh', 'dealkh istad', 'dealkh-istad'],
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://www.dealkh.istad.co/',
-    title: 'Best Deals, Coupons & Promotions in Cambodia - DealKH',
+    title: 'Istad DealKH | Platform for Cambodian Deals',
     description:
       'Discover the latest deals, coupons, and promotions from shops in Cambodia at DealKH. Save on your shopping with our curated list of discounts and offers.',
     images: [
@@ -70,8 +41,8 @@ export const metadata: Metadata = {
     siteName: 'dealkh.istad.co',
   },
   twitter: {
-    site: 'DealKH',
-    title: 'Best Deals, Coupons & Promotions in Cambodia - DealKH',
+    site: 'Ecommerce',
+    title: 'Istad DealKH | Platform for Cambodian Deals',
     description:
       'Find the best deals, coupons, and promotions from shops in Cambodia. Save big on your shopping with exclusive offers and discounts at DealKH.',
     images: [

@@ -321,6 +321,8 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
                   <Button
                     type="submit"
                     className="text-md ml-4 w-full max-w-[10rem] rounded-full bg-gradient-to-r from-pink-500 to-warning-500/80 px-4 py-2 font-semibold text-white"
+                    disabled={isUploading}
+                    isLoading={isUploading}
                   >
                     {isUploading ? 'Creating...' : 'Create'}
                   </Button>

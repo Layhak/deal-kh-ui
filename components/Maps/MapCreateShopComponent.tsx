@@ -41,6 +41,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
   const [currentLocation, setCurrentLocation] = useState<Coordinates | null>(
     null
   );
+  const [userChangedLocation, setUserChangedLocation] = useState(false);
   const mapRef = useRef<GoogleMap>(null);
 
   const handleMapClick = (event: google.maps.MapMouseEvent) => {
@@ -50,6 +51,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
         lng: event.latLng.lng(),
       };
       setSelectedLocation(location);
+      setUserChangedLocation(true);
       fetchAddressFromCoordinates(location).then((address) => {
         setSelectedAddress(address);
         onLocationSelect(location, address);
@@ -90,7 +92,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
   };
 
   useEffect(() => {
-    if (navigator.geolocation) {
+    if (navigator.geolocation && !userChangedLocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -110,7 +112,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
         }
       );
     }
-  }, [onLocationSelect]);
+  }, [onLocationSelect, userChangedLocation]);
 
   return (
     <div className="space-y-2">
@@ -144,7 +146,9 @@ const MapComponent: React.FC<MapComponentProps> = ({ onLocationSelect }) => {
                     <GoogleMap
                       ref={mapRef}
                       mapContainerStyle={containerStyle}
-                      center={currentLocation || defaultCenter}
+                      center={
+                        selectedLocation || currentLocation || defaultCenter
+                      }
                       zoom={15}
                       onClick={handleMapClick}
                     >

@@ -271,6 +271,8 @@ const Register: React.FC = () => {
                   }
                   type="submit"
                   variant={'solid'}
+                  isLoading={isLoading}
+                  disabled={isLoading}
                 >
                   Sign up
                 </Button>

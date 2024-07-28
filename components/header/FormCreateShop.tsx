@@ -1,3 +1,4 @@
+'use client';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Button,
@@ -114,11 +115,10 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
     const loggedIn = localStorage.getItem('loggedIn');
     if (!loggedIn) {
       setIsLoggedIn(false);
-      router.push('/login');
     } else {
       setIsLoggedIn(true);
     }
-  }, [router]);
+  }, []);
 
   const handleLocationSelect = (
     location: Coordinates,
@@ -278,7 +278,7 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
                         Location
                       </label>
                       <MapCreateShopComponent
-                        onLocationSelect={(location, address) =>
+                        onLocationSelect={(location: any, address: string) =>
                           handleLocationSelect(location, address, setFieldValue)
                         }
                       />

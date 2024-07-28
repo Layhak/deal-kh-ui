@@ -1,5 +1,4 @@
-// CreateShopModal.tsx
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Button,
   Image,
@@ -22,12 +21,13 @@ import MapCreateShopComponent from '@/components/Maps/MapCreateShopComponent';
 import { Coordinates, ShopCreateRequest } from '@/types/shop';
 import { IoImagesOutline } from 'react-icons/io5';
 import { Cancel } from '../icons';
+import { useRouter } from 'next/navigation';
 
-interface CreateShopModalProps {
+type CreateShopModalProps = {
   isOpen: boolean;
   onClose: () => void;
   refetch: () => void;
-}
+};
 
 const timeOptions = [
   { value: '00:00', label: '00:00' },
@@ -107,6 +107,18 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
     isLoading: isLoadingShopTypes,
     error,
   } = useGetAllShopTypesQuery();
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('loggedIn');
+    if (!loggedIn) {
+      setIsLoggedIn(false);
+      router.push('/login');
+    } else {
+      setIsLoggedIn(true);
+    }
+  }, [router]);
 
   const handleLocationSelect = (
     location: Coordinates,
@@ -192,145 +204,170 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
     <Modal backdrop="blur" isOpen={isOpen} onClose={onClose}>
       <ModalContent className="h-auto w-[90vw] max-w-[600px]">
         <ModalHeader className="dark:text-gray-100">DealKh</ModalHeader>
-        <ModalBody className="text-2xl font-semibold dark:text-gray-100">
-          Create New Shop
-        </ModalBody>
-        <ModalBody>
-          <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
-          >
-            {({ setFieldValue }) => (
-              <Form className="space-y-4">
-                <CustomInput label="Shop Name" type="text" name="name" />
-                <div className="grid grid-cols-2 gap-4">
-                  <CustomInput
-                    label="Phone Number"
-                    type="text"
-                    name="phoneNumber"
-                  />
-                  <CustomInput label="Email" type="email" name="email" />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <CustomSelect
-                    label="Opening Time"
-                    name="openAt"
-                    options={timeOptions}
-                    placeholder="Select Opening Time"
-                  />
-                  <CustomSelect
-                    label="Closing Time"
-                    name="closeAt"
-                    options={timeOptions}
-                    placeholder="Select Closing Time"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <CustomInput
-                    label="Slug"
-                    placeholder="deal-kh-shop"
-                    type="text"
-                    name="slug"
-                  />
-                  <CustomSelect
-                    label="Shop Type"
-                    name="shopType"
-                    options={
-                      shopTypes
-                        ? shopTypes.map((type: any) => ({
-                            value: type.slug,
-                            label: type.name,
-                          }))
-                        : []
-                    }
-                    placeholder="Select Shop Type"
-                  />
-                </div>
+        {isLoggedIn === true && (
+          <>
+            <ModalBody className="text-2xl font-semibold dark:text-gray-100">
+              Create New Shop
+            </ModalBody>
+            <ModalBody>
+              <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={handleSubmit}
+              >
+                {({ setFieldValue }) => (
+                  <Form className="space-y-4">
+                    <CustomInput
+                      label="Shop Name"
+                      placeholder={'Shop Name'}
+                      type="text"
+                      name="name"
+                    />
+                    <div className="grid grid-cols-2 gap-4">
+                      <CustomInput
+                        label="Phone Number"
+                        type="text"
+                        placeholder={'092-984-123'}
+                        name="phoneNumber"
+                      />
+                      <CustomInput
+                        label="Email"
+                        type="email"
+                        name="email"
+                        placeholder={'Enter your email'}
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <CustomSelect
+                        label="Opening Time"
+                        name="openAt"
+                        options={timeOptions}
+                        placeholder="Select Opening Time"
+                      />
+                      <CustomSelect
+                        label="Closing Time"
+                        name="closeAt"
+                        options={timeOptions}
+                        placeholder="Select Closing Time"
+                      />
+                    </div>
+                    <div className="grid grid-cols-2 gap-4">
+                      <CustomInput
+                        label="Slug"
+                        placeholder="deal-kh-shop"
+                        type="text"
+                        name="slug"
+                      />
+                      <CustomSelect
+                        label="Shop Type"
+                        name="shopType"
+                        options={
+                          shopTypes
+                            ? shopTypes.map((type: any) => ({
+                                value: type.slug,
+                                label: type.name,
+                              }))
+                            : []
+                        }
+                        placeholder="Select Shop Type"
+                      />
+                    </div>
 
-                <div>
-                  <label className="block pb-2 font-medium text-slate-900">
-                    Location
-                  </label>
-                  <MapCreateShopComponent
-                    onLocationSelect={(location, address) =>
-                      handleLocationSelect(location, address, setFieldValue)
-                    }
-                  />
-                </div>
-                <div className="mb-4 flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-stone-300 bg-foreground-50 p-4 dark:border-2 dark:border-foreground/40 dark:text-white">
-                  <input
-                    id="file-upload"
-                    type="file"
-                    onChange={(e) => handleFileChange(e, setFieldValue)}
-                    className="hidden"
-                    ref={fileInputRef}
-                  />
-                  <label
-                    htmlFor="file-upload"
-                    className="flex h-full w-full cursor-pointer flex-col items-center justify-center"
-                  >
-                    {preview ? (
-                      <div className="relative">
-                        <Image
-                          src={preview}
-                          alt="Preview"
-                          className="h-[100px] w-[100px] rounded-lg object-cover"
-                        />
-                        <Button
-                          isIconOnly
-                          color={'danger'}
-                          variant={'solid'}
-                          radius={'full'}
-                          size={'sm'}
-                          className="transform-translate-y-1/2 absolute right-0 top-0 z-10 translate-x-1/2 p-1"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            removeImage();
-                          }}
-                        >
-                          <Cancel size={28} />
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className="flex flex-col items-center justify-center">
-                        <label htmlFor="file-upload" className="cursor-pointer">
-                          <div className="rounded-full bg-slate-200 p-3">
-                            <IoImagesOutline className="h-6 w-6 text-gray-600" />
+                    <div>
+                      <label className="block pb-2 font-medium text-slate-900">
+                        Location
+                      </label>
+                      <MapCreateShopComponent
+                        onLocationSelect={(location, address) =>
+                          handleLocationSelect(location, address, setFieldValue)
+                        }
+                      />
+                    </div>
+                    <div className="mb-4 flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-stone-300 bg-foreground-50 p-4 dark:border-2 dark:border-foreground/40 dark:text-white">
+                      <input
+                        id="file-upload"
+                        type="file"
+                        onChange={(e) => handleFileChange(e, setFieldValue)}
+                        className="hidden"
+                        ref={fileInputRef}
+                      />
+                      <label
+                        htmlFor="file-upload"
+                        className="flex h-full w-full cursor-pointer flex-col items-center justify-center"
+                      >
+                        {preview ? (
+                          <div className="relative">
+                            <Image
+                              src={preview}
+                              width={100}
+                              height={100}
+                              alt="Preview"
+                              className="rounded-lg object-cover"
+                            />
+                            <Button
+                              isIconOnly
+                              color={'danger'}
+                              variant={'solid'}
+                              radius={'full'}
+                              size={'sm'}
+                              className="transform-translate-y-1/2 absolute right-0 top-0 z-10 translate-x-1/2 p-1"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                removeImage();
+                              }}
+                            >
+                              <Cancel size={28} />
+                            </Button>
                           </div>
-                        </label>
-                        <p className="mt-2 text-gray-500">
-                          Click to upload Shop Profile
-                        </p>
-                      </div>
-                    )}
-                  </label>
-                </div>
-                <ModalFooter className="flex justify-between">
-                  <Button
-                    type="button"
-                    onClick={onClose}
-                    variant={'ghost'}
-                    color={'warning'}
-                    size={'md'}
-                    className={'px-14 py-2'}
-                    radius={'full'}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="submit"
-                    className="text-md ml-4 w-full max-w-[10rem] rounded-full bg-gradient-to-r from-pink-500 to-warning-500/80 px-4 py-2 font-semibold text-white"
-                    disabled={isUploading}
-                    isLoading={isUploading}
-                  >
-                    {isUploading ? 'Creating...' : 'Create'}
-                  </Button>
-                </ModalFooter>
-              </Form>
-            )}
-          </Formik>
-        </ModalBody>
+                        ) : (
+                          <div className="flex flex-col items-center justify-center">
+                            <label
+                              htmlFor="file-upload"
+                              className="cursor-pointer"
+                            >
+                              <div className="rounded-full bg-slate-200 p-3">
+                                <IoImagesOutline className="h-6 w-6 text-gray-600" />
+                              </div>
+                            </label>
+                            <p className="mt-2 text-gray-500">
+                              Click to upload Shop Profile
+                            </p>
+                          </div>
+                        )}
+                      </label>
+                    </div>
+                    <ModalFooter className="flex justify-between">
+                      <Button
+                        type="button"
+                        onClick={onClose}
+                        variant={'ghost'}
+                        color={'warning'}
+                        size={'md'}
+                        className={'px-14 py-2'}
+                        radius={'full'}
+                      >
+                        Cancel
+                      </Button>
+                      <Button
+                        type="submit"
+                        className="text-md ml-4 w-full max-w-[10rem] rounded-full bg-gradient-to-r from-pink-500 to-warning-500/80 px-4 py-2 font-semibold text-white"
+                        disabled={isUploading}
+                        isLoading={isUploading}
+                      >
+                        {isUploading ? 'Creating...' : 'Create'}
+                      </Button>
+                    </ModalFooter>
+                  </Form>
+                )}
+              </Formik>
+            </ModalBody>
+          </>
+        )}
+        {isLoggedIn === false && (
+          <ModalBody className="text-center text-lg font-semibold dark:text-gray-100">
+            Redirecting to login...
+          </ModalBody>
+        )}
       </ModalContent>
     </Modal>
   );

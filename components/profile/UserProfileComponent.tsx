@@ -8,6 +8,7 @@ import {
 import {
   Button,
   Image,
+  Input,
   Link,
   Modal,
   ModalBody,
@@ -15,11 +16,12 @@ import {
   ModalHeader,
   useDisclosure,
 } from '@nextui-org/react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUploadSingleImageMutation } from '@/redux/service/image';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UpdateProfileComponent from '@/components/profile/update-profile/UpdateUserProfileComponent';
+import { useTheme } from 'next-themes';
 
 export default function UserProfileComponent() {
   const { data, refetch } = useGetProfileQuery();
@@ -48,7 +50,7 @@ export default function UserProfileComponent() {
   const [uploadSingleImage] = useUploadSingleImageMutation();
   const [uploadShopProfile] = useUploadProfileImageMutation();
   const [uploadShopCover] = useUploadCoverImageMutation();
-
+  const { theme } = useTheme();
   const handleProfileImageChange = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -61,6 +63,16 @@ export default function UserProfileComponent() {
         const imageUrl = response.payload.fullUrl; // Use fullUrl property from payload
         await uploadShopProfile({ profile: imageUrl });
         setProfileImage(imageUrl);
+        toast.success('Profile image uploaded successfully!', {
+          position: 'top-right',
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: theme,
+        });
       } catch (error) {
         console.error('Error uploading profile image:', error);
       }
@@ -89,34 +101,33 @@ export default function UserProfileComponent() {
 
   return (
     <div className="">
-      <div className="h-[390px] w-full rounded-lg bg-foreground-50 p-8">
-        <div className="relative flex h-72 w-full flex-col items-center rounded-md lg:flex-row">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={coverImage}
-            alt="Cover Image"
-            className="h-full w-full rounded-xl object-cover"
+      <div className="relative h-[390px] w-full rounded-lg bg-foreground-50 p-8">
+        <Image
+          className="h-full w-full rounded-xl object-cover"
+          removeWrapper
+          // as={NextImage}
+          src={coverImage}
+          alt="Cover Image"
+        />
+        <label
+          htmlFor="coverInput"
+          className="absolute right-14 top-14 z-10 cursor-pointer rounded-full bg-gradient-to-r from-pink-500 to-yellow-500 p-2"
+        >
+          <BsCamera className="text-white" size={20} />
+          <Input
+            id="coverInput"
+            type="file"
+            accept="image/*"
+            className="hidden"
+            onChange={handleCoverImageChange}
           />
-          <label
-            htmlFor="coverInput"
-            className="absolute right-4 top-4 cursor-pointer rounded-full bg-gradient-to-r from-pink-500 to-yellow-500 p-2"
-          >
-            <BsCamera className="text-white" size={20} />
-            <input
-              id="coverInput"
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={handleCoverImageChange}
-            />
-          </label>
-        </div>
+        </label>
         <div className="relative mt-4">
           <div className="absolute bottom-24 left-10 top-0 flex items-center">
             <div className="relative flex-shrink-0">
               <label htmlFor="profileInput" className="relative cursor-pointer">
                 <Image
-                  src={profileImage}
+                  src={profileImage || '/images/user/votey_profile.jpg'}
                   alt="Profile Image"
                   className="h-32 w-32 rounded-full object-cover"
                 />
@@ -124,7 +135,7 @@ export default function UserProfileComponent() {
                   <BsCamera className="text-white" size={20} />
                 </div>
               </label>
-              <input
+              <Input
                 id="profileInput"
                 type="file"
                 accept="image/*"
@@ -134,9 +145,11 @@ export default function UserProfileComponent() {
             </div>
             <div className="ml-4 mr-3">
               <h2 className="pt-10 text-xl font-bold text-foreground-900">
-                {user?.firstName + ' ' + user?.lastName ?? 'John Doe'}
+                {user?.firstName || 'John'} {user?.lastName || 'Doe'}
               </h2>
-              <p className="text-foreground-900">{user?.username}</p>
+              <p className="text-foreground-900">
+                {user?.username || 'John Doe'}
+              </p>
             </div>
           </div>
         </div>

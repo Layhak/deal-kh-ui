@@ -22,6 +22,9 @@ export const shopApi = ecommerceApi.injectEndpoints({
     filterShopByName: builder.query({
       query: (name) => `/shops?name=${name}`,
     }),
+    getUserByOwner: builder.query({
+      query: () => `/shops/owner`,
+    }),
     getCurrentUserShopBySlug: builder.query({
       query: (slug) => `/shops/${slug}/owner`,
     }),

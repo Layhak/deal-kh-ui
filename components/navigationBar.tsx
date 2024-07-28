@@ -70,6 +70,7 @@ export const NavigationBar = () => {
         progress: undefined,
         theme: theme,
       });
+      localStorage.removeItem('loggedIn');
       router.push('/');
     } catch (error) {
       toast.error('Failed to logout.', {

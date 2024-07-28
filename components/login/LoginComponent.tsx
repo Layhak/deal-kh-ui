@@ -53,6 +53,7 @@ const LoginComponent: React.FC<{ email: string }> = ({
   ) => {
     try {
       await loginUser(values).unwrap();
+      localStorage.setItem('loggedIn', 'true');
       localStorage.setItem('token', 'log in');
       router.push('/');
     } catch (error: any) {

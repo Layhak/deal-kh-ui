@@ -86,9 +86,9 @@ export default function HomePage() {
           return (
             !['top-sales', 'flash-sales'].includes(discountType.slug) && (
               <>
-                <div className="mx-6 my-4 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
+                <div className="mx-6 my-2 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
                   <div className="flex-1">
-                    <p className="relative w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
+                    <p className="text-md relative w-fit from-pink-500 to-yellow-500 font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r  md:text-lg">
                       {firstPart}
                       <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
                         {' ' + secondPart}
@@ -126,7 +126,7 @@ export default function HomePage() {
                         return (
                           <section
                             className={
-                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 p-4'
+                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2'
                             }
                           >
                             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -223,12 +223,12 @@ export default function HomePage() {
                       case 'event':
                         return (
                           <>
-                            <EvenSlideComponent />
                             <section
                               className={
                                 'my-auto flex h-full w-full max-w-7xl flex-col gap-2 p-4'
                               }
                             >
+                              <EvenSlideComponent />
                               <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                                 <SectionHome
                                   discountType={discountType.name}
@@ -261,20 +261,47 @@ export default function HomePage() {
           );
         })
       )}
-      <div className={'my-10'}>
-        <p className="relative my-10 w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
-          Category{' '}
-        </p>
-        <Category />
-      </div>
-      <div>
-        <div className={'flex items-center justify-between'}>
+      <div className="mx-6 my-5 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
+        <div className="py10 ">
           <p className="relative my-10 w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
-            Popular{' '}
-            <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-              Shop
-            </span>
+            Category{' '}
           </p>
+        </div>
+        <Link href={`category`}>
+          <div className="flex items-center pt-2">
+            <p className="mr-2 pb-1 text-[15px] font-normal text-foreground-700 lg:text-[17px]">
+              See More
+            </p>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              color="black"
+              viewBox="0 0 48 48"
+            >
+              <path
+                fill="none"
+                stroke="#6b7280"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="4"
+                d="M42 24H6m24-12l12 12-12 12"
+              />
+            </svg>
+          </div>
+        </Link>
+      </div>
+      <Category />
+      <div>
+        <div className="mx-6 my-5 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
+          <div className="py10 ">
+            <p className="relative my-10 w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
+              Popular{' '}
+              <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                Shop
+              </span>
+            </p>
+          </div>
           <Link href={`shop`}>
             <div className="flex items-center pt-2">
               <p className="mr-2 pb-1 text-[15px] font-normal text-foreground-700 lg:text-[17px]">

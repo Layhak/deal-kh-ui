@@ -1,7 +1,7 @@
 import '@/styles/globals.css';
 import { Providers } from '@/app/providers';
 import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
-import { Suspense } from 'react';
+import React, { Suspense } from 'react';
 import Loading from '@/app/(user)/loading';
 import error from '@/app/(user)/error';
 import 'react-toastify/dist/ReactToastify.css';
@@ -82,6 +82,5 @@ export default function RootLayout({
     </html>
   );
 }
-
 
 // ],

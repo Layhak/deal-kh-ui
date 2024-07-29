@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Avatar,
   Badge,
@@ -162,8 +162,8 @@ export const NavigationBar = () => {
         isMenuOpen={isMenuOpen}
         onMenuOpenChange={setIsMenuOpen}
         classNames={{
-          base: 'bg-default-50/80 backdrop-blur-md	',
-          menu: 'bg-default-50/80 backdrop-blur-md	',
+          base: 'bg-default-50 md:bg-default-50/80 backdrop-blur-md	',
+          menu: 'bg-default-50 md:bg-default-50/80 backdrop-blur-md	',
           item: [
             'relative',
             'h-1/2',
@@ -225,7 +225,7 @@ export const NavigationBar = () => {
           justify={'center'}
           className={'hidden gap-4 pe-16 lg:flex'}
         >
-          {siteConfig.navItems.map((item) => (
+          {siteConfig.navItems.map((item: any) => (
             <NavbarItem key={item.href} isActive={item.href === pathname}>
               <Tooltip
                 content={
@@ -346,7 +346,7 @@ export const NavigationBar = () => {
           </NavbarItem>
         </NavbarContent>
 
-        <NavbarMenu>
+        <NavbarMenu className={'z-50'}>
           {!isLoggedIn && (
             <>
               <NavbarMenuItem>
@@ -373,7 +373,7 @@ export const NavigationBar = () => {
               </NavbarMenuItem>
             </>
           )}
-          {siteConfig.navItems.map((item) => (
+          {siteConfig.navItems.map((item: any) => (
             <NavbarMenuItem key={item.href} isActive={item.href === pathname}>
               <Link
                 className={` group w-full`}

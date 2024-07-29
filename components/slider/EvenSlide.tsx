@@ -12,6 +12,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 import { useGetBannersQuery } from '@/redux/service/banner';
 import { Banner } from '@/types/banner';
 import { useRouter } from 'next/navigation';
+import React from 'react';
 
 export default function HeroSlideComponent() {
   const router = useRouter();
@@ -43,7 +44,7 @@ export default function HeroSlideComponent() {
   };
 
   return (
-    <div className="mt-2 w-full">
+    <div className="w-full">
       <Swiper
         className="w-full rounded-2xl"
         slidesPerView={1}

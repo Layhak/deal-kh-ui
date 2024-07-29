@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { Inter } from 'next/font/google';
-import { Button, Image } from '@nextui-org/react';
+import { Button, Divider, Image } from '@nextui-org/react';
 import MentorCard from '@/components/card/card-about/MentorCard';
 import MemberCard from '@/components/card/card-about/MemberCard';
 import NextLink from 'next/link';
@@ -136,7 +136,54 @@ function AboutPageComponent() {
           />
         </div>
       </div>
+      <div className="my-2 text-center">
+        <p className="text-3xl font-bold" data-aos="fade-up">
+          Our{' '}
+          <span
+            className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent"
+            data-aos="fade-up"
+          >
+            Sponsors
+          </span>
+        </p>
+        <Divider
+          className="mx-auto my-2 h-1 w-48 border-0 bg-gradient-to-r from-pink-500 to-yellow-500"
+          data-aos="fade-up"
+        />
+      </div>
+      <div
+        className="my-20 flex flex-col justify-center gap-10 px-10 md:flex-row"
+        data-aos="fade-up"
+      >
+        <Image src={'/images/sponsor1.png'} alt="About us" width={500} />
+        <Image src={'/images/sponsor2.png'} alt="About us" width={500} />
+      </div>
 
+      <div className="my-2 text-center">
+        <p className="text-3xl font-bold" data-aos="fade-up">
+          Organized{' '}
+          <span
+            className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent"
+            data-aos="fade-up"
+          >
+            By
+          </span>
+        </p>
+        <Divider
+          className="mx-auto my-2 h-1 w-48 border-0 bg-gradient-to-r from-pink-500 to-yellow-500"
+          data-aos="fade-up"
+        />
+      </div>
+      <div
+        className="my-20 flex justify-center gap-10 px-10"
+        data-aos="fade-up"
+      >
+        <Image
+          src={'/images/final-cstad-logo.png'}
+          alt="About us"
+          width={500}
+        />
+      </div>
       {/* Mentors Section */}
       <div className="my-2 text-center">
         <p className="text-3xl font-bold" data-aos="fade-up">
@@ -148,7 +195,7 @@ function AboutPageComponent() {
             Mentors
           </span>
         </p>
-        <hr
+        <Divider
           className="mx-auto my-2 h-1 w-44 border-0 bg-gradient-to-r from-pink-500 to-yellow-500"
           data-aos="fade-up"
         />
@@ -168,12 +215,12 @@ function AboutPageComponent() {
             Members
           </span>
         </p>
-        <hr
+        <Divider
           className="mx-auto my-2 h-1 w-48 border-0 bg-gradient-to-r from-pink-500 to-yellow-500"
           data-aos="fade-up"
         />
       </div>
-      <div className="flex justify-center" data-aos="fade-up">
+      <div className="mb-20 flex justify-center" data-aos="fade-up">
         <MemberCard />
       </div>
     </>

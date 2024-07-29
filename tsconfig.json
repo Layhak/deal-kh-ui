@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -22,23 +18,9 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./*"
-      ]
+      "@/*": ["./*"]
     }
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "app/(user)/_not-found.js",
-    "utils/nodemailer.js",
-    "app/_error.js"
-, "app/(user)/[...slug]"  ],
-  "exclude": [
-    "node_modules"
-  ],
-  "target": "es2015",
-  "downlevelIteration": true
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(admin)/_app.js"],
+  "exclude": ["node_modules"]
 }

@@ -1,5 +1,6 @@
 import NextLink from 'next/link';
 import { Button, Divider } from '@nextui-org/react';
+import React from 'react';
 
 const AuthLinks = () => {
   return (

@@ -31,4 +31,32 @@ export const siteConfig = {
       tooltip: 'Go to Policy Page',
     },
   ],
+  footerItems: [
+    {
+      label: 'Home',
+      href: '/',
+    },
+    {
+      label: 'Deal',
+      href: '/deal',
+    },
+    {
+      label: 'Shop',
+      href: '/shop',
+    },
+    {
+      label: 'About',
+      href: '/about',
+    },
+  ],
+  featureItems: [
+    {
+      label: 'Cart',
+      href: '/cart',
+    },
+    {
+      label: 'Wishlist',
+      href: '/wishlist',
+    },
+  ],
 };

@@ -2,13 +2,15 @@
 import React, { useState } from 'react';
 import { FaFacebookF, FaGoogle, FaInstagram } from 'react-icons/fa';
 import { MemberList } from './memberList';
-import { Image } from '@nextui-org/react';
+import { Button, Image } from '@nextui-org/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 import '@/styles/swiper.css';
 import { Autoplay, FreeMode, Pagination } from 'swiper/modules';
+import NextLink from 'next/link';
+import '@/styles/spinningBorder.css';
 
 type Members = {
   img: string;
@@ -55,37 +57,61 @@ export default function MemberCard() {
               <div className="mb-2 text-xl font-bold">{item.name}</div>
               <div className="mb-2 text-lg ">{item.role}</div>
             </div>
-            <div className="flex w-full justify-around px-6 py-4">
-              <div className="flex flex-col justify-center">
-                <div className="mx-auto max-w-7xl">
-                  <div className="st-current group relative flex items-center gap-1.5 overflow-hidden rounded-full p-[1px] font-semibold text-foreground shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
-                    <span className="absolute inset-[-10%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#EC4899_0%,#EAB308_50%,#EC4899_100%)]"></span>
-                    <div className="mx-[0.5px] my-[0.5px] inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-foreground-50 text-sm font-medium text-foreground backdrop-blur-3xl transition-background group-hover:bg-foreground-50/70">
-                      <FaFacebookF />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col justify-center">
-                <div className="mx-auto max-w-7xl">
-                  <div className="st-current group relative flex items-center gap-1.5 overflow-hidden rounded-full p-[1px] font-semibold text-foreground shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
-                    <span className="absolute inset-[-10%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#EC4899_0%,#EAB308_50%,#EC4899_100%)]"></span>
-                    <div className="mx-[0.5px] my-[0.5px] inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-foreground-50 text-sm font-medium text-foreground backdrop-blur-3xl transition-background group-hover:bg-foreground-50/70">
-                      <FaInstagram />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col justify-center">
-                <div className="mx-auto max-w-7xl">
-                  <div className="st-current group relative flex items-center gap-1.5 overflow-hidden rounded-full p-[1px] font-semibold text-foreground shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
-                    <span className="absolute inset-[-10%] animate-[spin_3s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#EC4899_0%,#EAB308_50%,#EC4899_100%)]"></span>
-                    <div className="mx-[0.5px] my-[0.5px] inline-flex h-12 w-12 cursor-pointer items-center justify-center rounded-full bg-foreground-50 text-sm font-medium text-foreground backdrop-blur-3xl transition-background group-hover:bg-foreground-50/70">
-                      <FaGoogle />
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="flex w-full justify-around gap-3 px-6 py-4">
+              <Button
+                as={NextLink}
+                href={'#'}
+                className=" group relative overflow-hidden bg-transparent text-small font-normal"
+                color="default"
+                style={{
+                  border: 'solid 2px transparent',
+                  backgroundImage: `linear-gradient(hsl(var(--nextui-foreground-100)), hsl(var(--nextui-foreground-100))), linear-gradient(to right, #f92386, #eaad20)`,
+                  backgroundOrigin: 'border-box',
+                  backgroundClip: 'padding-box, border-box',
+                }}
+                size={'lg'}
+                radius={'full'}
+                variant="bordered"
+                isIconOnly
+              >
+                <FaFacebookF />
+              </Button>{' '}
+              <Button
+                as={NextLink}
+                href={'#'}
+                className="group relative  overflow-hidden bg-transparent text-small font-normal"
+                color="default"
+                style={{
+                  border: 'solid 2px transparent',
+                  backgroundImage: `linear-gradient(hsl(var(--nextui-foreground-100)), hsl(var(--nextui-foreground-100))), linear-gradient(to right, #f92386, #eaad20)`,
+                  backgroundOrigin: 'border-box',
+                  backgroundClip: 'padding-box, border-box',
+                }}
+                size={'lg'}
+                radius={'full'}
+                variant="bordered"
+                isIconOnly
+              >
+                <FaInstagram />
+              </Button>
+              <Button
+                as={NextLink}
+                href={'#'}
+                className="group relative  overflow-hidden bg-transparent text-small font-normal"
+                color="default"
+                style={{
+                  border: 'solid 2px transparent',
+                  backgroundImage: `linear-gradient(hsl(var(--nextui-foreground-100)), hsl(var(--nextui-foreground-100))), linear-gradient(to right, #f92386, #eaad20)`,
+                  backgroundOrigin: 'border-box',
+                  backgroundClip: 'padding-box, border-box',
+                }}
+                size={'lg'}
+                radius={'full'}
+                variant="bordered"
+                isIconOnly
+              >
+                <FaGoogle />
+              </Button>
             </div>
           </SwiperSlide>
         ))}

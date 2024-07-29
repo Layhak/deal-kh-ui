@@ -1,0 +1,25 @@
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Apply the animation to the button's pseudo-element */
+.spinning-border-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: solid 2px transparent;
+  background-image: linear-gradient(hsl(var(--nextui-foreground-100)), hsl(var(--nextui-foreground-100))), linear-gradient(to right, #f92386, #eaad20);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  z-index: -1;
+  border-radius: 50%;
+  animation: spin 3s linear infinite;
+}

@@ -16,6 +16,9 @@ type Members = {
   img: string;
   name: string;
   role: string;
+  facebook: string;
+  instagram: string;
+  google: string;
 };
 
 export default function MemberCard() {
@@ -60,7 +63,7 @@ export default function MemberCard() {
             <div className="flex w-full justify-around gap-3 px-6 py-4">
               <Button
                 as={NextLink}
-                href={'#'}
+                href={item.facebook}
                 className=" group relative overflow-hidden bg-transparent text-small font-normal"
                 color="default"
                 style={{
@@ -78,7 +81,7 @@ export default function MemberCard() {
               </Button>{' '}
               <Button
                 as={NextLink}
-                href={'#'}
+                href={item.instagram}
                 className="group relative  overflow-hidden bg-transparent text-small font-normal"
                 color="default"
                 style={{
@@ -96,7 +99,7 @@ export default function MemberCard() {
               </Button>
               <Button
                 as={NextLink}
-                href={'#'}
+                href={`mailto:${item.google}`}
                 className="group relative  overflow-hidden bg-transparent text-small font-normal"
                 color="default"
                 style={{

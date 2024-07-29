@@ -8,6 +8,7 @@ import { Button, Divider, Image } from '@nextui-org/react';
 import MentorCard from '@/components/card/card-about/MentorCard';
 import MemberCard from '@/components/card/card-about/MemberCard';
 import NextLink from 'next/link';
+import NextImage from 'next/image';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -152,11 +153,11 @@ function AboutPageComponent() {
         />
       </div>
       <div
-        className="my-20 flex flex-col justify-center gap-10 px-10 md:flex-row"
+        className="my-20 flex flex-col items-center justify-center gap-5 px-10 md:flex-row"
         data-aos="fade-up"
       >
-        <Image src={'/images/sponsor1.png'} alt="About us" width={500} />
-        <Image src={'/images/sponsor2.png'} alt="About us" width={500} />
+        <Image src={'/images/sponsor1.png'} alt="About us" width={600} />
+        <Image src={'/images/sponsor2.png'} alt="About us" width={600} />
       </div>
 
       <div className="my-2 text-center">

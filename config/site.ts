@@ -29,8 +29,8 @@ export const siteConfig = {
       title: 'Istad DealKH | Platform for Cambodian Deals',
       description: 'Discover the latest deals, coupons, and promotions from shops in Cambodia at DealKH. Save on your shopping with our curated list of discounts and offers.',
       images: [
-        { url: process.env.NEXT_PUBLIC_LOGO_URL + 'banner.png', alt: 'DealKH Logo Ecommerce Website' },
-        { url: process.env.NEXT_PUBLIC_LOGO_URL + 'logo.png', alt: 'Exclusive Shopping Deals in Cambodia' },
+        { url: process.env.NEXT_PUBLIC_BASR_URL_IMAGES + 'banner.png', alt: 'DealKH Logo Ecommerce Website' },
+        { url: process.env.NEXT_PUBLIC_BASR_URL_IMAGES + 'logo.png', alt: 'Exclusive Shopping Deals in Cambodia' },
       ],
       siteName: 'dealkh.istad.co',
     },
@@ -39,7 +39,7 @@ export const siteConfig = {
       title: 'Istad DealKH | Platform for Cambodian Deals',
       description: 'Find the best deals, coupons, and promotions from shops in Cambodia. Save big on your shopping with exclusive offers and discounts at DealKH.',
       images: [
-        { url: process.env.NEXT_PUBLIC_LOGO_URL + 'banner.png', alt: 'DealKH Logo Ecommerce Website' },
+        { url: process.env.NEXT_PUBLIC_BASR_URL_IMAGES + 'banner.png', alt: 'DealKH Logo Ecommerce Website' },
       ],
     },
   },

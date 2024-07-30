@@ -27,8 +27,8 @@ export const siteConfig = {
     openGraph: {
       type: 'website',
       locale: 'en_US',
-      url: 'https://www.dealkh.istad.co/',
-      title: 'Istad DealKH | Platform for Cambodian Deals',
+      url: 'https://dealkh.istad.co/',
+      title: 'Dealkh Istad',
       description:
         'Discover the latest deals, coupons, and promotions from shops in Cambodia at DealKH. Save on your shopping with our curated list of discounts and offers.',
       images: [
@@ -40,7 +40,7 @@ export const siteConfig = {
         },
         // { url: process.env.NEXT_PUBLIC_LOGO_URL + 'logo.png', alt: 'Exclusive Shopping Deals in Cambodia' },
       ],
-      siteName: 'dealkh.istad.co',
+      siteName: 'dealkh',
     },
     twitter: {
       site: 'Ecommerce',

@@ -11,7 +11,7 @@ const CardCouponComponent: React.FC<Props> = ({ displayCount }) => {
   const router = useRouter();
 
   const handleClick = (couponId: number) => {
-    router.push(`/coupons/${couponId}`);
+    router.push(`/discount/shop-coupons`);
   };
 
   // Determine the number of coupons to display based on displayCount prop
@@ -19,7 +19,7 @@ const CardCouponComponent: React.FC<Props> = ({ displayCount }) => {
     displayCount === 3 ? couponData.slice(0, 3) : couponData;
 
   return (
-    <div className="my-5 grid grid-cols-1 gap-5 sm:grid-cols-3">
+    <div className="my-5 grid grid-cols-1 gap-5 sm:grid-cols-3 px-4 lg:p-0">
       {couponsToDisplay.map((coupon: CouponData, index: number) => (
         <div
           key={index}

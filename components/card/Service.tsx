@@ -11,8 +11,8 @@ const ServiceCardComponent: React.FC<ServiceCardComponentProps> = ({
   data,
 }) => {
   return (
-    <div className={'my-auto flex h-full w-full max-w-7xl flex-col gap-2 p-4'}>
-      <div className="grid grid-cols-1 gap-5 md:grid-cols-3 lg:grid-cols-4 ">
+    <div className={'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'}>
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 ">
         {data?.payload.list.map((product: ScrapedProduct) => (
           <Card key={product.name} className=" py-4 shadow-none ">
             <CardHeader className=" flex-col items-start px-4 pb-0  pt-2">

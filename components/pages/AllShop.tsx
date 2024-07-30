@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import ShopCardComponent from '@/components/card/Shop';
+import ShopCardComponent from '../card/Shop';
 
 export default function ShopListComponent() {
   return (

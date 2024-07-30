@@ -13,7 +13,7 @@ import SkeletonCard from '@/components/card/SkeletonCard';
 import SectionCategory from '@/components/card/SectionCategory';
 import { DiscountType } from '@/types/DiscountType';
 import ClearanceSaleSlideComponentProps from '@/components/slider/ClearanceSaleSlide';
-
+import BuyMoreGetMoreSlideComponent from '@/components/slider/BuyMoreGetMoreSlide';
 type CategoryPageProps = {
   params: {
     slug: string;
@@ -36,7 +36,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
 
   return (
     <main>
-      <div className="">
+      <section>
         <Image
           src={
             category.payload?.banner ||
@@ -45,7 +45,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
           className="h-[320px] w-[1300px] object-cover"
           alt={category.payload.name}
         />
-      </div>
+      </section>
       {isLoadingDiscountTypes ? (
         <SkeletonCard />
       ) : (
@@ -94,8 +94,12 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                     switch (discountType.slug) {
                       case 'clearance-sales':
                         return (
-                          <>
-                            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                          <section
+                            className={
+                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2'
+                            }
+                          >
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-col-3 gap-8 px-4 lg:p-0">
                               <SectionCategory
                                 size={3}
                                 discountType={discountType.name}
@@ -108,29 +112,30 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                                 bannerType={slug}
                               />
                             </div>
-                          </>
+                          </section>
                         );
                       case 'buy-more-get-more':
                         return (
                           <>
                             <div className="flex flex-col gap-8 lg:flex-row">
                               <div className="mx-auto md:mx-0">
-                                <Link href="/buy-more-get-more">
-                                  <Image
-                                    width="800"
-                                    src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
-                                    className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[800px]"
-                                    alt="image"
-                                  />
+                                <Link href="/discount/buy-more-get-more">
+                                  <BuyMoreGetMoreSlideComponent bannerType={slug} />
                                 </Link>
                               </div>
-                              <div className="grid grid-cols-2 gap-8 lg:grid-cols-3">
-                                <SectionCategory
-                                  discountType={discountType.name}
-                                  name={discountType.name}
-                                  category={slug}
-                                  size={6}
-                                />
+                              <div
+                                className={
+                                  'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:px-0'
+                                }
+                              >
+                                <div className="grigrid  grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 grid-cols-2 gap-8 lg:grid-cols-3">
+                                  <SectionCategory
+                                    discountType={discountType.name}
+                                    name={discountType.name}
+                                    category={slug}
+                                    size={6}
+                                  />
+                                </div>
                               </div>
                             </div>
                           </>
@@ -139,8 +144,12 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                         return (
                           <>
                             <CardCouponComponent displayCount={3} />
-                            <section>
-                              <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+                            <section
+                              className={
+                                'my-auto flex h-full w-full max-w-7xl flex-col gap-2 '
+                              }
+                            >
+                              <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 px-4 lg:p-0">
                                 <SectionCategory
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -152,8 +161,12 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                         );
                       default:
                         return (
-                          <section>
-                            <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+                          <section
+                            className={
+                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
+                            }
+                          >
+                            <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
                               <SectionCategory
                                 discountType={discountType.name}
                                 name={discountType.name}

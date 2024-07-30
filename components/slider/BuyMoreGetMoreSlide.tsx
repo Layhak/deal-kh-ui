@@ -49,9 +49,9 @@ export default function BuyMoreGetMoreSlideComponent({
   };
 
   return (
-    <div className="mt-2 w-full">
+    <div className="w-svw md:w=[700px] px-4 lg:p-0  lg:w-[400px] h-[500px] object-cover object-center sm:h-[700px] mx-auto lg:h-[800px]">
       <Swiper
-        className="w-full rounded-2xl"
+        className="h-auto w-auto"
         slidesPerView={1}
         autoplay={{
           delay: 5000,
@@ -65,17 +65,19 @@ export default function BuyMoreGetMoreSlideComponent({
         navigation={false}
         modules={[Autoplay, Pagination]}
         loop={true}
-      >
+        >
         {bannerData.length > 0 ? (
           bannerData.map((banner: Banner) => (
             <SwiperSlide
               key={banner.uuid}
               onClick={() => handleBannerClick(banner.shopLink)}
-              className="cursor-pointer"
+              className="cursor-pointer "
             >
               <Image
+              width={800}
+              removeWrapper
                 src={banner.image}
-                className="h-[500px] w-[300px] rounded-2xl object-cover"
+                className="h-[500px] sm:h-[700px] lg:h-[800px] object-cover object-center"
                 alt={banner.name}
               />
             </SwiperSlide>

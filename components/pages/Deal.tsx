@@ -1,13 +1,15 @@
 'use client';
 import { Image, Link } from '@nextui-org/react';
 import 'aos/dist/aos.css';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useGetProductScrapeQuery } from '@/redux/service/productScrape';
 import { useGetDiscountTypesQuery } from '@/redux/service/discountTypes';
 import { DiscountType } from '@/types/DiscountType';
 import SectionHome from '@/components/card/SectionHome';
 import CardCouponComponent from '@/components/card/coupon-detail/CardCouponComponent';
-
+import ClearanceSaleSlideComponentProps from '@/components/slider/ClearanceSaleSlide';
+import BuyMoreGetMoreSlideComponent from '../slider/BuyMoreGetMoreSlide';
+import EvenSlideComponent from '@/components/slider/EvenSlide';
 export default function Deal() {
   const [page] = useState(1);
   const size = 4;
@@ -45,7 +47,7 @@ export default function Deal() {
                         </span>
                       </p>
                     </div>
-                    <Link href="/discount">
+                    <Link href={`/discount/${discountType.slug}`}>
                       <div className="flex items-center pt-2">
                         <p className="mr-2 pb-1 text-[15px] font-normal text-foreground-700 lg:text-[17px]">
                           See More
@@ -74,43 +76,44 @@ export default function Deal() {
                       switch (discountType.slug) {
                         case 'clearance-sales':
                           return (
-                            <>
-                              <div className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+                            <section 
+                            className={
+                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:px-0'
+                            }
+                            >
+                              <div className="grid grid-cols-1 gap-8 md:grid-cols-3 ">
                                 <SectionHome
                                   size={3}
                                   discountType={discountType.name}
                                   name={discountType.name}
                                 />
                               </div>
-                              <div className="mx-auto w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
-                                <Image
-                                  src="https://img.freepik.com/free-vector/flash-sale-special-offer-clearance-banner_260559-257.jpg?t=st=1717838807~exp=1717842407~hmac=e590d5944a23efe6832b1099efa74823733c852376d301923a8add2e48ffb16b&w=1060"
-                                  className="mt-[35px] h-[200px] w-[1300px] object-cover lg:h-[310px]"
-                                  alt="image"
-                                />
+                              <div className="mx-auto mt-5 w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
+                              <ClearanceSaleSlideComponentProps bannerType="home-clearance" />
                               </div>
-                            </>
+                            </section>
                           );
                         case 'buy-more-get-more':
                           return (
                             <>
-                              <div className="flex flex-col gap-5 lg:flex-row ">
+                              <div className="flex flex-col gap-8 lg:flex-row ">
                                 <div className="mx-auto  md:mx-0  ">
                                   <Link href="/buy-more-get-more">
-                                    <Image
-                                      width="800"
-                                      src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
-                                      className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[800px]"
-                                      alt="image"
-                                    />
-                                  </Link>
+                                  <BuyMoreGetMoreSlideComponent bannerType='home-buy-more-get-more'/>                                  </Link>
                                 </div>
-                                <div className="grid grid-cols-2 gap-5 lg:grid-cols-3">
+                                <div
+                                 className={
+                                  'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:px-0'
+                                }
+                                >
+
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:grid-cols-3">
                                   <SectionHome
                                     discountType={discountType.name}
                                     name={discountType.name}
                                     size={6}
                                   />
+                                </div>
                                 </div>
                               </div>
                             </>
@@ -119,8 +122,12 @@ export default function Deal() {
                           return (
                             <>
                               <CardCouponComponent displayCount={3} />
-                              <section>
-                                <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                              <section
+                              className={
+                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
+                              }
+                              >
+                                <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
                                   <SectionHome
                                     discountType={discountType.name}
                                     name={discountType.name}
@@ -132,13 +139,13 @@ export default function Deal() {
                         case 'event':
                           return (
                             <>
-                              <Image
-                                src="https://romand.us/cdn/shop/files/PC_1.png?v=1719967761&width=1728"
-                                className="h-[500px] w-[1300px] object-cover"
-                                alt="Event"
-                              />
-                              <section>
-                                <div className="my-5 grid grid-cols-2 gap-5 lg:grid-cols-4">
+                              <EvenSlideComponent />
+                              <section
+                                       className={
+                                        'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
+                                      }
+                              >
+                                <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                                   <SectionHome
                                     discountType={discountType.name}
                                     name={discountType.name}
@@ -149,8 +156,12 @@ export default function Deal() {
                           );
                         default:
                           return (
-                            <section>
-                              <div className="grid grid-cols-2 gap-5 lg:grid-cols-4">
+                            <section 
+                            className={
+                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
+                            }
+                            >
+                              <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                                 <SectionHome
                                   discountType={discountType.name}
                                   name={discountType.name}

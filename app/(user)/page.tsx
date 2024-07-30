@@ -19,6 +19,7 @@ import PopularShop from '@/components/card/PopularShop';
 import SkeletonCard from '@/components/card/SkeletonCard';
 import EvenSlideComponent from '@/components/slider/EvenSlide';
 import ClearanceSaleSlideComponentProps from '@/components/slider/ClearanceSaleSlide';
+import BuyMoreGetMoreSlideComponent from '@/components/slider/BuyMoreGetMoreSlide';
 
 export default function HomePage() {
   const [page] = useState(1);
@@ -72,7 +73,7 @@ export default function HomePage() {
       {isLoadingDiscountTypes ? (
         <>
           <Skeleton className="my-10 h-[30px] w-full max-w-[200px] rounded-2xl" />
-          <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
             {Array.from({ length: size || 8 }, (_, index) => (
               <SkeletonCard key={index} />
             ))}
@@ -86,9 +87,9 @@ export default function HomePage() {
           return (
             !['top-sales', 'flash-sales'].includes(discountType.slug) && (
               <>
-                <div className="mx-6 my-2 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
+                <div className="mx-4 my-2 flex h-[50px] items-center justify-between md:my-5 lg:mx-0 lg:my-8">
                   <div className="flex-1">
-                    <p className="text-md relative w-fit from-pink-500 to-yellow-500 font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r  md:text-lg">
+                    <p className="md:text-xl text-md relative w-fit from-pink-500 to-yellow-500 font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r  md:text-2xl">
                       {firstPart}
                       <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
                         {' ' + secondPart}
@@ -129,7 +130,7 @@ export default function HomePage() {
                               'my-auto flex h-full w-full max-w-7xl flex-col gap-2'
                             }
                           >
-                            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 lg:p-0">
                               <SectionHome
                                 size={3}
                                 discountType={discountType.name}
@@ -146,21 +147,16 @@ export default function HomePage() {
                           <>
                             <div className="flex flex-col gap-8 lg:flex-row ">
                               <div className="mx-auto  md:mx-0  ">
-                                <Link href="/buy-more-get-more">
-                                  <Image
-                                    width="800"
-                                    src="https://i.pinimg.com/564x/f7/fe/32/f7fe32429482e12537ec90fc27bf6ff5.jpg"
-                                    className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[800px]"
-                                    alt="image"
-                                  />
+                                <Link href="/discount/buy-more-get-more">
+                                  <BuyMoreGetMoreSlideComponent bannerType='home-buy-more-get-more' />
                                 </Link>
                               </div>
                               <div
                                 className={
-                                  'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4'
+                                  'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:px-0'
                                 }
                               >
-                                <div className="grid grid-cols-1  gap-8 md:grid-cols-2 lg:grid-cols-3">
+                                <div className="grid  grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                                   <SectionHome
                                     discountType={discountType.name}
                                     name={discountType.name}
@@ -171,7 +167,7 @@ export default function HomePage() {
                             </div>
                             <div className="mx-6 my-4 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
                               <div className="flex-1">
-                                <p className="relative w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
+                                <p className="relative w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-2xl">
                                   Service
                                 </p>
                               </div>
@@ -208,10 +204,10 @@ export default function HomePage() {
                             <CardCouponComponent displayCount={3} />
                             <section
                               className={
-                                'my-auto flex h-full w-full max-w-7xl flex-col gap-2 p-4'
+                                'my-auto flex h-full w-full max-w-7xl flex-col gap-2 '
                               }
                             >
-                              <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                              <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 px-4 lg:p-0">
                                 <SectionHome
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -225,11 +221,11 @@ export default function HomePage() {
                           <>
                             <section
                               className={
-                                'my-auto flex h-full w-full max-w-7xl flex-col gap-2 p-4'
+                                'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
                               }
                             >
                               <EvenSlideComponent />
-                              <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                              <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
                                 <SectionHome
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -242,10 +238,10 @@ export default function HomePage() {
                         return (
                           <section
                             className={
-                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 p-4'
+                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
                             }
                           >
-                            <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                            <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
                               <SectionHome
                                 discountType={discountType.name}
                                 name={discountType.name}

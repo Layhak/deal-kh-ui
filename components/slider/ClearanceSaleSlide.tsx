@@ -49,7 +49,7 @@ export default function ClearanceSaleSlideComponentProps({
   };
 
   return (
-    <div className="mt-2 w-full">
+    <div className="mt-2 w-swh">
       <Swiper
         className="w-full rounded-2xl"
         slidesPerView={1}

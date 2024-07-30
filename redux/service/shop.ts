@@ -23,7 +23,7 @@ export const shopApi = ecommerceApi.injectEndpoints({
     filterShopByName: builder.query({
       query: (name) => `/shops?name=${name}`,
     }),
-    getUserByOwner: builder.query({
+    getAllShopsByOwner: builder.query({
       query: () => `/shops/owner`,
     }),
     getCurrentUserShopBySlug: builder.query({
@@ -32,10 +32,10 @@ export const shopApi = ecommerceApi.injectEndpoints({
     getAllShopsByType: builder.query({
       query: () => `/shops/shop-type`,
     }),
-    getAllShopsByOwner: builder.query({
-      query: ({ page = 1, size = 2, field = 'name', order = 'desc' }) =>
-        `/shops?page=${page}&size=${size}&field=${field}&order=${order}`,
-    }),
+    // getAllShopsByOwner: builder.query({
+    //   query: ({ page = 1, size = 2, field = 'name', order = 'desc' }) =>
+    //     `/shops?page=${page}&size=${size}&field=${field}&order=${order}`,
+    // }),
     createShop: builder.mutation({
       query: (newShop) => ({
         url: `/shops`,
@@ -90,10 +90,10 @@ export const {
   useGetApprovedShopsQuery,
   useGetShopNearbyQuery,
   useGetShopBySlugQuery,
+  useGetAllShopsByOwnerQuery,
   useFilterShopByNameQuery,
   useGetCurrentUserShopBySlugQuery,
   useGetAllShopsByTypeQuery,
-  useGetAllShopsByOwnerQuery,
   useCreateShopMutation,
   useUpdateShopBySlugMutation,
   useEnableShopBySlugMutation,

@@ -17,6 +17,8 @@ import CustomInput from '@/components/customInput/customInput';
 import CustomPasswordInput from '@/components/customInput/CustomPasswordInputProps';
 import ParticlesComponent from '@/components/ParticlesComponent';
 import LocationInput from '../customInput/customInputWithLocation';
+import { toast } from 'react-toastify';
+import { useTheme } from 'next-themes';
 
 type RegisterFormValues = {
   firstName: string;
@@ -85,6 +87,7 @@ const validationSchema = Yup.object().shape({
 const Register: React.FC = () => {
   const [registerUser, { isLoading }] = useRegisterUserMutation();
   const router = useRouter();
+  const { theme } = useTheme();
 
   const onSubmit = async (
     values: RegisterFormValues,
@@ -99,6 +102,28 @@ const Register: React.FC = () => {
       };
 
       await registerUser(formattedValues).unwrap();
+      toast.success('Registration successful!', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+        isLoading: isLoading,
+      });
+      toast.success('Please check your email for verification link', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+        delay: 3000,
+      });
       router.push('/');
     } catch (error: any) {
       if (error.data && error.data.error && error.data.error.description) {

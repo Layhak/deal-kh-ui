@@ -7,9 +7,13 @@ import CreateShopModal from './FormCreateShop';
 
 type openMenuProps = {
   isMenuOpen: boolean;
+  hasShop: boolean;
 };
 
-export default function HeaderCreateShop({ isMenuOpen }: openMenuProps) {
+export default function HeaderCreateShop({
+  isMenuOpen,
+  hasShop,
+}: openMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
@@ -28,7 +32,7 @@ export default function HeaderCreateShop({ isMenuOpen }: openMenuProps) {
 
   const refetch = () => {};
 
-  if (isMenuOpen) {
+  if (isMenuOpen || hasShop) {
     return null;
   }
 

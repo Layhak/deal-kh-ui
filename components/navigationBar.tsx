@@ -20,28 +20,31 @@ import {
   ScrollShadow,
   Tooltip,
 } from '@nextui-org/react';
-import { siteConfig } from '@/config/site';
 import NextLink from 'next/link';
-import { ThemeSwitch } from '@/components/ThemeSwitch';
-import { CartIcon, HeartIcon, MapIcon } from '@/components/icons';
-import {
-  removeAccessToken,
-  setLogoutSuccess,
-} from '@/redux/feature/auth/authSlice';
 import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import { useTheme } from 'next-themes';
-import AuthLink from '@/components/auth/AuthLink';
-import { useLogoutUserMutation } from '@/redux/service/auth';
-import { useGetProfileQuery } from '@/redux/service/user';
 import SearchProduct from './search/SearchProduct';
 import SearchLocation from './search/SearchLocation';
-import { selectProducts } from '@/redux/feature/cart/cartSlice';
-import { Product } from '@/libs/difinition';
-import { useAppDispatch, useAppSelector } from '@/redux/hook';
 import { BiUserCircle } from 'react-icons/bi';
-import HeaderCreateShop from '@/components/header/HeaderCreateShop';
-import { useGetAllUserWishListQuery } from '@/redux/service/wishList';
+
+import { useGetAllShopsByOwnerQuery } from '../redux/service/shop';
+import { CartIcon, HeartIcon, MapIcon } from './icons';
+import { ThemeSwitch } from './ThemeSwitch';
+import { siteConfig } from '../config/site';
+import AuthLink from './auth/AuthLink';
+import HeaderCreateShop from './header/HeaderCreateShop';
+import { useGetAllUserWishListQuery } from '../redux/service/wishList';
+import { Product } from '../libs/difinition';
+import { selectProducts } from '../redux/feature/cart/cartSlice';
+import { useAppDispatch, useAppSelector } from '../redux/hook';
+import {
+  removeAccessToken,
+  setLogoutSuccess,
+} from '../redux/feature/auth/authSlice';
+import { useLogoutUserMutation } from '../redux/service/auth';
+import { useGetProfileQuery } from '../redux/service/user';
+import Loading from '../app/(user)/loading';
 
 export const NavigationBar = () => {
   const pathname = usePathname();
@@ -145,6 +148,16 @@ export const NavigationBar = () => {
 
   const wishlistCount = wishListData?.payload?.pagination?.totalElements || 0;
 
+  const { data: userShops, isLoading: isLoadingUserShops } =
+    useGetAllShopsByOwnerQuery({});
+
+  useEffect(() => {
+    console.log('User Shops:', userShops);
+  }, [userShops]);
+
+  const hasShop = userShops?.payload?.pagination?.totalElements > 0;
+
+  console.log('Has Shop:', hasShop);
   const searchInput = (
     <>
       <SearchProduct />
@@ -154,7 +167,7 @@ export const NavigationBar = () => {
 
   return (
     <>
-      <HeaderCreateShop isMenuOpen={isMenuOpen} />
+      <HeaderCreateShop isMenuOpen={isMenuOpen} hasShop={hasShop} />
       <Navbar
         isBlurred
         position="sticky"

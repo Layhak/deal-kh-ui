@@ -30,7 +30,7 @@ export const siteConfig = {
       description: 'Discover the latest deals, coupons, and promotions from shops in Cambodia at DealKH. Save on your shopping with our curated list of discounts and offers.',
       images: [
         { url: process.env.NEXT_PUBLIC_LOGO_URL + 'banner.png', alt: 'DealKH Logo Ecommerce Website' },
-        { url: process.env.NEXT_PUBLIC_LOGO_URL + 'logo.png', alt: 'Exclusive Shopping Deals in Cambodia' },
+        // { url: process.env.NEXT_PUBLIC_LOGO_URL + 'logo.png', alt: 'Exclusive Shopping Deals in Cambodia' },
       ],
       siteName: 'dealkh.istad.co',
     },

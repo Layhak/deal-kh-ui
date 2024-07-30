@@ -30,82 +30,82 @@ export default function Deal() {
       {isLoadingDiscountTypes
         ? 'Loading'
         : discountTypes.payload.map((discountType: DiscountType) => {
-            const [firstPart, ...restParts] = discountType.name.split(' ');
-            const secondPart = restParts.join(' ');
+          const [firstPart, ...restParts] = discountType.name.split(' ');
+          const secondPart = restParts.join(' ');
 
-            return (
-              !['top-sales', 'flash-sales', 'no-discount'].includes(
-                discountType.slug
-              ) && (
-                <>
-                  <div className="mx-6 my-4 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
-                    <div className="flex-1">
-                      <p className="relative w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
-                        {firstPart}
-                        <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
-                          {' ' + secondPart}
-                        </span>
-                      </p>
-                    </div>
-                    <Link href={`/discount/${discountType.slug}`}>
-                      <div className="flex items-center pt-2">
-                        <p className="mr-2 pb-1 text-[15px] font-normal text-foreground-700 lg:text-[17px]">
-                          See More
-                        </p>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="20"
-                          height="20"
-                          color="black"
-                          viewBox="0 0 48 48"
-                        >
-                          <path
-                            fill="none"
-                            stroke="#6b7280"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="4"
-                            d="M42 24H6m24-12l12 12-12 12"
-                          />
-                        </svg>
-                      </div>
-                    </Link>
+          return (
+            !['top-sales', 'flash-sales', 'no-discount'].includes(
+              discountType.slug
+            ) && (
+              <>
+                <div className="mx-6 my-4 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
+                  <div className="flex-1">
+                    <p className="md:text-xl text-md relative w-fit from-pink-500 to-yellow-500 font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r  lg:text-2xl">
+                      {firstPart}
+                      <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
+                        {' ' + secondPart}
+                      </span>
+                    </p>
                   </div>
-                  <section>
-                    {(() => {
-                      switch (discountType.slug) {
-                        case 'clearance-sales':
-                          return (
-                            <section 
+                  <Link href={`/discount/${discountType.slug}`}>
+                    <div className="flex items-center pt-2">
+                      <p className="mr-2 pb-1 text-[15px] font-normal text-foreground-700 lg:text-[17px]">
+                        See More
+                      </p>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        color="black"
+                        viewBox="0 0 48 48"
+                      >
+                        <path
+                          fill="none"
+                          stroke="#6b7280"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="4"
+                          d="M42 24H6m24-12l12 12-12 12"
+                        />
+                      </svg>
+                    </div>
+                  </Link>
+                </div>
+                <section>
+                  {(() => {
+                    switch (discountType.slug) {
+                      case 'clearance-sales':
+                        return (
+                          <section
                             className={
                               'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:px-0'
                             }
-                            >
-                              <div className="grid grid-cols-1 gap-8 md:grid-cols-3 ">
-                                <SectionHome
-                                  size={3}
-                                  discountType={discountType.name}
-                                  name={discountType.name}
-                                />
-                              </div>
-                              <div className="mx-auto mt-5 w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
+                          >
+                            <div className="grid grid-cols-1 gap-8 md:grid-cols-3 ">
+                              <SectionHome
+                                size={3}
+                                discountType={discountType.name}
+                                name={discountType.name}
+                              />
+                            </div>
+                            <div className="mx-auto mt-5 w-[88%] md:w-[94%] lg:mx-0 lg:w-full">
                               <ClearanceSaleSlideComponentProps bannerType="home-clearance" />
+                            </div>
+                          </section>
+                        );
+                      case 'buy-more-get-more':
+                        return (
+                          <>
+                            <div className="flex flex-col gap-8 lg:flex-row ">
+                              <div className="mx-auto  md:mx-0  ">
+                                <Link href="/buy-more-get-more">
+                                  <BuyMoreGetMoreSlideComponent bannerType='home-buy-more-get-more' />                                  </Link>
                               </div>
-                            </section>
-                          );
-                        case 'buy-more-get-more':
-                          return (
-                            <>
-                              <div className="flex flex-col gap-8 lg:flex-row ">
-                                <div className="mx-auto  md:mx-0  ">
-                                  <Link href="/buy-more-get-more">
-                                  <BuyMoreGetMoreSlideComponent bannerType='home-buy-more-get-more'/>                                  </Link>
-                                </div>
-                                <div
-                                 className={
+                              <div
+                                className={
                                   'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:px-0'
                                 }
-                                >
+                              >
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:grid-cols-3">
                                   <SectionHome
@@ -114,52 +114,36 @@ export default function Deal() {
                                     size={6}
                                   />
                                 </div>
-                                </div>
                               </div>
-                            </>
-                          );
-                        case 'shop-coupons':
-                          return (
-                            <>
-                              <CardCouponComponent displayCount={3} />
-                              <section
+                            </div>
+                          </>
+                        );
+                      case 'shop-coupons':
+                        return (
+                          <>
+                            <CardCouponComponent displayCount={3} />
+                            <section
                               className={
-                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
+                                'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
                               }
-                              >
-                                <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
-                                  <SectionHome
-                                    discountType={discountType.name}
-                                    name={discountType.name}
-                                  />
-                                </div>
-                              </section>
-                            </>
-                          );
-                        case 'event':
-                          return (
-                            <>
-                              <EvenSlideComponent />
-                              <section
-                                       className={
-                                        'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
-                                      }
-                              >
-                                <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                                  <SectionHome
-                                    discountType={discountType.name}
-                                    name={discountType.name}
-                                  />
-                                </div>
-                              </section>
-                            </>
-                          );
-                        default:
-                          return (
-                            <section 
-                            className={
-                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
-                            }
+                            >
+                              <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
+                                <SectionHome
+                                  discountType={discountType.name}
+                                  name={discountType.name}
+                                />
+                              </div>
+                            </section>
+                          </>
+                        );
+                      case 'event':
+                        return (
+                          <>
+                            <EvenSlideComponent />
+                            <section
+                              className={
+                                'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
+                              }
                             >
                               <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
                                 <SectionHome
@@ -168,14 +152,30 @@ export default function Deal() {
                                 />
                               </div>
                             </section>
-                          );
-                      }
-                    })()}
-                  </section>
-                </>
-              )
-            );
-          })}
+                          </>
+                        );
+                      default:
+                        return (
+                          <section
+                            className={
+                              'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:p-0'
+                            }
+                          >
+                            <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                              <SectionHome
+                                discountType={discountType.name}
+                                name={discountType.name}
+                              />
+                            </div>
+                          </section>
+                        );
+                    }
+                  })()}
+                </section>
+              </>
+            )
+          );
+        })}
     </>
   );
 }

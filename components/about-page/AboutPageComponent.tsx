@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
 import { Inter } from 'next/font/google';
-import { Button, Divider, Image } from '@nextui-org/react';
+import { Button, Divider, Image, Link } from '@nextui-org/react';
 import MentorCard from '@/components/card/card-about/MentorCard';
 import MemberCard from '@/components/card/card-about/MemberCard';
 import NextLink from 'next/link';
@@ -156,8 +156,12 @@ function AboutPageComponent() {
         className="my-20 flex flex-col items-center justify-center gap-5 px-10 md:flex-row"
         data-aos="fade-up"
       >
-        <Image src={'/images/sponsor1.png'} alt="About us" width={600} />
-        <Image src={'/images/sponsor2.png'} alt="About us" width={600} />
+        <Link href={'https://mptc.gov.kh/'} target='_blank'>
+          <Image src={'/images/sponsor1.png'} alt="About us" width={600} />
+        </Link>
+        <Link href={'https://cbrd.gov.kh/'} target='_blank'>
+          <Image src={'/images/sponsor2.png'} alt="About us" width={600} />
+        </Link>
       </div>
 
       <div className="my-2 text-center">
@@ -179,11 +183,13 @@ function AboutPageComponent() {
         className="my-20 flex justify-center gap-10 px-10"
         data-aos="fade-up"
       >
-        <Image
-          src={'/images/final-cstad-logo.png'}
-          alt="About us"
-          width={500}
-        />
+        <Link href={'https://istad.co/'} target='_blank'>
+          <Image
+            src={'/images/final-cstad-logo.png'}
+            alt="About us"
+            width={500}
+          />
+        </Link>
       </div>
       {/* Mentors Section */}
       <div className="my-2 text-center">

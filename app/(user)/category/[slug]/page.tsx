@@ -58,7 +58,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
               <React.Fragment key={discountType.slug}>
                 <div className="mx-6 my-4 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
                   <div className="flex-1">
-                    <p className="relative w-fit from-pink-500 to-yellow-500 text-[16px] font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-[20px] lg:text-[26px]">
+                    <p className="md:text-xl text-md relative w-fit from-pink-500 to-yellow-500 font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r  lg:text-2xl">
                       {firstPart}
                       <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
                         {' ' + secondPart}

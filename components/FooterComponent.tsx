@@ -36,14 +36,14 @@ function FooterComponent() {
               Our Sponsors
             </h1>
             <div className={'grid  grid-cols-2 gap-4 '}>
-              <Link href="https://flowbite.com/" className="flex items-center">
+              <Link href="https://mptc.gov.kh/" className="flex items-center">
                 <Image
                   width={150}
                   src="/images/sponsor1.png"
                   alt="FlowBite Logo"
                 />
               </Link>
-              <Link href="https://flowbite.com/" className="flex items-center">
+              <Link href="https://cbrd.gov.kh/" className="flex items-center">
                 <Image
                   width={150}
                   src="/images/sponsor2.png"

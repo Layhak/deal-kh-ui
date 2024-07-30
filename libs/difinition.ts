@@ -103,6 +103,7 @@ export type ShopResponse = {
   updatedAt: string;
   createdBy: string;
   updatedBy: string;
+  ratingAvg: number;
 };
 
 export type Payload = {

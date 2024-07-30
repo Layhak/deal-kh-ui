@@ -8,9 +8,10 @@ export const shopApi = ecommerceApi.injectEndpoints({
     }),
     getApprovedShops: builder.query<
       ShopsResponse,
-      { page: number; size: number }
+      { page: number; size: number; field?: string; order?: string }
     >({
-      query: ({ page, size }) => `/shops/approved?page=${page}&size=${size}`,
+      query: ({ page, size, field, order }) =>
+        `/shops/approved?page=${page}&size=${size}&field=${field}&order=${order}`,
     }),
     getShopNearby: builder.query({
       query: ({ latitude, longitude }) =>

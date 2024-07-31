@@ -152,12 +152,12 @@ export default function ProductCard({
                     href={`/shop/${product.shopSlug}`}
                     className={' overflow-hidden '}
                   >
-                    <span className="line-clamp-1 text-xs font-medium text-blue-500 md:text-sm">
+                    <span className="line-clamp-1 text-sm font-medium text-blue-500">
                       {product.shop || 'Shop Name'}
                     </span>
                   </Link>
                 </p>
-                <p className="text-xs font-medium text-foreground-600 md:text-sm">
+                <p className="text-sm font-medium text-foreground-600">
                   Expired date :{' '}
                   <span className="font-medium text-red-500">
                     {product.expiredAt}
@@ -166,7 +166,7 @@ export default function ProductCard({
               </div>
               <div
                 className={
-                  'flex w-full flex-col items-start justify-start sm:flex-row md:items-center md:justify-between '
+                  'flex w-full  flex-row  items-center justify-between '
                 }
               >
                 <div className={'flex items-center justify-center gap-2'}>
@@ -243,31 +243,17 @@ const RatingStar = ({
 }) => {
   const stars = Array.from({ length: 5 }, (_, index) => {
     if (ratingAvg >= index + 1) {
-      return (
-        <StarIcon
-          key={index}
-          filled
-          className="h-2 w-2 text-warning md:h-4 md:w-4"
-        />
-      );
+      return <StarIcon key={index} filled className=" h-4 w-4 text-warning" />;
     } else if (ratingAvg >= index + 0.1) {
-      return (
-        <StarIcon
-          key={index}
-          half
-          className="h-2 w-2 text-warning md:h-4 md:w-4"
-        />
-      );
+      return <StarIcon key={index} half className=" h-4  w-4 text-warning" />;
     } else {
-      return (
-        <StarIcon key={index} className="h-2 w-2 text-warning md:h-4 md:w-4" />
-      );
+      return <StarIcon key={index} className="h-4 w-4 text-warning" />;
     }
   });
   return (
     <>
       {stars}
-      <span className="ml-1 text-[9px] font-medium text-foreground-600 md:text-small">
+      <span className="ml-1  text-small font-medium text-foreground-600">
         ({ratingCount}) Reviews
       </span>
     </>

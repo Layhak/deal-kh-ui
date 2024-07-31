@@ -5,9 +5,7 @@ import { LuClock10 } from 'react-icons/lu';
 import { BiCategory } from 'react-icons/bi';
 import { Image } from '@nextui-org/react';
 import { ShopDetail } from '@/types/shopDtail';
-import ReviewSHopProfile from '../review/ReviewShopProfile';
-import { useGetProductBySlugQuery } from '@/redux/service/product';
-import { useGetShopBySlugQuery } from '@/redux/service/shop';
+import ReviewShopProfile from '../review/ReviewShopProfile';
 
 type Props = {
   shopProfile: ShopDetail;
@@ -35,19 +33,22 @@ export default function ShopProfileComponent({ shopProfile, shopSlug }: Props) {
         <div
           className="relative flex h-40 w-full justify-start rounded-lg bg-gray-800 lg:h-96"
           style={{
-            backgroundImage: `url(${shopProfile.cover})`,
+            backgroundImage: `url(${shopProfile.cover || 'https://i.pinimg.com/564x/8b/80/6f/8b806f7e31056c7cb0d491569531bc4a.jpg'})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         >
           <div className="absolute -bottom-5 left-4 flex translate-y-1/2 transform flex-col items-start justify-start lg:bottom-0 lg:flex-row">
             <Image
-              src={shopProfile.profile}
+              src={
+                shopProfile.profile ||
+                'https://i.pinimg.com/564x/8b/80/6f/8b806f7e31056c7cb0d491569531bc4a.jpg'
+              }
               alt="Profile Picture"
               className="h-24 w-24 rounded-full border-4 border-white bg-white lg:h-40 lg:w-40"
             />
             <h1 className="self-center text-start text-lg font-semibold lg:ml-4 lg:mt-16 lg:text-2xl">
-              {shopProfile.name}
+              {shopProfile.name || 'Shop Name'}
             </h1>
           </div>
         </div>
@@ -109,7 +110,7 @@ export default function ShopProfileComponent({ shopProfile, shopSlug }: Props) {
           </div>
         </div>
         <div className="mx-4 mt-2 md:mt-[100px] lg:mx-0 lg:mt-28">
-          <ReviewSHopProfile productSlug={shopSlug} />
+          <ReviewShopProfile productSlug={shopSlug} />
         </div>
       </div>
 

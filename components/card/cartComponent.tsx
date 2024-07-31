@@ -1,20 +1,21 @@
+// CartComponent.js
 'use client';
-import { useAppDispatch, useAppSelector } from '@/redux/hook';
+import React, { useEffect, useState } from 'react';
+import { Image } from '@nextui-org/react';
+import { Button } from '@nextui-org/button';
+import { AnimatePresence, domAnimation, LazyMotion, m } from 'framer-motion';
+import { useAppDispatch, useAppSelector } from '../../redux/hook';
 import {
   decrementQuantity,
   incrementQuantity,
   removeFromCart,
   selectProducts,
   selectTotalPrice,
-} from '@/redux/feature/cart/cartSlice';
-import { useEffect, useState } from 'react';
-import { Image } from '@nextui-org/react';
-import { Button } from '@nextui-org/button';
-import { AnimatePresence, domAnimation, LazyMotion, m } from 'framer-motion';
-import CartRightSection from '@/components/CartRightSection';
-import ListProductAddToCart from '@/components/CartListProductComponent';
-import { Product } from '@/libs/difinition';
-import CheckoutConfirmationModal from '@/components/checkout/CheckoutConfirmationModal'; // Import the modal component
+} from '../../redux/feature/cart/cartSlice';
+import CheckoutConfirmationModal from '../checkout/CheckoutConfirmationModal';
+import CartRightSection from '../CartRightSection';
+import ListProductAddToCart from '../CartListProductComponent';
+import { Product } from '../../libs/difinition';
 
 export default function CartComponent() {
   const products = useAppSelector(selectProducts);
@@ -122,7 +123,7 @@ export default function CartComponent() {
   };
 
   const closeModal = () => {
-    setIsModalOpen(false); // Close the modal
+    setIsModalOpen(false); // Close the modal without clearing the cart
   };
 
   return (
@@ -249,7 +250,12 @@ export default function CartComponent() {
       <CheckoutConfirmationModal
         isOpen={isModalOpen}
         onOpenChange={closeModal}
-        wishlistItemUuid={selectedProduct?.slug || ''}
+        products={products.map((product: { name: string; slug: string }) => {
+          return {
+            name: product.name,
+            slug: product.slug,
+          };
+        })} // Pass product names and slugs to the modal
         refetchWishList={() => {
           // Refetch logic if needed
         }}

@@ -340,7 +340,11 @@ export const NavigationBar = () => {
                     className=" w-full gap-2"
                   >
                     <div className="flex items-center gap-2">
-                      <BiUserCircle size={24} />
+                      <Icon
+                        icon={'bi:person-circle'}
+                        width={22}
+                        className="flex-none outline-none transition-transform group-data-[hover=true]:translate-x-0.5 [&>path]:stroke-[2]"
+                      />
                       <p className="font-semibold">Profile</p>
                     </div>
                   </DropdownItem>
@@ -372,7 +376,7 @@ export const NavigationBar = () => {
                         icon="memory:logout"
                         width={24}
                       />
-                      <p className="font-semibold">My Shop</p>
+                      <p className="font-semibold">Log out</p>
                     </div>
                   </DropdownItem>
                 </DropdownMenu>
@@ -471,7 +475,7 @@ export const NavigationBar = () => {
             </NextLink>
           </NavbarItem>
           {isLoggedIn && (
-            <Dropdown placement="bottom-start" shadow="md">
+            <Dropdown size={'lg'} placement="bottom-start" shadow="md">
               <DropdownTrigger>
                 <Avatar
                   as="button"
@@ -500,7 +504,11 @@ export const NavigationBar = () => {
                   className=" w-full gap-2"
                 >
                   <div className="flex items-center gap-2">
-                    <BiUserCircle size={24} />
+                    <Icon
+                      icon={'bi:person-circle'}
+                      width={22}
+                      className="flex-none outline-none transition-transform group-data-[hover=true]:translate-x-0.5 [&>path]:stroke-[2]"
+                    />
                     <p className="font-semibold">Profile</p>
                   </div>
                 </DropdownItem>
@@ -532,7 +540,7 @@ export const NavigationBar = () => {
                       icon="memory:logout"
                       width={24}
                     />
-                    <p className="font-semibold">My Shop</p>
+                    <p className="font-semibold">Log out</p>
                   </div>
                 </DropdownItem>
               </DropdownMenu>

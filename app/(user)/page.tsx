@@ -89,7 +89,7 @@ export default function HomePage() {
               <>
                 <div className="mx-4 my-2 flex h-[50px] items-center justify-between md:my-5 lg:mx-0 lg:my-8">
                   <div className="flex-1">
-                    <p className="md:text-xl text-md relative w-fit from-pink-500 to-yellow-500 font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r  lg:text-2xl">
+                    <p className="text-md relative w-fit from-pink-500 to-yellow-500 font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-xl  lg:text-2xl">
                       {firstPart}
                       <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
                         {' ' + secondPart}
@@ -130,7 +130,7 @@ export default function HomePage() {
                               'my-auto flex h-full w-full max-w-7xl flex-col gap-2'
                             }
                           >
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 lg:p-0">
+                            <div className="grid grid-cols-1 gap-8 px-4 md:grid-cols-2 lg:grid-cols-3 lg:p-0">
                               <SectionHome
                                 size={3}
                                 discountType={discountType.name}
@@ -148,7 +148,7 @@ export default function HomePage() {
                             <div className="flex flex-col gap-8 lg:flex-row ">
                               <div className="mx-auto  md:mx-0  ">
                                 <Link href="/discount/buy-more-get-more">
-                                  <BuyMoreGetMoreSlideComponent bannerType='home-buy-more-get-more' />
+                                  <BuyMoreGetMoreSlideComponent bannerType="home-buy-more-get-more" />
                                 </Link>
                               </div>
                               <div
@@ -207,7 +207,7 @@ export default function HomePage() {
                                 'my-auto flex h-full w-full max-w-7xl flex-col gap-2 '
                               }
                             >
-                              <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 px-4 lg:p-0">
+                              <div className="grid w-full grid-cols-1 gap-8 px-4 sm:grid-cols-2 lg:grid-cols-4 lg:p-0">
                                 <SectionHome
                                   discountType={discountType.name}
                                   name={discountType.name}
@@ -263,29 +263,6 @@ export default function HomePage() {
             Category{' '}
           </p>
         </div>
-        <Link href={`category`}>
-          <div className="flex items-center pt-2">
-            <p className="mr-2 pb-1 text-[15px] font-normal text-foreground-700 lg:text-[17px]">
-              See More
-            </p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              color="black"
-              viewBox="0 0 48 48"
-            >
-              <path
-                fill="none"
-                stroke="#6b7280"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="4"
-                d="M42 24H6m24-12l12 12-12 12"
-              />
-            </svg>
-          </div>
-        </Link>
       </div>
       <Category />
       <div>

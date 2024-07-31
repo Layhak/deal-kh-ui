@@ -45,6 +45,7 @@ import {
 import { useLogoutUserMutation } from '../redux/service/auth';
 import { useGetProfileQuery } from '../redux/service/user';
 import Loading from '../app/(user)/loading';
+import { Icon } from '@iconify/react';
 
 export const NavigationBar = () => {
   const pathname = usePathname();
@@ -155,7 +156,7 @@ export const NavigationBar = () => {
     console.log('User Shops:', userShops);
   }, [userShops]);
 
-  const hasShop = userShops?.payload?.pagination?.totalElements > 0;
+  const hasShop: any = userShops?.payload?.pagination?.totalElements > 0;
 
   console.log('Has Shop:', hasShop);
   const searchInput = (
@@ -343,13 +344,36 @@ export const NavigationBar = () => {
                       <p className="font-semibold">Profile</p>
                     </div>
                   </DropdownItem>
+                  {hasShop && (
+                    <DropdownItem
+                      href={'https://dealkh-admin.istad.co'}
+                      key="my-shop"
+                      className=" w-full gap-2"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Icon
+                          className="flex-none outline-none transition-transform group-data-[hover=true]:translate-x-0.5 [&>path]:stroke-[2]"
+                          icon="weui:shop-filled"
+                          width={24}
+                        />
+                        <p className="font-semibold">My Shop</p>
+                      </div>
+                    </DropdownItem>
+                  )}
                   <DropdownItem
                     key="logout"
                     color="danger"
                     className="text-danger"
                     onClick={handleLogout}
                   >
-                    Log Out
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        className="flex-none outline-none transition-transform group-data-[hover=true]:translate-x-0.5 [&>path]:stroke-[2]"
+                        icon="memory:logout"
+                        width={24}
+                      />
+                      <p className="font-semibold">My Shop</p>
+                    </div>
                   </DropdownItem>
                 </DropdownMenu>
               </Dropdown>
@@ -447,19 +471,18 @@ export const NavigationBar = () => {
             </NextLink>
           </NavbarItem>
           {isLoggedIn && (
-            <Dropdown placement="bottom-end">
+            <Dropdown placement="bottom-start" shadow="md">
               <DropdownTrigger>
                 <Avatar
-                  classNames={{
-                    base: 'ring-pink-600',
-                  }}
+                  as="button"
+                  className="transition-transform"
+                  size="sm"
                   isBordered
-                  color="warning"
+                  color={'default'}
                   src={
                     userProfile?.payload?.profile ||
-                    'https://i.pravatar.cc/150?u=a042581f4e29026704d'
+                    `https://i.pravatar.cc/150?u=a042581`
                   }
-                  size="sm"
                 />
               </DropdownTrigger>
               <DropdownMenu aria-label="Profile Actions" variant="shadow">
@@ -481,13 +504,36 @@ export const NavigationBar = () => {
                     <p className="font-semibold">Profile</p>
                   </div>
                 </DropdownItem>
+                {hasShop && (
+                  <DropdownItem
+                    href={'https://dealkh-admin.istad.co'}
+                    key="my-shop"
+                    className=" w-full gap-2"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Icon
+                        className="flex-none outline-none transition-transform group-data-[hover=true]:translate-x-0.5 [&>path]:stroke-[2]"
+                        icon="weui:shop-filled"
+                        width={24}
+                      />
+                      <p className="font-semibold">My Shop</p>
+                    </div>
+                  </DropdownItem>
+                )}
                 <DropdownItem
                   key="logout"
                   color="danger"
                   className="text-danger"
                   onClick={handleLogout}
                 >
-                  Log Out
+                  <div className="flex items-center gap-2">
+                    <Icon
+                      className="flex-none outline-none transition-transform group-data-[hover=true]:translate-x-0.5 [&>path]:stroke-[2]"
+                      icon="memory:logout"
+                      width={24}
+                    />
+                    <p className="font-semibold">My Shop</p>
+                  </div>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>

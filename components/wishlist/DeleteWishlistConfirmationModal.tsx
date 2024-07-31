@@ -10,6 +10,7 @@ import {
 import { useDeleteWishListMutation } from '@/redux/service/wishList';
 import { toast } from 'react-toastify';
 import { useGetProfileQuery } from '@/redux/service/user';
+import { useTheme } from 'next-themes';
 
 type DeleteWishListConfirmationModalProps = {
   isOpen: boolean;
@@ -24,6 +25,7 @@ const DeleteWishListConfirmationModal: React.FC<
   const [deleteWishList, { isLoading }] = useDeleteWishListMutation();
   const { data: userProfile, isLoading: isLoadingUserProfile } =
     useGetProfileQuery();
+  const { theme } = useTheme();
 
   // useEffect(() => {
   //   if (userProfile && refetchWishList) {
@@ -34,7 +36,16 @@ const DeleteWishListConfirmationModal: React.FC<
   const handleDelete = async () => {
     try {
       await deleteWishList({ uuid: wishlistItemUuid }).unwrap();
-      toast.success('Wishlist item removed');
+      toast.success('Wishlist item removed', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
       onOpenChange(false); // Close modal after delete
       if (refetchWishList) {
         refetchWishList();

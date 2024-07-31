@@ -17,11 +17,13 @@ import {
   TableHeader,
   TableRow,
 } from '@nextui-org/react';
-import { SearchIcon, VerticalDotsIcon } from '@/components/icons';
-import { useGetAllUserWishListQuery } from '@/redux/service/wishList';
-import { WishListItem } from '@/types/wishList';
-import Loading from '@/app/(user)/loading';
-import { useGetProfileQuery } from '@/redux/service/user';
+import { Icon } from '@iconify/react';
+import DeleteWishListConfirmationModal from './DeleteWishlistConfirmationModal';
+import Loading from '../../app/(user)/loading';
+import { SearchIcon } from '../icons';
+import { WishListItem } from '../../types/wishList';
+import { useGetAllUserWishListQuery } from '../../redux/service/wishList';
+import { useGetProfileQuery } from '../../redux/service/user';
 
 const INITIAL_VISIBLE_COLUMNS = [
   'productName',
@@ -58,6 +60,10 @@ const WishListTableComponent: React.FC = () => {
   );
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
   const [page, setPage] = useState<number>(1);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedWishlistItemUuid, setSelectedWishlistItemUuid] = useState<
+    string | null
+  >(null);
 
   const {
     data: userProfile,
@@ -65,12 +71,13 @@ const WishListTableComponent: React.FC = () => {
     isError: isProfileError,
   } = useGetProfileQuery();
 
-  const { data, isLoading, isError, error } = useGetAllUserWishListQuery(
-    { page: page, size: rowsPerPage },
-    {
-      skip: !userProfile,
-    }
-  );
+  const { data, isLoading, isError, error, refetch } =
+    useGetAllUserWishListQuery(
+      { page: page, size: rowsPerPage },
+      {
+        skip: !userProfile,
+      }
+    );
 
   const headerColumns = useMemo(() => {
     if (visibleColumns.size === columns.length) return columns;
@@ -110,18 +117,20 @@ const WishListTableComponent: React.FC = () => {
         );
       case 'actions':
         return (
-          <div className="relative flex items-center justify-end gap-2">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button isIconOnly size="sm" variant="light">
-                  <VerticalDotsIcon className="text-default-300" />
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu>
-                <DropdownItem>Edit</DropdownItem>
-                <DropdownItem>Delete</DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+          <div className="relative flex items-center justify-center gap-2">
+            <Button
+              onClick={() => {
+                setSelectedWishlistItemUuid(item.uuid);
+                setIsModalOpen(true);
+              }}
+              isIconOnly
+              size="lg"
+              color={'danger'}
+              variant="light"
+              radius={'full'}
+            >
+              <Icon icon={'bi:trash'} width={24} />
+            </Button>
           </div>
         );
       default:
@@ -244,7 +253,7 @@ const WishListTableComponent: React.FC = () => {
           )}
         </TableHeader>
         <TableBody emptyContent={'No wishlist items found'} items={allItems}>
-          {(item) => (
+          {(item: any) => (
             <TableRow key={item.uuid}>
               {(columnKey: any) => (
                 <TableCell>{renderCell(item, columnKey)}</TableCell>
@@ -253,6 +262,12 @@ const WishListTableComponent: React.FC = () => {
           )}
         </TableBody>
       </Table>
+      <DeleteWishListConfirmationModal
+        isOpen={isModalOpen}
+        onOpenChange={setIsModalOpen}
+        wishlistItemUuid={selectedWishlistItemUuid || ''}
+        refetchWishList={refetch}
+      />
     </div>
   );
 };

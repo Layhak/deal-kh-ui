@@ -13,6 +13,7 @@ import CustomSelect from '@/components/customInput/CustomSelect';
 import CustomDatePicker from '@/components/customInput/customDatePicker';
 import { format } from 'date-fns';
 import { toast } from 'react-toastify';
+import { useTheme } from 'next-themes';
 
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().required('First Name is required'),
@@ -38,7 +39,7 @@ const UpdateProfileComponent: React.FC<UpdateProfileComponentProps> = ({
   const { data: userProfile } = useGetProfileQuery();
   const [updateProfile, { isLoading: isUpdating }] =
     useUpdateUserByUsernameMutation();
-
+  const { theme } = useTheme();
   const initialValues: UserUpdateRequest = {
     firstName: userProfile?.payload?.firstName || '',
     lastName: userProfile?.payload?.lastName || '',
@@ -64,7 +65,16 @@ const UpdateProfileComponent: React.FC<UpdateProfileComponentProps> = ({
         userUpdateRequest: formattedValues,
       }).unwrap();
       // console.log('Update successful!', response);
-      toast.success('Profile updated successfully!');
+      toast.success('Profile updated successfully!', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
       closeModal();
       refetchProfile();
     } catch (error) {

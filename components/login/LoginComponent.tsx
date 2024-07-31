@@ -22,6 +22,10 @@ type FormValues = {
   password: string;
 };
 
+type LoginComponentProps = {
+  email?: string; // Optional email prop
+};
+
 const initialValues: FormValues = {
   email: '',
   password: '',
@@ -37,9 +41,11 @@ const validationSchema = Yup.object().shape({
     .max(255, 'Password must be less than 255 characters'),
 });
 
-const LoginComponent: React.FC = () => {
+const LoginComponent: React.FC<LoginComponentProps> = ({
+  email: initialEmail,
+}) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [email, setEmail] = useState<string>(''); // State to store email
+  const [email, setEmail] = useState<string>(initialEmail || ''); // State to store email
   const [loginUser, { isLoading }] = useLoginUserMutation();
   const router = useRouter();
   const { theme } = useTheme();
@@ -71,7 +77,7 @@ const LoginComponent: React.FC = () => {
   };
 
   return (
-    <div className=" flex h-screen w-screen items-center justify-center p-2 sm:p-4 lg:p-8">
+    <div className="flex h-screen w-screen items-center justify-center p-2 sm:p-4 lg:p-8">
       <ParticlesComponent id="tsparticles" />
       <div
         className="flex w-full max-w-md flex-col gap-4 rounded-large bg-foreground-100 px-8 pb-10 pt-6  backdrop-saturate-150"
@@ -131,7 +137,9 @@ const LoginComponent: React.FC = () => {
                   type={'email'}
                   placeholder={'Enter your email address'}
                   value={values.email} // Ensure Formik value is passed
-                  onChange={(e) => {
+                  onChange={(e: {
+                    target: { value: React.SetStateAction<string> };
+                  }) => {
                     setEmail(e.target.value); // Update email state
                   }}
                 />

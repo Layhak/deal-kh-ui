@@ -1,7 +1,7 @@
 'use client';
 import React, { Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import LoginComponent from '@/components/login/LoginComponent'; // Adjust the import path as needed
+import LoginComponent from './LoginComponent';
 
 const LoginPageWrapper = () => {
   const searchParams = useSearchParams();

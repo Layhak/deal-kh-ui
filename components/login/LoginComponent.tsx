@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Formik, FormikHelpers, Form } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/navigation';
 import NextLink from 'next/link';
@@ -37,12 +37,10 @@ const validationSchema = Yup.object().shape({
     .max(255, 'Password must be less than 255 characters'),
 });
 
-const LoginComponent: React.FC<{ email: string }> = ({
-  email: initialEmail,
-}) => {
+const LoginComponent: React.FC = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [email, setEmail] = useState<string>(initialEmail); // State to store email
-  const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
+  const [email, setEmail] = useState<string>(''); // State to store email
+  const [loginUser, { isLoading }] = useLoginUserMutation();
   const router = useRouter();
   const { theme } = useTheme();
   const dispatch = useAppDispatch();

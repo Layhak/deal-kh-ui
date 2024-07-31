@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, useRef } from 'react';
+import React, { useState, ChangeEvent, useRef, useEffect } from 'react';
 import { Formik, Form, Field, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -52,6 +52,10 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
   const [verificationError, setVerificationError] = useState<string>('');
   const [step, setStep] = useState<number>(1);
   const inputRefs = useRef<HTMLInputElement[]>([]);
+
+  useEffect(() => {
+    setEnteredEmail(email);
+  }, [email]);
 
   const handleChange = (index: number, e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -122,7 +126,7 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
 
   const handleSubmitPassword = async (
     values: PasswordFormValues,
-    { setSubmitting, setErrors }: FormikHelpers<PasswordFormValues>
+    { setSubmitting, setErrors, resetForm }: FormikHelpers<PasswordFormValues>
   ) => {
     const otp = code.reduce((acc, curr) => acc + curr, '');
     if (otp.length !== 6 || isNaN(Number(otp))) {
@@ -138,7 +142,9 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
         confirmPassword: values.confirmPassword,
       }).unwrap();
       alert('Password reset successfully!');
-      onOpenChange(false);
+      resetForm(); // Reset the form
+      setStep(1); // Reset the step
+      onOpenChange(false); // Close the modal
     } catch (error: any) {
       console.error('Failed to reset password:', error);
       if (error.data && error.data.error && error.data.error.description) {
@@ -184,7 +190,7 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
   });
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} backdrop={'blur'}>
       <ModalContent>
         {(onClose) => (
           <>
@@ -197,7 +203,7 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
                     : 'Reset Password'}
               </h3>
             </ModalHeader>
-            <ModalBody className="flex flex-col items-center gap-4">
+            <ModalBody>
               {step === 1 ? (
                 <Formik
                   initialValues={{ email: enteredEmail }}
@@ -210,17 +216,20 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
                         name={'email'}
                         type={'email'}
                         placeholder={'Enter your email address'}
-                        onChange={(e) => setEnteredEmail(e.target.value)}
+                        onChange={(e: any) => setEnteredEmail(e.target.value)}
                         value={enteredEmail}
                       />
-                      <Spacer y={1} />
+                      <Spacer y={5} />
                       {verificationError && (
                         <p className="mt-2 text-red-500">{verificationError}</p>
                       )}
                       <Button
+                        color={'warning'}
+                        className="w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-lg text-gray-50"
                         type="submit"
-                        className="mt-5 w-full rounded-lg bg-gradient-to-r from-pink-500 to-orange-500 p-2 text-lg text-white"
+                        variant={'solid'}
                         disabled={isSubmitting}
+                        isLoading={isSubmitting}
                       >
                         Send OTP
                       </Button>
@@ -233,17 +242,17 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
                   onSubmit={handleConfirmOtp}
                 >
                   {({ isSubmitting }) => (
-                    <Form>
+                    <Form className={'flex flex-col items-start gap-4'}>
                       <p className="text-md mt-1 dark:text-gray-50">
                         We sent a code to{' '}
                         <span className="font-semibold">{enteredEmail}</span>
                       </p>
-                      <div className="mt-5 flex items-center justify-center gap-2">
+                      <div className="mt-5 flex items-center justify-center gap-4">
                         {code.map((value, index) => (
                           <div key={index} className="relative">
                             <div className="overflow-hidden rounded-md border-2 border-transparent">
                               <Field
-                                type="number"
+                                type="text"
                                 id={`otp${index}`}
                                 name={`otp[${index}]`}
                                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -277,10 +286,14 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
                           Click to resend
                         </Link>
                       </p>
+                      <Spacer y={5} />
                       <Button
+                        color={'warning'}
+                        className="w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-lg text-gray-50"
                         type="submit"
-                        className="mt-5 w-full rounded-lg bg-gradient-to-r from-pink-500 to-orange-500 p-2 text-lg text-white"
+                        variant={'solid'}
                         disabled={isSubmitting}
+                        isLoading={isSubmitting}
                       >
                         Confirm OTP
                       </Button>
@@ -330,10 +343,14 @@ const ResetPasswordModal: React.FC<ResetPasswordModalProps> = ({
                       {verificationError && (
                         <p className="mt-2 text-red-500">{verificationError}</p>
                       )}
+                      <Spacer y={5} />
                       <Button
+                        color={'warning'}
+                        className="w-full bg-gradient-to-tr from-pink-500 to-yellow-500 text-lg text-gray-50"
                         type="submit"
-                        className="mt-5 w-full rounded-lg bg-gradient-to-r from-pink-500 to-orange-500 p-2 text-lg text-white"
+                        variant={'solid'}
                         disabled={isSubmitting}
+                        isLoading={isSubmitting}
                       >
                         Reset Password
                       </Button>

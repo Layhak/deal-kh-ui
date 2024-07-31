@@ -58,7 +58,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
               <React.Fragment key={discountType.slug}>
                 <div className="mx-6 my-4 flex h-[50px] items-center justify-between md:my-8 lg:mx-0 lg:my-8">
                   <div className="flex-1">
-                    <p className="md:text-xl text-md relative w-fit from-pink-500 to-yellow-500 font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r  lg:text-2xl">
+                    <p className="text-md relative w-fit from-pink-500 to-yellow-500 font-bold text-foreground-700 after:absolute after:bottom-[-4px] after:left-0 after:h-[4px] after:w-full after:bg-gradient-to-r md:text-xl  lg:text-2xl">
                       {firstPart}
                       <span className="bg-gradient-to-r from-pink-500 to-yellow-500 bg-clip-text text-transparent">
                         {' ' + secondPart}
@@ -99,7 +99,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                               'my-auto flex h-full w-full max-w-7xl flex-col gap-2'
                             }
                           >
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-col-3 gap-8 px-4 lg:p-0">
+                            <div className="grid grid-cols-1 gap-8 px-4 md:grid-cols-2 lg:grid-cols-3 lg:p-0">
                               <SectionCategory
                                 size={3}
                                 discountType={discountType.name}
@@ -120,7 +120,11 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                             <div className="flex flex-col gap-8 lg:flex-row">
                               <div className="mx-auto md:mx-0">
                                 <Link href="/discount/buy-more-get-more">
-                                  <BuyMoreGetMoreSlideComponent bannerType={slug} />
+                                  <BuyMoreGetMoreSlideComponent
+                                    bannerType={
+                                      slug || 'home-buy-more-get-more'
+                                    }
+                                  />
                                 </Link>
                               </div>
                               <div
@@ -128,7 +132,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                                   'my-auto flex h-full w-full max-w-7xl flex-col gap-2 px-4 lg:px-0'
                                 }
                               >
-                                <div className="grigrid  grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 grid-cols-2 gap-8 lg:grid-cols-3">
+                                <div className="grid  grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                                   <SectionCategory
                                     discountType={discountType.name}
                                     name={discountType.name}
@@ -149,7 +153,7 @@ const CategoryPage = ({ params }: CategoryPageProps) => {
                                 'my-auto flex h-full w-full max-w-7xl flex-col gap-2 '
                               }
                             >
-                              <div className="grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4 px-4 lg:p-0">
+                              <div className="grid w-full grid-cols-1 gap-8 px-4 sm:grid-cols-2 lg:grid-cols-4 lg:p-0">
                                 <SectionCategory
                                   discountType={discountType.name}
                                   name={discountType.name}

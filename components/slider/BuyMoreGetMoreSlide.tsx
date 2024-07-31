@@ -49,7 +49,7 @@ export default function BuyMoreGetMoreSlideComponent({
   };
 
   return (
-    <div className="w-svw md:w=[700px] px-4 lg:p-0  lg:w-[400px] h-[500px] object-cover object-center sm:h-[700px] mx-auto lg:h-[800px]">
+    <div className="md:w=[700px] mx-auto h-[500px] w-svw  object-cover object-center px-4 sm:h-[700px] lg:h-[800px] lg:w-[400px] lg:p-0">
       <Swiper
         className="h-auto w-auto"
         slidesPerView={1}
@@ -65,7 +65,7 @@ export default function BuyMoreGetMoreSlideComponent({
         navigation={false}
         modules={[Autoplay, Pagination]}
         loop={true}
-        >
+      >
         {bannerData.length > 0 ? (
           bannerData.map((banner: Banner) => (
             <SwiperSlide
@@ -74,10 +74,10 @@ export default function BuyMoreGetMoreSlideComponent({
               className="cursor-pointer "
             >
               <Image
-              width={800}
-              removeWrapper
+                width={800}
+                removeWrapper
                 src={banner.image}
-                className="h-[500px] sm:h-[700px] lg:h-[800px] object-cover object-center"
+                className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[800px]"
                 alt={banner.name}
               />
             </SwiperSlide>
@@ -86,7 +86,7 @@ export default function BuyMoreGetMoreSlideComponent({
           <SwiperSlide>
             <Image
               src="https://romand.us/cdn/shop/files/PC_1.png?v=1719967761&width=1728"
-              className="h-[500px] w-[1300px] rounded-2xl object-cover"
+              className="h-[500px] object-cover object-center sm:h-[700px] lg:h-[800px]"
               alt="Event"
             />
           </SwiperSlide>

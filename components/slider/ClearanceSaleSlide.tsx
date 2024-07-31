@@ -49,7 +49,7 @@ export default function ClearanceSaleSlideComponentProps({
   };
 
   return (
-    <div className="mt-2 w-swh">
+    <div className="w-swh mt-2">
       <Swiper
         className="w-full rounded-2xl"
         slidesPerView={1}
@@ -84,7 +84,7 @@ export default function ClearanceSaleSlideComponentProps({
           <SwiperSlide>
             <Image
               src="https://romand.us/cdn/shop/files/PC_1.png?v=1719967761&width=1728"
-              className="h-[500px] w-[1300px] rounded-2xl object-cover"
+              className="h-[400px] w-[1300px] rounded-2xl object-cover"
               alt="Event"
             />
           </SwiperSlide>

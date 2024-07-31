@@ -11,18 +11,20 @@ import {
 } from '@nextui-org/react';
 import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
-import {
-  useCreateShopMutation,
-  useUploadShopImageMutation,
-} from '@/redux/service/shop';
-import { useGetAllShopTypesQuery } from '@/redux/service/shopType';
 import CustomInput from '../customInput/customInput';
 import CustomSelect from '../customInput/CustomSelect';
-import MapCreateShopComponent from '@/components/Maps/MapCreateShopComponent';
-import { Coordinates, ShopCreateRequest } from '@/types/shop';
 import { IoImagesOutline } from 'react-icons/io5';
 import { Cancel } from '../icons';
 import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
+import { useTheme } from 'next-themes';
+import MapCreateShopComponent from '../Maps/MapCreateShopComponent';
+import { Coordinates, ShopCreateRequest } from '../../types/shop';
+import { useGetAllShopTypesQuery } from '../../redux/service/shopType';
+import {
+  useCreateShopMutation,
+  useUploadShopImageMutation,
+} from '../../redux/service/shop';
 
 type CreateShopModalProps = {
   isOpen: boolean;
@@ -110,6 +112,7 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
   } = useGetAllShopTypesQuery();
   const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('loggedIn');
@@ -171,6 +174,16 @@ const CreateShopModal: React.FC<CreateShopModalProps> = ({
       await createShop(values).unwrap();
       resetForm();
       refetch();
+      toast.success('Shop created successfully! Please wait for approval.', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: theme,
+      });
       onClose();
     } catch (error) {
       console.error('Failed to create shop:', error);
